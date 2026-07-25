@@ -1,0 +1,387 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#050608;
+}
+
+.contenedor{
+    position:relative;
+    overflow:hidden;
+}
+
+.fondo{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter:brightness(.35);
+}
+
+.volver{
+    position:absolute;
+    top:25px;
+    left:30px;
+    z-index:5;
+    color:#fff;
+    font-size:.9rem;
+    font-weight:600;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.volver:hover{
+    color:#4A28C4;
+}
+
+.formulario{
+    position:relative;
+    z-index:2;
+    padding:45px;
+    background:rgba(180,180,180,.78);
+    backdrop-filter:blur(8px);
+    border-radius:15px;
+    box-shadow:0 0 40px rgba(0,0,0,.5);
+}
+
+.formulario h1{
+    text-align:center;
+    color:#4A28C4;
+    font-size:2rem;
+    font-weight:800;
+    margin-bottom:25px;
+}
+
+.formulario .form-control{
+    width:100%;
+    padding:14px 5px;
+    border:none;
+    border-bottom:2px solid #222;
+    border-radius:0;
+    background:transparent;
+    color:#111;
+    font-size:.95rem;
+    outline:none;
+    transition:.3s;
+}
+
+.formulario .form-control::placeholder{
+    color:#444;
+}
+
+.formulario .form-control:focus{
+    box-shadow:none;
+    border-color:#4A28C4;
+}
+
+.formulario button{
+    width:100%;
+    margin-top:10px;
+    padding:14px;
+    border:none;
+    border-radius:8px;
+    background:#1C2BC2;
+    color:#fff;
+    font-size:1rem;
+    font-weight:700;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.formulario button:hover{
+    background:#4A28C4;
+    transform:translateY(-2px);
+}
+
+.formulario a{
+    display:block;
+    text-align:center;
+    margin-top:15px;
+    color:#1C2BC2;
+    font-size:.9rem;
+    font-weight:600;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.formulario a:hover{
+    color:#4A28C4;
+}
+
+@media(max-width:768px){
+
+.formulario{
+    padding:35px 28px;
+}
+
+.formulario h1{
+    font-size:1.8rem;
+}
+
+}
+
+body{
+    background:#050608;
+    font-family:'Andada Pro',serif;
+}
+
+h1,
+h2,
+h3{
+    font-family:'Phudu',cursive;
+}
+
+button,
+.formulario button,
+.volver{
+    font-family:'Ancizar Sans',sans-serif;
+}
+
+p,
+a,
+input,
+textarea,
+select,
+option,
+label,
+span{
+    font-family:'Andada Pro',serif;
+}
+
+@media(max-width:480px){
+
+.formulario{
+    padding:28px 20px;
+}
+
+.formulario h1{
+    font-size:1.5rem;
+}
+
+.formulario .form-control{
+    font-size:.9rem;
+}
+
+.formulario button{
+    font-size:.9rem;
+    padding:12px;
+}
+
+.formulario a{
+    font-size:.8rem;
+}
+
+.volver{
+    top:18px;
+    left:18px;
+    font-size:.8rem;
+}
+
+}
+
+.reseñas{
+    padding:90px 0 60px;
+}
+
+.reseñas h1{
+    color:#4A28C4;
+    font-size:2.8rem;
+    font-weight:800;
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.subtitulo{
+    color:#d6d6d6;
+    text-align:center;
+    max-width:650px;
+    margin:0 auto 50px;
+    font-size:1rem;
+    line-height:1.7;
+}
+
+.reseña{
+    background:rgba(180,180,180,.78);
+    backdrop-filter:blur(8px);
+    border-radius:15px;
+    padding:22px;
+    display:flex;
+    align-items:flex-start;
+    gap:18px;
+    box-shadow:0 0 25px rgba(0,0,0,.35);
+    transition:.3s;
+    height:100%;
+}
+
+.reseña:hover{
+    transform:translateY(-6px);
+}
+
+.reseña img{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    object-fit:cover;
+    flex-shrink:0;
+}
+
+.reseña h3{
+    color:#4A28C4;
+    font-size:1rem;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.reseña span{
+    display:block;
+    color:#FFD700;
+    letter-spacing:2px;
+    margin-bottom:10px;
+}
+
+.reseña p{
+    color:#222;
+    font-size:.88rem;
+    line-height:1.6;
+    margin:0;
+}
+
+.formulario{
+    margin-top:70px;
+}
+
+.formulario h2{
+    color:#4A28C4;
+    text-align:center;
+    font-size:2rem;
+    font-weight:800;
+    margin-bottom:25px;
+}
+
+.formulario select{
+    cursor:pointer;
+}
+
+.formulario textarea{
+    resize:none;
+    min-height:150px;
+}
+
+@media(max-width:992px){
+
+.reseñas{
+    padding:80px 0 50px;
+}
+
+.reseñas h1{
+    font-size:2.4rem;
+}
+
+.reseña{
+    padding:20px;
+}
+
+}
+
+@media(max-width:768px){
+
+.reseñas{
+    padding:70px 0 40px;
+}
+
+.reseñas h1{
+    font-size:2rem;
+}
+
+.subtitulo{
+    font-size:.9rem;
+    margin-bottom:35px;
+    padding:0 10px;
+}
+
+.reseña{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+}
+
+.reseña img{
+    width:90px;
+    height:90px;
+}
+
+.reseña p{
+    font-size:.85rem;
+}
+
+.formulario{
+    padding:35px 28px;
+}
+
+.formulario h2{
+    font-size:1.7rem;
+}
+
+}
+
+@media(max-width:480px){
+
+.reseña{
+    background:rgba(180,180,180,.78);
+    backdrop-filter:blur(8px);
+    border-radius:15px;
+    padding:25px;
+    box-shadow:0 0 25px rgba(0,0,0,.35);
+    transition:.3s;
+    height:100%;
+    text-align:center;
+}
+
+.reseña:hover{
+    transform:translateY(-6px);
+}
+
+.reseña img{
+    width:95px;
+    height:95px;
+    border-radius:50%;
+    object-fit:cover;
+    object-position:top;
+    display:block;
+    margin:0 auto 18px;
+    border:3px solid #fff;
+}
+
+.reseñas h1{
+    font-size:1.8rem;
+}
+
+.subtitulo{
+    font-size:.85rem;
+}
+
+.reseña{
+    padding:18px;
+}
+
+.reseña img{
+    width:80px;
+    height:80px;
+}
+
+.reseña h3{
+    font-size:.95rem;
+}
+
+.reseña p{
+    font-size:.82rem;
+}
+
+.formulario h2{
+    font-size:1.5rem;
+}
+
+}
