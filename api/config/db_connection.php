@@ -1,8 +1,8 @@
 <?php
 $servername = "nombrequequiera_db";
-$username = "root"; 
-$password = "root_password"; 
-$dbname = "fitworks"; 
+$username = "usuario"; 
+$password = "password"; 
+$dbname = "fitpower_db"; 
 
 // Crear la conexión
 $conn = new mysqli($servername, $username, $password, $dbname);
