@@ -1,0 +1,471 @@
+@font-face {
+    font-family: "Pervitina Dex";
+    src: url("../../../assets/tipografías/Pervitina-Dex-FFP.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+:root {
+    --azul: #1C2BC2;
+    --negro: #000000;
+    --panel: #020202;
+    --fila: #101010;
+    --morado: #6B2CFF;
+    --morado-claro: #A25CFF;
+    --blanco: #FFFFFF;
+    --gris: #777777;
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+}
+
+
+body {
+    color: #FFFFFF;
+    font-family: "TASA Explorer", sans-serif;
+}
+
+
+button {
+    cursor: pointer;
+    font-family: "TASA Explorer", sans-serif;
+}
+
+
+/* header */
+
+.usuario-header-principal {
+    width: 100%;
+    height: 72px;
+    background-color: #1C2BC2;
+}
+
+
+.logo {
+    font-family: "Pervitina Dex", sans-serif;
+    color: #FFFFFF;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+
+.header-acciones {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+
+/* icono usuario */
+
+.icono-usuario {
+    position: relative;
+
+    width: 38px;
+    height: 38px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: #FFFFFF;
+}
+
+
+.icono-usuario .cabeza {
+    position: absolute;
+
+    width: 11px;
+    height: 11px;
+
+    top: 7px;
+    left: 13.5px;
+
+    border-radius: 50%;
+
+    background-color: #1C2BC2;
+}
+
+
+.icono-usuario .cuerpo {
+    position: absolute;
+
+    width: 22px;
+    height: 11px;
+
+    left: 8px;
+    bottom: 7px;
+
+    border-radius: 12px 12px 7px 7px;
+
+    background-color: #1C2BC2;
+}
+
+
+/* hamburguesa */
+
+.boton-menu {
+    width: 32px;
+    height: 32px;
+
+    padding: 0;
+
+    border: none;
+
+    background-color: transparent;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    gap: 5px;
+}
+
+
+.boton-menu span {
+    display: block;
+
+    width: 29px;
+    height: 4px;
+
+    background-color: #FFFFFF;
+
+    border-radius: 4px;
+}
+
+
+/* emnu lateral */
+
+.menu-usuario {
+    width: 240px !important;
+
+    background-color: #020202;
+
+    color: #FFFFFF;
+}
+
+
+.menu-usuario .offcanvas-header {
+    border-bottom: 1px solid #151515;
+}
+
+
+.menu-usuario .offcanvas-title {
+    font-family: "Special Gothic Expanded One", sans-serif;
+    font-size: 18px;
+}
+
+
+.menu-link {
+    display: block;
+
+    color: #AAAAAA;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    padding: 14px 5px;
+
+    border-bottom: 1px solid #101010;
+}
+
+
+.menu-link:hover {
+    color: #FFFFFF;
+}
+
+
+.menu-link.cerrar {
+    color: #FF1E25;
+}
+
+
+/* contenido */
+
+.usuario-content {
+    min-height: calc(100vh - 72px);
+
+    background-color: #000000;
+
+    padding: 32px 37px 50px;
+}
+
+
+/* presentacion */
+
+.presentacion {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+
+.perfil {
+    display: flex;
+
+    align-items: center;
+
+    gap: 28px;
+}
+
+
+.foto-usuario {
+    width: 66px;
+    height: 66px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    background-color: #020202;
+}
+
+
+.perfil h1 {
+    margin: 0;
+
+    color: #6B2CFF;
+
+    font-family: "Special Gothic Expanded One", sans-serif;
+
+    font-size: 28px;
+
+    font-style: italic;
+
+    font-weight: normal;
+}
+
+
+.cerrar-sesion {
+    border: none;
+
+    border-radius: 4px;
+
+    background-color: #E00000;
+
+    color: #FFFFFF;
+
+    font-size: 11px;
+
+    padding: 8px 20px;
+}
+
+
+.cerrar-sesion:hover {
+    background-color: #B80000;
+}
+
+
+/* linea */
+
+.linea {
+    width: 100%;
+
+    height: 1px;
+
+    background-color: #171717;
+
+    margin: 16px 0;
+}
+
+
+/* membresia */
+
+.informacion-membresia {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 34px;
+}
+
+
+.dato-membresia {
+    min-height: 48px;
+
+    padding: 7px 11px;
+
+    border: 1px solid #777777;
+
+    border-radius: 5px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+
+.dato-titulo {
+    color: #FFFFFF;
+
+    font-size: 10px;
+
+    line-height: 1.1;
+}
+
+
+.dato-valor {
+    color: #C88CFF;
+
+    font-size: 11px;
+
+    margin-top: 5px;
+}
+
+
+/* titulos de seccion */
+
+.seccion-rutinas h2,
+.seccion-clases h2 {
+    margin: 28px 0 16px;
+
+    color: #FFFFFF;
+
+    font-family: "Special Gothic Expanded One", sans-serif;
+
+    font-size: 20px;
+
+    font-weight: normal;
+}
+
+
+/* rutina */
+
+.rutina {
+    width: 200px;
+}
+
+
+.imagen-rutina {
+    width: 200px;
+    height: 64px;
+
+    border-radius: 5px;
+
+    background-color: #D7D7D7;
+
+    border: 1px solid #A25CFF;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #000000;
+
+    font-size: 7px;
+}
+
+
+.rutina-info {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    position: relative;
+}
+
+
+.nombre-rutina {
+    color: #FFFFFF;
+
+    font-size: 11px;
+
+    font-style: italic;
+
+    font-weight: 600;
+
+    margin-top: 6px;
+}
+
+
+.boton-ver {
+    align-self: flex-end;
+
+    border: none;
+
+    border-radius: 3px;
+
+    background-color: #6B2CFF;
+
+    color: #FFFFFF;
+
+    font-size: 7px;
+
+    padding: 4px 13px;
+
+    margin-top: 3px;
+}
+
+
+.boton-ver:hover {
+    background-color: #A25CFF;
+}
+
+
+/* clases */
+
+.clases {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 24px;
+
+    max-width: 680px;
+}
+
+
+.clase {
+    min-height: 45px;
+
+    padding: 8px 12px;
+
+    border: 1px solid #555555;
+
+    border-radius: 5px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+
+.nombre-clase {
+    color: #FFFFFF;
+
+    font-size: 10px;
+}
+
+
+.horario-clase {
+    color: #C88CFF;
+
+    font-size: 11px;
+
+    margin-top: 4px;
+}
+
+
