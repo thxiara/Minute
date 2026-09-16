@@ -1,4 +1,4 @@
-/* tablet */
+/* tablet*/
 
 @media (max-width: 1199px) {
 
@@ -29,7 +29,7 @@
 }
 
 
-/* cel */
+/* celular */
 
 @media (max-width: 767px) {
 
@@ -152,7 +152,7 @@
 }
 
 
-/* cel mas chico */
+/* celular chico */
 
 @media (max-width: 500px) {
 
@@ -225,25 +225,4 @@
         gap: 8px;
     }
 
-}
-
-/* sin menu en pc  */
-
-@media (min-width: 1200px) {
-
-    .boton-menu {
-        display: none !important;
-    }
-
-}
-
-.imagen-usuario-header {
-    width: 38px;
-    height: 38px;
-
-    border-radius: 50%;
-
-    object-fit: cover;
-
-    background-color: #020202;
 }

@@ -1,0 +1,331 @@
+
+/* tablet*/
+
+@media (max-width: 991px) {
+
+    .sidebar {
+        width: 145px;
+        min-width: 145px;
+    }
+
+
+    .main-content {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+
+    .content-title h1 {
+        font-size: 15px;
+    }
+
+
+    .nuevo-socio {
+        font-size: 8px;
+        padding: 5px 10px;
+    }
+
+}
+
+
+
+/* tablets chicas  */
+
+@media (max-width: 767px) {
+
+    .admin-header {
+        height: 57px;
+    }
+
+
+    .logo {
+        font-size: 28px;
+    }
+
+
+    .nombre-usuario {
+        font-size: 11px;
+    }
+
+
+    .imagen-usuario {
+        width: 28px;
+        height: 28px;
+    }
+
+
+    .boton-menu {
+        display: flex;
+    }
+
+
+    /*
+       En pantallas pequeñas el menú lateral
+       se abre mediante Bootstrap Offcanvas.
+    */
+
+    .main-content {
+        width: 100%;
+        padding: 22px 14px 25px;
+    }
+
+
+    .content-title {
+        margin-bottom: 13px;
+    }
+
+
+    .content-title h1 {
+        font-size: 14px;
+    }
+
+
+    .nuevo-socio {
+        font-size: 8px;
+        padding: 5px 9px;
+    }
+
+
+    .members-container {
+        width: 100%;
+        min-height: 220px;
+    }
+
+
+    /*
+       Mantiene la tabla con el tamaño necesario
+       y permite desplazarla horizontalmente.
+    */
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+
+    .tabla-socios {
+        min-width: 560px;
+    }
+
+
+    .tabla-socios th {
+        font-size: 7px;
+    }
+
+
+    .tabla-socios td {
+        font-size: 7px;
+    }
+
+
+    .search input {
+        width: 60px;
+    }
+
+}
+
+
+
+/* cel */
+
+@media (max-width: 576px) {
+
+    .admin-header {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+
+    .logo {
+        font-size: 25px;
+    }
+
+
+    .usuario-header {
+        gap: 8px;
+    }
+
+
+    .nombre-usuario {
+        font-size: 10px;
+    }
+
+
+    .imagen-usuario {
+        width: 27px;
+        height: 27px;
+    }
+
+
+    .boton-menu {
+        width: 24px;
+        height: 24px;
+    }
+
+
+    .boton-menu span {
+        width: 21px;
+        height: 3px;
+    }
+
+
+    .main-content {
+        padding: 20px 10px 25px;
+    }
+
+
+    .content-title {
+        gap: 10px;
+    }
+
+
+    .content-title h1 {
+        font-size: 13px;
+    }
+
+
+    .nuevo-socio {
+        font-size: 8px;
+        padding: 5px 8px;
+    }
+
+
+    .members-container {
+        padding: 8px;
+    }
+
+
+    .table-top {
+        height: 24px;
+    }
+
+
+    .registros {
+        font-size: 7px;
+    }
+
+
+    .registros select {
+        font-size: 7px;
+    }
+
+
+    .search input {
+        width: 55px;
+    }
+
+
+    .search button {
+        font-size: 11px;
+    }
+
+}
+
+
+
+/* cel chicos */
+
+@media (max-width: 450px) {
+
+    .nombre-usuario {
+        display: none;
+    }
+
+
+    .logo {
+        font-size: 24px;
+    }
+
+
+    .usuario-header {
+        gap: 7px;
+    }
+
+
+    .imagen-usuario {
+        width: 26px;
+        height: 26px;
+    }
+
+
+    .main-content {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+
+    .content-title h1 {
+        font-size: 12px;
+    }
+
+
+    .nuevo-socio {
+        font-size: 7px;
+        padding: 5px 7px;
+    }
+
+
+    .members-container {
+        padding: 7px;
+    }
+
+
+    .pagination {
+        padding-top: 8px;
+    }
+
+}
+
+
+
+/* grandes */
+
+@media (min-width: 1200px) {
+
+    .sidebar {
+        width: 140px;
+        min-width: 140px;
+    }
+
+
+    .main-content {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+
+    .content-title h1 {
+        font-size: 17px;
+    }
+
+
+    .nuevo-socio {
+        font-size: 9px;
+    }
+
+}
+
+
+
+/* muy grandes */
+
+@media (min-width: 1600px) {
+
+    .sidebar {
+        width: 155px;
+        min-width: 155px;
+    }
+
+
+    .main-content {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+
+    .members-container {
+        min-height: 190px;
+    }
+
+}
+
+

@@ -17,7 +17,7 @@
 }
 
 
-/* general */
+/* genearl */
 
 * {
     box-sizing: border-box;
@@ -46,7 +46,7 @@ button {
 }
 
 
-/* header */
+/*header */
 
 .admin-header {
     width: 100%;
@@ -55,7 +55,7 @@ button {
 }
 
 
-/* logo*/
+/* logo */
 
 .logo {
     font-family: "Pervitina Dex", sans-serif;
@@ -89,7 +89,7 @@ button {
 }
 
 
-/* boton menu */  
+/* boton menu */
 
 .boton-menu {
     width: 25px;
@@ -113,7 +113,7 @@ button {
 }
 
 
-/* contendio */
+/* contenido */
 
 .admin-content {
     min-height: calc(100vh - 57px);
@@ -208,7 +208,7 @@ button {
 }
 
 
-/* sidebar mobil */
+/* sidebar mobile */
 
 .sidebar-mobile {
     width: 145px !important;
@@ -232,7 +232,7 @@ button {
 }
 
 
-/* titulo principal  */
+/* titulo principal */
 
 .content-title {
     margin-bottom: 20px;
@@ -251,7 +251,7 @@ button {
 }
 
 
-/* boton nuevo socio */
+/* boton de nuevo socio */
 
 .nuevo-socio {
     background-color: #A25CFF;
@@ -276,7 +276,7 @@ button {
 }
 
 
-/* contenedor de la tabla */
+/* Ccontenedor de la tabla  */
 
 .members-container {
     width: 100%;
@@ -291,7 +291,7 @@ button {
 }
 
 
-/* parte superior de la tabla */
+/* parte de arriba de la tabla  */
 
 .table-top {
     height: 36px;
@@ -320,7 +320,7 @@ button {
 }
 
 
-/* buscador */
+/* buscador  */
 
 .search {
     display: flex;
@@ -363,7 +363,7 @@ button {
 }
 
 
-/* tabla  */
+/* tabla */
 
 .tabla-socios {
     width: 100%;
@@ -416,11 +416,15 @@ button {
 
 /* filas */
 
-
 .tabla-socios tbody td {
     background-color: #101010 !important;
     color: #D4D4D4;
 }
+
+.tabla-socios tbody tr:nth-child(2) td {
+    background-color: #0B0B0B !important;
+}
+
 
 .tabla-socios tbody tr {
     height: 52px;
@@ -538,7 +542,7 @@ button {
 }
 
 
-/* paginacion */
+/* paginacion  */
 
 .pagination {
     display: flex;
@@ -561,7 +565,7 @@ button {
 }
 
 
-/*efecto de pasar por boton */
+/* efecto al pasar por botones */
 
 .action-button:hover {
     background-color: #252525;
@@ -572,7 +576,7 @@ button {
 }
 
 
-/* sin fondo blanco*/
+/* evitar fondo banco */
 
 .main-content .bg-white,
 .members-container .bg-white,
@@ -583,6 +587,13 @@ button {
 
 .main-content .text-dark {
     color: #FFFFFF !important;
+}
+
+@font-face {
+    font-family: "Pervitina Dex";
+    src: url("../../assets/tipografías/Pervitina-Dex-FFP.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
 }
 
 @media (min-width: 1200px) {

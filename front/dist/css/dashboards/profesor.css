@@ -1,6 +1,6 @@
 @font-face {
     font-family: "Pervitina Dex";
-    src: url("fonts/PervitinaDex.ttf") format("truetype");
+    src: url("../../assets/tipografías/Pervitina-Dex-FFP.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
@@ -16,17 +16,18 @@
     --gris: #777777;
 }
 
-
-/* GENERAL */
-
 * {
     box-sizing: border-box;
+}
+
+html,
+body {
+    background-color: #000000;
 }
 
 body {
     margin: 0;
     padding: 0;
-    background-color: #000000;
     color: #FFFFFF;
     font-family: "TASA Explorer", sans-serif;
 }
@@ -42,16 +43,16 @@ button {
 }
 
 
-/* HEADER */
+/* header */
 
-.admin-header {
+.profesor-header {
     width: 100%;
     height: 57px;
     background-color: #1C2BC2;
 }
 
 
-/* LOGO */
+/* logo */
 
 .logo {
     font-family: "Pervitina Dex", sans-serif;
@@ -62,7 +63,7 @@ button {
 }
 
 
-/* USUARIO */
+/* usuario */
 
 .usuario-header {
     height: 57px;
@@ -72,20 +73,20 @@ button {
 .nombre-usuario {
     color: #FFFFFF;
     font-family: "TASA Explorer", sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
 }
 
 .imagen-usuario {
-    width: 30px;
-    height: 30px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     object-fit: cover;
-    background-color: #FFFFFF;
+    background-color: #020202;
 }
 
 
-/* BOTON MENU */
+/* boton menu  */
 
 .boton-menu {
     width: 25px;
@@ -109,19 +110,19 @@ button {
 }
 
 
-/* CONTENIDO */
+/* contenido */
 
-.admin-content {
+.profesor-content {
     min-height: calc(100vh - 57px);
     background-color: #000000;
 }
 
 
-/* SIDEBAR */
+/* sidebar */
 
 .sidebar {
-    width: 128px;
-    min-width: 128px;
+    width: 165px;
+    min-width: 165px;
 
     background-color: #020202;
 
@@ -135,7 +136,7 @@ button {
 }
 
 
-/* TITULOS DEL SIDEBAR */
+/* titulos del sidebar */
 
 .sidebar-title {
     display: flex;
@@ -169,7 +170,7 @@ button {
 }
 
 
-/* LINKS DEL SIDEBAR */
+/* links del sidebar */
 
 .sidebar-link {
     display: block;
@@ -204,7 +205,7 @@ button {
 }
 
 
-/* SIDEBAR MOBILE */
+/* sidebar mobile */
 
 .sidebar-mobile {
     width: 145px !important;
@@ -219,19 +220,19 @@ button {
 }
 
 
-/* CONTENIDO PRINCIPAL */
+/* conenido principal */
 
 .main-content {
     background-color: #000000;
 
-    padding: 25px 22px 30px;
+    padding: 38px 35px 40px;
 }
 
 
-/* TITULO PRINCIPAL */
+/* titulo principal */
 
 .content-title {
-    margin-bottom: 13px;
+    margin-bottom: 20px;
 }
 
 .content-title h1 {
@@ -241,45 +242,20 @@ button {
 
     font-family: "Special Gothic Expanded One", sans-serif;
 
-    font-size: 16px;
+    font-size: 25px;
 
     font-weight: normal;
 }
 
 
-/* BOTON NUEVO SOCIO */
+/* contenedor de la tabla */
 
-.nuevo-socio {
-    background-color: #A25CFF;
-
-    color: #FFFFFF;
-
-    border: none;
-
-    border-radius: 3px;
-
-    font-family: "TASA Explorer", sans-serif;
-
-    font-size: 9px;
-
-    padding: 5px 11px;
-}
-
-.nuevo-socio:hover {
-    background-color: #8D42E8;
-
-    color: #FFFFFF;
-}
-
-
-/* CONTENEDOR DE LA TABLA */
-
-.members-container {
+.students-container {
     width: 100%;
 
-    min-height: 177px;
+    min-height: 300px;
 
-    padding: 9px 10px 6px;
+    padding: 18px 18px 12px;
 
     background-color: #050505;
 
@@ -287,10 +263,10 @@ button {
 }
 
 
-/* PARTE SUPERIOR DE LA TABLA */
+/* parte de arriba de la tabla  */
 
 .table-top {
-    height: 22px;
+    height: 36px;
 }
 
 .registros {
@@ -298,7 +274,7 @@ button {
 
     font-family: "TASA Explorer", sans-serif;
 
-    font-size: 8px;
+    font-size: 13px;
 }
 
 .registros select {
@@ -312,11 +288,11 @@ button {
 
     font-family: "TASA Explorer", sans-serif;
 
-    font-size: 8px;
+    font-size: 13px;
 }
 
 
-/* BUSCADOR */
+/* buscador */
 
 .search {
     display: flex;
@@ -325,8 +301,8 @@ button {
 }
 
 .search input {
-    width: 64px;
-    height: 10px;
+    width: 150px;
+    height: 25px;
 
     border: 1px solid #777777;
 
@@ -337,11 +313,15 @@ button {
     color: #FFFFFF;
 
     outline: none;
+
+    font-size: 12px;
+
+    padding: 3px 7px;
 }
 
 .search button {
-    width: 16px;
-    height: 15px;
+    width: 25px;
+    height: 25px;
 
     padding: 0;
 
@@ -351,13 +331,13 @@ button {
 
     color: #FFFFFF;
 
-    font-size: 12px;
+    font-size: 15px;
 }
 
 
-/* TABLA */
+/* tabla */
 
-.tabla-socios {
+.tabla-alumnos {
     width: 100%;
 
     margin-bottom: 0;
@@ -365,11 +345,11 @@ button {
     table-layout: fixed;
 }
 
-.tabla-socios thead {
-    height: 18px;
+.tabla-alumnos thead {
+    height: 28px;
 }
 
-.tabla-socios th {
+.tabla-alumnos th {
     color: #BD8BF8;
 
     background-color: transparent;
@@ -378,62 +358,81 @@ button {
 
     font-family: "TASA Explorer", sans-serif;
 
-    font-size: 7px;
+    font-size: 12px;
 
     font-weight: 500;
 
-    padding: 0 3px 4px;
+    padding: 0 6px 7px;
 }
 
-.tabla-socios th:nth-child(1) {
+.tabla-alumnos th:nth-child(1) {
     width: 18%;
 }
 
-.tabla-socios th:nth-child(2) {
-    width: 16%;
+.tabla-alumnos th:nth-child(2) {
+    width: 18%;
 }
 
-.tabla-socios th:nth-child(3) {
-    width: 17%;
+.tabla-alumnos th:nth-child(3) {
+    width: 20%;
 }
 
-.tabla-socios th:nth-child(4) {
+.tabla-alumnos th:nth-child(4) {
     width: 27%;
 }
 
-.tabla-socios th:nth-child(5) {
-    width: 22%;
+.tabla-alumnos th:nth-child(5) {
+    width: 17%;
 }
 
 
-/* FILAS */
+/* filas */
 
-.tabla-socios tbody tr {
-    height: 36px;
+.tabla-alumnos tbody td {
+    background-color: #101010 !important;
+
+    color: #D4D4D4;
+}
+
+.tabla-alumnos tbody tr:nth-child(2) td {
+    background-color: #0B0B0B !important;
+}
+
+.tabla-alumnos tbody tr {
+    height: 52px;
 
     background-color: #101010;
 }
 
-.tabla-socios tbody tr:nth-child(2) {
+.tabla-alumnos tbody tr:nth-child(2) {
     background-color: #0B0B0B;
 }
 
-.tabla-socios td {
+.tabla-alumnos td {
     border-color: #080808;
 
     color: #D4D4D4;
 
     font-family: "TASA Explorer", sans-serif;
 
-    font-size: 7px;
+    font-size: 12px;
 
-    padding: 0 3px;
+    padding: 0 6px;
 
     vertical-align: middle;
 }
 
 
-/* ACCIONES */
+/* nota */
+
+.nota {
+    font-size: 10px !important;
+
+    line-height: 12px;
+}
+
+
+/* acciones */
 
 .acciones {
     position: relative;
@@ -442,8 +441,8 @@ button {
 }
 
 .action-button {
-    width: 18px;
-    height: 22px;
+    width: 28px;
+    height: 30px;
 
     padding: 0;
 
@@ -455,13 +454,13 @@ button {
 
     color: #C88CFF;
 
-    font-size: 15px;
+    font-size: 19px;
 
-    line-height: 18px;
+    line-height: 24px;
 }
 
 
-/* MENU DE ACCIONES */
+/* menu de acciones */
 
 .action-menu {
     display: none;
@@ -470,13 +469,13 @@ button {
 
     z-index: 100;
 
-    top: 29px;
+    top: 36px;
 
     right: 4px;
 
-    width: 103px;
+    width: 145px;
 
-    padding: 7px 6px;
+    padding: 9px 8px;
 
     background-color: #171717;
 
@@ -490,7 +489,7 @@ button {
 
     flex-direction: column;
 
-    gap: 5px;
+    gap: 7px;
 }
 
 .action-menu button {
@@ -506,7 +505,7 @@ button {
 
     font-family: "TASA Explorer", sans-serif;
 
-    font-size: 6px;
+    font-size: 10px;
 
     white-space: nowrap;
 }
@@ -515,12 +514,12 @@ button {
     margin-right: 4px;
 }
 
-.action-menu .delete {
-    color: #FF1E25;
-}
-
 .icono-ver {
     color: #FFFFFF;
+}
+
+.icono-evaluacion {
+    color: #C88CFF;
 }
 
 
@@ -533,7 +532,7 @@ button {
 
     gap: 7px;
 
-    padding-top: 9px;
+    padding-top: 15px;
 }
 
 .pagination button {
@@ -543,11 +542,11 @@ button {
 
     color: #C9C9C9;
 
-    font-size: 13px;
+    font-size: 16px;
 }
 
 
-/* EFECTO AL PASAR POR BOTONES */
+/* efectos */
 
 .action-button:hover {
     background-color: #252525;
@@ -557,16 +556,38 @@ button {
     color: #FFFFFF;
 }
 
-/* MENU HAMBURGUESA */
+
+/* evitar fondos de boostrap */
+
+.main-content .bg-white,
+.students-container .bg-white,
+.students-container .card {
+    background-color: #050505 !important;
+
+    color: #FFFFFF !important;
+}
+
+.main-content .text-dark {
+    color: #FFFFFF !important;
+}
+
+.leer-mas {
+    border: none;
+    background-color: transparent;
+    color: #A25CFF;
+    padding: 0;
+    margin-left: 3px;
+    font-family: "TASA Explorer", sans-serif;
+    font-size: 10px;
+}
+
+.leer-mas:hover {
+    color: #FFFFFF;
+}
 
 @media (min-width: 1200px) {
     .boton-menu {
         display: none !important;
-    }
-}
-
-@media (max-width: 1199px) {
-    .boton-menu {
-        display: flex !important;
+        visibility: hidden !important;
     }
 }
