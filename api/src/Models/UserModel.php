@@ -16,7 +16,7 @@ class UserModel
 
     public function existsByEmail(string $email): bool
     {
-        $query = "SELECT id_credentials FROM credentials WHERE email = :email";
+        $query = "SELECT id_credentials FROM Credentials WHERE email = :email";
         $stmt = $this->db->prepare($query);
         $stmt->execute(['email' => $email]);
 
@@ -29,7 +29,7 @@ class UserModel
             $this->db->beginTransaction();
 
             $stmtCredentials = $this->db->prepare(
-                "INSERT INTO credentials (email, password) VALUES (:email, :password)"
+                "INSERT INTO Credentials (email, password) VALUES (:email, :password)"
             );
             $stmtCredentials->execute([
                 'email' => $email,
@@ -38,7 +38,7 @@ class UserModel
             $credentialsId = $this->db->lastInsertId();
 
             $stmtClient = $this->db->prepare(
-                "INSERT INTO client (name_client, phone, fr_credentials) VALUES (:name, :phone, :fr_credentials)"
+                "INSERT INTO Client (name_client, phone, fr_credentials) VALUES (:name, :phone, :fr_credentials)"
             );
             $stmtClient->execute([
                 'name' => $name,
@@ -65,8 +65,8 @@ class UserModel
                         cr.id_credentials,
                         cr.email,
                         cr.password
-                   FROM credentials cr
-                   INNER JOIN client cl ON cl.fr_credentials = cr.id_credentials
+                   FROM Credentials cr
+                   INNER JOIN Client cl ON cl.fr_credentials = cr.id_credentials
                    WHERE cr.email = :email";
         $stmt = $this->db->prepare($query);
         $stmt->execute(['email' => $email]);
