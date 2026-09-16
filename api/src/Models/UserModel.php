@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use PDO;
-use PDOException;
-
 class UserModel
 {
-    private PDO $db;
+    private $db;
 
-    public function __construct(PDO $db)
+    public function __construct($db)
     {
         $this->db = $db;
     }
@@ -20,7 +17,7 @@ class UserModel
         $stmt = $this->db->prepare($query);
         $stmt->execute(['email' => $email]);
 
-        return (bool) $stmt->fetch(PDO::FETCH_ASSOC);
+        return (bool) $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     public function create(string $name, string $email, string $hashedPassword, ?string $phone = null): bool
@@ -49,7 +46,7 @@ class UserModel
             $this->db->commit();
 
             return true;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->db->rollBack();
 
             return false;
@@ -70,7 +67,7 @@ class UserModel
                    WHERE cr.email = :email";
         $stmt = $this->db->prepare($query);
         $stmt->execute(['email' => $email]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         return $user ?: null;
     }

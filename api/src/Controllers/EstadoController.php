@@ -1,7 +1,6 @@
 <?php
 namespace App\Controllers;
 
-// Importamos el molde del Modelo
 use App\Models\ClienteModel;
 
 class EstadoController {

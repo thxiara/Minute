@@ -4,19 +4,21 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use App\Utils\Response;
-use PDO;
 
 class AuthController
 {
-    private UserModel $userModel;
+    private $db;
+    private userModel $userModel;
 
-    public function __construct(PDO $db)
+    public function __construct($db)
     {
+        $this->db = $db;
         $this->userModel = new UserModel($db);
     }
 
     public function register(): void
     {
+        
         $data = $this->getRequestData();
 
         $name = trim($data['name'] ?? '');
@@ -40,14 +42,16 @@ class AuthController
         if (strlen($password) < 8) {
             Response::json(false, 'La contraseña debe tener al menos 8 caracteres.', [], 400);
         }
-
-        if ($this->userModel->existsByEmail($email)) {
+        
+        $usuario = $usermodel->existsByEmail($email);
+        if ($usuario) {
             Response::json(false, 'Ese correo ya está registrado.', [], 409);
         }
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        if ($this->userModel->create($name, $email, $hashedPassword, $phone)) {
+        $creado = $usermodel->create($name, $email, $hashedPassword, $phone);
+        if ($creado) {
             Response::json(true, 'Usuario registrado correctamente.');
         } else {
             Response::json(false, 'Ocurrió un error al registrar el usuario.', [], 500);
@@ -64,7 +68,7 @@ class AuthController
         if ($email === '' || $password === '') {
             Response::json(false, 'Todos los campos son obligatorios.', [], 400);
         }
-
+        
         $user = $this->userModel->findByEmail($email);
 
         if (!$user || !password_verify($password, $user['password'])) {
