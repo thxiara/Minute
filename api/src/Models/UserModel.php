@@ -2,48 +2,75 @@
 
 namespace App\Models;
 
+use PDO;
+use PDOException;
+
 class UserModel
 {
-    private \mysqli $conn;
+    private PDO $db;
 
-    public function __construct(\mysqli $conn)
+    public function __construct(PDO $db)
     {
-        $this->conn = $conn;
+        $this->db = $db;
     }
 
-    public function existsByUsernameOrEmail(string $username, string $email): bool
+    public function existsByEmail(string $email): bool
     {
-        $query = "SELECT id FROM users WHERE username = ? OR email = ?";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("ss", $username, $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $exists = $result->num_rows > 0;
-        $stmt->close();
+        $query = "SELECT id_credentials FROM credentials WHERE email = :email";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(['email' => $email]);
 
-        return $exists;
+        return (bool) $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function create(string $username, string $email, string $hashedPassword): bool
+    public function create(string $name, string $email, string $hashedPassword, ?string $phone = null): bool
     {
-        $query = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("sss", $username, $email, $hashedPassword);
-        $success = $stmt->execute();
-        $stmt->close();
+        try {
+            $this->db->beginTransaction();
 
-        return $success;
+            $stmtCredentials = $this->db->prepare(
+                "INSERT INTO credentials (email, password) VALUES (:email, :password)"
+            );
+            $stmtCredentials->execute([
+                'email' => $email,
+                'password' => $hashedPassword,
+            ]);
+            $credentialsId = $this->db->lastInsertId();
+
+            $stmtClient = $this->db->prepare(
+                "INSERT INTO client (name_client, phone, fr_credentials) VALUES (:name, :phone, :fr_credentials)"
+            );
+            $stmtClient->execute([
+                'name' => $name,
+                'phone' => $phone,
+                'fr_credentials' => $credentialsId,
+            ]);
+
+            $this->db->commit();
+
+            return true;
+        } catch (PDOException $e) {
+            $this->db->rollBack();
+
+            return false;
+        }
     }
 
-    public function findByUsernameOrEmail(string $identifier): ?array
+    public function findByEmail(string $email): ?array
     {
-        $query = "SELECT id, username, email, password FROM users WHERE username = ? OR email = ?";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("ss", $identifier, $identifier);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $user = $result->fetch_assoc();
-        $stmt->close();
+        $query = "SELECT
+                        cl.id_client,
+                        cl.name_client,
+                        cl.phone,
+                        cr.id_credentials,
+                        cr.email,
+                        cr.password
+                   FROM credentials cr
+                   INNER JOIN client cl ON cl.fr_credentials = cr.id_credentials
+                   WHERE cr.email = :email";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(['email' => $email]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $user ?: null;
     }

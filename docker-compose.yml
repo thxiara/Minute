@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
 
   # Servidor Web + PHP (front + api)
@@ -11,23 +13,23 @@ services:
     depends_on:
       - db
 
-  # Base de Datos MariaDB
+  # Base de Datos MySQL
   db:
-    image: mariadb:10.5
+    image: mysql:8.0
     container_name: ${APP_NAME}_db
     restart: always
     environment:
-      MARIADB_ROOT_PASSWORD: vitaminadedeficienciac.2026.com
-      MARIADB_DATABASE: fitpower_db
-      MARIADB_USER: usuario
-      MARIADB_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: minute_db
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: password
     ports:
       - "3306:3306"
     volumes:
-      - db_data:/var/lib/mariadb
+      - db_data:/var/lib/mysql
       - ./api/config/init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  # Interfaz gráfica para MariaDB
+  # Interfaz gráfica para MySQL
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: ${APP_NAME}_phpmyadmin
