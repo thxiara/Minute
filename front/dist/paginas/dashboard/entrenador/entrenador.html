@@ -471,41 +471,26 @@
                             <tbody>
 
 
-                                <!-- socio1-->
+                                <!-- socio 1 -->
 
                                 <tr>
 
-                                    <td>
-                                        Juan
-                                    </td>
+                                    <td></td>
 
+                                    <td></td>
 
-                                    <td>
-                                        12345678
-                                    </td>
+                                    <td></td>
 
-
-                                    <td>
-                                        12345678
-                                    </td>
-
-
-                                    <td>
-                                        02/02/2028
-                                    </td>
+                                    <td></td>
 
 
                                     <!-- nota -->
 
                                     <td class="nota">
 
-                                        <span class="nota-titulo">
-                                            Info
-                                        </span>
+                                        <span class="nota-titulo"></span>
 
-                                        <span class="nota-texto">
-                                            Lorem lorem lorem lorem lorem lorem...
-                                        </span>
+                                        <span class="nota-texto"></span>
 
                                         <a
                                             href="#"
@@ -567,37 +552,22 @@
 
                                 <tr>
 
-                                    <td>
-                                        María
-                                    </td>
+                                    <td></td>
 
+                                    <td></td>
 
-                                    <td>
-                                        87654321
-                                    </td>
+                                    <td></td>
 
-
-                                    <td>
-                                        09876543
-                                    </td>
-
-
-                                    <td>
-                                        15/03/2028
-                                    </td>
+                                    <td></td>
 
 
                                     <!-- nota -->
 
                                     <td class="nota">
 
-                                        <span class="nota-titulo">
-                                            Info
-                                        </span>
+                                        <span class="nota-titulo"></span>
 
-                                        <span class="nota-texto">
-                                            Lorem lorem lorem lorem lorem lorem...
-                                        </span>
+                                        <span class="nota-texto"></span>
 
                                         <a
                                             href="#"
@@ -609,7 +579,7 @@
                                     </td>
 
 
-                                    <!--acciones -->
+                                    <!-- acciones -->
 
                                     <td class="acciones">
 
@@ -696,82 +666,9 @@
 
     <!--funciones -->
 
-    <script>
-
-        /* menu de accionnes*/
-
-        document.querySelectorAll(".action-button").forEach(button => {
-
-            button.addEventListener("click", function(event) {
-
-                event.stopPropagation();
-
-                const menu = this.nextElementSibling;
-
-
-                document.querySelectorAll(".action-menu").forEach(element => {
-
-                    if (element !== menu) {
-
-                        element.classList.remove("mostrar");
-
-                    }
-
-                });
-
-
-                menu.classList.toggle("mostrar");
-
-            });
-
-        });
-
-
-
-        /* cerrar menu al clickear*/
-
-        document.addEventListener("click", function() {
-
-            document.querySelectorAll(".action-menu").forEach(menu => {
-
-                menu.classList.remove("mostrar");
-
-            });
-
-        });
-
-
-
-        /* flechas de sidebar */
-
-        document.querySelectorAll(".arrow-button").forEach(button => {
-
-            button.addEventListener("click", function() {
-
-                setTimeout(() => {
-
-                    const expanded =
-                        this.getAttribute("aria-expanded");
-
-
-                    this.innerHTML =
-                        expanded === "true"
-                            ? "V"
-                            : "&lt;";
-
-                }, 50);
-
-            });
-
-        });
-
-    </script>
- 
+   <script src="../../../js/dashboard/entrenador.js"></script>
 
 
 </body>
 
 </html>
-
-
-    /* tengo que cambiar los js a otro archivo aparte */ 

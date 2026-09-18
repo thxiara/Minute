@@ -47,7 +47,7 @@ button {
 
 .profesor-header {
     width: 100%;
-    height: 57px;
+    height: 64px;
     background-color: #1C2BC2;
 }
 
@@ -57,7 +57,7 @@ button {
 .logo {
     font-family: "Pervitina Dex", sans-serif;
     color: #FFFFFF;
-    font-size: 32px;
+    font-size: 36px;
     line-height: 1;
     letter-spacing: -1px;
 }
@@ -66,31 +66,31 @@ button {
 /* usuario */
 
 .usuario-header {
-    height: 57px;
-    gap: 12px;
+    height: 64px;
+    gap: 14px;
 }
 
 .nombre-usuario {
     color: #FFFFFF;
     font-family: "TASA Explorer", sans-serif;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
 }
 
 .imagen-usuario {
-    width: 38px;
-    height: 38px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     object-fit: cover;
     background-color: #020202;
 }
 
 
-/* boton menu  */
+/* boton menu */
 
 .boton-menu {
-    width: 25px;
-    height: 25px;
+    width: 28px;
+    height: 28px;
     padding: 0;
     border: none;
     background-color: transparent;
@@ -98,12 +98,12 @@ button {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 4px;
+    gap: 5px;
 }
 
 .boton-menu span {
     display: block;
-    width: 23px;
+    width: 25px;
     height: 3px;
     background-color: #FFFFFF;
     border-radius: 3px;
@@ -113,7 +113,7 @@ button {
 /* contenido */
 
 .profesor-content {
-    min-height: calc(100vh - 57px);
+    min-height: calc(100vh - 64px);
     background-color: #000000;
 }
 
@@ -126,13 +126,13 @@ button {
 
     background-color: #020202;
 
-    padding: 26px 11px;
+    padding: 30px 14px;
 
     border-right: 1px solid #090909;
 }
 
 .sidebar-section {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 
@@ -147,14 +147,14 @@ button {
 
     font-family: "Special Gothic Expanded One", sans-serif;
 
-    font-size: 11px;
+    font-size: 13px;
 
-    margin-bottom: 7px;
+    margin-bottom: 8px;
 }
 
 .arrow-button {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
 
     padding: 0;
 
@@ -166,7 +166,7 @@ button {
 
     font-family: Arial, sans-serif;
 
-    font-size: 10px;
+    font-size: 12px;
 }
 
 
@@ -181,11 +181,11 @@ button {
 
     font-family: "TASA Explorer", sans-serif;
 
-    font-size: 8px;
+    font-size: 10px;
 
     padding-left: 4px;
 
-    margin-bottom: 5px;
+    margin-bottom: 6px;
 }
 
 .sidebar-link::before {
@@ -193,7 +193,7 @@ button {
 
     color: #AAAAAA;
 
-    margin-right: 4px;
+    margin-right: 5px;
 }
 
 .sidebar-link:hover {
@@ -208,7 +208,7 @@ button {
 /* sidebar mobile */
 
 .sidebar-mobile {
-    width: 145px !important;
+    width: 175px !important;
 
     background-color: #020202;
 
@@ -216,23 +216,23 @@ button {
 }
 
 .sidebar-mobile .offcanvas-body {
-    padding: 26px 11px;
+    padding: 30px 14px;
 }
 
 
-/* conenido principal */
+/* contenido principal */
 
 .main-content {
     background-color: #000000;
 
-    padding: 38px 35px 40px;
+    padding: 42px 40px 45px;
 }
 
 
 /* titulo principal */
 
 .content-title {
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 }
 
 .content-title h1 {
@@ -242,7 +242,7 @@ button {
 
     font-family: "Special Gothic Expanded One", sans-serif;
 
-    font-size: 25px;
+    font-size: 30px;
 
     font-weight: normal;
 }
@@ -253,20 +253,20 @@ button {
 .students-container {
     width: 100%;
 
-    min-height: 300px;
+    min-height: 340px;
 
-    padding: 18px 18px 12px;
+    padding: 22px 22px 15px;
 
     background-color: #050505;
 
-    border-radius: 6px;
+    border-radius: 7px;
 }
 
 
-/* parte de arriba de la tabla  */
+/* parte de arriba de la tabla */
 
 .table-top {
-    height: 36px;
+    height: 40px;
 }
 
 .registros {
@@ -274,7 +274,7 @@ button {
 
     font-family: "TASA Explorer", sans-serif;
 
-    font-size: 13px;
+    font-size: 15px;
 }
 
 .registros select {
@@ -288,7 +288,7 @@ button {
 
     font-family: "TASA Explorer", sans-serif;
 
-    font-size: 13px;
+    font-size: 15px;
 }
 
 
@@ -301,12 +301,12 @@ button {
 }
 
 .search input {
-    width: 150px;
-    height: 25px;
+    width: 175px;
+    height: 30px;
 
     border: 1px solid #777777;
 
-    border-radius: 2px;
+    border-radius: 3px;
 
     background-color: #050505;
 
@@ -314,14 +314,14 @@ button {
 
     outline: none;
 
-    font-size: 12px;
+    font-size: 14px;
 
-    padding: 3px 7px;
+    padding: 4px 8px;
 }
 
 .search button {
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
 
     padding: 0;
 
@@ -331,7 +331,7 @@ button {
 
     color: #FFFFFF;
 
-    font-size: 15px;
+    font-size: 18px;
 }
 
 
@@ -346,7 +346,7 @@ button {
 }
 
 .tabla-alumnos thead {
-    height: 28px;
+    height: 32px;
 }
 
 .tabla-alumnos th {
@@ -358,11 +358,11 @@ button {
 
     font-family: "TASA Explorer", sans-serif;
 
-    font-size: 12px;
+    font-size: 14px;
 
     font-weight: 500;
 
-    padding: 0 6px 7px;
+    padding: 0 7px 8px;
 }
 
 .tabla-alumnos th:nth-child(1) {
@@ -399,7 +399,7 @@ button {
 }
 
 .tabla-alumnos tbody tr {
-    height: 52px;
+    height: 64px;
 
     background-color: #101010;
 }
@@ -415,9 +415,9 @@ button {
 
     font-family: "TASA Explorer", sans-serif;
 
-    font-size: 12px;
+    font-size: 14px;
 
-    padding: 0 6px;
+    padding: 0 7px;
 
     vertical-align: middle;
 }
@@ -426,9 +426,9 @@ button {
 /* nota */
 
 .nota {
-    font-size: 10px !important;
+    font-size: 12px !important;
 
-    line-height: 12px;
+    line-height: 15px;
 }
 
 
@@ -441,8 +441,8 @@ button {
 }
 
 .action-button {
-    width: 28px;
-    height: 30px;
+    width: 32px;
+    height: 34px;
 
     padding: 0;
 
@@ -454,9 +454,9 @@ button {
 
     color: #C88CFF;
 
-    font-size: 19px;
+    font-size: 21px;
 
-    line-height: 24px;
+    line-height: 28px;
 }
 
 
@@ -469,17 +469,17 @@ button {
 
     z-index: 100;
 
-    top: 36px;
+    top: 40px;
 
     right: 4px;
 
-    width: 145px;
+    width: 170px;
 
-    padding: 9px 8px;
+    padding: 11px 10px;
 
     background-color: #171717;
 
-    border-radius: 5px;
+    border-radius: 6px;
 
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
 }
@@ -489,7 +489,7 @@ button {
 
     flex-direction: column;
 
-    gap: 7px;
+    gap: 8px;
 }
 
 .action-menu button {
@@ -505,13 +505,13 @@ button {
 
     font-family: "TASA Explorer", sans-serif;
 
-    font-size: 10px;
+    font-size: 12px;
 
     white-space: nowrap;
 }
 
 .action-menu button span {
-    margin-right: 4px;
+    margin-right: 5px;
 }
 
 .icono-ver {
@@ -530,9 +530,9 @@ button {
 
     justify-content: flex-end;
 
-    gap: 7px;
+    gap: 8px;
 
-    padding-top: 15px;
+    padding-top: 17px;
 }
 
 .pagination button {
@@ -542,7 +542,7 @@ button {
 
     color: #C9C9C9;
 
-    font-size: 16px;
+    font-size: 19px;
 }
 
 
@@ -573,17 +573,24 @@ button {
 
 .leer-mas {
     border: none;
+
     background-color: transparent;
+
     color: #A25CFF;
+
     padding: 0;
-    margin-left: 3px;
+
+    margin-left: 4px;
+
     font-family: "TASA Explorer", sans-serif;
-    font-size: 10px;
+
+    font-size: 11px;
 }
 
 .leer-mas:hover {
     color: #FFFFFF;
 }
+
 
 @media (min-width: 1200px) {
     .boton-menu {
