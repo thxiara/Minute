@@ -1,0 +1,663 @@
+
+/* fuente para titulos*/
+
+@font-face{
+    font-family:'Pervitina Dex';
+    src:url('../assets/tipografias/Pervitina-Dex-FFP.ttf') format('truetype');
+    font-weight:400;
+    font-style:normal;
+}
+
+
+/* variables */
+
+:root{
+    --color-fondo:#050608;
+    --color-primario:#1C2BC2;
+    --color-secundario:#4A28C4;
+    --color-blanco:#fff;
+    --color-negro:#000;
+}
+
+
+/* config general*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+    overflow-x:hidden;
+}
+
+body{
+    background:var(--color-fondo);
+    color:var(--color-blanco);
+    font-family:'TASA Explorer',sans-serif;
+    overflow-x:hidden;
+}
+
+img{
+    max-width:100%;
+    display:block;
+}
+
+a{
+    text-decoration:none;
+}
+
+
+/* tipografias*/
+
+/* titulos principales */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+    font-family:'Pervitina Dex',sans-serif;
+}
+
+/* Subtítulos */
+.subtitulo,
+.hero-contenido span,
+.servicio h3,
+.reseñas-info h2,
+.instalaciones-texto h2,
+.planes h2,
+.plan h3,
+.plan h4{
+    font-family:'Special Gothic Expanded One',sans-serif;
+}
+
+/* Texto normal */
+p,
+li,
+span,
+input,
+textarea,
+select,
+button,
+a{
+    font-family:'TASA Explorer',sans-serif;
+}
+
+
+/* logo*/
+
+.logo,
+.logo-footer{
+    font-family:'Pervitina Dex',sans-serif;
+    font-style:normal;
+    font-weight:400;
+    letter-spacing:0;
+    color:var(--color-negro);
+}
+
+
+/* headeer */
+
+header{
+    background:var(--color-primario);
+    height:78px;
+    display:flex;
+    align-items:center;
+}
+
+.header-contenido{
+    height:78px;
+}
+
+.header-derecha{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.registrarse{
+    color:var(--color-negro);
+    font-family:'TASA Explorer',sans-serif;
+    font-size:.9rem;
+    font-weight:700;
+    transition:.3s;
+}
+
+.registrarse:hover{
+    color:var(--color-blanco);
+}
+
+.usuario-header{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid var(--color-blanco);
+    user-select:none;
+}
+
+
+/* hero*/
+
+.hero{
+    position:relative;
+    min-height:520px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+}
+
+.hero img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.45);
+}
+
+.hero-contenido{
+    position:relative;
+    z-index:2;
+}
+
+.hero-contenido h2{
+    font-family:'Pervitina Dex',sans-serif;
+    font-size:3rem;
+    line-height:1.2;
+    margin-bottom:35px;
+    font-weight:400;
+}
+
+.hero-contenido span{
+    font-family:'Special Gothic Expanded One',sans-serif;
+}
+
+.btn-hero{
+    display:inline-block;
+    padding:15px 34px;
+    border-radius:10px;
+    background:var(--color-secundario);
+    color:var(--color-blanco);
+    font-family:'TASA Explorer',sans-serif;
+    font-weight:600;
+    transition:.3s;
+    cursor:pointer;
+}
+
+.btn-hero:hover{
+    background:var(--color-primario);
+}
+
+
+/*  seccion nosotros */
+
+.nosotros{
+    background:var(--color-fondo);
+    padding:80px 0;
+}
+
+.texto h2{
+    color:var(--color-secundario);
+    font-family:'Pervitina Dex',sans-serif;
+    font-size:2.2rem;
+    font-weight:400;
+    margin-bottom:20px;
+    text-transform:uppercase;
+}
+
+.texto p{
+    max-width:470px;
+    color:var(--color-blanco);
+    font-family:'TASA Explorer',sans-serif;
+    font-size:1rem;
+    line-height:1.9;
+}
+
+.imagen{
+    height:300px;
+    overflow:hidden;
+    border-radius:14px;
+}
+
+.imagen img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    user-select:none;
+}
+
+
+/* servicios*/
+
+.servicios{
+    margin-top:55px;
+    justify-content:center;
+}
+
+.servicio{
+    height:100%;
+    padding:24px 18px;
+    background:var(--color-primario);
+    border-radius:12px;
+    text-align:center;
+    transition:.3s;
+}
+
+.servicio:hover{
+    transform:translateY(-8px);
+}
+
+.servicio i{
+    width:55px;
+    height:55px;
+    margin:0 auto 18px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:50%;
+    background:var(--color-secundario);
+    color:var(--color-blanco);
+    font-size:1.3rem;
+}
+
+.servicio h3{
+    margin-bottom:12px;
+    color:var(--color-blanco);
+    font-size:1rem;
+    font-weight:400;
+}
+
+.servicio p{
+    color:#e9e9e9;
+    font-family:'TASA Explorer',sans-serif;
+    font-size:.9rem;
+    line-height:1.7;
+}
+
+
+/* seccion instalaciones*/
+
+.instalaciones{
+    background:var(--color-fondo);
+    padding:90px 0;
+}
+
+.imagen-instalaciones{
+    width:100%;
+    aspect-ratio:1/1;
+    overflow:hidden;
+    border-radius:18px;
+}
+
+.imagen-instalaciones img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    user-select:none;
+}
+
+.instalaciones-texto{
+    padding-left:35px;
+}
+
+.instalaciones-texto h2{
+    margin-bottom:25px;
+    color:var(--color-secundario);
+    font-family:'Pervitina Dex',sans-serif;
+    font-size:2.4rem;
+    font-weight:400;
+}
+
+.instalaciones-texto p{
+    max-width:560px;
+    margin-bottom:35px;
+    color:var(--color-blanco);
+    font-family:'TASA Explorer',sans-serif;
+    font-size:1rem;
+    line-height:1.9;
+}
+
+.btn-instalaciones{
+    padding:15px 34px;
+    border:none;
+    border-radius:12px;
+    background:var(--color-secundario);
+    color:var(--color-blanco);
+    font-family:'TASA Explorer',sans-serif;
+    font-weight:600;
+    transition:.3s;
+    cursor:pointer;
+}
+
+.btn-instalaciones:hover{
+    background:var(--color-primario);
+}
+
+
+/* seccion reseñas*/
+
+.reseñas{
+    background:var(--color-fondo);
+    padding:90px 0;
+}
+
+.reseñas-info h2{
+    color:var(--color-secundario);
+    font-family:'Pervitina Dex',sans-serif;
+    font-size:2.3rem;
+    font-weight:400;
+    line-height:1.2;
+    margin-bottom:22px;
+}
+
+.reseñas-info p{
+    max-width:360px;
+    margin-bottom:35px;
+    color:var(--color-blanco);
+    font-family:'TASA Explorer',sans-serif;
+    font-size:1rem;
+    line-height:1.9;
+}
+
+.btn-reseña{
+    display:inline-block;
+    padding:15px 32px;
+    border-radius:10px;
+    background:var(--color-primario);
+    color:var(--color-blanco);
+    font-family:'TASA Explorer',sans-serif;
+    font-weight:600;
+    transition:.3s;
+    cursor:pointer;
+}
+
+.btn-reseña:hover{
+    background:var(--color-secundario);
+}
+
+
+/* comentarios*/
+
+.comentarios{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.viewport{
+    position:relative;
+    flex:1;
+    height:470px;
+    overflow:hidden;
+}
+
+.slider{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    transition:transform .5s ease;
+}
+
+.comentario{
+    min-height:143px;
+    display:flex;
+    align-items:center;
+    gap:22px;
+    flex-shrink:0;
+    padding:24px;
+    background:var(--color-secundario);
+    border-radius:15px;
+    transition:.3s;
+}
+
+.comentario:hover{
+    transform:translateY(-6px);
+}
+
+.comentario img{
+    width:110px;
+    height:110px;
+    object-fit:cover;
+    border-radius:50%;
+    border:4px solid var(--color-blanco);
+    flex-shrink:0;
+    user-select:none;
+}
+
+.contenido{
+    display:flex;
+    flex-direction:column;
+}
+
+.comentario h3{
+    margin-bottom:8px;
+    color:var(--color-blanco);
+    font-family:'Pervitina Dex',sans-serif;
+    font-size:1.05rem;
+    font-weight:400;
+}
+
+.comentario span{
+    display:block;
+    margin-bottom:12px;
+    color:#FFD700;
+    letter-spacing:2px;
+    font-family:'TASA Explorer',sans-serif;
+}
+
+.comentario p{
+    color:#f4f4f4;
+    font-family:'TASA Explorer',sans-serif;
+    font-size:.9rem;
+    line-height:1.7;
+}
+
+
+/* flecahs */
+
+.flecha{
+    width:52px;
+    height:52px;
+    border:none;
+    border-radius:50%;
+    background:var(--color-primario);
+    color:var(--color-blanco);
+    font-size:18px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.flecha:hover{
+    background:var(--color-secundario);
+}
+
+
+/* seccion planes*/
+
+.planes{
+    background:var(--color-fondo);
+    padding:90px 0;
+    text-align:center;
+}
+
+.planes .container{
+    max-width:1320px;
+    padding-inline:30px;
+}
+
+.planes h2{
+    margin-bottom:65px;
+    color:var(--color-secundario);
+    font-family:'Pervitina Dex',sans-serif;
+    font-size:2.5rem;
+    font-weight:400;
+    text-transform:uppercase;
+}
+
+.plan{
+    padding:28px;
+    border-radius:10px;
+    color:#E5ACFF;
+    transition:.35s;
+    height:100%;
+}
+
+.lateral{
+    background:#4F24AC;
+    min-height:430px;
+}
+
+.principal{
+    position:relative;
+    z-index:2;
+    background:var(--color-primario);
+    min-height:470px;
+}
+
+.plan:hover{
+    transform:translateY(-10px);
+}
+
+.plan h3{
+    margin-bottom:20px;
+    font-family:'Pervitina Dex',sans-serif;
+    font-size:2rem;
+    font-weight:400;
+}
+
+.plan h4{
+    margin-bottom:30px;
+    font-family:'Special Gothic Expanded One',sans-serif;
+    font-size:2.1rem;
+    font-weight:400;
+}
+
+.plan h4 span{
+    font-family:'TASA Explorer',sans-serif;
+    font-size:1rem;
+    font-weight:400;
+}
+
+.plan ul{
+    list-style:none;
+    padding:0;
+    margin-bottom:35px;
+    text-align:left;
+}
+
+.plan ul li{
+    position:relative;
+    padding-left:24px;
+    margin-bottom:16px;
+    font-family:'TASA Explorer',sans-serif;
+    font-size:.92rem;
+    line-height:1.8;
+}
+
+.plan ul li::before{
+    content:"✓";
+    position:absolute;
+    left:0;
+    color:var(--color-blanco);
+    font-family:'TASA Explorer',sans-serif;
+    font-weight:700;
+}
+
+.plan button{
+    width:80%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:var(--color-blanco);
+    color:var(--color-primario);
+    font-family:'TASA Explorer',sans-serif;
+    font-size:1rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.plan button:hover{
+    background:var(--color-fondo);
+    color:var(--color-blanco);
+}
+
+.plan a{
+    color:inherit;
+}
+
+
+/* footer */
+
+footer{
+    background:var(--color-primario);
+    padding:35px 0;
+}
+
+.logo-footer{
+    margin:0;
+    color:var(--color-negro);
+    font-size:2rem;
+}
+
+.iconos{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.iconos a{
+    width:48px;
+    height:48px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:50%;
+    background:var(--color-blanco);
+    color:var(--color-primario);
+    font-size:1.2rem;
+    transition:.3s;
+}
+
+.iconos a:hover{
+    background:var(--color-fondo);
+    color:var(--color-blanco);
+    transform:translateY(-5px);
+}
+
+
+/* division*/
+
+.division{
+    width:100%;
+    height:25px;
+    background:var(--color-primario);
+}
+
+
+/* ajustes generales*/
+
+button,
+a{
+    -webkit-tap-highlight-color:transparent;
+}
+
+button:focus,
+a:focus{
+    outline:none;
+}
+
+.container{
+    overflow:visible;
+}
+
+.comentario .contenido h3 { font-family: "Special Gothic Expanded One", sans-serif; }

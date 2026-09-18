@@ -1,0 +1,154 @@
+/* tablet */
+
+@media(max-width:992px){
+
+    .reseñas{
+        padding:80px 0 50px;
+    }
+
+    .reseñas h1{
+        font-size:2.4rem;
+    }
+
+    .reseña{
+        padding:20px;
+    }
+
+}
+
+
+/* cel */
+
+@media(max-width:768px){ 
+
+    .formulario{
+        padding:35px 28px;
+    }
+
+    .formulario h1{
+        font-size:1.8rem;
+    }
+
+    .reseñas{
+        padding:70px 0 40px;
+    }
+
+    .reseñas h1{
+        font-size:2rem;
+    }
+
+    .subtitulo{
+        font-size:.9rem;
+        margin-bottom:35px;
+        padding:0 10px;
+    }
+
+    .reseña{
+        flex-direction:column;
+        align-items:center;
+        text-align:center;
+    }
+
+    .reseña img{
+        width:90px;
+        height:90px;
+    }
+
+    .reseña p{
+        font-size:.85rem;
+    }
+
+    .formulario h2{
+        font-size:1.7rem;
+    }
+
+}
+
+
+/* cel chico */
+
+@media(max-width:480px){
+
+    .formulario{
+        padding:28px 20px;
+    }
+
+    .formulario h1{
+        font-size:1.5rem;
+    }
+
+    .formulario .form-control{
+        font-size:.9rem;
+    }
+
+    .formulario button{
+        font-size:.9rem;
+        padding:12px;
+    }
+
+    .formulario a{
+        font-size:.8rem;
+    }
+
+    .volver{
+        top:18px;
+        left:18px;
+        font-size:.8rem;
+    }
+
+    .reseña{
+        background:rgba(180,180,180,.78);
+        backdrop-filter:blur(8px);
+        border-radius:15px;
+        padding:25px;
+        box-shadow:0 0 25px rgba(0,0,0,.35);
+        transition:.3s;
+        height:100%;
+        text-align:center;
+    }
+
+    .reseña:hover{
+        transform:translateY(-6px);
+    }
+
+    .reseña img{
+        width:95px;
+        height:95px;
+        border-radius:50%;
+        object-fit:cover;
+        object-position:top;
+        display:block;
+        margin:0 auto 18px;
+        border:3px solid #fff;
+    }
+
+    .reseñas h1{
+        font-size:1.8rem;
+    }
+
+    .subtitulo{
+        font-size:.85rem;
+    }
+
+    .reseña{
+        padding:18px;
+    }
+
+    .reseña img{
+        width:80px;
+        height:80px;
+    }
+
+    .reseña h3{
+        font-size:.95rem;
+    }
+
+    .reseña p{
+        font-size:.82rem;
+    }
+
+    .formulario h2{
+        font-size:1.5rem;
+    }
+
+}

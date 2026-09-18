@@ -1,0 +1,398 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+
+/*  TABLET Y CELULAR*/
+
+@media (max-width: 991px) {
+
+    .admin-header {
+        height: 62px;
+    }
+
+    .admin-header .container-fluid {
+        height: 62px;
+        padding: 0 18px;
+    }
+
+    .logo {
+        font-size: 30px;
+    }
+
+    .usuario-header {
+        height: 62px;
+        gap: 10px;
+    }
+
+    .nombre-usuario {
+        font-size: 13px;
+    }
+
+    .imagen-usuario {
+        width: 35px;
+        height: 35px;
+    }
+
+    .boton-menu {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .sidebar {
+        display: none !important;
+    }
+
+    .admin-content {
+        width: 100% !important;
+        min-height: calc(100vh - 62px);
+    }
+
+    .main-content {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 30px 25px 40px !important;
+    }
+
+    .sidebar-mobile {
+        width: 200px !important;
+        max-width: 80%;
+    }
+}
+
+
+/*   CELULAR*/
+
+@media (max-width: 575px) {
+
+    /* HEADER */
+
+    .admin-header {
+        height: 56px;
+    }
+
+    .admin-header .container-fluid {
+        height: 56px;
+        padding: 0 10px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    .usuario-header {
+        height: 56px;
+        gap: 7px;
+    }
+
+    .nombre-usuario {
+        display: none !important;
+    }
+
+    .imagen-usuario {
+        width: 30px;
+        height: 30px;
+    }
+
+    .boton-menu {
+        width: 26px;
+        height: 26px;
+        gap: 4px;
+    }
+
+    .boton-menu span {
+        width: 23px;
+        height: 3px;
+    }
+
+
+    /* CONTENIDO */
+
+    .admin-content {
+        width: 100% !important;
+        min-height: calc(100vh - 56px);
+    }
+
+    .main-content {
+        width: 100% !important;
+        padding: 25px 12px 30px !important;
+    }
+
+
+    /* TITULO */
+
+    .content-title {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 25px;
+    }
+
+    .content-title h1 {
+        font-size: 17px;
+        margin: 0;
+    }
+
+    .nuevo-socio {
+        width: auto;
+        flex-shrink: 0;
+        font-size: 8px;
+        padding: 7px 9px;
+    }
+
+
+    /* CONTENEDOR */
+
+    .members-container {
+        width: 100% !important;
+        min-height: 0;
+        padding: 0 !important;
+        background: transparent;
+    }
+
+
+    /* MOSTRAR REGISTROS */
+
+    .table-top {
+        width: 100%;
+        height: auto;
+        margin: 0 0 20px 0;
+        display: block;
+    }
+
+    .registros {
+        font-size: 9px;
+    }
+
+    .registros select {
+        font-size: 9px;
+    }
+
+    .search {
+        display: none;
+    }
+
+
+    /* TABLA */
+
+    .table-responsive {
+        width: 100%;
+        overflow: visible !important;
+    }
+
+    .tabla-socios {
+        width: 100% !important;
+        min-width: 0 !important;
+        table-layout: fixed;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+
+    /* OCULTAR ENCABEZADO */
+
+    .tabla-socios thead {
+        display: none;
+    }
+
+
+    /* CADA SOCIO ES UNA TARJETA */
+
+    .tabla-socios tbody {
+        display: block;
+        width: 100%;
+    }
+
+    .tabla-socios tbody tr {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        width: 100%;
+        height: auto;
+        min-height: 180px;
+        margin-bottom: 15px;
+        padding: 13px 12px;
+        background: #101010 !important;
+        border: none;
+        border-radius: 0;
+    }
+
+
+    /* CELDAS */
+
+    .tabla-socios tbody td {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: auto !important;
+        height: auto;
+        min-height: 48px;
+        padding: 4px 4px !important;
+        margin: 0;
+        background: transparent !important;
+        border: none !important;
+        color: #d4d4d4;
+        font-size: 8px;
+        white-space: normal;
+        vertical-align: middle;
+    }
+
+
+    /* NOMBRE */
+
+    .tabla-socios tbody td:nth-child(1) {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .tabla-socios tbody td:nth-child(1)::before {
+        content: "Nombre";
+        display: block;
+        margin-bottom: 6px;
+        color: #bd8bf8;
+        font-size: 8px;
+    }
+
+
+    /* CI */
+
+    .tabla-socios tbody td:nth-child(2) {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .tabla-socios tbody td:nth-child(2)::before {
+        content: "C.I";
+        display: block;
+        margin-bottom: 6px;
+        color: #bd8bf8;
+        font-size: 8px;
+    }
+
+
+    /* CELULAR */
+
+    .tabla-socios tbody td:nth-child(3) {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .tabla-socios tbody td:nth-child(3)::before {
+        content: "Cel.";
+        display: block;
+        margin-bottom: 6px;
+        color: #bd8bf8;
+        font-size: 8px;
+    }
+
+
+    /* VENCIMIENTO */
+
+    .tabla-socios tbody td:nth-child(4) {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .tabla-socios tbody td:nth-child(4)::before {
+        content: "Vencimiento";
+        display: block;
+        margin-bottom: 6px;
+        color: #bd8bf8;
+        font-size: 8px;
+    }
+
+
+    /* ACCIONES */
+
+    .tabla-socios tbody td:nth-child(5) {
+        grid-column: 1 / 3;
+        grid-row: 3;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 42px;
+    }
+
+    .tabla-socios tbody td:nth-child(5)::before {
+        content: "Acciones";
+        color: #bd8bf8;
+        font-size: 8px;
+        margin: 0;
+    }
+
+    .action-button {
+        width: 25px;
+        height: 27px;
+        font-size: 17px;
+        line-height: 22px;
+    }
+
+    .action-menu {
+        width: 130px;
+        top: 31px;
+        right: 0;
+        padding: 8px;
+        gap: 5px;
+    }
+
+    .action-menu button {
+        font-size: 9px;
+    }
+
+
+    /* PAGINACIÓN */
+
+    .pagination {
+        justify-content: center;
+        padding-top: 10px;
+    }
+
+    .pagination button {
+        font-size: 14px;
+    }
+
+
+    /* MENÚ LATERAL */
+
+    .sidebar-mobile {
+        width: 190px !important;
+        max-width: 80%;
+    }
+
+    .sidebar-mobile .offcanvas-body {
+        padding: 25px 14px;
+    }
+}
+
+
+/* PC */
+
+@media (min-width: 992px) {
+
+    .boton-menu {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+
+    .sidebar {
+        display: block !important;
+    }
+
+    .sidebar-mobile {
+        display: none !important;
+    }
+}
