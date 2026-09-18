@@ -26,6 +26,8 @@ class AuthController
         $password = $data['password'] ?? '';
         $confirmPassword = $data['confirm_password'] ?? '';
         $phone = trim($data['phone'] ?? '') ?: null;
+        $ci = trim($data['ci'] ?? '');
+        $roleId = (int)($data['role'] ?? 1);
 
         if ($name === '' || $email === '' || $password === '' || $confirmPassword === '') {
             Response::json(false, 'Todos los campos son obligatorios.', [], 400);
@@ -50,7 +52,7 @@ class AuthController
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        $creado = $this->userModel->create($name, $email, $hashedPassword, $phone);
+        $creado = $this->userModel->create($name, $email, $hashedPassword, $phone, $roleId, $ci);
         if ($creado) {
             Response::json(true, 'Usuario registrado correctamente.');
         } else {

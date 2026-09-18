@@ -20,7 +20,7 @@ class UserModel
         return (bool) $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
-    public function create(string $name, string $email, string $hashedPassword, ?string $phone = null): bool
+    public function create(string $name, string $email, string $hashedPassword, ?string $phone, int $roleId, string $ci): bool
     {
         try {
             $this->db->beginTransaction();
@@ -35,12 +35,14 @@ class UserModel
             $credentialsId = $this->db->lastInsertId();
 
             $stmtClient = $this->db->prepare(
-                "INSERT INTO Client (name_client, phone, fr_credentials) VALUES (:name, :phone, :fr_credentials)"
+                "INSERT INTO Client (name_client, phone, fr_credentials, fr_role, `C.I`) VALUES (:name, :phone, :fr_credentials, :fr_role, :ci)"
             );
             $stmtClient->execute([
                 'name' => $name,
                 'phone' => $phone,
                 'fr_credentials' => $credentialsId,
+                'fr_role' => $roleId, // Assuming a default role
+                'ci' => $ci, // Assuming a default value for C.I
             ]);
 
             $this->db->commit();
@@ -48,7 +50,7 @@ class UserModel
             return true;
         } catch (\PDOException $e) {
             $this->db->rollBack();
-
+            error_log($e->getMessage());
             return false;
         }
     }
