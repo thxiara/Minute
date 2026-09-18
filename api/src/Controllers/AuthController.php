@@ -43,14 +43,14 @@ class AuthController
             Response::json(false, 'La contraseña debe tener al menos 8 caracteres.', [], 400);
         }
         
-        $usuario = $usermodel->existsByEmail($email);
+        $usuario = $this->userModel->existsByEmail($email);
         if ($usuario) {
             Response::json(false, 'Ese correo ya está registrado.', [], 409);
         }
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        $creado = $usermodel->create($name, $email, $hashedPassword, $phone);
+        $creado = $this->userModel->create($name, $email, $hashedPassword, $phone);
         if ($creado) {
             Response::json(true, 'Usuario registrado correctamente.');
         } else {
