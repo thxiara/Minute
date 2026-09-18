@@ -49,6 +49,8 @@ button {
 
 /* logo */
 
+/* logo */
+
 .logo {
     font-family: "Pervitina Dex", sans-serif;
     color: #FFFFFF;
@@ -62,6 +64,7 @@ button {
     display: flex;
     align-items: center;
     gap: 20px;
+    gap: 20px;
 }
 
 
@@ -70,6 +73,8 @@ button {
 .icono-usuario {
     position: relative;
 
+    width: 42px;
+    height: 42px;
     width: 42px;
     height: 42px;
 
@@ -87,7 +92,11 @@ button {
 
     width: 12px;
     height: 12px;
+    width: 12px;
+    height: 12px;
 
+    top: 8px;
+    left: 15px;
     top: 8px;
     left: 15px;
 
@@ -102,7 +111,11 @@ button {
 
     width: 24px;
     height: 12px;
+    width: 24px;
+    height: 12px;
 
+    left: 9px;
+    bottom: 8px;
     left: 9px;
     bottom: 8px;
 
@@ -117,6 +130,8 @@ button {
 .boton-menu {
     width: 34px;
     height: 34px;
+    width: 34px;
+    height: 34px;
 
     padding: 0;
 
@@ -129,12 +144,14 @@ button {
     justify-content: center;
 
     gap: 6px;
+    gap: 6px;
 }
 
 
 .boton-menu span {
     display: block;
 
+    width: 30px;
     width: 30px;
     height: 4px;
 
@@ -145,8 +162,10 @@ button {
 
 
 /* menu lateral */
+/* menu lateral */
 
 .menu-usuario {
+    width: 260px !important;
     width: 260px !important;
 
     background-color: #020202;
@@ -163,6 +182,7 @@ button {
 .menu-usuario .offcanvas-title {
     font-family: "Special Gothic Expanded One", sans-serif;
     font-size: 20px;
+    font-size: 20px;
 }
 
 
@@ -174,7 +194,9 @@ button {
     text-decoration: none;
 
     font-size: 17px;
+    font-size: 17px;
 
+    padding: 15px 6px;
     padding: 15px 6px;
 
     border-bottom: 1px solid #101010;
@@ -199,6 +221,7 @@ button {
     background-color: #000000;
 
     padding: 38px 42px 55px;
+    padding: 38px 42px 55px;
 }
 
 
@@ -219,10 +242,13 @@ button {
     align-items: center;
 
     gap: 30px;
+    gap: 30px;
 }
 
 
 .foto-usuario {
+    width: 74px;
+    height: 74px;
     width: 74px;
     height: 74px;
 
@@ -242,6 +268,7 @@ button {
     font-family: "Special Gothic Expanded One", sans-serif;
 
     font-size: 32px;
+    font-size: 32px;
 
     font-style: italic;
 
@@ -253,13 +280,16 @@ button {
     border: none;
 
     border-radius: 5px;
+    border-radius: 5px;
 
     background-color: #E00000;
 
     color: #FFFFFF;
 
     font-size: 14px;
+    font-size: 14px;
 
+    padding: 10px 22px;
     padding: 10px 22px;
 }
 
@@ -279,6 +309,7 @@ button {
     background-color: #171717;
 
     margin: 19px 0;
+    margin: 19px 0;
 }
 
 
@@ -290,12 +321,15 @@ button {
     grid-template-columns: repeat(3, 1fr);
 
     gap: 36px;
+    gap: 36px;
 }
 
 
 .dato-membresia {
     min-height: 58px;
+    min-height: 58px;
 
+    padding: 8px 13px;
     padding: 8px 13px;
 
     border: 1px solid #777777;
@@ -314,6 +348,7 @@ button {
     color: #FFFFFF;
 
     font-size: 13px;
+    font-size: 13px;
 
     line-height: 1.1;
 }
@@ -323,21 +358,26 @@ button {
     color: #C88CFF;
 
     font-size: 14px;
+    font-size: 14px;
 
+    margin-top: 6px;
     margin-top: 6px;
 }
 
 
 /* titulos de seccion */
+/* titulos de seccion */
 
 .seccion-rutinas h2,
 .seccion-clases h2 {
+    margin: 32px 0 18px;
     margin: 32px 0 18px;
 
     color: #FFFFFF;
 
     font-family: "Special Gothic Expanded One", sans-serif;
 
+    font-size: 23px;
     font-size: 23px;
 
     font-weight: normal;
@@ -348,10 +388,13 @@ button {
 
 .rutina {
     width: 220px;
+    width: 220px;
 }
 
 
 .imagen-rutina {
+    width: 220px;
+    height: 72px;
     width: 220px;
     height: 72px;
 
@@ -368,6 +411,7 @@ button {
 
     color: #000000;
 
+    font-size: 9px;
     font-size: 9px;
 }
 
@@ -387,11 +431,13 @@ button {
     color: #FFFFFF;
 
     font-size: 14px;
+    font-size: 14px;
 
     font-style: italic;
 
     font-weight: 600;
 
+    margin-top: 7px;
     margin-top: 7px;
 }
 
@@ -402,15 +448,19 @@ button {
     border: none;
 
     border-radius: 4px;
+    border-radius: 4px;
 
     background-color: #6B2CFF;
 
     color: #FFFFFF;
 
     font-size: 10px;
+    font-size: 10px;
 
     padding: 5px 15px;
+    padding: 5px 15px;
 
+    margin-top: 4px;
     margin-top: 4px;
 }
 
@@ -421,6 +471,7 @@ button {
 
 
 /* clases */
+/* clases */
 
 .clases {
     display: grid;
@@ -428,14 +479,18 @@ button {
     grid-template-columns: 1fr 1fr;
 
     gap: 26px;
+    gap: 26px;
 
+    max-width: 720px;
     max-width: 720px;
 }
 
 
 .clase {
     min-height: 55px;
+    min-height: 55px;
 
+    padding: 9px 14px;
     padding: 9px 14px;
 
     border: 1px solid #555555;
@@ -454,6 +509,7 @@ button {
     color: #FFFFFF;
 
     font-size: 13px;
+    font-size: 13px;
 }
 
 
@@ -461,11 +517,14 @@ button {
     color: #C88CFF;
 
     font-size: 14px;
+    font-size: 14px;
 
+    margin-top: 5px;
     margin-top: 5px;
 }
 
 
+/* sacar menu hamburguesa en pc */
 /* sacar menu hamburguesa en pc */
 
 @media (min-width: 1200px) {
@@ -477,13 +536,19 @@ button {
 }
 
 
+
 .imagen-usuario-header {
+    width: 42px;
+    height: 42px;
+
     width: 42px;
     height: 42px;
 
     border-radius: 50%;
 
+
     object-fit: cover;
+
 
     background-color: #020202;
 }
