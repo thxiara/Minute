@@ -1,7 +1,6 @@
 @font-face {
     font-family: "Pervitina Dex";
     src: url("../../assets/tipografías/Pervitina-Dex-FFP.ttf") format("truetype");
-    src: url("../../assets/tipografías/Pervitina-Dex-FFP.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
@@ -45,11 +44,9 @@ button {
 
 
 /* header */
-/* header */
 
 .admin-header {
     width: 100%;
-    height: 64px;
     height: 64px;
     background-color: #1C2BC2;
 }
@@ -61,7 +58,6 @@ button {
     font-family: "Pervitina Dex", sans-serif;
     color: #FFFFFF;
     font-size: 36px;
-    font-size: 36px;
     line-height: 1;
     letter-spacing: -1px;
 }
@@ -72,21 +68,16 @@ button {
 .usuario-header {
     height: 64px;
     gap: 14px;
-    height: 64px;
-    gap: 14px;
 }
 
 .nombre-usuario {
     color: #FFFFFF;
     font-family: "TASA Explorer", sans-serif;
     font-size: 18px;
-    font-size: 18px;
     font-weight: 400;
 }
 
 .imagen-usuario {
-    width: 42px;
-    height: 42px;
     width: 42px;
     height: 42px;
     border-radius: 50%;
@@ -100,8 +91,6 @@ button {
 .boton-menu {
     width: 28px;
     height: 28px;
-    width: 28px;
-    height: 28px;
     padding: 0;
     border: none;
     background-color: transparent;
@@ -110,12 +99,10 @@ button {
     flex-direction: column;
     justify-content: center;
     gap: 5px;
-    gap: 5px;
 }
 
 .boton-menu span {
     display: block;
-    width: 25px;
     width: 25px;
     height: 3px;
     background-color: #FFFFFF;
@@ -127,7 +114,6 @@ button {
 
 .admin-content {
     min-height: calc(100vh - 64px);
-    min-height: calc(100vh - 64px);
     background-color: #000000;
 }
 
@@ -137,19 +123,15 @@ button {
 .sidebar {
     width: 155px;
     min-width: 155px;
-    width: 155px;
-    min-width: 155px;
 
     background-color: #020202;
 
-    padding: 30px 14px;
     padding: 30px 14px;
 
     border-right: 1px solid #090909;
 }
 
 .sidebar-section {
-    margin-bottom: 14px;
     margin-bottom: 14px;
 }
 
@@ -166,15 +148,11 @@ button {
     font-family: "Special Gothic Expanded One", sans-serif;
 
     font-size: 13px;
-    font-size: 13px;
 
-    margin-bottom: 9px;
     margin-bottom: 9px;
 }
 
 .arrow-button {
-    width: 20px;
-    height: 20px;
     width: 20px;
     height: 20px;
 
@@ -188,7 +166,6 @@ button {
 
     font-family: Arial, sans-serif;
 
-    font-size: 12px;
     font-size: 12px;
 }
 
@@ -205,12 +182,9 @@ button {
     font-family: "TASA Explorer", sans-serif;
 
     font-size: 10px;
-    font-size: 10px;
 
     padding-left: 5px;
-    padding-left: 5px;
 
-    margin-bottom: 7px;
     margin-bottom: 7px;
 }
 
@@ -219,7 +193,6 @@ button {
 
     color: #AAAAAA;
 
-    margin-right: 5px;
     margin-right: 5px;
 }
 
@@ -236,7 +209,6 @@ button {
 
 .sidebar-mobile {
     width: 175px !important;
-    width: 175px !important;
 
     background-color: #020202;
 
@@ -244,7 +216,6 @@ button {
 }
 
 .sidebar-mobile .offcanvas-body {
-    padding: 30px 14px;
     padding: 30px 14px;
 }
 
@@ -255,14 +226,12 @@ button {
     background-color: #000000;
 
     padding: 42px 40px 45px;
-    padding: 42px 40px 45px;
 }
 
 
 /* titulo principal */
 
 .content-title {
-    margin-bottom: 24px;
     margin-bottom: 24px;
 }
 
@@ -273,7 +242,6 @@ button {
 
     font-family: "Special Gothic Expanded One", sans-serif;
 
-    font-size: 30px;
     font-size: 30px;
 
     font-weight: normal;
@@ -290,14 +258,11 @@ button {
     border: none;
 
     border-radius: 4px;
-    border-radius: 4px;
 
     font-family: "TASA Explorer", sans-serif;
 
     font-size: 16px;
-    font-size: 16px;
 
-    padding: 10px 18px;
     padding: 10px 18px;
 }
 
@@ -309,29 +274,23 @@ button {
 
 
 /* contenedor de la tabla */
-/* contenedor de la tabla */
 
 .members-container {
     width: 100%;
 
     min-height: 340px;
-    min-height: 340px;
 
-    padding: 22px 22px 15px;
     padding: 22px 22px 15px;
 
     background-color: #050505;
 
     border-radius: 7px;
-    border-radius: 7px;
 }
 
 
 /* parte de arriba de la tabla */
-/* parte de arriba de la tabla */
 
 .table-top {
-    height: 42px;
     height: 42px;
 }
 
@@ -340,7 +299,6 @@ button {
 
     font-family: "TASA Explorer", sans-serif;
 
-    font-size: 15px;
     font-size: 15px;
 }
 
@@ -356,11 +314,9 @@ button {
     font-family: "TASA Explorer", sans-serif;
 
     font-size: 15px;
-    font-size: 15px;
 }
 
 
-/* buscador */
 /* buscador */
 
 .search {
@@ -372,12 +328,9 @@ button {
 .search input {
     width: 175px;
     height: 30px;
-    width: 175px;
-    height: 30px;
 
     border: 1px solid #777777;
 
-    border-radius: 3px;
     border-radius: 3px;
 
     background-color: #050505;
@@ -387,15 +340,11 @@ button {
     outline: none;
 
     font-size: 14px;
-    font-size: 14px;
 
-    padding: 4px 8px;
     padding: 4px 8px;
 }
 
 .search button {
-    width: 30px;
-    height: 30px;
     width: 30px;
     height: 30px;
 
@@ -407,7 +356,6 @@ button {
 
     color: #FFFFFF;
 
-    font-size: 18px;
     font-size: 18px;
 }
 
@@ -424,7 +372,6 @@ button {
 
 .tabla-socios thead {
     height: 34px;
-    height: 34px;
 }
 
 .tabla-socios th {
@@ -437,11 +384,9 @@ button {
     font-family: "TASA Explorer", sans-serif;
 
     font-size: 14px;
-    font-size: 14px;
 
     font-weight: 500;
 
-    padding: 0 8px 9px;
     padding: 0 8px 9px;
 }
 
@@ -471,7 +416,6 @@ button {
 .tabla-socios tbody td {
     background-color: #101010 !important;
 
-
     color: #D4D4D4;
 }
 
@@ -480,7 +424,6 @@ button {
 }
 
 .tabla-socios tbody tr {
-    height: 62px;
     height: 62px;
 
     background-color: #101010;
@@ -498,9 +441,7 @@ button {
     font-family: "TASA Explorer", sans-serif;
 
     font-size: 14px;
-    font-size: 14px;
 
-    padding: 0 8px;
     padding: 0 8px;
 
     vertical-align: middle;
@@ -518,8 +459,6 @@ button {
 .action-button {
     width: 32px;
     height: 34px;
-    width: 32px;
-    height: 34px;
 
     padding: 0;
 
@@ -532,9 +471,7 @@ button {
     color: #C88CFF;
 
     font-size: 21px;
-    font-size: 21px;
 
-    line-height: 28px;
     line-height: 28px;
 }
 
@@ -549,19 +486,15 @@ button {
     z-index: 100;
 
     top: 40px;
-    top: 40px;
 
     right: 4px;
 
     width: 170px;
-    width: 170px;
 
-    padding: 11px 10px;
     padding: 11px 10px;
 
     background-color: #171717;
 
-    border-radius: 6px;
     border-radius: 6px;
 
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
@@ -572,7 +505,6 @@ button {
 
     flex-direction: column;
 
-    gap: 8px;
     gap: 8px;
 }
 
@@ -590,13 +522,11 @@ button {
     font-family: "TASA Explorer", sans-serif;
 
     font-size: 12px;
-    font-size: 12px;
 
     white-space: nowrap;
 }
 
 .action-menu button span {
-    margin-right: 5px;
     margin-right: 5px;
 }
 
@@ -610,7 +540,6 @@ button {
 
 
 /* paginacion */
-/* paginacion */
 
 .pagination {
     display: flex;
@@ -618,9 +547,7 @@ button {
     justify-content: flex-end;
 
     gap: 8px;
-    gap: 8px;
 
-    padding-top: 18px;
     padding-top: 18px;
 }
 
@@ -631,7 +558,6 @@ button {
 
     color: #C9C9C9;
 
-    font-size: 19px;
     font-size: 19px;
 }
 
@@ -648,13 +574,11 @@ button {
 
 
 /* evitar fondo blanco */
-/* evitar fondo blanco */
 
 .main-content .bg-white,
 .members-container .bg-white,
 .members-container .card {
     background-color: #050505 !important;
-
 
     color: #FFFFFF !important;
 }

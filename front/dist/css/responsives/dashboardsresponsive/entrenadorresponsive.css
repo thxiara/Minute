@@ -10,33 +10,15 @@ body {
     overflow-x: hidden;
 }
 
-* {
-    box-sizing: border-box;
-}
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    overflow-x: hidden;
-}
-
-
-/*  TABLET */
 /*  TABLET */
 
 @media (max-width: 991px) {
 
     .entrenador-header {
         height: 62px;
-        height: 62px;
     }
 
-    .entrenador-header .container-fluid {
-        height: 62px;
-        padding: 0 18px;
-    }
     .entrenador-header .container-fluid {
         height: 62px;
         padding: 0 18px;
@@ -44,13 +26,8 @@ body {
 
     .logo {
         font-size: 30px;
-        font-size: 30px;
     }
 
-    .usuario-header {
-        height: 62px;
-        gap: 10px;
-    }
     .usuario-header {
         height: 62px;
         gap: 10px;
@@ -58,12 +35,9 @@ body {
 
     .nombre-usuario {
         font-size: 13px;
-        font-size: 13px;
     }
 
     .imagen-usuario {
-        width: 35px;
-        height: 35px;
         width: 35px;
         height: 35px;
     }
@@ -72,14 +46,8 @@ body {
         display: flex !important;
         visibility: visible !important;
         opacity: 1 !important;
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
     }
 
-    .sidebar {
-        display: none !important;
-    }
     .sidebar {
         display: none !important;
     }
@@ -89,42 +57,25 @@ body {
         max-width: 100% !important;
         padding: 30px 25px 40px !important;
         margin: 0 !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 30px 25px 40px !important;
-        margin: 0 !important;
     }
 
     .sidebar-mobile {
         width: 200px !important;
         max-width: 80%;
-    .sidebar-mobile {
-        width: 200px !important;
-        max-width: 80%;
     }
 }
-}
 
 
 /*CELULAR*/
-/*CELULAR*/
 
-@media (max-width: 575px) {
-
-    /* HEADER */
 @media (max-width: 575px) {
 
     /* HEADER */
 
     .entrenador-header {
         height: 56px;
-        height: 56px;
     }
 
-    .entrenador-header .container-fluid {
-        height: 56px;
-        padding: 0 10px;
-    }
     .entrenador-header .container-fluid {
         height: 56px;
         padding: 0 10px;
@@ -132,24 +83,18 @@ body {
 
     .logo {
         font-size: 24px;
-        font-size: 24px;
     }
 
     .usuario-header {
-        height: 56px;
-        gap: 7px;
         height: 56px;
         gap: 7px;
     }
 
     .nombre-usuario {
         display: none !important;
-        display: none !important;
     }
 
     .imagen-usuario {
-        width: 30px;
-        height: 30px;
         width: 30px;
         height: 30px;
     }
@@ -159,14 +104,9 @@ body {
         width: 26px;
         height: 26px;
         gap: 4px;
-        display: flex !important;
-        width: 26px;
-        height: 26px;
-        gap: 4px;
     }
 
     .boton-menu span {
-        width: 23px;
         width: 23px;
         height: 3px;
     }
@@ -179,35 +119,16 @@ body {
         min-height: calc(100vh - 56px);
     }
 
-    /* CONTENIDO */
-
-    .admin-content {
-        width: 100% !important;
-        min-height: calc(100vh - 56px);
-    }
-
     .main-content {
         width: 100% !important;
         max-width: 100% !important;
         padding: 25px 12px 30px !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 25px 12px 30px !important;
     }
 
 
     /* TITULO */
 
-    /* TITULO */
-
     .content-title {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        margin-bottom: 25px;
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -228,20 +149,8 @@ body {
         flex-shrink: 0;
         font-size: 8px;
         padding: 7px 9px;
-        margin: 0;
-        font-size: 17px;
-        line-height: 1.2;
     }
 
-    .nuevo-socio {
-        width: auto;
-        flex-shrink: 0;
-        font-size: 8px;
-        padding: 7px 9px;
-    }
-
-
-    /* CONTENEDOR */
 
     /* CONTENEDOR */
 
@@ -250,14 +159,8 @@ body {
         min-height: 0;
         padding: 0 !important;
         background: transparent;
-        width: 100% !important;
-        min-height: 0;
-        padding: 0 !important;
-        background: transparent;
     }
 
-
-    /* REGISTROS */
 
     /* REGISTROS */
 
@@ -266,24 +169,16 @@ body {
         height: auto;
         margin: 0 0 20px 0;
         display: block;
-        width: 100%;
-        height: auto;
-        margin: 0 0 20px 0;
-        display: block;
     }
 
     .registros {
-        font-size: 9px;
         font-size: 9px;
     }
 
     .registros select {
         font-size: 9px;
-        font-size: 9px;
     }
 
-    .search {
-        display: none;
     .search {
         display: none;
     }
@@ -291,11 +186,6 @@ body {
 
     /* TABLA */
 
-    /* TABLA */
-
-    .table-responsive {
-        width: 100%;
-        overflow: visible !important;
     .table-responsive {
         width: 100%;
         overflow: visible !important;
@@ -313,27 +203,10 @@ body {
     /* QUITAMOS LA CABECERA */
 
     .tabla-socios thead {
-    .tabla-socios {
-        width: 100% !important;
-        min-width: 0 !important;
-        table-layout: fixed;
-        border-collapse: separate;
-        border-spacing: 0;
-    }
-
-
-    /* QUITAMOS LA CABECERA */
-
-    .tabla-socios thead {
         display: none;
     }
 
 
-    /* CUERPO */
-
-    .tabla-socios tbody {
-        display: block;
-        width: 100%;
     /* CUERPO */
 
     .tabla-socios tbody {
@@ -384,56 +257,8 @@ body {
     .tabla-socios tbody td:nth-child(1) {
         grid-column: 1;
         grid-row: 1;
-    /* CADA ENTRENADOR = UNA TARJETA */
-
-    .tabla-socios tbody tr {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto auto;
-        width: 100%;
-        height: auto;
-        min-height: 180px;
-        margin-bottom: 15px;
-        padding: 13px 12px;
-        background: #101010 !important;
-        border: none;
-        border-radius: 0;
     }
 
-
-    /* CELDAS */
-
-    .tabla-socios tbody td {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: auto !important;
-        height: auto;
-        min-height: 48px;
-        padding: 4px !important;
-        margin: 0;
-        background: transparent !important;
-        border: none !important;
-        color: #d4d4d4;
-        font-size: 8px;
-        white-space: normal;
-        vertical-align: middle;
-    }
-
-
-    /* NOMBRE */
-
-    .tabla-socios tbody td:nth-child(1) {
-        grid-column: 1;
-        grid-row: 1;
-    }
-
-    .tabla-socios tbody td:nth-child(1)::before {
-        content: "Nombre";
-        display: block;
-        margin-bottom: 6px;
-        color: #bd8bf8;
-        font-size: 8px;
     .tabla-socios tbody td:nth-child(1)::before {
         content: "Nombre";
         display: block;
@@ -448,19 +273,8 @@ body {
     .tabla-socios tbody td:nth-child(2) {
         grid-column: 2;
         grid-row: 1;
-    /* C.I */
-
-    .tabla-socios tbody td:nth-child(2) {
-        grid-column: 2;
-        grid-row: 1;
     }
 
-    .tabla-socios tbody td:nth-child(2)::before {
-        content: "C.I";
-        display: block;
-        margin-bottom: 6px;
-        color: #bd8bf8;
-        font-size: 8px;
     .tabla-socios tbody td:nth-child(2)::before {
         content: "C.I";
         display: block;
@@ -499,40 +313,8 @@ body {
         margin-bottom: 6px;
         color: #bd8bf8;
         font-size: 8px;
-
-    /* TERCER DATO */
-
-    .tabla-socios tbody td:nth-child(3) {
-        grid-column: 1;
-        grid-row: 2;
     }
 
-    .tabla-socios tbody td:nth-child(3)::before {
-        content: "Cel.";
-        display: block;
-        margin-bottom: 6px;
-        color: #bd8bf8;
-        font-size: 8px;
-    }
-
-
-    /* CUARTO DATO */
-
-    .tabla-socios tbody td:nth-child(4) {
-        grid-column: 2;
-        grid-row: 2;
-    }
-
-    .tabla-socios tbody td:nth-child(4)::before {
-        content: "Especialidad";
-        display: block;
-        margin-bottom: 6px;
-        color: #bd8bf8;
-        font-size: 8px;
-    }
-
-
-    /* ACCIONES */
 
     /* ACCIONES */
 
@@ -544,29 +326,8 @@ body {
         align-items: center;
         justify-content: space-between;
         min-height: 42px;
-    .tabla-socios tbody td:nth-child(5) {
-        grid-column: 1 / 3;
-        grid-row: 3;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        min-height: 42px;
     }
 
-    .tabla-socios tbody td:nth-child(5)::before {
-        content: "Acciones";
-        color: #bd8bf8;
-        font-size: 8px;
-        margin: 0;
-    }
-
-
-    /* BOTON ACCIONES */
-
-    .action-button {
-        width: 25px;
-        height: 27px;
     .tabla-socios tbody td:nth-child(5)::before {
         content: "Acciones";
         color: #bd8bf8;
@@ -582,52 +343,8 @@ body {
         height: 27px;
         font-size: 17px;
         line-height: 22px;
-        line-height: 22px;
     }
 
-    .action-menu {
-        width: 130px;
-        top: 31px;
-        right: 0;
-        padding: 8px;
-        gap: 5px;
-    }
-
-    .action-menu button {
-        font-size: 9px;
-    }
-
-
-    /* PAGINACION */
-
-    .pagination {
-        justify-content: center;
-        padding-top: 10px;
-    }
-
-    .pagination button {
-        font-size: 14px;
-    }
-
-
-    /* MENU LATERAL */
-
-    .sidebar-mobile {
-        width: 190px !important;
-        max-width: 80%;
-    }
-
-    .sidebar-mobile .offcanvas-body {
-        padding: 25px 14px;
-    }
-}
-
-
-/* =========================================================
-   PC
-   ========================================================= */
-
-@media (min-width: 992px) {
     .action-menu {
         width: 130px;
         top: 31px;
@@ -677,21 +394,14 @@ body {
         visibility: hidden !important;
         opacity: 0 !important;
     }
-        opacity: 0 !important;
-    }
 
     .sidebar {
         display: block !important;
-        display: block !important;
     }
 
     .sidebar-mobile {
         display: none !important;
-    .sidebar-mobile {
-        display: none !important;
     }
 
-     
-}
      
 }
