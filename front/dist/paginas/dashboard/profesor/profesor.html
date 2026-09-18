@@ -21,7 +21,7 @@
 
     <link
         rel="preconnect"
-        href="https://fonts.gstatic.com"
+        href="https://fonts.googleapis.com"
         crossorigin
     >
 
@@ -379,24 +379,19 @@
 
                                 <tr>
 
-                                    <td>
-                                        Juan
-                                    </td>
+                                    <td></td>
 
-                                    <td>
-                                        099371513
-                                    </td>
+                                    <td></td>
 
-                                    <td>
-                                        Deficiente
-                                    </td>
+                                    <td></td>
 
-                                <td class="nota">
-                                     Lorem lorem lorem lorem lorem...
+                                    <td class="nota">
+
                                         <button type="button" class="leer-mas">
-                                          leer más
+                                            leer más
                                         </button>
-</td>
+
+                                    </td>
 
                                     <td class="acciones">
 
@@ -517,64 +512,7 @@
     </script>
 
 
-    <script>
-
-        document.querySelectorAll(".action-button").forEach(button => {
-
-            button.addEventListener("click", function(event) {
-
-                event.stopPropagation();
-
-                const menu = this.nextElementSibling;
-
-                document.querySelectorAll(".action-menu").forEach(element => {
-
-                    if (element !== menu) {
-
-                        element.classList.remove("mostrar");
-
-                    }
-
-                });
-
-                menu.classList.toggle("mostrar");
-
-            });
-
-        });
-
-
-        document.addEventListener("click", function() {
-
-            document.querySelectorAll(".action-menu").forEach(menu => {
-
-                menu.classList.remove("mostrar");
-
-            });
-
-        });
-
-
-        document.querySelectorAll(".arrow-button").forEach(button => {
-
-            button.addEventListener("click", function() {
-
-                setTimeout(() => {
-
-                    const expanded =
-                        this.getAttribute("aria-expanded");
-
-                    this.innerHTML =
-                        expanded === "true" ? "V" : "&lt;";
-
-                }, 50);
-
-            });
-
-        });
-
-    </script>
-    
+    <script src="../../../js/dashboard/profesor.js"></script>
 
 
 </body>

@@ -1,0 +1,329 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+
+/* pc*/
+
+@media (min-width: 992px) {
+
+    .boton-menu {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+
+    .sidebar {
+        display: block !important;
+    }
+
+    .sidebar-mobile {
+        display: none !important;
+    }
+
+}
+
+
+/* tablet y celular*/
+
+@media (max-width: 991px) {
+
+    .admin-header {
+        height: 62px;
+    }
+
+    .admin-header .container-fluid {
+        height: 62px;
+        padding: 0 18px;
+    }
+
+    .logo {
+        font-size: 30px;
+    }
+
+    .usuario-header {
+        height: 62px;
+        gap: 10px;
+    }
+
+    .nombre-usuario {
+        font-size: 13px;
+    }
+
+    .imagen-usuario {
+        width: 35px;
+        height: 35px;
+    }
+
+    .boton-menu {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .sidebar {
+        display: none !important;
+    }
+
+    .registrar-content {
+        width: 100% !important;
+        min-height: calc(100vh - 62px);
+        padding: 30px 25px 40px !important;
+    }
+
+    .registro-container {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .sidebar-mobile {
+        width: 200px !important;
+        max-width: 80%;
+    }
+
+}
+
+
+/* 
+   CELULAR
+ */
+
+@media (max-width: 575px) {
+
+    /* HEADER */
+
+    .admin-header {
+        height: 56px;
+    }
+
+    .admin-header .container-fluid {
+        height: 56px;
+        padding: 0 10px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    .usuario-header {
+        height: 56px;
+        gap: 7px;
+    }
+
+    .nombre-usuario {
+        display: none !important;
+    }
+
+    .imagen-usuario {
+        width: 30px;
+        height: 30px;
+    }
+
+    .boton-menu {
+        width: 26px;
+        height: 26px;
+        gap: 4px;
+    }
+
+    .boton-menu span {
+        width: 23px;
+        height: 3px;
+    }
+
+
+    /* CONTENIDO
+     */
+
+    .registrar-content {
+        width: 100% !important;
+        min-height: calc(100vh - 56px);
+        padding: 25px 12px 30px !important;
+    }
+
+
+    /* CONTENEDOR
+        */
+
+    .registro-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 16px !important;
+    }
+
+
+    /*  TITULO
+      */
+
+    .registro-container h1 {
+        font-size: 17px;
+        margin-bottom: 22px;
+    }
+
+
+    /*  FORMULARIO VERTICAL */
+
+    .form-line {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 0 !important;
+        margin-bottom: 14px;
+    }
+
+
+    /* CADA CAMPO OCUPA TODA LA FILA */
+
+    .campo {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 13px;
+    }
+
+
+    /* LABEL */
+
+    .campo label {
+        display: block;
+        width: 100%;
+        font-size: 8px;
+        margin-bottom: 5px;
+    }
+
+
+    /* INPUTS */
+
+    .campo input,
+    .campo select {
+        display: block;
+        width: 100% !important;
+        height: 32px;
+        font-size: 9px;
+        padding: 5px 8px;
+    }
+
+
+    /*BOTONES */
+
+    .form-buttons {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 10px;
+    }
+
+    .form-buttons button {
+        height: 28px;
+        min-width: 70px;
+        font-size: 8px;
+    }
+
+
+    /*    MENÚ LATERAL */
+
+    .sidebar-mobile {
+        width: 190px !important;
+        max-width: 80%;
+    }
+
+    .sidebar-mobile .offcanvas-body {
+        padding: 25px 14px;
+    }
+
+}
+
+
+/*  CELULAR CHICO */
+
+@media (max-width: 400px) {
+
+    .logo {
+        font-size: 22px;
+    }
+
+    .imagen-usuario {
+        width: 28px;
+        height: 28px;
+    }
+
+    .boton-menu {
+        width: 25px;
+        height: 25px;
+    }
+
+    .boton-menu span {
+        width: 22px;
+        height: 3px;
+    }
+
+
+    /* CONTENIDO */
+
+    .registrar-content {
+        padding: 20px 10px 25px !important;
+    }
+
+    .registro-container {
+        padding: 13px !important;
+    }
+
+
+    /* TITULO */
+
+    .registro-container h1 {
+        font-size: 15px;
+        margin-bottom: 18px;
+    }
+
+
+    /* FORMULARIO */
+
+    .form-line {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        margin-bottom: 10px;
+    }
+
+    .campo {
+        width: 100% !important;
+        margin-bottom: 11px;
+    }
+
+    .campo label {
+        font-size: 7px;
+        margin-bottom: 4px;
+    }
+
+    .campo input,
+    .campo select {
+        width: 100% !important;
+        height: 30px;
+        font-size: 8px;
+    }
+
+
+    /* BOTONES */
+
+    .form-buttons {
+        gap: 6px;
+        margin-top: 8px;
+    }
+
+    .form-buttons button {
+        height: 26px;
+        min-width: 60px;
+        font-size: 7px;
+    }
+
+}
+
+

@@ -659,3 +659,5 @@ a:focus{
 .container{
     overflow:visible;
 }
+
+.comentario .contenido h3 { font-family: "Special Gothic Expanded One", sans-serif; }
