@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS minute_db;
-USE minute_db
+USE minute_db;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
