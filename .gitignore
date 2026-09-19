@@ -146,7 +146,6 @@ storage/logs/
 
 
 # Archivos subidos por usuarios / Media local de prueba
-front/dist/assets/imagenes/
 front/dist/assets/videos/
 **/uploads/
 *.mp4
