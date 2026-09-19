@@ -1,0 +1,415 @@
+/* Rresponsivo para  tablet   */
+
+@media(max-width:992px){
+
+    /* aca va la seccion del header */
+    .header-vacio{
+        display:none;
+    }
+
+    .header-contenido{
+        justify-content:space-between!important;
+    }
+
+    .logo{
+        font-size:1.8rem;
+    }
+
+
+    /* la seccion de nosotros */
+    .texto,
+    .instalaciones-texto{
+        text-align:center;
+    }
+
+    .texto p,
+    .instalaciones-texto p{
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .instalaciones-texto{
+        margin-top:35px;
+        padding-left:0;
+    }
+
+
+    /* seccion de reseñas */
+    .reseñas-info{
+        margin-bottom:35px;
+        text-align:center;
+    }
+
+    .reseñas-info p{
+        max-width:100%;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+
+    /* seccion de planes  */
+    .planes .container{
+        padding-inline:20px;
+    }
+
+    .planes .row{
+        justify-content:center;
+    }
+
+    .planes .col-md-6{
+        flex:0 0 50%;
+        max-width:50%;
+    }
+
+    .planes .col-md-12{
+        flex:0 0 100%;
+        max-width:100%;
+    }
+
+    .principal{
+        transform:none;
+    }
+
+    .principal:hover{
+        transform:translateY(-10px);
+    }
+
+    .plan{
+        margin-bottom:25px;
+    }
+
+
+    /*  la de footer */
+    footer{
+        text-align:center;
+    }
+
+    .logo-footer{
+        margin-top:15px;
+    }
+
+    .iconos{
+        justify-content:center;
+    }
+}
+
+
+/* responsive tablet especifico */
+
+@media(min-width:769px) and (max-width:992px){
+
+    .servicios>.col-md-4:last-child{
+        flex:0 0 50%;
+        max-width:50%;
+    }
+}
+
+
+/*   de celular  */
+
+@media(max-width:768px){
+
+    /*  aca en el header */
+    header{
+        height:70px;
+    }
+
+    .header-contenido{
+        height:70px;
+    }
+
+    .header-derecha{
+        gap:10px;
+    }
+
+    .usuario-header{
+        width:42px;
+        height:42px;
+    }
+
+
+    /* en el hero  */
+    .hero{
+        min-height:430px;
+        padding:80px 0;
+    }
+
+    .hero-contenido h2{
+        font-size:2.2rem;
+    }
+
+
+    /* en nosotros  */
+    .nosotros{
+        padding:65px 0;
+    }
+
+    .servicios>.col-md-4,
+    .servicios>.col-md-4:last-child{
+        flex:0 0 100%;
+        max-width:100%;
+    }
+
+    .imagen{
+        height:260px;
+    }
+
+
+    /* seccion insatalaciones  */
+    .instalaciones{
+        padding:70px 0;
+    }
+
+    .imagen-instalaciones{
+        max-width:420px;
+        margin:auto;
+    }
+
+    .instalaciones-texto h2{
+        font-size:2rem;
+    }
+
+
+    /*  reseñas */
+    .reseñas{
+        padding:70px 0;
+    }
+
+    .comentarios{
+        margin-top:20px;
+    }
+
+    .comentario{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .comentario img{
+        width:95px;
+        height:95px;
+    }
+
+    .contenido{
+        align-items:center;
+    }
+
+
+    /* planes */
+    .planes{
+        padding:70px 0;
+    }
+
+    .planes h2{
+        font-size:2rem;
+    }
+
+    .planes .col-md-6,
+    .planes .col-md-12{
+        flex:0 0 100%;
+        max-width:100%;
+    }
+
+    .plan{
+        padding:28px;
+    }
+
+    .plan h3{
+        font-size:1.8rem;
+    }
+
+    .plan h4{
+        font-size:2rem;
+    }
+
+    .plan button{
+        width:100%;
+    }
+
+
+    /* footer */
+    footer{
+        padding:28px 0;
+    }
+
+    .logo-footer{
+        font-size:1.8rem;
+    }
+
+    .iconos{
+        gap:15px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .iconos a{
+        width:44px;
+        height:44px;
+        font-size:1rem;
+    }
+}
+
+
+/*  responsivo para celukalr  */
+
+@media(max-width:576px){
+
+    /* seccionesesta general  */
+    body{
+        font-size:.95rem;
+    }
+
+
+    /* header */
+    .logo{
+        font-size:1.6rem;
+    }
+
+    .registrarse{
+        font-size:.8rem;
+    }
+
+    .usuario-header{
+        width:38px;
+        height:38px;
+    }
+
+
+    /* hero */
+    .hero{
+        min-height:340px;
+        padding:60px 0;
+    }
+
+    .hero-contenido h2{
+        font-size:1.6rem;
+    }
+
+    .btn-hero{
+        padding:12px 22px;
+        font-size:.9rem;
+    }
+
+
+    /* nosotros  */
+    .nosotros{
+        padding:55px 0;
+    }
+
+    .texto h2{
+        font-size:1.8rem;
+    }
+
+    .texto p{
+        font-size:.95rem;
+    }
+
+    .imagen{
+        height:220px;
+    }
+
+    .servicio{
+        padding:22px;
+    }
+
+
+    /* instalaciones */
+    .instalaciones{
+        padding:55px 0;
+    }
+
+    .instalaciones-texto h2{
+        font-size:1.7rem;
+    }
+
+    .instalaciones-texto p{
+        font-size:.95rem;
+    }
+
+    .btn-instalaciones{
+        width:100%;
+    }
+
+
+    /* reseñas */
+    .reseñas{
+        padding:55px 0;
+    }
+
+    .reseñas-info h2{
+        font-size:1.8rem;
+    }
+
+    .reseñas-info p{
+        font-size:.95rem;
+    }
+
+    .comentario{
+        padding:20px;
+    }
+
+    .comentario h3{
+        font-size:1rem;
+    }
+
+    .comentario p{
+        font-size:.85rem;
+    }
+
+    .flecha{
+        width:46px;
+        height:46px;
+    }
+
+
+    /* planes */
+    .planes{
+        padding:55px 0;
+    }
+
+    .planes .container{
+        padding-inline:15px;
+    }
+
+    .plan{
+        padding:25px;
+    }
+
+    .plan h3{
+        font-size:1.6rem;
+    }
+
+    .plan h4{
+        font-size:1.8rem;
+    }
+
+    .plan ul li{
+        font-size:.88rem;
+    }
+
+
+    /* footer */
+    .logo-footer{
+        font-size:1.5rem;
+    }
+
+    .iconos{
+        gap:12px;
+    }
+
+    .iconos a{
+        width:40px;
+        height:40px;
+        font-size:.95rem;
+    }
+
+
+    /* ajustes generales */
+    .container{
+        padding-left:15px;
+        padding-right:15px;
+    }
+
+    section{
+        overflow:hidden;
+    }
+}

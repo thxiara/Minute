@@ -1,0 +1,489 @@
+@font-face {
+    font-family: "Pervitina Dex";
+    src: url("../../assets/tipografias/Pervitina-Dex-FFP.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --azul: #1C2BC2;
+    --negro: #000000;
+    --panel: #020202;
+    --fila: #101010;
+    --morado: #6B2CFF;
+    --morado-claro: #A25CFF;
+    --blanco: #FFFFFF;
+    --gris: #777777;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+}
+
+body {
+    color: #FFFFFF;
+    font-family: "TASA Explorer", sans-serif;
+}
+
+button {
+    cursor: pointer;
+    font-family: "TASA Explorer", sans-serif;
+}
+
+
+/* header */
+
+.usuario-header-principal {
+    width: 100%;
+    height: 72px;
+    background-color: #1C2BC2;
+}
+
+
+/* logo */
+
+.logo {
+    font-family: "Pervitina Dex", sans-serif;
+    color: #FFFFFF;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+
+.header-acciones {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+
+/* icono usuario */
+
+.icono-usuario {
+    position: relative;
+
+    width: 42px;
+    height: 42px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: #FFFFFF;
+}
+
+
+.icono-usuario .cabeza {
+    position: absolute;
+
+    width: 12px;
+    height: 12px;
+
+    top: 8px;
+    left: 15px;
+
+    border-radius: 50%;
+
+    background-color: #1C2BC2;
+}
+
+
+.icono-usuario .cuerpo {
+    position: absolute;
+
+    width: 24px;
+    height: 12px;
+
+    left: 9px;
+    bottom: 8px;
+
+    border-radius: 12px 12px 7px 7px;
+
+    background-color: #1C2BC2;
+}
+
+
+/* hamburguesa */
+
+.boton-menu {
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+
+    border: none;
+
+    background-color: transparent;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    gap: 6px;
+}
+
+
+.boton-menu span {
+    display: block;
+
+    width: 30px;
+    height: 4px;
+
+    background-color: #FFFFFF;
+
+    border-radius: 4px;
+}
+
+
+/* menu lateral */
+
+.menu-usuario {
+    width: 260px !important;
+
+    background-color: #020202;
+
+    color: #FFFFFF;
+}
+
+
+.menu-usuario .offcanvas-header {
+    border-bottom: 1px solid #151515;
+}
+
+
+.menu-usuario .offcanvas-title {
+    font-family: "Special Gothic Expanded One", sans-serif;
+    font-size: 20px;
+}
+
+
+.menu-link {
+    display: block;
+
+    color: #AAAAAA;
+
+    text-decoration: none;
+
+    font-size: 17px;
+
+    padding: 15px 6px;
+
+    border-bottom: 1px solid #101010;
+}
+
+
+.menu-link:hover {
+    color: #FFFFFF;
+}
+
+
+.menu-link.cerrar {
+    color: #FF1E25;
+}
+
+
+/* contenido */
+
+.usuario-content {
+    min-height: calc(100vh - 72px);
+
+    background-color: #000000;
+
+    padding: 38px 42px 55px;
+}
+
+
+/* presentacion */
+
+.presentacion {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+
+.perfil {
+    display: flex;
+
+    align-items: center;
+
+    gap: 30px;
+}
+
+
+.foto-usuario {
+    width: 74px;
+    height: 74px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    background-color: #020202;
+}
+
+
+.perfil h1 {
+    margin: 0;
+
+    color: #6B2CFF;
+
+    font-family: "Special Gothic Expanded One", sans-serif;
+
+    font-size: 32px;
+
+    font-style: italic;
+
+    font-weight: normal;
+}
+
+
+.cerrar-sesion {
+    border: none;
+
+    border-radius: 5px;
+
+    background-color: #E00000;
+
+    color: #FFFFFF;
+
+    font-size: 14px;
+
+    padding: 10px 22px;
+}
+
+
+.cerrar-sesion:hover {
+    background-color: #B80000;
+}
+
+
+/* linea */
+
+.linea {
+    width: 100%;
+
+    height: 1px;
+
+    background-color: #171717;
+
+    margin: 19px 0;
+}
+
+
+/* membresia */
+
+.informacion-membresia {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 36px;
+}
+
+
+.dato-membresia {
+    min-height: 58px;
+
+    padding: 8px 13px;
+
+    border: 1px solid #777777;
+
+    border-radius: 5px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+
+.dato-titulo {
+    color: #FFFFFF;
+
+    font-size: 13px;
+
+    line-height: 1.1;
+}
+
+
+.dato-valor {
+    color: #C88CFF;
+
+    font-size: 14px;
+
+    margin-top: 6px;
+}
+
+
+/* titulos de seccion */
+
+.seccion-rutinas h2,
+.seccion-clases h2 {
+    margin: 32px 0 18px;
+
+    color: #FFFFFF;
+
+    font-family: "Special Gothic Expanded One", sans-serif;
+
+    font-size: 23px;
+
+    font-weight: normal;
+}
+
+
+/* rutina */
+
+.rutina {
+    width: 220px;
+}
+
+
+.imagen-rutina {
+    width: 220px;
+    height: 72px;
+
+    border-radius: 5px;
+
+    background-color: #D7D7D7;
+
+    border: 1px solid #A25CFF;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #000000;
+
+    font-size: 9px;
+}
+
+
+.rutina-info {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    position: relative;
+}
+
+
+.nombre-rutina {
+    color: #FFFFFF;
+
+    font-size: 14px;
+
+    font-style: italic;
+
+    font-weight: 600;
+
+    margin-top: 7px;
+}
+
+
+.boton-ver {
+    align-self: flex-end;
+
+    border: none;
+
+    border-radius: 4px;
+
+    background-color: #6B2CFF;
+
+    color: #FFFFFF;
+
+    font-size: 10px;
+
+    padding: 5px 15px;
+
+    margin-top: 4px;
+}
+
+
+.boton-ver:hover {
+    background-color: #A25CFF;
+}
+
+
+/* clases */
+
+.clases {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 26px;
+
+    max-width: 720px;
+}
+
+
+.clase {
+    min-height: 55px;
+
+    padding: 9px 14px;
+
+    border: 1px solid #555555;
+
+    border-radius: 5px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+
+.nombre-clase {
+    color: #FFFFFF;
+
+    font-size: 13px;
+}
+
+
+.horario-clase {
+    color: #C88CFF;
+
+    font-size: 14px;
+
+    margin-top: 5px;
+}
+
+
+/* sacar menu hamburguesa en pc */
+
+@media (min-width: 1200px) {
+
+    .boton-menu {
+        display: none !important;
+    }
+
+}
+
+
+.imagen-usuario-header {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    background-color: #020202;
+}

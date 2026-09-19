@@ -1,0 +1,288 @@
+@font-face { 
+    font-family: "Pervitina Dex"; 
+    src: url("../../assets/tipografias/Pervitina-Dex-FFP.ttf") format("truetype"); 
+    font-weight: normal; 
+    font-style: normal; 
+} 
+ 
+:root { 
+    --azul: #1C2BC2; 
+    --negro: #000000; 
+    --panel: #020202; 
+    --morado: #6B2CFF; 
+    --morado-claro: #A25CFF; 
+    --blanco: #FFFFFF; 
+    --gris: #777777; 
+} 
+ 
+* { 
+    box-sizing: border-box; 
+} 
+ 
+html, 
+body { 
+    margin: 0; 
+    padding: 0; 
+    background-color: var(--negro); 
+} 
+ 
+body { 
+    color: var(--blanco); 
+    font-family: "TASA Explorer", sans-serif; 
+} 
+ 
+button, 
+input, 
+select { 
+    font-family: "TASA Explorer", sans-serif; 
+} 
+ 
+button { 
+    cursor: pointer; 
+} 
+ 
+/* Header */ 
+ 
+.admin-header { 
+    width: 100%; 
+    height: 65px; 
+    background-color: var(--azul); 
+    flex-shrink: 0;
+} 
+ 
+.logo { 
+    font-family: "Pervitina Dex", sans-serif; 
+    color: var(--blanco); 
+    font-size: 36px; 
+    line-height: 1; 
+    letter-spacing: -1px; 
+} 
+ 
+.usuario-header { 
+    height: 65px; 
+    gap: 15px; 
+} 
+ 
+.nombre-usuario { 
+    color: var(--blanco); 
+    font-size: 17px; 
+    font-weight: 400; 
+} 
+ 
+.imagen-usuario { 
+    width: 42px; 
+    height: 42px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    background-color: var(--panel); 
+} 
+ 
+/* Botón menú */ 
+ 
+.boton-menu { 
+    width: 28px; 
+    height: 28px; 
+    padding: 0; 
+    border: none; 
+    background-color: transparent; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    gap: 5px; 
+} 
+ 
+.boton-menu span { 
+    display: block; 
+    width: 26px; 
+    height: 3px; 
+    background-color: var(--blanco); 
+    border-radius: 3px; 
+} 
+ 
+/* Contenido */ 
+ 
+.admin-content { 
+    min-height: calc(100vh - 65px); 
+    background-color: var(--negro); 
+} 
+ 
+/* Sidebar */ 
+ 
+.sidebar { 
+    width: 175px; 
+    min-width: 175px; 
+    background-color: var(--panel); 
+    padding: 32px 18px; 
+    border-right: 1px solid #090909; 
+} 
+ 
+.sidebar-section { 
+    margin-bottom: 20px; 
+} 
+ 
+.sidebar-title { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    color: var(--blanco); 
+    font-family: "Special Gothic Expanded One", sans-serif; 
+    font-size: 13px; 
+    margin-bottom: 10px; 
+} 
+ 
+.arrow-button { 
+    width: 22px; 
+    height: 22px; 
+    padding: 0; 
+    border: none; 
+    background-color: transparent; 
+    color: var(--blanco); 
+    font-family: Arial, sans-serif; 
+    font-size: 12px; 
+} 
+ 
+.sidebar-link { 
+    display: block; 
+    color: var(--gris); 
+    text-decoration: none; 
+    font-size: 11px; 
+    padding-left: 5px; 
+    margin-bottom: 8px; 
+} 
+ 
+.sidebar-link::before { 
+    content: "•"; 
+    color: #AAAAAA; 
+    margin-right: 6px; 
+} 
+ 
+.sidebar-link:hover { 
+    color: var(--blanco); 
+} 
+ 
+.sidebar-link.activo { 
+    color: #AAAAAA; 
+} 
+ 
+/* Sidebar móvil */ 
+ 
+.sidebar-mobile { 
+    width: 210px !important; 
+    background-color: var(--panel); 
+    color: var(--blanco); 
+} 
+ 
+.sidebar-mobile .offcanvas-body { 
+    padding: 32px 18px; 
+} 
+ 
+/* Contenido principal */ 
+ 
+.registrar-content { 
+    width: 100%; 
+    min-height: calc(100vh - 65px); 
+    background-color: var(--negro); 
+    padding: 50px; 
+} 
+ 
+/* Formulario */ 
+ 
+.registro-container { 
+    width: 100%; 
+    max-width: 950px; 
+    min-height: 430px; 
+    padding: 28px 32px 24px; 
+    background-color: #050505; 
+    border-radius: 8px; 
+} 
+ 
+.registro-container h1 { 
+    margin: 0; 
+    color: var(--morado); 
+    font-family: "Special Gothic Expanded One", sans-serif; 
+    font-size: 22px; 
+    font-weight: normal; 
+} 
+ 
+.form-line { 
+    width: 100%; 
+    height: 1px; 
+    margin: 10px 0 25px; 
+    background-color: #262626; 
+} 
+ 
+/* Campos */ 
+ 
+.campo { 
+    margin-bottom: 22px; 
+} 
+ 
+.campo label { 
+    display: block; 
+    margin-bottom: 7px; 
+    color: #D5D5D5; 
+    font-size: 13px; 
+} 
+ 
+.campo input, 
+.campo select { 
+    width: 100%; 
+    height: 42px; 
+    padding: 7px 10px; 
+    border: 1px solid #292929; 
+    border-radius: 5px; 
+    outline: none; 
+    background-color: #050505; 
+    color: var(--blanco); 
+    font-size: 13px; 
+} 
+ 
+.campo input:focus, 
+.campo select:focus { 
+    border-color: var(--morado); 
+} 
+ 
+.campo select { 
+    appearance: auto; 
+} 
+ 
+/* Botones */ 
+ 
+.form-line-final { 
+    margin-top: 10px; 
+    margin-bottom: 20px; 
+} 
+ 
+.form-buttons { 
+    display: flex; 
+    justify-content: flex-end; 
+    gap: 12px; 
+} 
+ 
+.form-buttons button { 
+    height: 38px; 
+    min-width: 100px; 
+    padding: 6px 18px; 
+    border: none; 
+    border-radius: 5px; 
+    font-size: 13px; 
+} 
+ 
+.btn-cancelar { 
+    background-color: #1C1C1C; 
+    color: var(--gris); 
+} 
+ 
+.btn-guardar { 
+    background-color: #C88CFF; 
+    color: var(--negro); 
+} 
+ 
+.btn-cancelar:hover { 
+    background-color: #252525; 
+    color: #AAAAAA; 
+} 
+ 
+.btn-guardar:hover { 
+    background-color: var(--morado-claro); 
+}
