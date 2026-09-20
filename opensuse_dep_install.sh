@@ -1,10 +1,6 @@
 sudo zypper refresh #Se actualiza la información de los repositorios de descarga
-echo -e "\e[1;32mInstalando rclone\e[0m"
-sudo zypper -n install -y rclone #Instalar rclone para hacer backups a BackBlaze
 echo -e "\e[1;32mInstalando mariadb\e[0m"
 sudo zypper -n install -y mariadb #Instalar MariaDB como base de datos a ser usada
-echo -e "\e[1;32mInstalando vsftpd (ftp)\e[0m"
-sudo zypper -n install -y vsftpd #Instalar servicio de ftp para OpenSUSE
 echo -e "\e[1;32mInstalando phpMyAdmin\e[0m"
 sudo zypper -n install -y phpMyAdmin #Instalar phpMyAdmin para facilitar la gestión de la base de datos
 echo -e "\e[1;32mInstalando apache2\e[0m"
