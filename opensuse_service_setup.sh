@@ -21,9 +21,9 @@ while :; do
 		*) continue ;;
 	esac
 done
-sudo mariadb -e "CREATE DATABASE `$newdb` CHARACTER SET utf8mb4;"
+sudo mariadb -e "CREATE DATABASE \`$newdb\` CHARACTER SET utf8mb4;" && sudo mariadb -u root "$newdb" < /srv/www/htdocs/api/config/init.sql;
 sudo mariadb -e "CREATE USER '$newuser'@'localhost' IDENTIFIED BY '$newpass';"
-sudo mariadb -e "GRANT ALL PRIVILEGES ON `$newdb`.* TO '$newuser'@'localhost';"
+sudo mariadb -e "GRANT ALL PRIVILEGES ON \`$newdb\`.* TO '$newuser'@'localhost';"
 sudo mariadb -e "FLUSH PRIVILEGES;"
 printf "DB_HOST=localhost\nDB_NAME=$newdb\nDB_USER=$newuser\nDB_PASS=$newpass" | sudo tee /srv/www/htdocs/api/.env
 exit 0
