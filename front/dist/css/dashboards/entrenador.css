@@ -7,113 +7,15 @@
 }
 
 :root {
-    --azul: #1C2BC2;
-    --negro: #000000;
-    --panel: #020202;
+    --color-primario: #1C2BC2;
+    --color-negro:#000;
+    --color-fondo:#050608;
     --fila: #101010;
-    --morado: #6B2CFF;
-    --morado-claro: #A25CFF;
-    --blanco: #FFFFFF;
-    --gris: #777777;
+    --color-secundario:#4A28C4: #6B2CFF;
+    --color-terciario: #A25CFF;
+    --color-blanco: #FFFFFF;
+    --color-gris: #777777;
 }
-
-
-/* general */
-
-* {
-    box-sizing: border-box;
-}
-
-html,
-body {
-    background-color: #000000;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    color: #FFFFFF;
-    font-family: "TASA Explorer", sans-serif;
-}
-
-button,
-input,
-select {
-    font-family: "TASA Explorer", sans-serif;
-}
-
-button {
-    cursor: pointer;
-}
-
-
-/* header */
-
-.entrenador-header {
-    width: 100%;
-    height: 64px;
-    background-color: #1C2BC2;
-}
-
-
-/* logo */
-
-.logo {
-    font-family: "Pervitina Dex", sans-serif;
-    color: #FFFFFF;
-    font-size: 36px;
-    line-height: 1;
-    letter-spacing: -1px;
-}
-
-
-/* usuario */
-
-.usuario-header {
-    height: 64px;
-    gap: 14px;
-}
-
-.nombre-usuario {
-    color: #FFFFFF;
-    font-family: "TASA Explorer", sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-}
-
-.imagen-usuario {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    object-fit: cover;
-    background-color: #020202;
-}
-
-
-/* boton menu */
-
-.boton-menu {
-    width: 28px;
-    height: 28px;
-    padding: 0;
-    border: none;
-    background-color: transparent;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-}
-
-.boton-menu span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background-color: #FFFFFF;
-    border-radius: 3px;
-}
-
-
 /* contenido */
 
 .entrenador-content {
