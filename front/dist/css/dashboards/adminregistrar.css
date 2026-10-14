@@ -26,42 +26,42 @@ button {
  
 /* Ajustes del panel de registro sobre los estilos comunes. */
 
-.sidebar {
+.barra-lateral {
     width: 175px;
     min-width: 175px;
     padding: 32px 18px;
 }
 
-.sidebar-section {
+.seccion-barra-lateral {
     margin-bottom: 20px;
 }
 
-.sidebar-title {
+.titulo-barra-lateral {
     margin-bottom: 10px;
 }
 
-.arrow-button {
+.boton-flecha {
     width: 22px;
     height: 22px;
     color: var(--blanco);
 }
 
-.sidebar-link {
+.enlace-barra-lateral {
     font-size: 11px;
     padding-left: 5px;
     margin-bottom: 8px;
 }
 
-.sidebar-link::before {
+.enlace-barra-lateral::before {
     margin-right: 6px;
 }
 
-.sidebar-mobile {
+.barra-lateral-movil {
     width: 210px !important;
     background-color: var(--panel);
 }
 
-.sidebar-mobile .offcanvas-body {
+.barra-lateral-movil .offcanvas-body {
     padding: 32px 18px;
 }
 

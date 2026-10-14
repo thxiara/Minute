@@ -5,20 +5,20 @@
     background-color: #000000;
 }
 
-.sidebar {
+.barra-lateral {
     width: 165px;
     min-width: 165px;
 }
 
-.sidebar-section {
+.seccion-barra-lateral {
     margin-bottom: 12px;
 }
 
-.sidebar-title {
+.titulo-barra-lateral {
     margin-bottom: 8px;
 }
 
-.sidebar-link {
+.enlace-barra-lateral {
     padding-left: 4px;
     margin-bottom: 6px;
 }

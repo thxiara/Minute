@@ -48,7 +48,7 @@ body {
         opacity: 1 !important;
     }
 
-    .sidebar {
+    .barra-lateral {
         display: none !important;
     }
 
@@ -59,7 +59,7 @@ body {
         margin: 0 !important;
     }
 
-    .sidebar-mobile {
+    .barra-lateral-movil {
         width: 200px !important;
         max-width: 80%;
     }
@@ -372,12 +372,12 @@ body {
 
     /* MENU LATERAL */
 
-    .sidebar-mobile {
+    .barra-lateral-movil {
         width: 190px !important;
         max-width: 80%;
     }
 
-    .sidebar-mobile .offcanvas-body {
+    .barra-lateral-movil .offcanvas-body {
         padding: 25px 14px;
     }
 }
@@ -395,11 +395,11 @@ body {
         opacity: 0 !important;
     }
 
-    .sidebar {
+    .barra-lateral {
         display: block !important;
     }
 
-    .sidebar-mobile {
+    .barra-lateral-movil {
         display: none !important;
     }
 

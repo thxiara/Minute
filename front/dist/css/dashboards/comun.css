@@ -1,4 +1,4 @@
-.sidebar {
+.barra-lateral {
     width: 155px;
     min-width: 155px;
     background-color: #020202;
@@ -6,11 +6,11 @@
     border-right: 1px solid #090909;
 }
 
-.sidebar-section {
+.seccion-barra-lateral {
     margin-bottom: 14px;
 }
 
-.sidebar-title {
+.titulo-barra-lateral {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -20,7 +20,7 @@
     margin-bottom: 9px;
 }
 
-.arrow-button {
+.boton-flecha {
     width: 20px;
     height: 20px;
     padding: 0;
@@ -31,7 +31,7 @@
     font-size: 12px;
 }
 
-.sidebar-link {
+.enlace-barra-lateral {
     display: block;
     color: var(--color-gris);
     text-decoration: none;
@@ -41,26 +41,26 @@
     margin-bottom: 7px;
 }
 
-.sidebar-link::before {
+.enlace-barra-lateral::before {
     content: "•";
     color: #AAAAAA;
     margin-right: 5px;
 }
 
-.sidebar-link:hover {
+.enlace-barra-lateral:hover {
     color: var(--color-blanco);
 }
 
-.sidebar-link.activo {
+.enlace-barra-lateral.activo {
     color: #AAAAAA;
 }
 
-.sidebar-mobile {
+.barra-lateral-movil {
     width: 175px !important;
     background-color: #020202;
     color: var(--color-blanco);
 }
 
-.sidebar-mobile .offcanvas-body {
+.barra-lateral-movil .offcanvas-body {
     padding: 30px 14px;
 }
