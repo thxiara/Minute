@@ -1,20 +1,3 @@
-@font-face {
-    font-family: "Pervitina Dex";
-    src: url("../../assets/tipografías/Pervitina-Dex-FFP.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-}
-
-:root {
-    --color-primario: #1C2BC2;
-    --color-negro:#000;
-    --color-fondo:#050608;
-    --fila: #101010;
-    --color-secundario:#4A28C4: #6B2CFF;
-    --color-terciario: #A25CFF;
-    --color-blanco: #FFFFFF;
-    --color-gris: #777777;
-}
 /* contenido */
 
 .profesor-content {
@@ -22,106 +5,22 @@
     background-color: #000000;
 }
 
-
-/* sidebar */
-
 .sidebar {
     width: 165px;
     min-width: 165px;
-
-    background-color: #020202;
-
-    padding: 30px 14px;
-
-    border-right: 1px solid #090909;
 }
 
 .sidebar-section {
     margin-bottom: 12px;
 }
 
-
-/* titulos del sidebar */
-
 .sidebar-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    color: #FFFFFF;
-
-    font-family: "Special Gothic Expanded One", sans-serif;
-
-    font-size: 13px;
-
     margin-bottom: 8px;
 }
 
-.arrow-button {
-    width: 20px;
-    height: 20px;
-
-    padding: 0;
-
-    border: none;
-
-    background-color: transparent;
-
-    color: #FFFFFF;
-
-    font-family: Arial, sans-serif;
-
-    font-size: 12px;
-}
-
-
-/* links del sidebar */
-
 .sidebar-link {
-    display: block;
-
-    color: #777777;
-
-    text-decoration: none;
-
-    font-family: "TASA Explorer", sans-serif;
-
-    font-size: 10px;
-
     padding-left: 4px;
-
     margin-bottom: 6px;
-}
-
-.sidebar-link::before {
-    content: "•";
-
-    color: #AAAAAA;
-
-    margin-right: 5px;
-}
-
-.sidebar-link:hover {
-    color: #FFFFFF;
-}
-
-.sidebar-link.activo {
-    color: #AAAAAA;
-}
-
-
-/* sidebar mobile */
-
-.sidebar-mobile {
-    width: 175px !important;
-
-    background-color: #020202;
-
-    color: #FFFFFF;
-}
-
-.sidebar-mobile .offcanvas-body {
-    padding: 30px 14px;
 }
 
 

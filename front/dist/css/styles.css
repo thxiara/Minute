@@ -15,8 +15,18 @@
     --color-fondo:#050608;
     --color-primario:#1C2BC2;
     --color-secundario:#4A28C4;
+    --color-terciario:#A25CFF;
     --color-blanco:#fff;
     --color-negro:#000;
+    --fila:#101010;
+    --color-gris:#777777;
+    --azul:var(--color-primario);
+    --negro:var(--color-negro);
+    --panel:#020202;
+    --morado:#6B2CFF;
+    --morado-claro:var(--color-terciario);
+    --blanco:var(--color-blanco);
+    --gris:var(--color-gris);
 }
 
 

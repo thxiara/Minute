@@ -1,20 +1,3 @@
-@font-face {
-    font-family: "Pervitina Dex";
-    src: url("../../assets/tipografías/Pervitina-Dex-FFP.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-}
-
-:root {
-    --azul: #1C2BC2;
-    --negro: #000000;
-    --panel: #020202;
-    --fila: #101010;
-    --morado: #6B2CFF;
-    --morado-claro: #A25CFF;
-    --blanco: #FFFFFF;
-    --gris: #777777;
-}
 /* menu lateral */
 
 .menu-usuario {
