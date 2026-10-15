@@ -64,3 +64,33 @@
 .barra-lateral-movil .offcanvas-body {
     padding: 30px 14px;
 }
+
+.boton-menu {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: #FFFFFF;
+    box-shadow: none;
+    appearance: none;
+}
+
+.boton-menu span {
+    display: block;
+    width: 23px;
+    height: 2px;
+    flex: 0 0 2px;
+    border-radius: 2px;
+    background-color: currentColor;
+}
+
+.boton-menu:focus-visible {
+    outline: 2px solid #FFFFFF;
+    outline-offset: 3px;
+}

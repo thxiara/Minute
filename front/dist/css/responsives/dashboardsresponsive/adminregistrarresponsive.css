@@ -326,4 +326,37 @@ body {
 
 }
 
+@media (max-width: 575px) {
+    .registro-container {
+        padding: 20px !important;
+    }
+
+    .registro-container h1 {
+        font-size: 22px;
+        line-height: 1.25;
+    }
+
+    .campo label {
+        font-size: 13px;
+        margin-bottom: 7px;
+    }
+
+    .campo input,
+    .campo select {
+        height: 42px;
+        padding: 8px 10px;
+        font-size: 16px;
+    }
+
+    .form-buttons {
+        justify-content: stretch;
+    }
+
+    .form-buttons button {
+        flex: 1;
+        height: 42px;
+        min-width: 0;
+        font-size: 13px;
+    }
+}
 
