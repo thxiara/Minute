@@ -85,7 +85,9 @@ class AuthController
         $_SESSION['email'] = $user['email'];
         $_SESSION['role_id'] = (int) $user['role_id'];
 
-        Response::json(true, 'Inicio de sesión exitoso.');
+        Response::json(true, 'Inicio de sesión exitoso.', [
+            'role_id' => (int) $user['role_id'],
+        ]);
     }
 
     public function me(): void
