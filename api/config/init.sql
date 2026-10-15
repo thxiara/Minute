@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `Client` (
     `fr_role`       INT NOT NULL,
     `phone`         INT,
     `name_client`   VARCHAR(50) NOT NULL,
-    `C.I`           VARCHAR(20) NOT NULL UNIQUE,
+    `ci`           VARCHAR(20) NOT NULL UNIQUE,
     CONSTRAINT `fk_client_credentials`
         FOREIGN KEY (`fr_credentials`) REFERENCES `Credentials`(`id_credentials`)
         ON DELETE CASCADE ON UPDATE CASCADE,

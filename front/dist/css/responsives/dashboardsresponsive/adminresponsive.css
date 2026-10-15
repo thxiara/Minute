@@ -274,7 +274,7 @@ body {
     }
 
     .tabla-socios tbody td:nth-child(2)::before {
-        content: "C.I";
+        content: "ci";
         display: block;
         margin-bottom: 6px;
         color: #bd8bf8;
