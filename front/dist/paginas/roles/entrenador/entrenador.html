@@ -7,13 +7,19 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>FitPower - Vista Profesor</title>
+    <title>FitPower - Vista Entrenador</title>
+
+
+    <!-- boostrap -->
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
 
+
+    <!-- google fons -->
+
     <link
         rel="preconnect"
         href="https://fonts.googleapis.com"
@@ -21,7 +27,7 @@
 
     <link
         rel="preconnect"
-        href="https://fonts.googleapis.com"
+        href="https://fonts.gstatic.com"
         crossorigin
     >
 
@@ -30,14 +36,19 @@
         rel="stylesheet"
     >
 
+
+    <!-- css -->
+     <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/dashboards/comun.css">
+
     <link
         rel="stylesheet"
-        href="../../../css/dashboards/profesor.css"
+        href="../../../css/dashboards/entrenador.css"
     >
 
     <link
         rel="stylesheet"
-        href="../../../css/responsives/dashboardsresponsive/profesorresponsive.css"
+        href="../../../css/responsives/dashboardsresponsive/entrenadorresponsive.css"
     >
 
 </head>
@@ -45,32 +56,25 @@
 
 <body>
 
-    <div class="container-fluid profesor-page p-0">
+    <div class="container-fluid entrenador-page p-0">
+        <header>
 
-        <header class="profesor-header">
+            <div class="container-fluid">
 
-            <div class="container-fluid h-100">
+                <div class="d-flex justify-content-between align-items-center header-contenido">
 
-                <div class="row h-100 align-items-center">
+                     <h1 class="logo">
+                        <a href="../../../../index.html">FitPower</a>
+                    </h1>
 
-                    <div class="col">
+                    <div class="header-derecha">
 
-                        <div class="logo">
-                            FitPower
-                        </div>
-
-                    </div>
-
-
-                    <div class="col-auto">
-
-                        <div class="usuario-header d-flex align-items-center">
-
-                            <span class="nombre-usuario">
+                            <span class="header-text">
                                 Nombre Apellido
                             </span>
 
-                            <img src="../../../assets/imágenes/img6.jpg" alt="Usuario" class="imagen-usuario">
+                                <img
+                                src="../../../assets/imágenes/img6.jpg" class="usuario-header" alt="Usuario">
 
                             <button
                                 class="boton-menu"
@@ -78,15 +82,12 @@
                                 data-bs-toggle="offcanvas"
                                 data-bs-target="#menuLateral"
                                 aria-controls="menuLateral"
+                                aria-label="Abrir menú"
                             >
-
                                 <span></span>
                                 <span></span>
                                 <span></span>
-
                             </button>
-
-                        </div>
 
                     </div>
 
@@ -96,25 +97,31 @@
 
         </header>
 
+        <!-- contenido -->
 
-        <div class="row g-0 profesor-content">
+        <div class="row g-0 entrenador-content">
 
 
-            <aside class="col-md-auto sidebar d-none d-md-block">
+            <!-- bider dekstop-->
 
-                <div class="sidebar-section">
+            <aside class="col-md-auto barra-lateral d-none d-md-block">
 
-                    <div class="sidebar-title">
+
+                <!-- socios -->
+
+                <div class="seccion-barra-lateral">
+
+                    <div class="titulo-barra-lateral">
 
                         <span>
-                            Alumnos
+                            Socios
                         </span>
 
                         <button
-                            class="arrow-button"
+                            class="boton-flecha"
                             type="button"
                             data-bs-toggle="collapse"
-                            data-bs-target="#alumnosMenu"
+                            data-bs-target="#sociosMenu"
                             aria-expanded="true"
                         >
                             V
@@ -125,12 +132,20 @@
 
                     <div
                         class="collapse show"
-                        id="alumnosMenu"
+                        id="sociosMenu"
                     >
 
                         <a
                             href="#"
-                            class="sidebar-link activo"
+                            class="enlace-barra-lateral"
+                        >
+                            Nuevo socio
+                        </a>
+
+
+                        <a
+                            href="#"
+                            class="enlace-barra-lateral activo"
                         >
                             Socios activos
                         </a>
@@ -140,19 +155,22 @@
                 </div>
 
 
-                <div class="sidebar-section">
 
-                    <div class="sidebar-title">
+                <!-- entrenamientos -->
+
+                <div class="seccion-barra-lateral">
+
+                    <div class="titulo-barra-lateral">
 
                         <span>
-                            Clases
+                            Entrenamientos
                         </span>
 
                         <button
-                            class="arrow-button"
+                            class="boton-flecha"
                             type="button"
                             data-bs-toggle="collapse"
-                            data-bs-target="#clasesMenu"
+                            data-bs-target="#entrenamientosMenu"
                             aria-expanded="false"
                         >
                             &lt;
@@ -163,21 +181,22 @@
 
                     <div
                         class="collapse"
-                        id="clasesMenu"
+                        id="entrenamientosMenu"
                     >
 
                         <a
                             href="#"
-                            class="sidebar-link"
+                            class="enlace-barra-lateral"
                         >
-                            Mis clases
+                            Nuevo entrenamiento
                         </a>
+
 
                         <a
                             href="#"
-                            class="sidebar-link"
+                            class="enlace-barra-lateral"
                         >
-                            Horarios
+                            Entrenamientos activos
                         </a>
 
                     </div>
@@ -187,27 +206,33 @@
             </aside>
 
 
+
+            <!--menu mobile -->
+
             <div
-                class="offcanvas offcanvas-start sidebar-mobile"
+                class="offcanvas offcanvas-start barra-lateral-movil"
                 tabindex="-1"
                 id="menuLateral"
             >
 
                 <div class="offcanvas-body">
 
-                    <div class="sidebar-section">
 
-                        <div class="sidebar-title">
+                    <!-- socios -->
+
+                    <div class="seccion-barra-lateral">
+
+                        <div class="titulo-barra-lateral">
 
                             <span>
-                                Alumnos
+                                Socios
                             </span>
 
                             <button
-                                class="arrow-button"
+                                class="boton-flecha"
                                 type="button"
                                 data-bs-toggle="collapse"
-                                data-bs-target="#alumnosMobile"
+                                data-bs-target="#sociosMobile"
                                 aria-expanded="true"
                             >
                                 V
@@ -218,12 +243,20 @@
 
                         <div
                             class="collapse show"
-                            id="alumnosMobile"
+                            id="sociosMobile"
                         >
 
                             <a
                                 href="#"
-                                class="sidebar-link activo"
+                                class="enlace-barra-lateral"
+                            >
+                                Nuevo socio
+                            </a>
+
+
+                            <a
+                                href="#"
+                                class="enlace-barra-lateral activo"
                             >
                                 Socios activos
                             </a>
@@ -233,19 +266,22 @@
                     </div>
 
 
-                    <div class="sidebar-section">
 
-                        <div class="sidebar-title">
+                    <!-- entrenamientos -->
+
+                    <div class="seccion-barra-lateral">
+
+                        <div class="titulo-barra-lateral">
 
                             <span>
-                                Clases
+                                Entrenamientos
                             </span>
 
                             <button
-                                class="arrow-button"
+                                class="boton-flecha"
                                 type="button"
                                 data-bs-toggle="collapse"
-                                data-bs-target="#clasesMobile"
+                                data-bs-target="#entrenamientosMobile"
                                 aria-expanded="false"
                             >
                                 &lt;
@@ -256,21 +292,22 @@
 
                         <div
                             class="collapse"
-                            id="clasesMobile"
+                            id="entrenamientosMobile"
                         >
 
                             <a
                                 href="#"
-                                class="sidebar-link"
+                                class="enlace-barra-lateral"
                             >
-                                Mis clases
+                                Nuevo entrenamiento
                             </a>
+
 
                             <a
                                 href="#"
-                                class="sidebar-link"
+                                class="enlace-barra-lateral"
                             >
-                                Horarios
+                                Entrenamientos activos
                             </a>
 
                         </div>
@@ -282,21 +319,35 @@
             </div>
 
 
+
+            <!-- contenido principal -->
+
             <main class="col main-content">
+
+
+                <!-- titulo -->
 
                 <div class="content-title">
 
                     <h1>
-                        Alumnos Activos
+                        Socios Activos
                     </h1>
 
                 </div>
 
 
-                <div class="students-container">
 
+                <!-- tabla -->
+
+                <div class="members-container">
+
+
+                    <!-- parte de arriba -->
 
                     <div class="d-flex justify-content-between align-items-center table-top">
+
+
+                        <!-- registros -->
 
                         <div class="registros">
 
@@ -323,11 +374,15 @@
                         </div>
 
 
+
+                        <!-- Buscador -->
+
                         <div class="search">
 
                             <input
                                 type="text"
                                 aria-label="Buscar"
+                                placeholder="Buscar socios"
                             >
 
                             <button
@@ -342,9 +397,15 @@
                     </div>
 
 
+
+                    <!-- tabla -->
+
                     <div class="table-responsive">
 
-                        <table class="table tabla-alumnos">
+                        <table class="table tabla-socios">
+
+
+                            <!-- encabezados -->
 
                             <thead>
 
@@ -355,11 +416,15 @@
                                     </th>
 
                                     <th>
+                                        C.I
+                                    </th>
+
+                                    <th>
                                         Cel.
                                     </th>
 
                                     <th>
-                                        Desempeño(Mes)
+                                        Vencimiento
                                     </th>
 
                                     <th>
@@ -375,7 +440,13 @@
                             </thead>
 
 
+
+                            <!-- cuerpo -->
+
                             <tbody>
+
+
+                                <!-- socio 1 -->
 
                                 <tr>
 
@@ -384,14 +455,29 @@
                                     <td></td>
 
                                     <td></td>
+
+                                    <td></td>
+
+
+                                    <!-- nota -->
 
                                     <td class="nota">
 
-                                        <button type="button" class="leer-mas">
-                                            leer más
-                                        </button>
+                                        <span class="nota-titulo"></span>
+
+                                        <span class="nota-texto"></span>
+
+                                        <a
+                                            href="#"
+                                            class="leer-mas"
+                                        >
+                                            Leer más
+                                        </a>
 
                                     </td>
+
+
+                                    <!-- acciones -->
 
                                     <td class="acciones">
 
@@ -411,18 +497,21 @@
                                                     ●
                                                 </span>
 
-                                                Ver perfil
+                                                Ver/editar perfil
 
                                             </button>
 
 
-                                            <button type="button">
+                                            <button
+                                                type="button"
+                                                class="delete"
+                                            >
 
-                                                <span class="icono-evaluacion">
-                                                    ◆
+                                                <span>
+                                                    ⊗
                                                 </span>
 
-                                                Dar evaluación
+                                                Dar de baja
 
                                             </button>
 
@@ -432,13 +521,40 @@
 
                                 </tr>
 
+
+
+                                <!-- socio 2 -->
 
                                 <tr>
 
                                     <td></td>
+
                                     <td></td>
+
                                     <td></td>
+
                                     <td></td>
+
+
+                                    <!-- nota -->
+
+                                    <td class="nota">
+
+                                        <span class="nota-titulo"></span>
+
+                                        <span class="nota-texto"></span>
+
+                                        <a
+                                            href="#"
+                                            class="leer-mas"
+                                        >
+                                            Leer más
+                                        </a>
+
+                                    </td>
+
+
+                                    <!-- acciones -->
 
                                     <td class="acciones">
 
@@ -458,18 +574,21 @@
                                                     ●
                                                 </span>
 
-                                                Ver perfil
+                                                Ver/editar perfil
 
                                             </button>
 
 
-                                            <button type="button">
+                                            <button
+                                                type="button"
+                                                class="delete"
+                                            >
 
-                                                <span class="icono-evaluacion">
-                                                    ◆
+                                                <span>
+                                                    ⊗
                                                 </span>
 
-                                                Dar evaluación
+                                                Dar de baja
 
                                             </button>
 
@@ -478,6 +597,7 @@
                                     </td>
 
                                 </tr>
+
 
                             </tbody>
 
@@ -485,6 +605,9 @@
 
                     </div>
 
+
+
+                    <!-- paginacion -->
 
                     <div class="pagination">
 
@@ -507,12 +630,18 @@
     </div>
 
 
+
+    <!-- boostrap js -->
+
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
     </script>
 
 
-    <script src="../../../js/dashboard/profesor.js"></script>
+
+    <!--funciones -->
+
+   <script src="../../../js/dashboard/entrenador.js"></script>
 
 
 </body>

@@ -1,0 +1,96 @@
+.barra-lateral {
+    width: 155px;
+    min-width: 155px;
+    background-color: #020202;
+    padding: 30px 14px;
+    border-right: 1px solid #090909;
+}
+
+.seccion-barra-lateral {
+    margin-bottom: 14px;
+}
+
+.titulo-barra-lateral {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--color-blanco);
+    font-family: "Special Gothic Expanded One", sans-serif;
+    font-size: 13px;
+    margin-bottom: 9px;
+}
+
+.boton-flecha {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: var(--color-blanco);
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+}
+
+.enlace-barra-lateral {
+    display: block;
+    color: var(--color-gris);
+    text-decoration: none;
+    font-family: "TASA Explorer", sans-serif;
+    font-size: 10px;
+    padding-left: 5px;
+    margin-bottom: 7px;
+}
+
+.enlace-barra-lateral::before {
+    content: "•";
+    color: #AAAAAA;
+    margin-right: 5px;
+}
+
+.enlace-barra-lateral:hover {
+    color: var(--color-blanco);
+}
+
+.enlace-barra-lateral.activo {
+    color: #AAAAAA;
+}
+
+.barra-lateral-movil {
+    width: 175px !important;
+    background-color: #020202;
+    color: var(--color-blanco);
+}
+
+.barra-lateral-movil .offcanvas-body {
+    padding: 30px 14px;
+}
+
+.boton-menu {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: #FFFFFF;
+    box-shadow: none;
+    appearance: none;
+}
+
+.boton-menu span {
+    display: block;
+    width: 23px;
+    height: 2px;
+    flex: 0 0 2px;
+    border-radius: 2px;
+    background-color: currentColor;
+}
+
+.boton-menu:focus-visible {
+    outline: 2px solid #FFFFFF;
+    outline-offset: 3px;
+}
