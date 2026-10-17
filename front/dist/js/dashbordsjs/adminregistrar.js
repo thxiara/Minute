@@ -1,18 +1,36 @@
-document.querySelectorAll(".boton-flecha").forEach(button => {
+const roleSelect = document.querySelector("#rol");
+const membershipField = document.querySelector("#membershipField");
+const membershipLabel = document.querySelector("#membershipLabel");
+const membershipSelect = document.querySelector("#plan");
+const formTitle = document.querySelector("#formTitle");
 
-    button.addEventListener("click", function() {
+const membershipOptions = [
+    ["basico", "Básico"],
+    ["pro", "Pro"],
+    ["premium", "Premium"]
+];
 
-        setTimeout(() => {
+const classOptions = [
+    ["zumba", "zumba — Lun. y mié., 18:00"],
+    ["yoga", "Yoga — Mar. y jue., 19:00"]
+];
 
-            const expanded =
-                this.getAttribute("aria-expanded");
+roleSelect.addEventListener("change", () => {
+    const role = roleSelect.value;
+    const roleName = roleSelect.options[roleSelect.selectedIndex].text;
+    const hasMembershipField = role === "socio" || role === "profesor";
+    const isProfessor = role === "profesor";
+    const options = isProfessor ? classOptions : membershipOptions;
 
-            this.innerHTML =
-                expanded === "true" ? "V" : "&lt;";
+    formTitle.textContent = role ? `Nuevo ${roleName.toLowerCase()}` : "Nuevo usuario";
+    membershipField.hidden = !hasMembershipField;
+    membershipSelect.disabled = !hasMembershipField;
+    membershipSelect.required = hasMembershipField;
+    membershipSelect.name = isProfessor ? "clase" : "membresia";
+    membershipLabel.textContent = isProfessor ? "Clase a enseñar *" : "Membresía *";
 
-        }, 50);
-
-    });
-
+    membershipSelect.replaceChildren(
+        new Option(isProfessor ? "Selecciona una clase" : "Selecciona una membresía", ""),
+        ...options.map(([value, label]) => new Option(label, value))
+    );
 });
-
