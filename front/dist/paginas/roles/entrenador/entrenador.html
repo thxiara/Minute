@@ -38,10 +38,17 @@
 
 
     <!-- css -->
+     <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/dashboards/comun.css">
 
     <link
         rel="stylesheet"
         href="../../../css/dashboards/entrenador.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../../../css/responsives/dashboardsresponsive/comunresponsive.css"
     >
 
     <link
@@ -55,47 +62,24 @@
 <body>
 
     <div class="container-fluid entrenador-page p-0">
+        <header>
 
+            <div class="container-fluid">
 
-        <!-- header -->
+                <div class="d-flex justify-content-between align-items-center header-contenido">
 
-        <header class="entrenador-header">
+                     <h1 class="logo">
+                        <a href="../../../../index.html">FitPower</a>
+                    </h1>
 
-            <div class="container-fluid h-100">
+                    <div class="header-derecha">
 
-                <div class="row h-100 align-items-center">
-
-
-                    <!-- logo -->
-
-                    <div class="col">
-
-                        <div class="logo">
-                            FitPower
-                        </div>
-
-                    </div>
-
-
-                    <!-- usuario -->
-
-                    <div class="col-auto">
-
-                        <div class="usuario-header d-flex align-items-center">
-
-                            <span class="nombre-usuario">
+                            <span class="header-text">
                                 Nombre Apellido
                             </span>
 
-
-                            <img
-                                src="../../../assets/imágenes/img6.jpg"
-                                alt="Usuario"
-                                class="imagen-usuario"
-                            >
-
-
-                            <!-- boton menu -->
+                                <img
+                                src="../../../assets/imágenes/img6.jpg" class="usuario-header" alt="Usuario">
 
                             <button
                                 class="boton-menu"
@@ -103,15 +87,12 @@
                                 data-bs-toggle="offcanvas"
                                 data-bs-target="#menuLateral"
                                 aria-controls="menuLateral"
+                                aria-label="Abrir menú"
                             >
-
                                 <span></span>
                                 <span></span>
                                 <span></span>
-
                             </button>
-
-                        </div>
 
                     </div>
 
@@ -121,8 +102,6 @@
 
         </header>
 
-
-
         <!-- contenido -->
 
         <div class="row g-0 entrenador-content">
@@ -130,21 +109,21 @@
 
             <!-- bider dekstop-->
 
-            <aside class="col-md-auto sidebar d-none d-md-block">
+            <aside class="col-md-auto barra-lateral d-none d-md-block">
 
 
                 <!-- socios -->
 
-                <div class="sidebar-section">
+                <div class="seccion-barra-lateral">
 
-                    <div class="sidebar-title">
+                    <div class="titulo-barra-lateral">
 
                         <span>
                             Socios
                         </span>
 
                         <button
-                            class="arrow-button"
+                            class="boton-flecha"
                             type="button"
                             data-bs-toggle="collapse"
                             data-bs-target="#sociosMenu"
@@ -160,18 +139,9 @@
                         class="collapse show"
                         id="sociosMenu"
                     >
-
                         <a
                             href="#"
-                            class="sidebar-link"
-                        >
-                            Nuevo socio
-                        </a>
-
-
-                        <a
-                            href="#"
-                            class="sidebar-link activo"
+                            class="enlace-barra-lateral activo"
                         >
                             Socios activos
                         </a>
@@ -184,16 +154,16 @@
 
                 <!-- entrenamientos -->
 
-                <div class="sidebar-section">
+                <div class="seccion-barra-lateral">
 
-                    <div class="sidebar-title">
+                    <div class="titulo-barra-lateral">
 
                         <span>
                             Entrenamientos
                         </span>
 
                         <button
-                            class="arrow-button"
+                            class="boton-flecha"
                             type="button"
                             data-bs-toggle="collapse"
                             data-bs-target="#entrenamientosMenu"
@@ -212,7 +182,7 @@
 
                         <a
                             href="#"
-                            class="sidebar-link"
+                            class="enlace-barra-lateral"
                         >
                             Nuevo entrenamiento
                         </a>
@@ -220,7 +190,7 @@
 
                         <a
                             href="#"
-                            class="sidebar-link"
+                            class="enlace-barra-lateral"
                         >
                             Entrenamientos activos
                         </a>
@@ -236,7 +206,7 @@
             <!--menu mobile -->
 
             <div
-                class="offcanvas offcanvas-start sidebar-mobile"
+                class="offcanvas offcanvas-start barra-lateral-movil"
                 tabindex="-1"
                 id="menuLateral"
             >
@@ -246,16 +216,16 @@
 
                     <!-- socios -->
 
-                    <div class="sidebar-section">
+                    <div class="seccion-barra-lateral">
 
-                        <div class="sidebar-title">
+                        <div class="titulo-barra-lateral">
 
                             <span>
                                 Socios
                             </span>
 
                             <button
-                                class="arrow-button"
+                                class="boton-flecha"
                                 type="button"
                                 data-bs-toggle="collapse"
                                 data-bs-target="#sociosMobile"
@@ -271,18 +241,9 @@
                             class="collapse show"
                             id="sociosMobile"
                         >
-
                             <a
                                 href="#"
-                                class="sidebar-link"
-                            >
-                                Nuevo socio
-                            </a>
-
-
-                            <a
-                                href="#"
-                                class="sidebar-link activo"
+                                class="enlace-barra-lateral activo"
                             >
                                 Socios activos
                             </a>
@@ -295,16 +256,16 @@
 
                     <!-- entrenamientos -->
 
-                    <div class="sidebar-section">
+                    <div class="seccion-barra-lateral">
 
-                        <div class="sidebar-title">
+                        <div class="titulo-barra-lateral">
 
                             <span>
                                 Entrenamientos
                             </span>
 
                             <button
-                                class="arrow-button"
+                                class="boton-flecha"
                                 type="button"
                                 data-bs-toggle="collapse"
                                 data-bs-target="#entrenamientosMobile"
@@ -323,7 +284,7 @@
 
                             <a
                                 href="#"
-                                class="sidebar-link"
+                                class="enlace-barra-lateral"
                             >
                                 Nuevo entrenamiento
                             </a>
@@ -331,7 +292,7 @@
 
                             <a
                                 href="#"
-                                class="sidebar-link"
+                                class="enlace-barra-lateral"
                             >
                                 Entrenamientos activos
                             </a>
@@ -360,7 +321,6 @@
                     </h1>
 
                 </div>
-
 
 
                 <!-- tabla -->
@@ -408,6 +368,7 @@
                             <input
                                 type="text"
                                 aria-label="Buscar"
+                                placeholder="Buscar socios"
                             >
 
                             <button
@@ -475,22 +436,22 @@
 
                                 <tr>
 
-                                    <td></td>
+                                    <td>Llalala</td>
 
-                                    <td></td>
+                                    <td>1.123.456-7</td>
 
-                                    <td></td>
+                                    <td>012 345 678</td>
 
-                                    <td></td>
+                                    <td>22/11/2026</td>
 
 
                                     <!-- nota -->
 
                                     <td class="nota">
 
-                                        <span class="nota-titulo"></span>
+                                        <span class="nota-titulo">titulo ok</span>
 
-                                        <span class="nota-texto"></span>
+                                        <span class="nota-texto">bien</span>
 
                                         <a
                                             href="#"
@@ -552,22 +513,22 @@
 
                                 <tr>
 
-                                    <td></td>
+                                    <td>Nombre</td>
 
-                                    <td></td>
+                                    <td>1.234.567-8</td>
 
-                                    <td></td>
+                                    <td>123 345 678</td>
 
-                                    <td></td>
+                                    <td>05/12/2026</td>
 
 
                                     <!-- nota -->
 
                                     <td class="nota">
 
-                                        <span class="nota-titulo"></span>
+                                        <span class="nota-titulo">buu horrible</span>
 
-                                        <span class="nota-texto"></span>
+                                        <span class="nota-texto">no se no se</span>
 
                                         <a
                                             href="#"
