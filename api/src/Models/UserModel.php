@@ -48,8 +48,8 @@ class UserModel
                 'name' => $name,
                 'phone' => $phone,
                 'fr_credentials' => $credentialsId,
-                'fr_role' => $roleId, // Assuming a default role
-                'ci' => $ci, // Assuming a default value for ci
+                'fr_role' => $roleId,  
+                'ci' => $ci, 
             ]);
 
             $this->db->commit();
