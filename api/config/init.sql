@@ -25,7 +25,9 @@ CREATE TABLE IF NOT EXISTS `Product` (
     `id_product`   INT AUTO_INCREMENT PRIMARY KEY,
     `name_product` VARCHAR(40) NOT NULL,
     `stock`        INT NOT NULL DEFAULT 0,
-    `price`        DECIMAL(10,2) NOT NULL
+    `price`        DECIMAL(10,2) NOT NULL,
+    `category`      VARCHAR(40) NOT NULL,
+    `media_product` VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `Membership` (
