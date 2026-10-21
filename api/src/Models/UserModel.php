@@ -5,7 +5,7 @@ namespace App\Models;
 class UserModel
 {
     private $db;
-    # Se define la variable db a traves del constructor (el valor se ingresa como parametro al instanciar la clase UserModel).
+
     public function __construct($db)
     {
         $this->db = $db;
@@ -13,15 +13,8 @@ class UserModel
 
     public function existsByEmail(string $email): bool
     {
-        
-        # Es basicamente la misma logica utilizada en la function 'contarClientes' de la clase ClienteModel, 
-        # pero en este caso, al tener un dato variable proveniente del usuario ('email'),
-        # existe la posibilidad de que se haga una inyección de SQL.
         $query = "SELECT id_credentials FROM Credentials WHERE email = :email";
         $stmt = $this->db->prepare($query);
-
-        # Gracias al execute, el placeholder ':email',
-        # es reemplazado por el valor de la variable $email, evitando asi la inyección de SQL.
         $stmt->execute(['email' => $email]);
 
         return (bool) $stmt->fetch(\PDO::FETCH_ASSOC);
@@ -48,8 +41,8 @@ class UserModel
                 'name' => $name,
                 'phone' => $phone,
                 'fr_credentials' => $credentialsId,
-                'fr_role' => $roleId,  
-                'ci' => $ci, 
+                'fr_role' => $roleId, // Assuming a default role
+                'ci' => $ci, // Assuming a default value for ci
             ]);
 
             $this->db->commit();

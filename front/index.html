@@ -42,7 +42,7 @@
                     INICIAR SESIÓN
                 </a>
 
-                <a href="dist/paginas/dashboard/admin/admin.html" id="panelLink" class="registrarse" style="display:none;">
+                <a href="#" id="panelLink" class="registrarse" style="display:none;">
                     MI PANEL
                 </a>
 
@@ -688,10 +688,14 @@
         const panelLink = document.getElementById('panelLink');
         const logoutLink = document.getElementById('logoutLink');
 
-        const esAdmin = sesion.success && sesion.logged_in && sesion.role_id === Session.ROLES.ADMIN;
+        // "Mi panel" lleva al dashboard que le corresponde a cada rol (admin, entrenador, profesor o socio).
+        const panelUrl = sesion.success && sesion.logged_in
+            ? Session.dashboardFor(sesion.role_id)
+            : null;
 
-        if (esAdmin) {
+        if (panelUrl) {
             loginLink.style.display = 'none';
+            panelLink.href = panelUrl;
             panelLink.style.display = '';
             logoutLink.style.display = '';
 

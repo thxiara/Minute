@@ -28,6 +28,22 @@ if (registrarSocioForm) {
         socio: 4
     };
 
+    // La membresía (plan) solo aplica a los socios: para entrenadores y profesores
+    // el campo se oculta y no se exige.
+    const campoPlan = document.getElementById('campoPlan');
+
+    const actualizarCampoPlan = () => {
+        const esSocio = registrarSocioForm.tipo.value === 'socio';
+        campoPlan.hidden = !esSocio;
+        if (!esSocio) {
+            registrarSocioForm.plan.value = '';
+        }
+    };
+
+    registrarSocioForm.tipo.addEventListener('change', actualizarCampoPlan);
+    // 'reset' se dispara antes de que el formulario vuelva a sus valores iniciales.
+    registrarSocioForm.addEventListener('reset', () => setTimeout(actualizarCampoPlan, 0));
+
     registrarSocioForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
@@ -36,6 +52,11 @@ if (registrarSocioForm) {
         const tipoSeleccionado = this.tipo.value;
         if (!tipoSeleccionado) {
             alertContainer.innerHTML = `<div class="alert alert-danger">Seleccioná un tipo de usuario.</div>`;
+            return;
+        }
+
+        if (tipoSeleccionado === 'socio' && !this.plan.value) {
+            alertContainer.innerHTML = `<div class="alert alert-danger">Seleccioná el plan de membresía del socio.</div>`;
             return;
         }
 

@@ -8,12 +8,27 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
         password: this.password.value
     };
 
+    const mostrarError = (mensaje) => {
+        const alerta = document.createElement('div');
+        alerta.className = 'alert alert-danger';
+        alerta.textContent = mensaje;
+        alertContainer.replaceChildren(alerta);
+    };
+
     API.request('/login', 'POST', datos).then((data) => {
-        if (data.success) {
-            alertContainer.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
-            setTimeout(() => window.location.href = '/front/dist/paginas/dashboard/admin/admin.html', 1500);
-        } else {
-            alertContainer.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+        if (!data.success) {
+            mostrarError(data.message);
+            return;
         }
+
+        const destino = Session.dashboardFor(data.role_id);
+
+        if (!destino) {
+            API.request('/logout', 'POST');
+            mostrarError('Tu usuario no tiene un panel asignado.');
+            return;
+        }
+
+        window.location.replace(destino);
     });
 });

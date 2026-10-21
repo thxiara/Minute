@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="verificando-sesion">
 
 <head>
 
@@ -41,13 +41,18 @@
 
     <link
         rel="stylesheet"
-        href="../../../css/dashboards/usuario.css"
+        href="../../../../css/dashboards/usuario.css"
     >
 
     <link
         rel="stylesheet"
-        href="../../../css/responsives/dashboardsresponsive/usuarioresponsive.css"
+        href="../../../../css/responsives/dashboardsresponsive/usuarioresponsive.css"
     >
+
+    <!-- Oculta el panel hasta que Session.requireRole() confirme sesión y rol (ver js/session.js). -->
+    <style>
+        html.verificando-sesion body { visibility: hidden; }
+    </style>
 
 </head>
 
@@ -71,7 +76,7 @@
                     <div class="col">
 
                         <div class="logo">
-                            FitPower
+                            <a href="../../../../../index.html">FitPower</a>
                         </div>
 
                     </div>
@@ -87,7 +92,7 @@
                             <!-- foto del usuario -->
 
                             <img
-                                src="../../../assets/imagenes/img6.jpg"
+                                src="../../../../assets/imagenes/img6.jpg"
                                 alt="Usuario"
                                 class="imagen-usuario-header"
                             >
@@ -202,7 +207,7 @@
                     <!-- foto del perfil -->
 
                     <img
-                        src="../../../assets/imagenes/img6.jpg"
+                        src="../../../../assets/imagenes/img6.jpg"
                         alt="Usuario"
                         class="foto-usuario"
                     >
@@ -388,6 +393,28 @@
 
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+    <script src="../../../../js/api.js"></script>
+    <script src="../../../../js/session.js"></script>
+
+    <script>
+        (async () => {
+            const sesion = await Session.requireRole([Session.ROLES.SOCIO]);
+            if (!sesion) return;
+
+            const saludo = document.querySelector('.perfil h1');
+            if (saludo) {
+                saludo.textContent = `Hola, ${sesion.name}`;
+            }
+
+            document.querySelectorAll('.menu-link.cerrar, .cerrar-sesion').forEach((boton) => {
+                boton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    Session.logout('/front/index.html');
+                });
+            });
+        })();
     </script>
 
 
