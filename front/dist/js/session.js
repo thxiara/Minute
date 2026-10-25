@@ -57,8 +57,8 @@ const Session = {
 
 // Dashboard de cada rol. Si se agrega un rol nuevo, sumarlo acá y en Session.ROLES.
 Session.DASHBOARDS = {
-    [Session.ROLES.ADMIN]:      '/front/dist/paginas/roles/admin/dash/admin.html',
-    [Session.ROLES.ENTRENADOR]: '/front/dist/paginas/roles/entrenador/dash/entrenador.html',
-    [Session.ROLES.PROFESOR]:   '/front/dist/paginas/roles/profesor/dash/profesor.html',
-    [Session.ROLES.SOCIO]:      '/front/dist/paginas/roles/usuario/dash/usuario.html'
+    [Session.ROLES.ADMIN]:      '/front/dist/paginas/roles/admin/admin.html',
+    [Session.ROLES.ENTRENADOR]: '/front/dist/paginas/roles/entrenador/entrenador.html',
+    [Session.ROLES.PROFESOR]:   '/front/dist/paginas/roles/profesor/profesor.html',
+    [Session.ROLES.SOCIO]:      '/front/dist/paginas/roles/usuario/usuario.html'
 };
