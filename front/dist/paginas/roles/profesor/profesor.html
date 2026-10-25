@@ -7,18 +7,12 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>FitPower - Vista Entrenador</title>
-
-
-    <!-- boostrap -->
+    <title>FitPower - Vista Profesor</title>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
-
-
-    <!-- google fons -->
 
     <link
         rel="preconnect"
@@ -27,29 +21,32 @@
 
     <link
         rel="preconnect"
-        href="https://fonts.gstatic.com"
+        href="https://fonts.googleapis.com"
         crossorigin
     >
-
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/dashboards/comun.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&family=TASA+Explorer:wght@400;500;600;700&display=swap"
         rel="stylesheet"
     >
 
-
-    <!-- css -->
-
     <link
         rel="stylesheet"
-        href="../../../../css/dashboards/entrenador.css"
+        href="../../../css/dashboards/profesor.css"
     >
 
     <link
         rel="stylesheet"
-        href="../../../../css/responsives/dashboardsresponsive/entrenadorresponsive.css"
+        href="../../../css/responsives/dashboardsresponsive/comunresponsive.css"
     >
 
-    <!-- Oculta el panel hasta que Session.requireRole() confirme sesión y rol (ver js/session.js). -->
+    <link
+        rel="stylesheet"
+        href="../../../css/responsives/dashboardsresponsive/profesorresponsive.css"
+    >
+
+<!-- Oculta el panel hasta que Session.requireRole() confirme sesión y rol (ver js/session.js). -->
     <style>
         html.verificando-sesion body { visibility: hidden; }
     </style>
@@ -59,48 +56,26 @@
 
 <body>
 
-    <div class="container-fluid entrenador-page p-0">
+    <div class="container-fluid profesor-page p-0">
 
+        <header>
 
-        <!-- header -->
+            <div class="container-fluid">
 
-        <header class="entrenador-header">
+                <div class="d-flex justify-content-between align-items-center header-contenido">
 
-            <div class="container-fluid h-100">
+                     <h1 class="logo">
+                        <a href="../../../../index.html">FitPower</a>
+                    </h1>
 
-                <div class="row h-100 align-items-center">
+                    <div class="header-derecha">
 
-
-                    <!-- logo -->
-
-                    <div class="col">
-
-                        <div class="logo">
-                            FitPower
-                        </div>
-
-                    </div>
-
-
-                    <!-- usuario -->
-
-                    <div class="col-auto">
-
-                        <div class="usuario-header d-flex align-items-center">
-
-                            <span class="nombre-usuario">
+                            <span class="header-text">
                                 Nombre Apellido
                             </span>
 
-
-                            <img
-                                src="../../../../assets/imagenes/img6.jpg"
-                                alt="Usuario"
-                                class="imagen-usuario"
-                            >
-
-
-                            <!-- boton menu -->
+                                <img
+                                src="../../../assets/imágenes/img6.jpg" class="usuario-header" alt="Usuario">
 
                             <button
                                 class="boton-menu"
@@ -108,15 +83,12 @@
                                 data-bs-toggle="offcanvas"
                                 data-bs-target="#menuLateral"
                                 aria-controls="menuLateral"
+                                aria-label="Abrir menú"
                             >
-
                                 <span></span>
                                 <span></span>
                                 <span></span>
-
                             </button>
-
-                        </div>
 
                     </div>
 
@@ -127,32 +99,24 @@
         </header>
 
 
-
-        <!-- contenido -->
-
-        <div class="row g-0 entrenador-content">
+        <div class="row g-0 profesor-content">
 
 
-            <!-- bider dekstop-->
+            <aside class="col-md-auto barra-lateral d-none d-md-block">
 
-            <aside class="col-md-auto sidebar d-none d-md-block">
+                <div class="seccion-barra-lateral">
 
-
-                <!-- socios -->
-
-                <div class="sidebar-section">
-
-                    <div class="sidebar-title">
+                    <div class="titulo-barra-lateral">
 
                         <span>
-                            Socios
+                            Alumnos
                         </span>
 
                         <button
-                            class="arrow-button"
+                            class="boton-flecha"
                             type="button"
                             data-bs-toggle="collapse"
-                            data-bs-target="#sociosMenu"
+                            data-bs-target="#alumnosMenu"
                             aria-expanded="true"
                         >
                             V
@@ -163,20 +127,12 @@
 
                     <div
                         class="collapse show"
-                        id="sociosMenu"
+                        id="alumnosMenu"
                     >
 
                         <a
                             href="#"
-                            class="sidebar-link"
-                        >
-                            Nuevo socio
-                        </a>
-
-
-                        <a
-                            href="#"
-                            class="sidebar-link activo"
+                            class="enlace-barra-lateral activo"
                         >
                             Socios activos
                         </a>
@@ -186,22 +142,19 @@
                 </div>
 
 
+                <div class="seccion-barra-lateral">
 
-                <!-- entrenamientos -->
-
-                <div class="sidebar-section">
-
-                    <div class="sidebar-title">
+                    <div class="titulo-barra-lateral">
 
                         <span>
-                            Entrenamientos
+                            Clases
                         </span>
 
                         <button
-                            class="arrow-button"
+                            class="boton-flecha"
                             type="button"
                             data-bs-toggle="collapse"
-                            data-bs-target="#entrenamientosMenu"
+                            data-bs-target="#clasesMenu"
                             aria-expanded="false"
                         >
                             &lt;
@@ -212,22 +165,21 @@
 
                     <div
                         class="collapse"
-                        id="entrenamientosMenu"
+                        id="clasesMenu"
                     >
 
                         <a
                             href="#"
-                            class="sidebar-link"
+                            class="enlace-barra-lateral"
                         >
-                            Nuevo entrenamiento
+                            Mis clases
                         </a>
-
 
                         <a
                             href="#"
-                            class="sidebar-link"
+                            class="enlace-barra-lateral"
                         >
-                            Entrenamientos activos
+                            Horarios
                         </a>
 
                     </div>
@@ -237,33 +189,27 @@
             </aside>
 
 
-
-            <!--menu mobile -->
-
             <div
-                class="offcanvas offcanvas-start sidebar-mobile"
+                class="offcanvas offcanvas-start barra-lateral-movil"
                 tabindex="-1"
                 id="menuLateral"
             >
 
                 <div class="offcanvas-body">
 
+                    <div class="seccion-barra-lateral">
 
-                    <!-- socios -->
-
-                    <div class="sidebar-section">
-
-                        <div class="sidebar-title">
+                        <div class="titulo-barra-lateral">
 
                             <span>
-                                Socios
+                                Alumnos
                             </span>
 
                             <button
-                                class="arrow-button"
+                                class="boton-flecha"
                                 type="button"
                                 data-bs-toggle="collapse"
-                                data-bs-target="#sociosMobile"
+                                data-bs-target="#alumnosMobile"
                                 aria-expanded="true"
                             >
                                 V
@@ -274,20 +220,12 @@
 
                         <div
                             class="collapse show"
-                            id="sociosMobile"
+                            id="alumnosMobile"
                         >
 
                             <a
                                 href="#"
-                                class="sidebar-link"
-                            >
-                                Nuevo socio
-                            </a>
-
-
-                            <a
-                                href="#"
-                                class="sidebar-link activo"
+                                class="enlace-barra-lateral activo"
                             >
                                 Socios activos
                             </a>
@@ -297,22 +235,19 @@
                     </div>
 
 
+                    <div class="seccion-barra-lateral">
 
-                    <!-- entrenamientos -->
-
-                    <div class="sidebar-section">
-
-                        <div class="sidebar-title">
+                        <div class="titulo-barra-lateral">
 
                             <span>
-                                Entrenamientos
+                                Clases
                             </span>
 
                             <button
-                                class="arrow-button"
+                                class="boton-flecha"
                                 type="button"
                                 data-bs-toggle="collapse"
-                                data-bs-target="#entrenamientosMobile"
+                                data-bs-target="#clasesMobile"
                                 aria-expanded="false"
                             >
                                 &lt;
@@ -323,22 +258,21 @@
 
                         <div
                             class="collapse"
-                            id="entrenamientosMobile"
+                            id="clasesMobile"
                         >
 
                             <a
                                 href="#"
-                                class="sidebar-link"
+                                class="enlace-barra-lateral"
                             >
-                                Nuevo entrenamiento
+                                Mis clases
                             </a>
-
 
                             <a
                                 href="#"
-                                class="sidebar-link"
+                                class="enlace-barra-lateral"
                             >
-                                Entrenamientos activos
+                                Horarios
                             </a>
 
                         </div>
@@ -350,35 +284,21 @@
             </div>
 
 
-
-            <!-- contenido principal -->
-
             <main class="col main-content">
-
-
-                <!-- titulo -->
 
                 <div class="content-title">
 
                     <h1>
-                        Socios Activos
+                        Alumnos Activos
                     </h1>
 
                 </div>
 
 
+                <div class="students-container">
 
-                <!-- tabla -->
-
-                <div class="members-container">
-
-
-                    <!-- parte de arriba -->
 
                     <div class="d-flex justify-content-between align-items-center table-top">
-
-
-                        <!-- registros -->
 
                         <div class="registros">
 
@@ -405,14 +325,12 @@
                         </div>
 
 
-
-                        <!-- Buscador -->
-
                         <div class="search">
 
                             <input
                                 type="text"
                                 aria-label="Buscar"
+                                placeholder="Buscar alumnos"
                             >
 
                             <button
@@ -427,15 +345,9 @@
                     </div>
 
 
-
-                    <!-- tabla -->
-
                     <div class="table-responsive">
 
-                        <table class="table tabla-socios">
-
-
-                            <!-- encabezados -->
+                        <table class="table tabla-alumnos">
 
                             <thead>
 
@@ -446,15 +358,11 @@
                                     </th>
 
                                     <th>
-                                        ci
-                                    </th>
-
-                                    <th>
                                         Cel.
                                     </th>
 
                                     <th>
-                                        Vencimiento
+                                        Desempeño(Mes)
                                     </th>
 
                                     <th>
@@ -470,44 +378,27 @@
                             </thead>
 
 
-
-                            <!-- cuerpo -->
-
                             <tbody>
 
-
-                                <!-- socio 1 -->
-
                                 <tr>
 
-                                    <td></td>
+                                    <td>pepe</td>
 
-                                    <td></td>
+                                    <td>123 456 789</td>
 
-                                    <td></td>
-
-                                    <td></td>
-
-
-                                    <!-- nota -->
+                                    <td>10/10</td>
 
                                     <td class="nota">
 
-                                        <span class="nota-titulo"></span>
+                                        <span class="nota-texto">
+                                            muy mal
+                                        </span>
 
-                                        <span class="nota-texto"></span>
-
-                                        <a
-                                            href="#"
-                                            class="leer-mas"
-                                        >
-                                            Leer más
-                                        </a>
+                                        <button type="button" class="leer-mas">
+                                            leer más
+                                        </button>
 
                                     </td>
-
-
-                                    <!-- acciones -->
 
                                     <td class="acciones">
 
@@ -527,21 +418,18 @@
                                                     ●
                                                 </span>
 
-                                                Ver/editar perfil
+                                                Ver perfil
 
                                             </button>
 
 
-                                            <button
-                                                type="button"
-                                                class="delete"
-                                            >
+                                            <button type="button">
 
-                                                <span>
-                                                    ⊗
+                                                <span class="icono-evaluacion">
+                                                    ◆
                                                 </span>
 
-                                                Dar de baja
+                                                Dar evaluación
 
                                             </button>
 
@@ -552,39 +440,19 @@
                                 </tr>
 
 
-
-                                <!-- socio 2 -->
-
                                 <tr>
 
-                                    <td></td>
-
-                                    <td></td>
-
-                                    <td></td>
-
-                                    <td></td>
-
-
-                                    <!-- nota -->
-
+                                    <td>papa</td>
+                                    <td>987 654 321</td>
+                                    <td>0/10</td>
                                     <td class="nota">
-
-                                        <span class="nota-titulo"></span>
-
-                                        <span class="nota-texto"></span>
-
-                                        <a
-                                            href="#"
-                                            class="leer-mas"
-                                        >
-                                            Leer más
-                                        </a>
-
+                                        <span class="nota-texto">
+                                            Algo algo algo
+                                        </span>
+                                        <button type="button" class="leer-mas">
+                                            leer más
+                                        </button>
                                     </td>
-
-
-                                    <!-- acciones -->
 
                                     <td class="acciones">
 
@@ -604,21 +472,18 @@
                                                     ●
                                                 </span>
 
-                                                Ver/editar perfil
+                                                Ver perfil
 
                                             </button>
 
 
-                                            <button
-                                                type="button"
-                                                class="delete"
-                                            >
+                                            <button type="button">
 
-                                                <span>
-                                                    ⊗
+                                                <span class="icono-evaluacion">
+                                                    ◆
                                                 </span>
 
-                                                Dar de baja
+                                                Dar evaluación
 
                                             </button>
 
@@ -627,7 +492,6 @@
                                     </td>
 
                                 </tr>
-
 
                             </tbody>
 
@@ -635,9 +499,6 @@
 
                     </div>
 
-
-
-                    <!-- paginacion -->
 
                     <div class="pagination">
 
@@ -660,33 +521,25 @@
     </div>
 
 
-
-    <!-- boostrap js -->
-
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
     </script>
 
+<script src="../../../../js/api.js"></script>
+    <script src="../../../../js/session.js"></script>
+    <script src="../../../../js/dashboard/profesor.js"></script>
 
+    <script>
+        (async () => {
+            const sesion = await Session.requireRole([Session.ROLES.PROFESOR]);
+            if (!sesion) return;
 
-    <!--funciones -->
-
-   <script src="../../../../js/api.js"></script>
-   <script src="../../../../js/session.js"></script>
-   <script src="../../../../js/dashboard/entrenador.js"></script>
-
-   <script>
-       (async () => {
-           const sesion = await Session.requireRole([Session.ROLES.ENTRENADOR]);
-           if (!sesion) return;
-
-           const nombreUsuario = document.querySelector('.nombre-usuario');
-           if (nombreUsuario) {
-               nombreUsuario.textContent = sesion.name;
-           }
-       })();
-   </script>
-
+            const nombreUsuario = document.querySelector('.nombre-usuario');
+            if (nombreUsuario) {
+                nombreUsuario.textContent = sesion.name;
+            }
+        })();
+    </script>
 
 </body>
 

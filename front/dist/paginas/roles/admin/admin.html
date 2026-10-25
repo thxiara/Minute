@@ -23,7 +23,8 @@
         href="https://fonts.gstatic.com"
         crossorigin
     >
-
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/dashboards/comun.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&family=TASA+Explorer:wght@400;500;600;700&display=swap"
         rel="stylesheet"
@@ -31,15 +32,20 @@
 
     <link
         rel="stylesheet"
-        href="../../../../css/dashboards/admin.css"
+        href="../../../css/dashboards/admin.css"
     >
 
     <link
         rel="stylesheet"
-        href="../../../../css/responsives/dashboardsresponsive/adminresponsive.css"
+        href="../../../css/responsives/dashboardsresponsive/comunresponsive.css"
     >
 
-    <!-- Oculta el panel hasta que Session.requireRole() confirme sesión y rol (ver js/session.js). -->
+    <link
+        rel="stylesheet"
+        href="../../../css/responsives/dashboardsresponsive/adminresponsive.css"
+    >
+
+<!-- Oculta el panel hasta que Session.requireRole() confirme sesión y rol (ver js/session.js). -->
     <style>
         html.verificando-sesion body { visibility: hidden; }
     </style>
@@ -54,48 +60,24 @@
 
         <!-- header -->
 
-        <header class="admin-header">
+        <header>
 
-            <div class="container-fluid h-100">
+            <div class="container-fluid">
 
-                <div class="row h-100 align-items-center">
+                <div class="d-flex justify-content-between align-items-center header-contenido">
 
-                    <div class="col">
+                     <h1 class="logo">
+                        <a href="../../../../index.html">FitPower</a>
+                    </h1>
 
-                        <a class="logo" href="../../../../../index.html">
-                            FitPower
-                        </a>
+                    <div class="header-derecha">
 
-                    </div>
-
-
-                    <div class="col-auto">
-
-                        <div class="usuario-header d-flex align-items-center">
-
-                            <span class="nombre-usuario">
+                            <span class="header-text">
                                 Nombre Apellido
                             </span>
 
-
-                            <img src="../../../../assets/imagenes/img6.jpg" alt="Usuario" class="imagen-usuario">
-
-
-                            <button
-                                class="boton-menu"
-                                type="button"
-                                data-bs-toggle="offcanvas"
-                                data-bs-target="#menuLateral"
-                                aria-controls="menuLateral"
-                            >
-
-                                <span></span>
-                                <span></span>
-                                <span></span>
-
-                            </button>
-
-                        </div>
+                                <img
+                                src="../../../assets/imágenes/img6.jpg" class="usuario-header" alt="Usuario">
 
                     </div>
 
@@ -112,21 +94,21 @@
         <div class="row g-0 admin-content">
 
 
-            <!-- sidebar dekstop -->
+            <!-- barra-lateral dekstop -->
 
-            <aside class="col-md-auto sidebar d-none d-md-block">
+            <aside class="col-md-auto barra-lateral d-none d-md-block">
 
-                <div class="sidebar-section">
+                <div class="seccion-barra-lateral">
 
 
-                    <div class="sidebar-title">
+                    <div class="titulo-barra-lateral">
 
                         <span>
                             Socios
                         </span>
 
                         <button
-                            class="arrow-button"
+                            class="boton-flecha"
                             type="button"
                             data-bs-toggle="collapse"
                             data-bs-target="#sociosMenu"
@@ -144,8 +126,8 @@
                     >
 
                         <a
-                            href="#"
-                            class="sidebar-link"
+                            href="adminregistrar.html"
+                            class="enlace-barra-lateral"
                         >
                             Nuevo socio
                         </a>
@@ -153,7 +135,7 @@
 
                         <a
                             href="#"
-                            class="sidebar-link activo"
+                            class="enlace-barra-lateral activo"
                         >
                             Socios activos
                         </a>
@@ -164,17 +146,17 @@
 
 
 
-                <div class="sidebar-section">
+                <div class="seccion-barra-lateral">
 
 
-                    <div class="sidebar-title">
+                    <div class="titulo-barra-lateral">
 
                         <span>
                             Productos
                         </span>
 
                         <button
-                            class="arrow-button"
+                            class="boton-flecha"
                             type="button"
                             data-bs-toggle="collapse"
                             data-bs-target="#productosMenu"
@@ -193,7 +175,7 @@
 
                         <a
                             href="#"
-                            class="sidebar-link"
+                            class="enlace-barra-lateral"
                         >
                             Nuevo producto
                         </a>
@@ -201,7 +183,7 @@
 
                         <a
                             href="#"
-                            class="sidebar-link"
+                            class="enlace-barra-lateral"
                         >
                             Productos activos
                         </a>
@@ -217,24 +199,24 @@
             <!-- menu movil -->
 
             <div
-                class="offcanvas offcanvas-start sidebar-mobile"
+                class="offcanvas offcanvas-start barra-lateral-movil"
                 tabindex="-1"
                 id="menuLateral"
             >
 
                 <div class="offcanvas-body">
 
-                    <div class="sidebar-section">
+                    <div class="seccion-barra-lateral">
 
 
-                        <div class="sidebar-title">
+                        <div class="titulo-barra-lateral">
 
                             <span>
                                 Socios
                             </span>
 
                             <button
-                                class="arrow-button"
+                                class="boton-flecha"
                                 type="button"
                                 data-bs-toggle="collapse"
                                 data-bs-target="#sociosMobile"
@@ -253,7 +235,7 @@
 
                             <a
                                 href="adminregistrar.html"
-                                class="sidebar-link"
+                                class="enlace-barra-lateral"
                             >
                                 Nuevo socio
                             </a>
@@ -261,7 +243,7 @@
 
                             <a
                                 href="#"
-                                class="sidebar-link activo"
+                                class="enlace-barra-lateral activo"
                             >
                                 Socios activos
                             </a>
@@ -271,17 +253,17 @@
                     </div>
 
 
-                    <div class="sidebar-section">
+                    <div class="seccion-barra-lateral">
 
 
-                        <div class="sidebar-title">
+                        <div class="titulo-barra-lateral">
 
                             <span>
                                 Productos
                             </span>
 
                             <button
-                                class="arrow-button"
+                                class="boton-flecha"
                                 type="button"
                                 data-bs-toggle="collapse"
                                 data-bs-target="#productosMobile"
@@ -300,7 +282,7 @@
 
                             <a
                                 href="#"
-                                class="sidebar-link"
+                                class="enlace-barra-lateral"
                             >
                                 Nuevo producto
                             </a>
@@ -308,25 +290,12 @@
 
                             <a
                                 href="#"
-                                class="sidebar-link"
+                                class="enlace-barra-lateral"
                             >
                                 Productos activos
                             </a>
 
                         </div>
-
-                    </div>
-
-
-                    <div class="sidebar-section">
-
-                        <a
-                            href="#"
-                            id="logoutLink"
-                            class="sidebar-link"
-                        >
-                            Cerrar sesión
-                        </a>
 
                     </div>
 
@@ -358,8 +327,6 @@
                     </a>
 
                 </div>
-
-
 
                 <!-- tabla -->
 
@@ -458,13 +425,13 @@
 
                                 <tr>
 
-                                    <td></td>
+                                    <td>miau</td>
 
-                                    <td></td>
+                                    <td>1.234.567-8</td>
 
-                                    <td></td>
+                                    <td>789 456 123</td>
 
-                                    <td></td>
+                                    <td>14/11/2026</td>
 
 
                                     <td class="acciones">
@@ -515,10 +482,10 @@
 
                                 <tr>
 
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>parapapapa</td>
+                                    <td>1.123.456-7</td>
+                                    <td>012 345 678</td>
+                                    <td>02/12/2026</td>
 
                                     <td class="acciones">
 
@@ -599,7 +566,6 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
     <script src="../../../../js/api.js"></script>
     <script src="../../../../js/session.js"></script>
     <script src="../../../../js/dashboard/admin.js"></script>
@@ -626,3 +592,7 @@
 
 </body>
 </html>
+
+</body>
+
+</html> 

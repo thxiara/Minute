@@ -152,3 +152,33 @@
     }
 
 }
+
+@media(min-width:481px) and (max-width:767px){
+
+    .formulario{
+        padding:35px 30px;
+    }
+
+    .volver{
+        top:20px;
+        left:22px;
+    }
+
+    .reseñas{
+        padding-top:75px;
+    }
+
+}
+
+@media(max-width:360px){
+
+    .formulario{
+        padding:24px 16px;
+    }
+
+    .volver{
+        top:14px;
+        left:14px;
+    }
+
+}

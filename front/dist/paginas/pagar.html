@@ -58,7 +58,7 @@
         }
 
         .payment-box{
-            width:420px;
+            width:min(100%,420px);
             background:#111;
             padding:35px;
             border-radius:20px;
@@ -178,17 +178,25 @@
 
         @media(max-width:500px){
 
+            body{
+                align-items:flex-start;
+                padding:16px 0;
+            }
+
             .payment-box{
-                width:90%;
-                padding:25px;
+                width:100%;
+                padding:22px;
             }
 
             .card{
                 height:auto;
+                min-height:170px;
+                padding:20px;
             }
 
             .number{
-                font-size:18px;
+                font-size:clamp(15px,5vw,18px);
+                letter-spacing:2px;
             }
 
         }

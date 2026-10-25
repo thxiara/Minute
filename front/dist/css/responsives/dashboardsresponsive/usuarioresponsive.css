@@ -1,228 +1,176 @@
-/* tablet*/
-
 @media (max-width: 1199px) {
-
     .usuario-content {
         padding: 28px 30px 45px;
     }
 
-
-    .logo {
+    .usuario-page .logo {
         font-size: 36px;
     }
 
-
-    .presentacion {
-        gap: 20px;
-    }
-
-
+    .presentacion,
     .informacion-membresia {
         gap: 20px;
     }
-
 
     .clases {
         max-width: 100%;
     }
 
-}
-
-
-/* celular */
-
-@media (max-width: 767px) {
-
-    .usuario-header-principal {
-        height: 72px;
-    }
-
-
-    .logo {
-        font-size: 32px;
-    }
-
-
-    .header-acciones {
-        gap: 12px;
-    }
-
-
-    .icono-usuario {
-        width: 32px;
-        height: 32px;
-    }
-
-
-    .boton-menu {
+    .usuario-page .boton-menu {
         display: flex !important;
     }
+}
 
+@media (max-width: 767px) {
+    .usuario-page > header,
+    .usuario-page .header-contenido {
+        height: 64px;
+    }
+
+    .usuario-page .logo {
+        font-size: clamp(24px, 6vw, 30px);
+    }
+
+    .usuario-page .header-derecha {
+        gap: 10px;
+    }
+
+    .usuario-page .header-text {
+        font-size: 13px;
+    }
+
+    .usuario-page .usuario-header {
+        width: 38px;
+        height: 38px;
+    }
 
     .usuario-content {
-        padding: 18px 20px 35px;
+        padding: 22px 20px 36px;
     }
-
 
     .presentacion {
-        align-items: flex-start;
+        align-items: center;
+        gap: 14px;
     }
-
 
     .perfil {
-        gap: 15px;
+        min-width: 0;
+        gap: 12px;
     }
-
 
     .foto-usuario {
         width: 58px;
         height: 58px;
     }
 
-
     .perfil h1 {
-        font-size: 20px;
+        font-size: clamp(20px, 5vw, 26px);
     }
-
 
     .cerrar-sesion {
-        font-size: 8px;
-        padding: 6px 12px;
+        flex-shrink: 0;
+        padding: 9px 12px;
+        font-size: 12px;
     }
 
-
     .informacion-membresia {
-        grid-template-columns: 1fr 1fr 1fr;
-
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 10px;
     }
 
-
     .dato-membresia {
+        min-width: 0;
         min-height: 42px;
-
-        padding: 5px 7px;
+        padding: 9px;
     }
-
 
     .dato-titulo {
-        font-size: 6px;
+        font-size: 10px;
+        line-height: 1.3;
     }
-
 
     .dato-valor {
-        font-size: 7px;
+        font-size: 13px;
+        overflow-wrap: anywhere;
     }
-
 
     .seccion-rutinas h2,
     .seccion-clases h2 {
-        font-size: 16px;
-
         margin-top: 25px;
+        font-size: 19px;
     }
 
-
-    .rutina {
-        width: 190px;
+    .rutina,
+    .imagen-rutina {
+        width: min(100%, 280px);
     }
-
 
     .clases {
-        grid-template-columns: 1fr 1fr;
-
-        gap: 15px;
+        grid-template-columns: 1fr;
+        gap: 10px;
     }
 
+    .nombre-clase,
+    .horario-clase {
+        font-size: 13px;
+    }
 
     .clase {
         padding: 7px 10px;
     }
 
-
-    .nombre-clase {
-        font-size: 8px;
+    .usuario-page .boton-menu {
+        width: 30px;
+        height: 30px;
     }
-
-
-    .horario-clase {
-        font-size: 8px;
-    }
-
 }
 
-
-/* celular chico */
-
-@media (max-width: 500px) {
-
+@media (max-width: 420px) {
     .usuario-content {
-        padding-left: 14px;
-        padding-right: 14px;
+        padding-inline: 14px;
     }
 
-
-    .logo {
-        font-size: 28px;
+    .usuario-page .logo {
+        font-size: 24px;
     }
 
-
-    .presentacion {
-        align-items: center;
+    .usuario-page .header-text {
+        display: none;
     }
-
 
     .perfil {
         gap: 10px;
     }
-
 
     .foto-usuario {
         width: 50px;
         height: 50px;
     }
 
-
     .perfil h1 {
         font-size: 17px;
     }
 
-
-    .cerrar-sesion {
-        font-size: 7px;
-
-        padding: 5px 9px;
-    }
-
-
     .informacion-membresia {
-        gap: 6px;
-    }
-
-
-    .dato-membresia {
-        padding: 5px;
-    }
-
-
-    .dato-titulo {
-        font-size: 5px;
-    }
-
-
-    .dato-valor {
-        font-size: 6px;
-    }
-
-
-    .seccion-rutinas h2,
-    .seccion-clases h2 {
-        font-size: 14px;
-    }
-
-
-    .clases {
+        grid-template-columns: 1fr;
         gap: 8px;
     }
 
+    .dato-membresia {
+        min-height: 58px;
+        padding: 10px 12px;
+    }
+
+    .dato-titulo {
+        font-size: 11px;
+    }
+
+    .dato-valor {
+        font-size: 14px;
+    }
+
+    .seccion-rutinas h2,
+    .seccion-clases h2 {
+        font-size: 16px;
+    }
 }

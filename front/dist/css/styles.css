@@ -3,7 +3,7 @@
 
 @font-face{
     font-family:'Pervitina Dex';
-    src:url('../assets/tipografias/Pervitina-Dex-FFP.ttf') format('truetype');
+    src:url('../assets/tipografías/Pervitina-Dex-FFP.ttf') format('truetype');
     font-weight:400;
     font-style:normal;
 }
@@ -15,8 +15,18 @@
     --color-fondo:#050608;
     --color-primario:#1C2BC2;
     --color-secundario:#4A28C4;
+    --color-terciario:#A25CFF;
     --color-blanco:#fff;
     --color-negro:#000;
+    --fila:#101010;
+    --color-gris:#777777;
+    --azul:var(--color-primario);
+    --negro:var(--color-negro);
+    --panel:#020202;
+    --morado:#6B2CFF;
+    --morado-claro:var(--color-terciario);
+    --blanco:var(--color-blanco);
+    --gris:var(--color-gris);
 }
 
 
@@ -46,7 +56,7 @@ img{
 }
 
 a{
-    text-decoration:none;
+    text-decoration:none !important;
 }
 
 
@@ -89,15 +99,15 @@ a{
 
 /* logo*/
 
-.logo,
+.logo, .logo a,
 .logo-footer{
     font-family:'Pervitina Dex',sans-serif;
     font-style:normal;
     font-weight:400;
     letter-spacing:0;
+    text-decoration: none;
     color:var(--color-negro);
 }
-
 
 /* headeer */
 
@@ -117,8 +127,17 @@ header{
     align-items:center;
     gap:18px;
 }
+.header-derecha img{
+    height:auto;
+    object-fit:cover;
+    object-position: center;
+}
+.imagen-usuario{
+    border-radius:50%;
+    background-color:var(--color-negro);
+}
 
-.registrarse{
+.header-text{
     color:var(--color-negro);
     font-family:'TASA Explorer',sans-serif;
     font-size:.9rem;
@@ -126,7 +145,7 @@ header{
     transition:.3s;
 }
 
-.registrarse:hover{
+.header-text:hover{
     color:var(--color-blanco);
 }
 

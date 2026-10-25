@@ -257,8 +257,6 @@
     body{
         font-size:.95rem;
     }
-
-
     /* header */
     .logo{
         font-size:1.6rem;
@@ -343,16 +341,41 @@
         font-size:.95rem;
     }
 
-    .comentario{
-        padding:20px;
+   .comentario {
+        flex-direction: column !important;
+        align-items: center;
+        text-align: center;
+        padding: 16px;
+        gap: 6px;
+        min-height: auto;
     }
 
-    .comentario h3{
-        font-size:1rem;
+    .comentario img {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 2px;
+        border-width: 3px;
     }
 
-    .comentario p{
-        font-size:.85rem;
+    .contenido {
+        align-items: center;
+        width: 100%;
+    }
+
+    .comentario h3 {
+        font-size: 0.95rem;
+        margin-bottom: 4px;
+    }
+
+    .comentario span {
+        margin-bottom: 6px;
+        font-size: 0.85rem;
+    }
+
+    .comentario p {
+        font-size: 0.85rem;
+        line-height: 1.4;
+        margin-bottom: 0;
     }
 
     .flecha{

@@ -35,7 +35,7 @@ document.addEventListener("click", function() {
 });
 
 
-document.querySelectorAll(".arrow-button").forEach(button => {
+document.querySelectorAll(".boton-flecha").forEach(button => {
 
     button.addEventListener("click", function() {
 
