@@ -47,7 +47,7 @@ $RECYCLE.BIN/
 
 # Editores de texto comunes
 .vim/
-.swp
+*.swp
 .swo
 *~
 *.bak
