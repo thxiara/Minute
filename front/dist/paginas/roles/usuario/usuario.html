@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="verificando-sesion">
+<html lang="es">
 
 <head>
 
@@ -57,11 +57,6 @@
         href="../../../css/responsives/dashboardsresponsive/usuarioresponsive.css"
     >
 
-<!-- Oculta el panel hasta que Session.requireRole() confirme sesión y rol (ver js/session.js). 
-    <style>
-        html.verificando-sesion body { visibility: hidden; }
-    </style>
--->
 
 </head>
 
@@ -334,28 +329,6 @@
     <script src="../../../js/api.js"></script>
     <script src="../../../js/dashboard/usuario.js"></script>
 
-<!-- Sacar el chequeo de sesión de la vista, lo tiene que manejar el backend
-    <script src="../../../js/session.js"></script>
-
-    <script>
-        (async () => {
-            const sesion = await Session.requireRole([Session.ROLES.SOCIO]);
-            if (!sesion) return;
-
-            const saludo = document.querySelector('.perfil h1');
-            if (saludo) {
-                saludo.textContent = `Hola, ${sesion.name}`;
-            }
-
-            document.querySelectorAll('.menu-link.cerrar, .cerrar-sesion').forEach((boton) => {
-                boton.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    Session.logout('/front/index.html');
-                });
-            });
-        })();
-    </script>
--->
 
 </body>
 
