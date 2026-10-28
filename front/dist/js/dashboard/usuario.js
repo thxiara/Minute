@@ -375,7 +375,7 @@ if (reviewSection && window.FitPowerReviewData) {
     const reviewLink = document.getElementById("memberReviewLink");
     const feedback = document.getElementById("memberReviewFeedback");
     feedback.textContent = "";
-    reviewLink.href = `../../resenas.html?name=${encodeURIComponent(normalizedMemberName)}&editar=1`;
+    reviewLink.href = `paginas/resenas.html?name=${encodeURIComponent(normalizedMemberName)}&editar=1`;
     if (review) {
         emptyMessage.hidden = true;
         reviewContent.hidden = false;
@@ -432,7 +432,7 @@ reviewForm.addEventListener("submit", (event) => {
             text: reviewText.value.trim(),
             updatedAt: new Date().toISOString()
         });
-        window.location.href = `roles/usuario/usuario.html?name=${encodeURIComponent(memberName)}&resena=guardada`;
+        window.location.href = `/dash/socio?name=${encodeURIComponent(memberName)}&resena=guardada`;
     } catch {
         reviewFeedback.classList.add("is-error");
         reviewFeedback.textContent = "No se pudo guardar tu reseña.";

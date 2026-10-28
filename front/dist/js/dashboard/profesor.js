@@ -57,7 +57,7 @@ document.querySelectorAll(".boton-flecha").forEach(button => {
 document.querySelectorAll("[data-profesor-profile]").forEach(button => {
     button.addEventListener("click", () => {
         const studentName = button.dataset.studentName || "Pepe";
-        window.location.href = `perfil.html?name=${encodeURIComponent(studentName)}`;
+        window.location.href = `paginas/roles/profesor/perfi.html?name=${encodeURIComponent(studentName)}`;
     });
 });
 })();
@@ -197,7 +197,7 @@ classState.classes
     .forEach((session) => {
         const link = document.createElement("a");
         link.className = "interface-panel class-choice-card";
-        link.href = `clase.html?clase=${encodeURIComponent(session.id)}`;
+        link.href = `paginas/roles/profesor/clase.html?clase=${encodeURIComponent(session.id)}`;
 
         const kind = document.createElement("span");
         kind.className = "interface-eyebrow";
@@ -275,7 +275,7 @@ function makeSessionCard(session, date, today) {
     if (date <= today) {
         const attendanceLink = document.createElement("a");
         attendanceLink.className = "interface-button";
-        attendanceLink.href = `clase.html?clase=${encodeURIComponent(session.id)}&fecha=${dateKey}`;
+        attendanceLink.href = `paginas/roles/profesor/clase.html?clase=${encodeURIComponent(session.id)}&fecha=${dateKey}`;
         attendanceLink.textContent = "Tomar asistencia";
         card.append(attendanceLink);
         return card;
@@ -495,7 +495,7 @@ function createDateCard(date, today) {
     } else if (date <= today) {
         const attendanceLink = document.createElement("a");
         attendanceLink.className = "interface-button";
-        attendanceLink.href = `clase.html?clase=${encodeURIComponent(selectedClass.id)}&fecha=${dateKey}`;
+        attendanceLink.href = `paginas/roles/profesor/clase.html?clase=${encodeURIComponent(selectedClass.id)}&fecha=${dateKey}`;
         attendanceLink.textContent = "Tomar asistencia";
         card.append(attendanceLink);
     } else {
@@ -514,7 +514,7 @@ if (!selectedClass) {
     errorMessage.hidden = false;
     const selectLink = document.createElement("a");
     selectLink.className = "interface-button";
-    selectLink.href = "seleccionar-clase.html";
+    selectLink.href = "paginas/roles/profesor/seleccionar-clase.html";
     selectLink.textContent = "Ver mis clases";
     classDates.append(selectLink);
 } else {

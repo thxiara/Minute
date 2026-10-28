@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <base href="/front/dist/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rutinas | FitPower</title>
@@ -8,19 +9,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&family=TASA+Explorer:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../../css/styles.css">
-    <link rel="stylesheet" href="../../../css/dashboards/comun.css">
-    <link rel="stylesheet" href="../../../css/dashboards/interfaces.css">
-    <link rel="stylesheet" href="../../../css/responsives/dashboardsresponsive/comunresponsive.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboards/comun.css">
+    <link rel="stylesheet" href="css/dashboards/interfaces.css">
+    <link rel="stylesheet" href="css/responsives/dashboardsresponsive/comunresponsive.css">
 </head>
 <body class="interface-page trainer-interface">
     <header>
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center header-contenido">
-                <h1 class="logo"><a href="../../../../index.html">FitPower</a></h1>
+                <h1 class="logo"><a href="../index.html">FitPower</a></h1>
                 <div class="header-derecha">
                     <span class="header-text">Nombre Apellido</span>
-                    <img src="../../../assets/imagenes/img6.jpg" class="usuario-header" alt="Foto de perfil">
+                    <img src="assets/imagenes/img6.jpg" class="usuario-header" alt="Foto de perfil">
                     <button class="boton-menu role-nav-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#roleNavigation" aria-controls="roleNavigation" aria-label="Abrir navegación">
                         <span></span><span></span><span></span>
                     </button>
@@ -39,12 +40,12 @@
               <nav aria-label="Navegación de entrenador">
                 <div class="interface-nav-group">
                     <h3>Socios</h3>
-                    <a href="entrenador.html">Socios activos</a>
+                    <a href="/dash/entrenador">Socios activos</a>
                 </div>
                 <div class="interface-nav-group">
                     <h3>Entrenamientos</h3>
-                    <a href="ejercicios.html">Ejercicios</a>
-                    <a href="rutinas.html#rutinas" aria-current="page">Rutinas</a>
+                    <a href="paginas/roles/entrenador/ejercicios.html">Ejercicios</a>
+                    <a href="paginas/roles/entrenador/rutinas.html#rutinas" aria-current="page">Rutinas</a>
                 </div>
               </nav>
             </div>
@@ -118,6 +119,6 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../../js/dashboard/entrenador.js"></script>
+    <script src="js/dashboard/entrenador.js"></script>
 </body>
 </html>

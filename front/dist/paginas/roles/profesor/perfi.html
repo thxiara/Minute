@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <base href="/front/dist/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil de alumno | FitPower</title>
@@ -8,19 +9,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&family=TASA+Explorer:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../../css/styles.css">
-    <link rel="stylesheet" href="../../../css/dashboards/comun.css">
-    <link rel="stylesheet" href="../../../css/dashboards/interfaces.css">
-    <link rel="stylesheet" href="../../../css/responsives/dashboardsresponsive/comunresponsive.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboards/comun.css">
+    <link rel="stylesheet" href="css/dashboards/interfaces.css">
+    <link rel="stylesheet" href="css/responsives/dashboardsresponsive/comunresponsive.css">
 </head>
 <body class="interface-page professor-interface">
     <header>
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center header-contenido">
-                <h1 class="logo"><a href="../../../../index.html">FitPower</a></h1>
+                <h1 class="logo"><a href="../index.html">FitPower</a></h1>
                 <div class="header-derecha">
                     <span class="header-text">Nombre Apellido</span>
-                    <img src="../../../assets/imagenes/img6.jpg" class="usuario-header" alt="Foto de perfil">
+                    <img src="assets/imagenes/img6.jpg" class="usuario-header" alt="Foto de perfil">
                     <button class="boton-menu role-nav-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#roleNavigation" aria-controls="roleNavigation" aria-label="Abrir navegación">
                         <span></span><span></span><span></span>
                     </button>
@@ -39,13 +40,13 @@
                 <nav aria-label="Navegación de profesor">
                     <div class="interface-nav-group">
                         <h3>Alumnos</h3>
-                        <a href="profesor.html">Alumnos activos</a>
-                        <a href="perfil.html" aria-current="page">Perfil de alumno</a>
+                        <a href="/dash/profesor">Alumnos activos</a>
+                        <a href="paginas/roles/profesor/perfi.html" aria-current="page">Perfil de alumno</a>
                     </div>
                     <div class="interface-nav-group">
                         <h3>Clases</h3>
-                        <a href="seleccionar-clase.html">Gestionar una clase</a>
-                        <a href="clases.html">Próximas fechas</a>
+                        <a href="paginas/roles/profesor/seleccionar-clase.html">Gestionar una clase</a>
+                        <a href="paginas/roles/profesor/clases.html">Próximas fechas</a>
                     </div>
                 </nav>
             </div>
@@ -57,11 +58,11 @@
                     <h1>Perfil de alumno</h1>
                     <p>Datos de contacto, asistencia y desempeño del alumno.</p>
                 </div>
-                <a class="interface-button-secondary" href="profesor.html">Volver a alumnos</a>
+                <a class="interface-button-secondary" href="/dash/profesor">Volver a alumnos</a>
             </div>
 
             <section class="interface-panel profile-summary student-profile" aria-label="Resumen del alumno">
-                <img src="../../../assets/imagenes/img6.jpg" alt="Foto de Pepe">
+                <img src="assets/imagenes/img6.jpg" alt="Foto de Pepe">
                 <div>
                     <h2 id="studentName">Pepe</h2>
                     <p>Socio desde abril de 2026</p>
@@ -108,6 +109,6 @@
             </div>
         </main>
     </div>
-    <script src="../../../js/dashboard/profesor.js"></script>
+    <script src="js/dashboard/profesor.js"></script>
 </body>
 </html>

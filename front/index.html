@@ -10,7 +10,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="dist/css/styles.css">
+    <link rel="stylesheet" href="/front/dist/css/styles.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-    <link rel="stylesheet" href="dist/css/responsives/responsive.css">
+    <link rel="stylesheet" href="/front/dist/css/responsives/responsive.css">
 </head>
 
 
@@ -39,12 +39,12 @@
 
             <div class="header-derecha">
 
-                <a href="dist/paginas/login.html" class="header-text">
+                <a href="/front/dist/paginas/login.html" class="header-text">
                     INICIAR SESIÓN
                 </a>
 
                 <img
-                    src="dist/assets/imagenes/img6.jpg"
+                    src="/front/dist/assets/imagenes/img6.jpg"
                     class="usuario-header"
                     alt="Usuario">
 
@@ -61,7 +61,7 @@
 <section class="hero">
 
     <img
-        src="dist/assets/imagenes/img1.jpg"
+        src="/front/dist/assets/imagenes/img1.jpg"
         alt="Hero">
 
     <div class="overlay"></div>
@@ -129,7 +129,7 @@
                 <div class="imagen">
 
                     <img
-                        src="dist/assets/imagenes/img2.jpg"
+                        src="/front/dist/assets/imagenes/img2.jpg"
                         alt="Nosotros">
 
                 </div>
@@ -230,7 +230,7 @@
                     </p>
 
                     <a
-                        href="dist/paginas/resenas.html"
+                        href="/front/dist/paginas/resenas.html"
                         class="btn-reseña">
 
                         Ver todas las reseñas
@@ -263,7 +263,7 @@
                             <div class="comentario">
 
                                 <img
-                                    src="dist/assets/imagenes/img7.jpg"
+                                    src="/front/dist/assets/imagenes/img7.jpg"
                                     alt="Socio">
 
                                 <div class="contenido">
@@ -289,7 +289,7 @@
                             <div class="comentario">
 
                                 <img
-                                    src="dist/assets/imagenes/img3.jpg"
+                                    src="/front/dist/assets/imagenes/img3.jpg"
                                     alt="Socio">
 
                                 <div class="contenido">
@@ -315,7 +315,7 @@
                             <div class="comentario">
 
                                 <img
-                                    src="dist/assets/imagenes/img8.jpg"
+                                    src="/front/dist/assets/imagenes/img8.jpg"
                                     alt="Socio">
 
                                 <div class="contenido">
@@ -341,7 +341,7 @@
                             <div class="comentario">
 
                                 <img
-                                    src="dist/assets/imagenes/img9.jpg"
+                                    src="/front/dist/assets/imagenes/img9.jpg"
                                     alt="Socio">
 
                                 <div class="contenido">
@@ -367,7 +367,7 @@
                             <div class="comentario">
 
                                 <img
-                                    src="dist/assets/imagenes/img10.jpg"
+                                    src="/front/dist/assets/imagenes/img10.jpg"
                                     alt="Socio">
 
                                 <div class="contenido">
@@ -425,7 +425,7 @@
                 <div class="imagen-instalaciones">
 
                     <img
-                        src="dist/assets/imagenes/img5.jpg"
+                        src="/front/dist/assets/imagenes/img5.jpg"
                         alt="Instalaciones">
 
                 </div>
@@ -667,38 +667,9 @@
 
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="dist/js/java.js"></script>
-<script src="dist/js/api.js"></script>
-<script src="dist/js/session.js"></script>
-
-<script>
-    (async () => {
-        const sesion = await Session.get();
-
-        const loginLink = document.getElementById('loginLink');
-        const panelLink = document.getElementById('panelLink');
-        const logoutLink = document.getElementById('logoutLink');
-
-        // "Mi panel" lleva al dashboard que le corresponde a cada rol (admin, entrenador, profesor o socio).
-        const panelUrl = sesion.success && sesion.logged_in
-            ? Session.dashboardFor(sesion.role_id)
-            : null;
-
-        if (panelUrl) {
-            loginLink.style.display = 'none';
-            panelLink.href = panelUrl;
-            panelLink.style.display = '';
-            logoutLink.style.display = '';
-
-            logoutLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                Session.logout('/front/index.html');
-            });
-        }
-    })();
-</script>
+<script src="/front/dist/js/java.js"></script>
+<script src="/front/dist/js/api.js"></script>
+<script src="/front/dist/js/session.js"></script>
 
 </body>
 

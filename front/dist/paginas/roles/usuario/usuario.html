@@ -2,6 +2,7 @@
 <html lang="es">
 
 <head>
+    <base href="/front/dist/">
 
     <meta charset="UTF-8">
 
@@ -38,23 +39,23 @@
 
 
     <!-- css -->
-    <link rel="stylesheet" href="../../../css/styles.css">
-    <link rel="stylesheet" href="../../../css/dashboards/comun.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboards/comun.css">
 
     <link
         rel="stylesheet"
-        href="../../../css/dashboards/usuario.css"
+        href="css/dashboards/usuario.css"
     >
-    <link rel="stylesheet" href="../../../css/dashboards/interfaces.css">
+    <link rel="stylesheet" href="css/dashboards/interfaces.css">
 
     <link
         rel="stylesheet"
-        href="../../../css/responsives/dashboardsresponsive/comunresponsive.css"
+        href="css/responsives/dashboardsresponsive/comunresponsive.css"
     >
 
     <link
         rel="stylesheet"
-        href="../../../css/responsives/dashboardsresponsive/usuarioresponsive.css"
+        href="css/responsives/dashboardsresponsive/usuarioresponsive.css"
     >
 
 
@@ -72,7 +73,7 @@
                 <div class="d-flex justify-content-between align-items-center header-contenido">
 
                      <h1 class="logo">
-                        <a href="../../../../index.html">FitPower</a>
+                        <a href="../index.html">FitPower</a>
                     </h1>
 
                     <div class="header-derecha">
@@ -82,7 +83,7 @@
                             </span>
 
                                 <img
-                                src="../../../assets/imagenes/img6.jpg" class="usuario-header" alt="Usuario" data-profile-photo>
+                                src="assets/imagenes/img6.jpg" class="usuario-header" alt="Usuario" data-profile-photo>
 
                             <button
                                 class="boton-menu"
@@ -132,7 +133,7 @@
             <div class="offcanvas-body">
 
                 <a
-                    href="#perfil"
+                    href="/dash/socio#perfil"
                     class="menu-link"
                 >
                     Mi perfil
@@ -140,7 +141,7 @@
 
 
                 <a
-                    href="#rutinas"
+                    href="/dash/socio#rutinas"
                     class="menu-link"
                 >
                     Mis rutinas
@@ -148,7 +149,7 @@
 
 
                 <a
-                    href="#clases"
+                    href="/dash/socio#clases"
                     class="menu-link"
                 >
                     Mis clases
@@ -156,7 +157,7 @@
 
 
                 <a
-                    href="#"
+                    href="/dash/socio#"
                     class="menu-link cerrar"
                 >
                     Cerrar sesión
@@ -183,7 +184,7 @@
                     <div class="foto-usuario-control">
                         <button type="button" class="foto-usuario-trigger" id="changePhotoButton" aria-label="Cambiar foto de perfil">
                             <img
-                                src="../../../assets/imagenes/img6.jpg"
+                                src="assets/imagenes/img6.jpg"
                                 alt="Usuario"
                                 class="foto-usuario"
                                 data-profile-photo
@@ -310,7 +311,7 @@
                         <p class="member-review-rating" id="memberReviewRating"></p>
                         <p class="member-review-text" id="memberReviewText"></p>
                     </div>
-                    <a class="interface-button-secondary" id="memberReviewLink" href="../../resenas.html?name=miau&amp;editar=1">Escribir reseña</a>
+                    <a class="interface-button-secondary" id="memberReviewLink" href="paginas/resenas.html?name=miau&amp;editar=1">Escribir reseña</a>
                 </div>
                 <p class="interface-feedback" id="memberReviewFeedback" role="status" aria-live="polite"></p>
             </section>
@@ -326,8 +327,8 @@
     <!-- boostrap js -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../../js/api.js"></script>
-    <script src="../../../js/dashboard/usuario.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/dashboard/usuario.js"></script>
 
 
 </body>
