@@ -368,3 +368,89 @@
     outline: 2px solid #FFFFFF;
     outline-offset: 3px;
 }
+
+/* Acabado compartido para los paneles de roles */
+.admin-page > header,
+.entrenador-page > header,
+.profesor-page > header,
+.usuario-page > header {
+    background: linear-gradient(110deg, #25176f, #282ab7);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.barra-lateral,
+.barra-lateral-movil {
+    background-color: #090a10;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.enlace-barra-lateral {
+    min-height: 34px;
+    transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
+}
+
+.enlace-barra-lateral.activo {
+    border-left: 2px solid #a477ff;
+    color: #e6d9ff;
+}
+
+.enlace-barra-lateral:hover {
+    color: #fff;
+    background-color: rgba(162, 92, 255, 0.12);
+}
+
+.main-content {
+    background:
+        radial-gradient(ellipse at 82% 0, rgba(107, 44, 255, 0.08), transparent 32rem),
+        #08090d;
+}
+
+.content-title h1 {
+    color: #a77cff;
+    letter-spacing: 0.01em;
+}
+
+.members-container,
+.students-container {
+    border-color: rgba(255, 255, 255, 0.09);
+    border-radius: 14px;
+    background: linear-gradient(145deg, #12131a, #0d0e13);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.24);
+}
+
+.tabla-socios tbody td,
+.tabla-alumnos tbody td {
+    border-color: rgba(255, 255, 255, 0.06);
+}
+
+.tabla-socios tbody tr:hover td,
+.tabla-alumnos tbody tr:hover td {
+    background-color: rgba(107, 44, 255, 0.11) !important;
+}
+
+.search input,
+.registros select {
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.action-menu {
+    border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.action-menu button:hover {
+    color: #cbb5ff;
+}
+
+.nuevo-socio {
+    border: 0;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #7138df, #4a28c4);
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(74, 40, 196, 0.2);
+}
+
+.nuevo-socio:hover {
+    background: linear-gradient(135deg, #824fe8, #5933d0);
+    color: #fff;
+    transform: translateY(-1px);
+}

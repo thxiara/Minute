@@ -45,6 +45,7 @@
         rel="stylesheet"
         href="../../../css/responsives/dashboardsresponsive/profesorresponsive.css"
     >
+    <link rel="stylesheet" href="../../../css/dashboards/interfaces.css">
 
 <!-- Oculta el panel hasta que Session.requireRole() confirme sesión y rol (ver js/session.js). 
     <style>
@@ -132,7 +133,7 @@
                     >
 
                         <a
-                            href="#"
+                            href="profesor.html"
                             class="enlace-barra-lateral activo"
                         >
                             Socios activos
@@ -170,17 +171,17 @@
                     >
 
                         <a
-                            href="#"
+                            href="seleccionar-clase.html"
                             class="enlace-barra-lateral"
                         >
-                            Mis clases
+                            Gestionar una clase
                         </a>
 
                         <a
-                            href="#"
+                            href="clases.html"
                             class="enlace-barra-lateral"
                         >
-                            Horarios
+                            Próximas fechas
                         </a>
 
                     </div>
@@ -225,7 +226,7 @@
                         >
 
                             <a
-                                href="#"
+                                href="profesor.html"
                                 class="enlace-barra-lateral activo"
                             >
                                 Socios activos
@@ -263,17 +264,17 @@
                         >
 
                             <a
-                                href="#"
+                                href="seleccionar-clase.html"
                                 class="enlace-barra-lateral"
                             >
-                                Mis clases
+                                Gestionar una clase
                             </a>
 
                             <a
-                                href="#"
+                                href="clases.html"
                                 class="enlace-barra-lateral"
                             >
-                                Horarios
+                                Próximas fechas
                             </a>
 
                         </div>
@@ -413,7 +414,7 @@
 
                                         <div class="action-menu">
 
-                                            <button type="button">
+                                            <button type="button" data-profesor-profile data-student-name="pepe">
 
                                                 <span class="icono-ver">
                                                     ●
@@ -424,7 +425,7 @@
                                             </button>
 
 
-                                            <button type="button">
+                                            <button type="button" data-profesor-profile data-student-name="papa">
 
                                                 <span class="icono-evaluacion">
                                                     ◆

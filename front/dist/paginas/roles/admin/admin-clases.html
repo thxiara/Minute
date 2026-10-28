@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrar clases | FitPower</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&family=TASA+Explorer:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/dashboards/comun.css">
+    <link rel="stylesheet" href="../../../css/dashboards/interfaces.css">
+    <link rel="stylesheet" href="../../../css/responsives/dashboardsresponsive/comunresponsive.css">
+</head>
+<body class="interface-page admin-interface">
+    <header>
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center header-contenido">
+                <h1 class="logo"><a href="../../../../index.html">FitPower</a></h1>
+                <div class="header-derecha">
+                    <span class="header-text">Nombre Apellido</span>
+                    <img src="../../../assets/imagenes/img6.jpg" class="usuario-header" alt="Foto de perfil">
+                    <button class="boton-menu role-nav-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#roleNavigation" aria-controls="roleNavigation" aria-label="Abrir navegación">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="interface-layout">
+        <aside class="interface-sidebar offcanvas offcanvas-start" id="roleNavigation" tabindex="-1" aria-labelledby="roleNavigationTitle">
+            <div class="offcanvas-header d-lg-none">
+                <h2 class="offcanvas-title" id="roleNavigationTitle">Administración</h2>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+            </div>
+            <div class="offcanvas-body">
+              <nav aria-label="Navegación de administración">
+                <div class="interface-nav-group">
+                    <h3>Socios</h3>
+                    <a href="admin.html">Socios activos</a>
+                    <a href="adminregistrar.html">Nuevo socio</a>
+                </div>
+                <div class="interface-nav-group">
+                    <h3>Clases</h3>
+                    <a href="admin-clases.html" aria-current="page">Administrar clases</a>
+                </div>
+              </nav>
+            </div>
+        </aside>
+
+        <main class="interface-content">
+            <div class="interface-heading">
+                <div>
+                    <h1>Administrar clases</h1>
+                </div>
+            </div>
+
+            <section class="interface-panel mb-4">
+                <div class="interface-panel-header"><h2>Crear clase</h2></div>
+                <div class="interface-panel-body">
+                    <form id="createClassForm">
+                        <div class="row g-3">
+                            <div class="col-md-5">
+                                <label class="form-label" for="newClassName">Nombre</label>
+                                <input class="form-control" id="newClassName" name="name" maxlength="60" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="newClassTime">Horario</label>
+                                <input class="form-control" id="newClassTime" name="time" type="time" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="newClassTeacher">Profesor</label>
+                                <select class="form-select" id="newClassTeacher" name="teacherId" required>
+                                    <option value="profesor-demo">Profesor</option>
+                                    <option value="profesor-2">pepito</option>
+                                </select>
+                            </div>
+                        </div>
+                        <fieldset class="mt-4">
+                            <legend class="form-label">Días</legend>
+                            <div class="weekday-options">
+                                <label><input type="checkbox" name="days" value="1"> Lunes</label>
+                                <label><input type="checkbox" name="days" value="2"> Martes</label>
+                                <label><input type="checkbox" name="days" value="3"> Miércoles</label>
+                                <label><input type="checkbox" name="days" value="4"> Jueves</label>
+                                <label><input type="checkbox" name="days" value="5"> Viernes</label>
+                                <label><input type="checkbox" name="days" value="6"> Sábado</label>
+                                <label><input type="checkbox" name="days" value="0"> Domingo</label>
+                            </div>
+                        </fieldset>
+                        <div class="d-flex align-items-center gap-3 mt-4">
+                            <button class="interface-button" type="submit">Crear clase</button>
+                            <p id="createClassFeedback" class="interface-feedback mb-0" role="status"></p>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <section class="interface-panel">
+                <div class="interface-panel-header">
+                    <div><h2>Clases existentes</h2></div>
+                </div>
+                <div class="interface-panel-body">
+                    <div class="schedule-list" id="managedClasses"></div>
+                    <p id="managedClassesEmpty" class="interface-empty" hidden>No hay clases.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../js/dashboard/admin.js"></script>
+</body>
+</html>

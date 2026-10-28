@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de socio | FitPower</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&family=TASA+Explorer:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/dashboards/comun.css">
+    <link rel="stylesheet" href="../../../css/dashboards/interfaces.css">
+    <link rel="stylesheet" href="../../../css/responsives/dashboardsresponsive/comunresponsive.css">
+</head>
+<body class="interface-page admin-interface">
+    <header>
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center header-contenido">
+                <h1 class="logo"><a href="../../../../index.html">FitPower</a></h1>
+                <div class="header-derecha">
+                    <span class="header-text">Nombre Apellido</span>
+                    <img src="../../../assets/imagenes/img6.jpg" class="usuario-header" alt="Foto de perfil">
+                    <button class="boton-menu role-nav-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#roleNavigation" aria-controls="roleNavigation" aria-label="Abrir navegación">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="interface-layout">
+        <aside class="interface-sidebar offcanvas offcanvas-start" id="roleNavigation" tabindex="-1" aria-labelledby="roleNavigationTitle">
+            <div class="offcanvas-header d-lg-none">
+                <h2 class="offcanvas-title" id="roleNavigationTitle">Administración</h2>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+            </div>
+            <div class="offcanvas-body">
+              <nav aria-label="Navegación de administración">
+                <div class="interface-nav-group">
+                    <h3>Socios</h3>
+                    <a href="admin.html">Socios activos</a>
+                    <a href="adminregistrar.html">Nuevo socio</a>
+                    <a href="adminperfil.html" aria-current="page">Perfil de socio</a>
+                </div>
+                <div class="interface-nav-group">
+                    <h3>Clases</h3>
+                    <a href="admin-clases.html">Administrar clases</a>
+                </div>
+              </nav>
+            </div>
+        </aside>
+
+        <main class="interface-content">
+            <div class="interface-heading">
+                <div>
+                    <h1>Perfil de socio</h1>
+                    <p>Consulta la información de membresía y las actividades asignadas a este socio.</p>
+                </div>
+                <div class="interface-actions">
+                    <a class="interface-button-secondary" href="admin.html">Volver a socios</a>
+                    <button class="interface-button-secondary" type="button" data-open-class-assign data-member-name="miau">Asignar clases</button>
+                </div>
+            </div>
+
+            <section class="interface-panel profile-summary" aria-label="Resumen del socio">
+                <img src="../../../assets/imagenes/img6.jpg" alt="Foto del socio">
+                <div>
+                    <h2 id="profileName">miau</h2>
+                    <p>Miembro desde abril de 2026</p>
+                </div>
+            </section>
+
+            <div class="interface-grid">
+                <section class="interface-panel">
+                    <div class="interface-panel-header"><h2>Información personal</h2></div>
+                    <div class="interface-panel-body">
+                        <div class="info-grid">
+                            <div class="info-item"><span>Documento</span><strong id="profileDocument">1.234.567-8</strong></div>
+                            <div class="info-item"><span>Teléfono</span><strong id="profilePhone">789 456 123</strong></div>
+                            <div class="info-item"><span>Correo</span><strong id="profileEmail">miau@fitpower.uy</strong></div>
+                            <div class="info-item"><span>Estado</span><strong>Activo</strong></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="interface-panel">
+                    <div class="interface-panel-header"><h2>Membresía</h2></div>
+                    <div class="interface-panel-body">
+                        <ul class="interface-list">
+                            <li><strong>Plan</strong><span>Plan Pro</span></li>
+                            <li><strong>Vencimiento</strong><span id="profileExpiration">14/11/2026</span></li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="interface-panel">
+                    <div class="interface-panel-header"><h2>Clases grupales</h2></div>
+                    <div class="interface-panel-body">
+                        <ul class="interface-list" id="memberAssignedClasses"></ul>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal fade" id="assignMemberClassesModal" tabindex="-1" aria-labelledby="assignMemberClassesTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content interface-modal">
+                <form id="assignMemberClassesForm">
+                    <div class="modal-header">
+                        <div>
+                            <h2 class="modal-title" id="assignMemberClassesTitle">Asignar clases</h2>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Selecciona las clases para <strong id="assignClassesMember">el socio</strong>.</p>
+                        <div class="class-assignment-options" id="memberClassOptions"></div>
+                        <p id="memberClassFeedback" class="interface-feedback" role="status" hidden></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="interface-button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="interface-button">Guardar clases</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../js/dashboard/admin.js"></script>
+</body>
+</html>
