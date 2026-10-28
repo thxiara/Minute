@@ -43,7 +43,7 @@ try {
     exit;
 }
 
-$base = '/api';
+$base = '';
 
 $router = new \App\Utils\Router($base, $db);
 

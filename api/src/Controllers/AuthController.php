@@ -10,6 +10,13 @@ class AuthController
     private $db;
     private userModel $userModel;
 
+    private const DASHBOARDS = [
+        1 => '/dash/admin',
+        2 => '/dash/entrenador',
+        3 => '/dash/profesor',
+        4 => '/dash/socio',
+    ];
+
     public function __construct($db)
     {
         $this->db = $db;
@@ -87,6 +94,7 @@ class AuthController
 
         Response::json(true, 'Inicio de sesión exitoso.', [
             'role_id' => (int) $user['role_id'],
+            'redirect' => self::DASHBOARDS[(int) $user['role_id']] ?? '/',
         ]);
     }
 
@@ -102,6 +110,7 @@ class AuthController
             'name' => $_SESSION['name'] ?? null,
             'email' => $_SESSION['email'] ?? null,
             'role_id' => $_SESSION['role_id'] ?? null,
+            'dashboard' => self::DASHBOARDS[$_SESSION['role_id'] ?? 0] ?? null,
         ]);
     }
 
@@ -113,8 +122,83 @@ class AuthController
         Response::json(true, 'Sesión cerrada.');
     }
 
-    private function getRequestData(): array
-    {
+        // GET /login → si ya hay sesión te manda a tu panel, si no muestra el formulario.
+    public function paginaLogin(): void {
+        $miPanel = $this->panelDeLaSesion();
+        if ($miPanel !== null) {
+            $this->redirigir($miPanel);
+        }
+        $this->enviarHtml('login.html');
+    }
+    
+    // GET /logout → cierra la sesión y vuelve al inicio.
+    public function salir(): void {
+        $_SESSION = [];
+        session_destroy();
+        $this->redirigir('/');
+    }
+
+    // GET /dash → te manda al panel que te corresponde.
+    public function miPanel(): void {
+        $this->redirigir($this->panelDeLaSesion() ?? '/login');
+    }
+    
+    // Un método por panel: cada uno dice qué rol puede verlo y qué archivo mostrar.
+    // La URL de cada uno está en routes.php.
+    public function panelAdmin(): void { $this->servirPanel(1, 'roles/admin/admin.html'); }
+    public function panelAdminRegistrar(): void { $this->servirPanel(1, 'roles/admin/adminregistrar.html'); }
+    public function panelEntrenador(): void { $this->servirPanel(2, 'roles/entrenador/entrenador.html'); }
+    public function panelProfesor(): void { $this->servirPanel(3, 'roles/profesor/profesor.html'); }
+    public function panelSocio(): void { $this->servirPanel(4, 'roles/usuario/usuario.html'); }
+    
+    // El guardia: chequea sesión y rol; si todo está bien manda el HTML con el nombre ya puesto.
+    private function servirPanel(int $rolPermitido, string $archivo): void {
+    
+        // Sin sesión → al login.
+        if (empty($_SESSION['client_id'])) {
+            $this->redirigir('/login');
+        }
+
+        // Con sesión pero no es su panel → al panel que sí le corresponde.
+        if ((int) ($_SESSION['role_id'] ?? 0) !== $rolPermitido) {
+            $this->redirigir($this->panelDeLaSesion() ?? '/');
+        }
+        
+        $this->enviarHtml($archivo, [
+            '{{nombre}}' => $_SESSION['name'] ?? '',
+        ]);
+    }
+
+    // URL del panel del usuario logueado, o null si no hay sesión (o el rol no tiene panel).
+    private function panelDeLaSesion(): ?string {
+        if (empty($_SESSION['client_id'])) {
+            return null;
+        }
+        return self::DASHBOARDS[(int) ($_SESSION['role_id'] ?? 0)] ?? null;
+    }
+    // Lee un HTML de front/dist/paginas, reemplaza las marcas {{...}} y lo envía.
+    private function enviarHtml(string $archivo, array $reemplazos = []): void {
+        $html = file_get_contents(self::CARPETA_VISTAS . $archivo);
+        foreach ($reemplazos as $marca => $valor) {
+            // htmlspecialchars: si alguien se llama "<script>", se muestra como texto y no se ejecuta.
+            $html = str_replace($marca, htmlspecialchars($valor, ENT_QUOTES, 'UTF-8'), $html);
+        }
+        
+        http_response_code(200);
+        header('Content-Type: text/html; charset=UTF-8');
+    
+        // no-store: después de cerrar sesión, el botón "atrás" no puede mostrar el panel guardado.
+        header('Cache-Control: no-store');
+        echo $html;
+        exit();
+    }
+
+    private function redirigir(string $url): void {
+        header('Location: ' . $url, true, 302);
+        exit();
+    }
+
+    private function getRequestData(): array {
         $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
 
         if (stripos($contentType, 'application/json') !== false) {

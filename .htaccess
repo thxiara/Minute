@@ -1,4 +1,4 @@
-<IfModule mod_rewrite.c> 
+<IfModule mod_rewrite.c>
     RewriteEngine On
 
     # ====================================================
@@ -13,10 +13,18 @@
     # ...entonces, manda TODO al index.php de la carpeta api.
     RewriteRule ^api/(.*)$ /api/index.php [L,QSA]
 
-
     # ====================================================
-    # 2. TRÁFICO DEL FRONTEND (Los clientes)
+    # 2. PÁGINAS CON SESIÓN (las decide el AuthController)
     # ====================================================
-    # Redirige físicamente a la carpeta front cuando entran a la raíz
-    RewriteRule ^$ /front/index.html [R=301,L]
+    # /login, /logout, /dash, /dash/admin, /dash/admin/registrar, ...
+    # van al index.php de la API, que mira la sesión y decide qué mostrar.
+    RewriteRule ^(login|logout|dash)(/.*)?$ /api/index.php [L,QSA]
+    
+    # ====================================================
+    # 3. PÁGINAS PÚBLICAS (URL linda → archivo real)
+    # ====================================================
+    # Sin [R]: el navegador sigue viendo la URL linda, Apache sirve el archivo por detrás.
+    RewriteRule ^$ /front/index.html [L]
+    # RewriteRule ^resenas/?$ /front/dist/paginas/resenas.html [L]
+    # RewriteRule ^pagar/?$ /front/dist/paginas/pagar.html [L]
 </IfModule>
