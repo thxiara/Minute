@@ -117,8 +117,7 @@ class AuthController
 
     public function logout(): void
     {
-        $_SESSION = [];
-        session_destroy();
+        $this->destruirSesion();
 
         Response::json(true, 'Sesión cerrada.');
     }
@@ -134,8 +133,7 @@ class AuthController
     
     // GET /logout → cierra la sesión y vuelve al inicio.
     public function salir(): void {
-        $_SESSION = [];
-        session_destroy();
+        $this->destruirSesion();
         $this->redirigir('/');
     }
 
@@ -203,6 +201,22 @@ class AuthController
     private function redirigir(string $url): void {
         header('Location: ' . $url, true, 302);
         exit();
+    }
+
+    // Cierra la sesión y borra la cookie del navegador.
+    private function destruirSesion(): void {
+        $_SESSION = [];
+
+        if (ini_get('session.use_cookies')) {
+            setcookie(session_name(), '', [
+                'expires'  => time() - 42000,
+                'path'     => '/',
+                'httponly' => true,
+                'samesite' => 'Lax',
+            ]);
+        }
+
+        session_destroy();
     }
 
     private function getRequestData(): array {

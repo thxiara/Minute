@@ -16,6 +16,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
+// La sesión dura hasta que el usuario cierre sesión explícitamente (10 años).
+const SESSION_LIFETIME = 60 * 60 * 24 * 365 * 10;
+
+// Las sesiones se guardan fuera de /tmp para que sobrevivan a la recreación del contenedor.
+$sessionPath = '/var/lib/php/sessions';
+if (is_dir($sessionPath) && is_writable($sessionPath)) {
+    session_save_path($sessionPath);
+}
+
+ini_set('session.gc_maxlifetime', (string) SESSION_LIFETIME);
+ini_set('session.use_strict_mode', '1');
+ini_set('session.use_only_cookies', '1');
+
+session_set_cookie_params([
+    'lifetime' => SESSION_LIFETIME,
+    'path'     => '/',
+    'httponly' => true,
+    'samesite' => 'Lax',
+]);
+
 session_start();
 
 require_once 'autoload.php';

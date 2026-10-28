@@ -9,6 +9,7 @@ services:
       - "8080:80"
     volumes:
       - ./:/var/www/html
+      - sessions:/var/lib/php/sessions
     depends_on:
       - db
 
@@ -39,4 +40,5 @@ services:
 
 volumes:
   db_data:
+  sessions:
   

@@ -127,6 +127,11 @@
         height:42px;
     }
 
+    .header-btn{
+        padding:8px 14px;
+        font-size:.72rem;
+    }
+
 
     /* en el hero  */
     .hero{
