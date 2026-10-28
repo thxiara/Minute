@@ -9,6 +9,7 @@ class AuthController
 {
     private $db;
     private userModel $userModel;
+    private const CARPETA_VISTAS = __DIR__ . '/../../../front/';
 
     private const DASHBOARDS = [
         1 => '/dash/admin',
@@ -128,7 +129,7 @@ class AuthController
         if ($miPanel !== null) {
             $this->redirigir($miPanel);
         }
-        $this->enviarHtml('login.html');
+        $this->enviarHtml('dist/paginas/login.html');
     }
     
     // GET /logout → cierra la sesión y vuelve al inicio.
@@ -145,11 +146,17 @@ class AuthController
     
     // Un método por panel: cada uno dice qué rol puede verlo y qué archivo mostrar.
     // La URL de cada uno está en routes.php.
-    public function panelAdmin(): void { $this->servirPanel(1, 'roles/admin/admin.html'); }
-    public function panelAdminRegistrar(): void { $this->servirPanel(1, 'roles/admin/adminregistrar.html'); }
-    public function panelEntrenador(): void { $this->servirPanel(2, 'roles/entrenador/entrenador.html'); }
-    public function panelProfesor(): void { $this->servirPanel(3, 'roles/profesor/profesor.html'); }
-    public function panelSocio(): void { $this->servirPanel(4, 'roles/usuario/usuario.html'); }
+    public function panelAdmin(): void { $this->servirPanel(1, 'dist/paginas/roles/admin/admin.html'); }
+    public function panelAdminRegistrar(): void { $this->servirPanel(1, 'dist/paginas/roles/admin/adminregistrar.html'); }
+    public function panelEntrenador(): void { $this->servirPanel(2, 'dist/paginas/roles/entrenador/entrenador.html'); }
+    public function panelProfesor(): void { $this->servirPanel(3, 'dist/paginas/roles/profesor/profesor.html'); }
+    public function panelSocio(): void { $this->servirPanel(4, 'dist/paginas/roles/usuario/usuario.html'); }
+    
+    public function landing(): void {
+        $this->enviarHtml('index.html', [
+            '{{nombre}}' => $_SESSION['name'] ?? '',
+        ]); 
+        }
     
     // El guardia: chequea sesión y rol; si todo está bien manda el HTML con el nombre ya puesto.
     private function servirPanel(int $rolPermitido, string $archivo): void {
