@@ -25,6 +25,7 @@
     >
     <link rel="stylesheet" href="../../../css/styles.css">
     <link rel="stylesheet" href="../../../css/dashboards/comun.css">
+    <link rel="stylesheet" href="../../../css/dashboards/interfaces.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&family=TASA+Explorer:wght@400;500;600;700&display=swap"
         rel="stylesheet"
@@ -135,7 +136,7 @@
 
 
                         <a
-                            href="#"
+                            href="admin.html"
                             class="enlace-barra-lateral activo"
                         >
                             Socios activos
@@ -145,7 +146,7 @@
 
                 </div>
 
-
+                <a href="admin-clases.html" class="enlace-barra-lateral">Administrar clases</a>
 
                 <div class="seccion-barra-lateral">
 
@@ -243,7 +244,7 @@
 
 
                             <a
-                                href="#"
+                                href="admin.html"
                                 class="enlace-barra-lateral activo"
                             >
                                 Socios activos
@@ -253,6 +254,7 @@
 
                     </div>
 
+                    <a href="admin-clases.html" class="enlace-barra-lateral">Administrar clases</a>
 
                     <div class="seccion-barra-lateral">
 
@@ -320,12 +322,10 @@
                     </h1>
 
 
-                    <a
-                        href="adminregistrar.html"
-                        class="btn nuevo-socio"
-                    >
-                        Nuevo socio
-                    </a>
+                    <div class="interface-actions">
+                        <a href="admin-clases.html" class="interface-button-secondary">Administrar clases</a>
+                        <a href="adminregistrar.html" class="btn nuevo-socio">Nuevo socio</a>
+                    </div>
 
                 </div>
 
@@ -447,7 +447,7 @@
 
                                         <div class="action-menu">
 
-                                            <button type="button">
+                                            <button type="button" data-admin-profile data-member-name="miau">
 
                                                 <span class="icono-ver">
                                                     ●
@@ -455,6 +455,11 @@
 
                                                 Ver/editar perfil
 
+                                            </button>
+
+                                            <button type="button" data-open-class-assign data-member-name="miau">
+                                                <span class="icono-ver">▣</span>
+                                                Asignar clases
                                             </button>
 
 
@@ -500,7 +505,7 @@
 
                                         <div class="action-menu">
 
-                                            <button type="button">
+                                            <button type="button" data-admin-profile data-member-name="parapapapa">
 
                                                 <span class="icono-ver">
                                                     ●
@@ -508,6 +513,11 @@
 
                                                 Ver/editar perfil
 
+                                            </button>
+
+                                            <button type="button" data-open-class-assign data-member-name="parapapapa">
+                                                <span class="icono-ver">▣</span>
+                                                Asignar clases
                                             </button>
 
 
@@ -565,6 +575,31 @@
     </div>
 
 
+
+
+    <div class="modal fade" id="assignMemberClassesModal" tabindex="-1" aria-labelledby="assignMemberClassesTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content interface-modal">
+                <form id="assignMemberClassesForm">
+                    <div class="modal-header">
+                        <div>
+                            <h2 class="modal-title" id="assignMemberClassesTitle">Asignar clases</h2>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Selecciona las clases para <strong id="assignClassesMember">el socio</strong>.</p>
+                        <div class="class-assignment-options" id="memberClassOptions"></div>
+                        <p id="memberClassFeedback" class="interface-feedback" role="status" hidden></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="interface-button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="interface-button">Guardar clases</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../../../js/api.js"></script>
