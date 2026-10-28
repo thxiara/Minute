@@ -112,6 +112,17 @@ body{
     transform:translateY(-2px);
 }
 
+.formulario .review-feedback{
+    min-height:1.4em;
+    margin:10px 0 0;
+    color:#18213e;
+    font-weight:600;
+}
+
+.formulario .review-feedback.is-error{
+    color:#8a1c25;
+}
+
 .formulario a{
     display:block;
     text-align:center;
@@ -231,3 +242,75 @@ body{
     font-family: "Special Gothic Expanded One", sans-serif;
 }
 
+/* Acabado visual compartido para acceso y reseñas */
+body {
+    background:
+        radial-gradient(ellipse at 15% 0, rgba(74, 40, 196, 0.18), transparent 32rem),
+        radial-gradient(ellipse at 100% 85%, rgba(28, 43, 194, 0.12), transparent 30rem),
+        #07080d;
+}
+
+.formulario {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(145deg, rgba(24, 25, 35, 0.94), rgba(14, 15, 21, 0.95));
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.46);
+    color: #f5f5f7;
+}
+
+.formulario h1,
+.formulario h2 {
+    color: #b69aff;
+}
+
+.formulario .form-control {
+    border-color: rgba(255, 255, 255, 0.25);
+    color: #f7f7fa;
+}
+
+.formulario .form-control::placeholder {
+    color: #a3a6b1;
+}
+
+.formulario .form-control:focus {
+    border-color: #a77cff;
+    box-shadow: 0 3px 0 rgba(167, 124, 255, 0.12);
+}
+
+.formulario button {
+    background: linear-gradient(135deg, #7138df, #3428a9);
+    box-shadow: 0 9px 22px rgba(74, 40, 196, 0.22);
+}
+
+.formulario button:hover {
+    background: linear-gradient(135deg, #824fe8, #4939c3);
+}
+
+.formulario a,
+.volver {
+    color: #c2a8ff;
+}
+
+.reseña {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(145deg, #181923, #101117);
+    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.26);
+}
+
+.reseña h3 {
+    color: #c2a8ff;
+}
+
+.reseña p {
+    color: #d3d5de;
+}
+
+.reseña img {
+    border: 2px solid rgba(182, 154, 255, 0.65);
+}
+
+.formulario .form-control:focus-visible,
+.formulario button:focus-visible,
+.volver:focus-visible {
+    outline: 2px solid #c2a8ff;
+    outline-offset: 3px;
+}

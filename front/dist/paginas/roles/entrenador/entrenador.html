@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="verificando-sesion">
+<html lang="es">
 
 <head>
 
@@ -55,12 +55,7 @@
         rel="stylesheet"
         href="../../../css/responsives/dashboardsresponsive/entrenadorresponsive.css"
     >
-
-<!-- Oculta el panel hasta que Session.requireRole() confirme sesión y rol (ver js/session.js). -->
-    <style>
-        html.verificando-sesion body { visibility: hidden; }
-    </style>
-/style>
+    <link rel="stylesheet" href="../../../css/dashboards/interfaces.css">
 
 </head>
 
@@ -146,7 +141,7 @@
                         id="sociosMenu"
                     >
                         <a
-                            href="#"
+                            href="entrenador.html"
                             class="enlace-barra-lateral activo"
                         >
                             Socios activos
@@ -187,18 +182,17 @@
                     >
 
                         <a
-                            href="#"
+                            href="ejercicios.html"
                             class="enlace-barra-lateral"
                         >
-                            Nuevo entrenamiento
+                            Ejercicios
                         </a>
 
-
                         <a
-                            href="#"
+                            href="rutinas.html#rutinas"
                             class="enlace-barra-lateral"
                         >
-                            Entrenamientos activos
+                            Rutinas
                         </a>
 
                     </div>
@@ -248,7 +242,7 @@
                             id="sociosMobile"
                         >
                             <a
-                                href="#"
+                                href="entrenador.html"
                                 class="enlace-barra-lateral activo"
                             >
                                 Socios activos
@@ -289,18 +283,17 @@
                         >
 
                             <a
-                                href="#"
+                                href="ejercicios.html"
                                 class="enlace-barra-lateral"
                             >
-                                Nuevo entrenamiento
+                                Ejercicios
                             </a>
 
-
                             <a
-                                href="#"
+                                href="rutinas.html#rutinas"
                                 class="enlace-barra-lateral"
                             >
-                                Entrenamientos activos
+                                Rutinas
                             </a>
 
                         </div>
@@ -454,62 +447,19 @@
                                     <!-- nota -->
 
                                     <td class="nota">
-
-                                        <span class="nota-titulo">titulo ok</span>
-
-                                        <span class="nota-texto">bien</span>
-
-                                        <a
-                                            href="#"
-                                            class="leer-mas"
-                                        >
-                                            Leer más
-                                        </a>
-
+                                        <span class="nota-titulo">Nota para el entrenador</span>
+                                        <span class="nota-texto" data-trainer-note="llalala">Sin nota</span>
                                     </td>
-
-
-                                    <!-- acciones -->
 
                                     <td class="acciones">
-
-                                        <button
-                                            type="button"
-                                            class="action-button"
-                                        >
-                                            ⋮
-                                        </button>
-
-
+                                        <button type="button" class="action-button" aria-label="Acciones para Llalala">⋮</button>
                                         <div class="action-menu">
-
-                                            <button type="button">
-
-                                                <span class="icono-ver">
-                                                    ●
-                                                </span>
-
-                                                Ver/editar perfil
-
+                                            <button type="button" data-trainer-member="llalala">
+                                                <span class="icono-ver">◆</span>Asignar rutina y nota
                                             </button>
-
-
-                                            <button
-                                                type="button"
-                                                class="delete"
-                                            >
-
-                                                <span>
-                                                    ⊗
-                                                </span>
-
-                                                Dar de baja
-
-                                            </button>
-
                                         </div>
-
                                     </td>
+
 
                                 </tr>
 
@@ -531,62 +481,19 @@
                                     <!-- nota -->
 
                                     <td class="nota">
-
-                                        <span class="nota-titulo">buu horrible</span>
-
-                                        <span class="nota-texto">no se no se</span>
-
-                                        <a
-                                            href="#"
-                                            class="leer-mas"
-                                        >
-                                            Leer más
-                                        </a>
-
+                                        <span class="nota-titulo">Nota para el entrenador</span>
+                                        <span class="nota-texto" data-trainer-note="nombre">Sin nota</span>
                                     </td>
-
-
-                                    <!-- acciones -->
 
                                     <td class="acciones">
-
-                                        <button
-                                            type="button"
-                                            class="action-button"
-                                        >
-                                            ⋮
-                                        </button>
-
-
+                                        <button type="button" class="action-button" aria-label="Acciones para Nombre">⋮</button>
                                         <div class="action-menu">
-
-                                            <button type="button">
-
-                                                <span class="icono-ver">
-                                                    ●
-                                                </span>
-
-                                                Ver/editar perfil
-
+                                            <button type="button" data-trainer-member="nombre">
+                                                <span class="icono-ver">◆</span>Asignar rutina y nota
                                             </button>
-
-
-                                            <button
-                                                type="button"
-                                                class="delete"
-                                            >
-
-                                                <span>
-                                                    ⊗
-                                                </span>
-
-                                                Dar de baja
-
-                                            </button>
-
                                         </div>
-
                                     </td>
+
 
                                 </tr>
 
@@ -621,6 +528,37 @@
 
     </div>
 
+
+    <div class="modal fade" id="trainerMemberModal" tabindex="-1" aria-labelledby="trainerMemberTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content interface-modal">
+                <form id="trainerMemberForm">
+                    <div class="modal-header">
+                        <div>
+                            <span class="interface-eyebrow">Seguimiento del socio</span>
+                            <h2 class="modal-title" id="trainerMemberTitle">Rutina y nota</h2>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Socio: <strong id="trainerMemberName"></strong></p>
+                        <label class="form-label" for="trainerRoutineSelect">Rutina asignada</label>
+                        <select class="form-select" id="trainerRoutineSelect" name="routine">
+                            <option value="">Sin rutina asignada</option>
+                        </select>
+                        <label class="form-label mt-3" for="trainerMemberNote">Nota privada para tener en cuenta</label>
+                        <textarea class="form-control" id="trainerMemberNote" name="note" rows="3" maxlength="240" placeholder="Comentario breve para el seguimiento"></textarea>
+                        <p class="form-text text-secondary">Esta nota es interna del entrenador y no es una evaluación.</p>
+                        <p id="trainerMemberFeedback" class="interface-feedback" role="status"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="interface-button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="interface-button">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
     <!-- boostrap js -->

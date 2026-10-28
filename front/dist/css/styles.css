@@ -680,3 +680,120 @@ a:focus{
 }
 
 .comentario .contenido h3 { font-family: "Special Gothic Expanded One", sans-serif; }
+
+/* Ajustes visuales compartidos */
+:root {
+    --borde-suave: rgba(255, 255, 255, 0.1);
+    --superficie: #11131b;
+    --superficie-elevada: #171923;
+    --acento-claro: #b69aff;
+}
+
+body {
+    background:
+        radial-gradient(ellipse at 82% 0, rgba(74, 40, 196, 0.12), transparent 34rem),
+        var(--color-fondo);
+}
+
+header {
+    background: linear-gradient(110deg, #25176f, var(--color-primario));
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.16);
+}
+
+.logo a {
+    display: inline-block;
+    transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.logo a:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.hero .overlay {
+    background: linear-gradient(90deg, rgba(4, 5, 11, 0.78), rgba(4, 5, 11, 0.28));
+}
+
+.hero-contenido h2 {
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.42);
+}
+
+.nosotros,
+.instalaciones,
+.reseñas,
+.planes {
+    background:
+        radial-gradient(ellipse at 50% 0, rgba(74, 40, 196, 0.07), transparent 34rem),
+        var(--color-fondo);
+}
+
+.imagen,
+.imagen-instalaciones {
+    border: 1px solid var(--borde-suave);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
+}
+
+.imagen img,
+.imagen-instalaciones img {
+    transition: transform 450ms ease;
+}
+
+.imagen:hover img,
+.imagen-instalaciones:hover img {
+    transform: scale(1.025);
+}
+
+.servicio {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(145deg, rgba(45, 37, 132, 0.96), rgba(28, 43, 194, 0.9));
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18);
+}
+
+.servicio:hover,
+.plan:hover {
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.28);
+}
+
+.lateral {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(145deg, #482b91, #362078);
+}
+
+.principal {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: linear-gradient(145deg, #292b9f, #1c2bc2);
+    box-shadow: 0 20px 46px rgba(28, 43, 194, 0.18);
+}
+
+.btn-hero,
+.btn-instalaciones,
+.btn-reseña {
+    box-shadow: 0 9px 22px rgba(74, 40, 196, 0.22);
+}
+
+.btn-hero:hover,
+.btn-instalaciones:hover,
+.btn-reseña:hover,
+.plan button:hover {
+    transform: translateY(-2px);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--acento-claro);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}

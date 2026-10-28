@@ -295,6 +295,16 @@
     background-color: #A25CFF;
 }
 
+.routine-exercise-preview {
+    margin: 10px 0 0;
+    padding: 10px 10px 10px 26px;
+    border: 1px solid #29232F;
+    border-radius: 7px;
+    background: #080808;
+    color: #CFC5DB;
+    font-size: 12px;
+}
+
 
 /* clases */
 
@@ -350,6 +360,17 @@
     font-size: 14px;
 
     margin-top: 5px;
+}
+
+.class-notice {
+    display: block;
+    margin-top: 8px;
+    padding: 8px 10px;
+    border-left: 3px solid #8e63e8;
+    border-radius: 0 6px 6px 0;
+    background: rgba(107, 44, 255, 0.1);
+    color: #e8e2ff;
+    font-size: 0.85rem;
 }
 
 
