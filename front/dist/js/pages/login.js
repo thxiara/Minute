@@ -21,14 +21,6 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
             return;
         }
 
-        const destino = Session.dashboardFor(data.role_id);
-
-        if (!destino) {
-            API.request('/logout', 'POST');
-            mostrarError('Tu usuario no tiene un panel asignado.');
-            return;
-        }
-
-        window.location.replace(destino);
+        window.location.replace(data.redirect);
     });
 });
