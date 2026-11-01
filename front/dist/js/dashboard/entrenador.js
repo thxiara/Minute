@@ -329,7 +329,7 @@ function renderRoutines() {
 
         const image = document.createElement("img");
         image.className = "routine-preview-image";
-        image.src = `../../../assets/imagenes/${routine.image || previewImages[0]}`;
+        image.src = `assets/imagenes/${routine.image || previewImages[0]}`;
         image.alt = `Vista previa de ${routine.name}`;
         image.loading = "lazy";
 
@@ -468,7 +468,7 @@ function editRoutine(routine) {
 function showRoutine(routine) {
     document.getElementById("routineDetailTitle").textContent = routine.name;
     const image = document.getElementById("routineDetailImage");
-    image.src = `../../../assets/imagenes/${routine.image || previewImages[0]}`;
+    image.src = `assets/imagenes/${routine.image || previewImages[0]}`;
     image.alt = `Vista previa de ${routine.name}`;
 
     const list = document.getElementById("routineDetailExercises");

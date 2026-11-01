@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `Client` (
     `id_client`     INT AUTO_INCREMENT PRIMARY KEY,
     `fr_credentials` INT NOT NULL,
     `fr_role`       INT NOT NULL,
-    `phone`         INT NOT NULL UNIQUE, 
+    `phone`         VARCHAR(20) NOT NULL UNIQUE,
     `name_client`   VARCHAR(50) NOT NULL,
     `ci`           VARCHAR(20) NOT NULL UNIQUE,
     CONSTRAINT `fk_client_credentials`

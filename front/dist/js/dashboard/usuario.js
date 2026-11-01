@@ -222,7 +222,8 @@ if (photoInput) {
 
 const memberClassesContainer = document.getElementById("memberClasses");
 const profileQuery = new URLSearchParams(window.location.search);
-const memberName = profileQuery.get("name") || memberClassesContainer?.dataset.memberName || "miau";
+// En el panel del socio el nombre viene de la sesión (data-member-name lo pone el servidor).
+const memberName = memberClassesContainer?.dataset.memberName || profileQuery.get("name") || "";
 const normalizedMemberName = memberName.trim().toLocaleLowerCase("es");
 const displayMemberName = memberName.trim().replace(/\b\p{L}/gu, letter => letter.toLocaleUpperCase("es"));
 if (memberClassesContainer) memberClassesContainer.dataset.memberName = normalizedMemberName;
@@ -316,7 +317,7 @@ if (window.FitPowerTrainingData) {
         card.className = "routine-preview-card";
         const image = document.createElement("img");
         image.className = "routine-preview-image";
-        image.src = `../../../assets/imagenes/${routine.image || "img1.jpg"}`;
+        image.src = `assets/imagenes/${routine.image || "img1.jpg"}`;
         image.alt = `Vista previa de ${routine.name}`;
         image.loading = "lazy";
 

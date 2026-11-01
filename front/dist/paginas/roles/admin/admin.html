@@ -71,11 +71,24 @@
                     <div class="header-derecha">
 
                             <span class="header-text">
-                                Nombre Apellido
+                                {{nombre}}
                             </span>
 
                                 <img
                                 src="assets/imagenes/img6.jpg" class="usuario-header" alt="Usuario">
+
+                            <button
+                                class="boton-menu"
+                                type="button"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#menuLateral"
+                                aria-controls="menuLateral"
+                                aria-label="Abrir menú"
+                            >
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
 
                     </div>
 
@@ -186,17 +199,11 @@
                             Productos activos
                         </a>
 
-                        <a
-                            href="/logout"
-                            class="enlace-barra-lateral"
-                            style="color: red"
-                        >
-                            Cerrar sesión
-                        </a>
-
                     </div>
 
                 </div>
+
+                <a href="/logout" class="enlace-barra-lateral cerrar">Cerrar sesión</a>
 
             </aside>
 
@@ -305,6 +312,8 @@
                         </div>
 
                     </div>
+
+                    <a href="/logout" class="enlace-barra-lateral cerrar">Cerrar sesión</a>
 
                 </div>
 
@@ -611,7 +620,3 @@
 
 </body>
 </html>
-
-</body>
-
-</html> 

@@ -33,11 +33,12 @@ class AuthController
         $email = trim($data['email'] ?? '');
         $password = $data['password'] ?? '';
         $confirmPassword = $data['confirm_password'] ?? '';
-        $phone = trim($data['phone'] ?? '') ?: null;
+        // Solo dígitos: "099 123 456" y "099-123-456" se guardan igual y conservan el 0 inicial.
+        $phone = preg_replace('/\D+/', '', (string) ($data['phone'] ?? ''));
         $ci = trim($data['ci'] ?? '');
         $roleId = (int)($data['role'] ?? 1);
 
-        if ($name === '' || $email === '' || $password === '' || $confirmPassword === '') {
+        if ($name === '' || $email === '' || $password === '' || $confirmPassword === '' || $phone === '' || $ci === '') {
             Response::json(false, 'Todos los campos son obligatorios.', [], 400);
         }
 
@@ -56,6 +57,14 @@ class AuthController
         $usuario = $this->userModel->existsByEmail($email);
         if ($usuario) {
             Response::json(false, 'Ese correo ya está registrado.', [], 409);
+        }
+
+        if ($this->userModel->existsByCi($ci)) {
+            Response::json(false, 'Esa C.I ya está registrada.', [], 409);
+        }
+
+        if ($this->userModel->existsByPhone($phone)) {
+            Response::json(false, 'Ese teléfono ya está registrado.', [], 409);
         }
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);

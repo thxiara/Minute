@@ -69,7 +69,7 @@
                     <div class="header-derecha">
 
                             <span class="header-text">
-                                Nombre Apellido
+                                {{nombre}}
                             </span>
 
                                 <img
@@ -180,18 +180,11 @@
                             Próximas fechas
                         </a>
 
-                        <a
-                            href="/logout"
-                            class="enlace-barra-lateral"
-                            style="color: red"
-                        >
-                            Cerrar sesión
-                        </a>
-
-
                     </div>
 
                 </div>
+
+                <a href="/logout" class="enlace-barra-lateral cerrar">Cerrar sesión</a>
 
             </aside>
 
@@ -285,6 +278,8 @@
                         </div>
 
                     </div>
+
+                    <a href="/logout" class="enlace-barra-lateral cerrar">Cerrar sesión</a>
 
                 </div>
 
@@ -430,7 +425,7 @@
                                             </button>
 
 
-                                            <button type="button" data-profesor-profile data-student-name="papa">
+                                            <button type="button" data-profesor-profile data-student-name="pepe">
 
                                                 <span class="icono-evaluacion">
                                                     ◆
@@ -473,7 +468,7 @@
 
                                         <div class="action-menu">
 
-                                            <button type="button">
+                                            <button type="button" data-profesor-profile data-student-name="papa">
 
                                                 <span class="icono-ver">
                                                     ●
@@ -484,7 +479,7 @@
                                             </button>
 
 
-                                            <button type="button">
+                                            <button type="button" data-profesor-profile data-student-name="papa">
 
                                                 <span class="icono-evaluacion">
                                                     ◆

@@ -20,7 +20,25 @@ class UserModel
         return (bool) $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
-    public function create(string $name, string $email, string $hashedPassword, ?string $phone, int $roleId, string $ci): bool
+    public function existsByCi(string $ci): bool
+    {
+        $query = "SELECT id_client FROM Client WHERE ci = :ci";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(['ci' => $ci]);
+
+        return (bool) $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    public function existsByPhone(string $phone): bool
+    {
+        $query = "SELECT id_client FROM Client WHERE phone = :phone";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(['phone' => $phone]);
+
+        return (bool) $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    public function create(string $name, string $email, string $hashedPassword, string $phone, int $roleId, string $ci): bool
     {
         try {
             $this->db->beginTransaction();
@@ -51,7 +69,6 @@ class UserModel
         } catch (\PDOException $e) {
         $this->db->rollBack();
         error_log($e->getMessage());
-    file_put_contents('/tmp/debug.log', get_class($e) . ': ' . $e->getMessage() . "\n", FILE_APPEND);
         return false;
         }
     }

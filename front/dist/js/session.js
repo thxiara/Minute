@@ -14,6 +14,13 @@
             return;
         }
 
+        // Páginas estáticas del panel: el nombre del header sale de la sesión.
+        if (haySesion && data.name) {
+            document.querySelectorAll('[data-session-name]').forEach((elemento) => {
+                elemento.textContent = data.name;
+            });
+        }
+
         const boton = document.getElementById('accesoBtn');
         if (!boton) return;
 

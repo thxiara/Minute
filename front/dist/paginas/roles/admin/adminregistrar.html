@@ -83,7 +83,7 @@
                         <div class="usuario-header d-flex align-items-center">
 
                             <span class="nombre-usuario">
-                                Nombre Apellido
+                                {{nombre}}
                             </span>
 
 
@@ -225,6 +225,8 @@
 
                 </div>
 
+                <a href="/logout" class="enlace-barra-lateral cerrar">Cerrar sesión</a>
+
             </aside>
 
 
@@ -336,6 +338,8 @@
 
                     </div>
 
+                    <a href="/logout" class="enlace-barra-lateral cerrar">Cerrar sesión</a>
+
                 </div>
 
             </div>
@@ -393,6 +397,7 @@
                                     type="text"
                                     id="nombre"
                                     name="nombre"
+                                    required
                                 >
 
                             </div>
@@ -410,6 +415,7 @@
                                     type="text"
                                     id="ci"
                                     name="ci"
+                                    required
                                 >
 
                             </div>
@@ -427,6 +433,7 @@
                                     type="text"
                                     id="telefono"
                                     name="telefono"
+                                    required
                                 >
 
                             </div>
@@ -449,6 +456,7 @@
                                     type="email"
                                     id="email"
                                     name="email"
+                                    required
                                 >
 
                             </div>
@@ -505,6 +513,7 @@
                                     type="password"
                                     id="contrasena"
                                     name="contrasena"
+                                    required
                                 >
 
                             </div>

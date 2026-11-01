@@ -454,3 +454,7 @@
     color: #fff;
     transform: translateY(-1px);
 }
+
+.enlace-barra-lateral.cerrar {
+    color: #FF1E25;
+}

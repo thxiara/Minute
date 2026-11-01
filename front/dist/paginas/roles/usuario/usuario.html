@@ -79,7 +79,7 @@
                     <div class="header-derecha">
 
                             <span class="header-text" id="memberHeaderName">
-                                Nombre apellido jiji
+                                {{nombre}}
                             </span>
 
                                 <img
@@ -157,7 +157,7 @@
 
 
                 <a
-                    href="/dash/socio#"
+                    href="/logout"
                     class="menu-link cerrar"
                 >
                     Cerrar sesión
@@ -196,7 +196,7 @@
 
 
                     <h1 id="memberGreeting">
-                        Hola, Nombre
+                        Hola, {{nombre}}
                     </h1>
 
 
@@ -296,7 +296,7 @@
                 </h2>
 
 
-                <div class="clases" id="memberClasses" data-member-name="miau"></div>
+                <div class="clases" id="memberClasses" data-member-name="{{nombre}}"></div>
 
             </section>
 

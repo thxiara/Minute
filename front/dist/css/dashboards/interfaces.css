@@ -1581,3 +1581,7 @@ body.interface-page .interface-button:hover {
     background: rgba(255, 110, 110, 0.1);
     color: #ffb1b1;
 }
+
+body.interface-page .interface-sidebar a.cerrar {
+    color: #FF1E25;
+}
