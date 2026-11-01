@@ -44,4 +44,11 @@ class ClienteModel {
             return false;
         }
     }
-}
+
+    // true si el id corresponde a un cliente con rol socio (4).
+    public function esSocio(int $id): bool {
+        $stmt = $this->db->prepare('SELECT 1 FROM Client WHERE id_client = :id AND fr_role = 4');
+        $stmt->execute(['id' => $id]);
+        return (bool) $stmt->fetchColumn();
+    }
+}

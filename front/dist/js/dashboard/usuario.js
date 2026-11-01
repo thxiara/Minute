@@ -98,77 +98,6 @@
 })();
 })();
 
-// Sección: Almacenamiento de rutinas asignadas.
-(() => {
-(() => {
-    const storageKey = "fitpowerTrainingData";
-    const seed = {
-        muscleGroups: ["Piernas", "Pecho", "Espalda", "Hombros", "Core"],
-        exercises: [
-            { id: "sentadilla", name: "Sentadilla", muscle: "Piernas", equipment: "Barra" },
-            { id: "peso-muerto", name: "Peso muerto", muscle: "Piernas", equipment: "Barra" },
-            { id: "press-banca", name: "Press de banca", muscle: "Pecho", equipment: "Barra" },
-            { id: "flexiones", name: "Flexiones", muscle: "Pecho", equipment: "Peso corporal" },
-            { id: "remo", name: "Remo", muscle: "Espalda", equipment: "Mancuernas" },
-            { id: "jalon", name: "Jalón al pecho", muscle: "Espalda", equipment: "Polea" },
-            { id: "press-militar", name: "Press militar", muscle: "Hombros", equipment: "Mancuernas" },
-            { id: "plancha", name: "Plancha", muscle: "Core", equipment: "Peso corporal" }
-        ],
-        routines: [
-            { id: "rutina-piernas", name: "Fuerza de piernas", image: "img1.jpg", items: [{ exerciseId: "sentadilla", sets: 4, reps: 10 }, { exerciseId: "peso-muerto", sets: 3, reps: 8 }] },
-            { id: "rutina-superior", name: "Tren superior", image: "img2.jpg", items: [{ exerciseId: "press-banca", sets: 3, reps: 10 }, { exerciseId: "remo", sets: 3, reps: 12 }, { exerciseId: "press-militar", sets: 3, reps: 10 }] },
-            { id: "rutina-core", name: "Core y estabilidad", image: "img1.jpg", items: [{ exerciseId: "flexiones", sets: 3, reps: 12 }, { exerciseId: "jalon", sets: 3, reps: 12 }, { exerciseId: "plancha", sets: 3, reps: 30 }] }
-        ],
-        memberRoutines: {},
-        memberNotes: {}
-    };
-
-    function load() {
-        const stored = localStorage.getItem(storageKey);
-        if (!stored) return structuredClone(seed);
-
-        try {
-            const data = JSON.parse(stored);
-            if (!data || !Array.isArray(data.exercises) || !Array.isArray(data.routines)) {
-                throw new TypeError("El formato no es válido.");
-            }
-            const exercises = data.exercises.map(exercise => ({
-                ...exercise,
-                muscle: seed.muscleGroups.includes(exercise.muscle) ? exercise.muscle : "Cuerpo completo"
-            }));
-            return {
-                muscleGroups: seed.muscleGroups,
-                exercises,
-                routines: data.routines.map((routine, index) => {
-                    const items = Array.isArray(routine.items)
-                        ? routine.items
-                        : (routine.exerciseIds || []).map(exerciseId => ({ exerciseId, sets: 3, reps: 12 }));
-                    return {
-                        ...routine,
-                        image: routine.image || `img${(index % 2) + 1}.jpg`,
-                        items: items.map(item => ({
-                            exerciseId: item.exerciseId,
-                            sets: Number(item.sets) || 3,
-                            reps: Number(item.reps) || 12
-                        }))
-                    };
-                }),
-                memberRoutines: data.memberRoutines || {},
-                memberNotes: data.memberNotes || {}
-            };
-        } catch {
-            return structuredClone(seed);
-        }
-    }
-
-    function save(data) {
-        localStorage.setItem(storageKey, JSON.stringify(data));
-    }
-
-    window.FitPowerTrainingData = { load, save };
-})();
-})();
-
 // Sección: Perfil, vencimiento, clases y rutinas del socio.
 (() => {
 const photoInput = document.getElementById("profilePhotoInput");
@@ -306,68 +235,6 @@ if (memberClassesContainer && window.FitPowerClassData) {
     }
 }
 
-if (window.FitPowerTrainingData) {
-    const trainingData = window.FitPowerTrainingData.load();
-    const routineId = trainingData.memberRoutines[normalizedMemberName];
-    const routine = trainingData.routines.find(item => item.id === routineId);
-    const routineContainer = document.getElementById("memberRoutine");
-    const noRoutineMessage = document.getElementById("noAssignedRoutine");
-    if (routineContainer && routine) {
-        const card = document.createElement("article");
-        card.className = "routine-preview-card";
-        const image = document.createElement("img");
-        image.className = "routine-preview-image";
-        image.src = `assets/imagenes/${routine.image || "img1.jpg"}`;
-        image.alt = `Vista previa de ${routine.name}`;
-        image.loading = "lazy";
-
-        const content = document.createElement("div");
-        content.className = "routine-preview-content";
-        const title = document.createElement("h2");
-        title.textContent = routine.name;
-        const summary = document.createElement("p");
-        const routineItems = routine.items || (routine.exerciseIds || []).map(exerciseId => ({ exerciseId, sets: 3, reps: 12 }));
-        summary.textContent = routineItems
-            .map(item => trainingData.exercises.find(exercise => exercise.id === item.exerciseId)?.name)
-            .filter(Boolean)
-            .join(" · ") || "Rutina de entrenamiento";
-        const actions = document.createElement("div");
-        actions.className = "routine-card-actions";
-        const routineButton = document.createElement("button");
-        routineButton.type = "button";
-        routineButton.className = "interface-button-secondary";
-        routineButton.setAttribute("aria-expanded", "false");
-        routineButton.textContent = "Ver";
-        actions.append(routineButton);
-        content.append(title, summary, actions);
-        card.append(image, content);
-        routineContainer.replaceChildren(card);
-        if (noRoutineMessage) noRoutineMessage.hidden = true;
-
-        routineButton.addEventListener("click", () => {
-            let exerciseList = document.getElementById("assignedRoutineExercises");
-            if (!exerciseList) {
-                exerciseList = document.createElement("ul");
-                exerciseList.id = "assignedRoutineExercises";
-                exerciseList.className = "routine-exercise-preview";
-                routineItems.forEach((routineItem) => {
-                    const exercise = trainingData.exercises.find(item => item.id === routineItem.exerciseId);
-                    if (!exercise) return;
-                    const item = document.createElement("li");
-                    item.textContent = `${exercise.name} — ${routineItem.sets} series × ${routineItem.reps} repeticiones`;
-                    exerciseList.append(item);
-                });
-                content.append(exerciseList);
-            }
-            const expanded = routineButton.getAttribute("aria-expanded") === "true";
-            exerciseList.hidden = expanded;
-            routineButton.setAttribute("aria-expanded", String(!expanded));
-        });
-    } else if (noRoutineMessage) {
-        noRoutineMessage.hidden = false;
-    }
-}
-
 const reviewSection = document.getElementById("memberReview");
 if (reviewSection && window.FitPowerReviewData) {
     const review = window.FitPowerReviewData.get(normalizedMemberName);
@@ -443,3 +310,75 @@ reviewForm.addEventListener("submit", (event) => {
 }
 })();
 
+// Sección: Rutinas asignadas (vienen de la base, las asigna el entrenador).
+(() => {
+const routineContainer = document.getElementById("memberRoutine");
+if (!routineContainer) return;
+
+const noRoutineMessage = document.getElementById("noAssignedRoutine");
+const routineCount = document.getElementById("routineCount");
+
+function createRoutineCard(routine) {
+    const card = document.createElement("article");
+    card.className = "routine-preview-card";
+
+    const image = document.createElement("img");
+    image.className = "routine-preview-image";
+    image.src = `assets/imagenes/img${(routine.id_routine % 2) + 1}.jpg`;
+    image.alt = `Vista previa de ${routine.name_routine}`;
+    image.loading = "lazy";
+
+    const content = document.createElement("div");
+    content.className = "routine-preview-content";
+    const title = document.createElement("h2");
+    title.textContent = routine.name_routine;
+    const trainer = document.createElement("p");
+    trainer.textContent = `Entrenador: ${routine.trainer_name}`;
+    const summary = document.createElement("p");
+    summary.textContent = routine.items.map(item => item.exercise_name).join(" · ") || "Rutina de entrenamiento";
+
+    const exerciseList = document.createElement("ul");
+    exerciseList.className = "routine-exercise-preview";
+    exerciseList.hidden = true;
+    routine.items.forEach((item) => {
+        const line = document.createElement("li");
+        line.textContent = `${item.exercise_name} — ${item.sets} series × ${item.reps} repeticiones`;
+        exerciseList.append(line);
+    });
+
+    const actions = document.createElement("div");
+    actions.className = "routine-card-actions";
+    const routineButton = document.createElement("button");
+    routineButton.type = "button";
+    routineButton.className = "interface-button-secondary";
+    routineButton.setAttribute("aria-expanded", "false");
+    routineButton.textContent = "Ver";
+    routineButton.addEventListener("click", () => {
+        const expanded = routineButton.getAttribute("aria-expanded") === "true";
+        exerciseList.hidden = expanded;
+        routineButton.setAttribute("aria-expanded", String(!expanded));
+        routineButton.textContent = expanded ? "Ver" : "Ocultar";
+    });
+    actions.append(routineButton);
+
+    content.append(title, trainer, summary, actions, exerciseList);
+    card.append(image, content);
+    return card;
+}
+
+(async () => {
+    const data = await API.request("/mis-rutinas");
+    if (!data.success) {
+        if (routineCount) routineCount.textContent = "—";
+        if (noRoutineMessage) {
+            noRoutineMessage.textContent = data.message || "No se pudieron cargar tus rutinas.";
+            noRoutineMessage.hidden = false;
+        }
+        return;
+    }
+
+    if (routineCount) routineCount.textContent = String(data.total);
+    routineContainer.replaceChildren(...data.rutinas.map(createRoutineCard));
+    if (noRoutineMessage) noRoutineMessage.hidden = data.total > 0;
+})();
+})();

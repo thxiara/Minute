@@ -17,6 +17,8 @@ CREATE TABLE IF NOT EXISTS `Role` (
 CREATE TABLE IF NOT EXISTS `Exercise` (
     `id_exercise`   INT AUTO_INCREMENT PRIMARY KEY,
     `name_exercise` VARCHAR(30) NOT NULL,
+    `muscle_exercise`    VARCHAR(30) NOT NULL DEFAULT 'Cuerpo completo',
+    `equipment_exercise` VARCHAR(50) NOT NULL DEFAULT '',
     `desc_exercise` TEXT,
     `media_exercise` VARCHAR(255)
 );

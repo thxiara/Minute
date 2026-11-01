@@ -183,14 +183,14 @@
                     >
 
                         <a
-                            href="paginas/roles/entrenador/ejercicios.html"
+                            href="/dash/entrenador/ejercicios"
                             class="enlace-barra-lateral"
                         >
                             Ejercicios
                         </a>
 
                         <a
-                            href="paginas/roles/entrenador/rutinas.html#rutinas"
+                            href="/dash/entrenador/rutinas"
                             class="enlace-barra-lateral"
                         >
                             Rutinas
@@ -286,14 +286,14 @@
                         >
 
                             <a
-                                href="paginas/roles/entrenador/ejercicios.html"
+                                href="/dash/entrenador/ejercicios"
                                 class="enlace-barra-lateral"
                             >
                                 Ejercicios
                             </a>
 
                             <a
-                                href="paginas/roles/entrenador/rutinas.html#rutinas"
+                                href="/dash/entrenador/rutinas"
                                 class="enlace-barra-lateral"
                             >
                                 Rutinas
@@ -433,76 +433,11 @@
 
                             <!-- cuerpo -->
 
-                            <tbody>
-
-
-                                <!-- socio 1 -->
-
+                            <!-- Las filas las arma entrenador.js con los socios de la base. -->
+                            <tbody id="trainerMembersBody">
                                 <tr>
-
-                                    <td>Llalala</td>
-
-                                    <td>1.123.456-7</td>
-
-                                    <td>012 345 678</td>
-
-                                    <td>22/11/2026</td>
-
-
-                                    <!-- nota -->
-
-                                    <td class="nota">
-                                        <span class="nota-titulo">Nota para el entrenador</span>
-                                        <span class="nota-texto" data-trainer-note="llalala">Sin nota</span>
-                                    </td>
-
-                                    <td class="acciones">
-                                        <button type="button" class="action-button" aria-label="Acciones para Llalala">⋮</button>
-                                        <div class="action-menu">
-                                            <button type="button" data-trainer-member="llalala">
-                                                <span class="icono-ver">◆</span>Asignar rutina y nota
-                                            </button>
-                                        </div>
-                                    </td>
-
-
+                                    <td colspan="6" class="text-center">Cargando socios…</td>
                                 </tr>
-
-
-
-                                <!-- socio 2 -->
-
-                                <tr>
-
-                                    <td>Nombre</td>
-
-                                    <td>1.234.567-8</td>
-
-                                    <td>123 345 678</td>
-
-                                    <td>05/12/2026</td>
-
-
-                                    <!-- nota -->
-
-                                    <td class="nota">
-                                        <span class="nota-titulo">Nota para el entrenador</span>
-                                        <span class="nota-texto" data-trainer-note="nombre">Sin nota</span>
-                                    </td>
-
-                                    <td class="acciones">
-                                        <button type="button" class="action-button" aria-label="Acciones para Nombre">⋮</button>
-                                        <div class="action-menu">
-                                            <button type="button" data-trainer-member="nombre">
-                                                <span class="icono-ver">◆</span>Asignar rutina y nota
-                                            </button>
-                                        </div>
-                                    </td>
-
-
-                                </tr>
-
-
                             </tbody>
 
                         </table>
@@ -541,16 +476,17 @@
                     <div class="modal-header">
                         <div>
                             <span class="interface-eyebrow">Seguimiento del socio</span>
-                            <h2 class="modal-title" id="trainerMemberTitle">Rutina y nota</h2>
+                            <h2 class="modal-title" id="trainerMemberTitle">Rutinas y nota</h2>
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
                     <div class="modal-body">
                         <p>Socio: <strong id="trainerMemberName"></strong></p>
-                        <label class="form-label" for="trainerRoutineSelect">Rutina asignada</label>
-                        <select class="form-select" id="trainerRoutineSelect" name="routine">
-                            <option value="">Sin rutina asignada</option>
-                        </select>
+                        <p class="form-label mb-2">Rutinas asignadas</p>
+                        <div class="class-assignment-options" id="trainerRoutineOptions"></div>
+                        <p class="interface-empty" id="trainerNoRoutines" hidden>
+                            Todavía no creaste rutinas. <a href="/dash/entrenador/rutinas">Crear una</a>
+                        </p>
                         <label class="form-label mt-3" for="trainerMemberNote">Nota privada para tener en cuenta</label>
                         <textarea class="form-control" id="trainerMemberNote" name="note" rows="3" maxlength="240" placeholder="Comentario breve para el seguimiento"></textarea>
                         <p class="form-text text-secondary">Esta nota es interna del entrenador y no es una evaluación.</p>

@@ -156,6 +156,8 @@ class AuthController
     public function panelAdmin(): void { $this->servirPanel(1, 'dist/paginas/roles/admin/admin.html'); }
     public function panelAdminRegistrar(): void { $this->servirPanel(1, 'dist/paginas/roles/admin/adminregistrar.html'); }
     public function panelEntrenador(): void { $this->servirPanel(2, 'dist/paginas/roles/entrenador/entrenador.html'); }
+    public function panelEntrenadorEjercicios(): void { $this->servirPanel(2, 'dist/paginas/roles/entrenador/ejercicios.html'); }
+    public function panelEntrenadorRutinas(): void { $this->servirPanel(2, 'dist/paginas/roles/entrenador/rutinas.html'); }
     public function panelProfesor(): void { $this->servirPanel(3, 'dist/paginas/roles/profesor/profesor.html'); }
     public function panelSocio(): void { $this->servirPanel(4, 'dist/paginas/roles/usuario/usuario.html'); }
     

@@ -58,151 +58,202 @@ document.querySelectorAll(".boton-flecha").forEach(button => {
 });
 })();
 
-//Almacenamiento ejercicios y rutinas
+// Notas privadas del entrenador.
+// Siguen guardándose en este navegador: la base de datos todavía no tiene dónde guardarlas.
 (() => {
-(() => {
-    const storageKey = "fitpowerTrainingData";
-    const seed = {
-        muscleGroups: ["Piernas", "Pecho", "Espalda", "Hombros", "Core"],
-        exercises: [
-            { id: "sentadilla", name: "Sentadilla", muscle: "Piernas", equipment: "Barra" },
-            { id: "peso-muerto", name: "Peso muerto", muscle: "Piernas", equipment: "Barra" },
-            { id: "press-banca", name: "Press de banca", muscle: "Pecho", equipment: "Barra" },
-            { id: "flexiones", name: "Flexiones", muscle: "Pecho", equipment: "Peso corporal" },
-            { id: "remo", name: "Remo", muscle: "Espalda", equipment: "Mancuernas" },
-            { id: "jalon", name: "Jalón al pecho", muscle: "Espalda", equipment: "Polea" },
-            { id: "press-militar", name: "Press militar", muscle: "Hombros", equipment: "Mancuernas" },
-            { id: "plancha", name: "Plancha", muscle: "Core", equipment: "Peso corporal" }
-        ],
-        routines: [
-            { id: "rutina-piernas", name: "Fuerza de piernas", image: "img1.jpg", items: [{ exerciseId: "sentadilla", sets: 4, reps: 10 }, { exerciseId: "peso-muerto", sets: 3, reps: 8 }] },
-            { id: "rutina-superior", name: "Tren superior", image: "img2.jpg", items: [{ exerciseId: "press-banca", sets: 3, reps: 10 }, { exerciseId: "remo", sets: 3, reps: 12 }, { exerciseId: "press-militar", sets: 3, reps: 10 }] },
-            { id: "rutina-core", name: "Core y estabilidad", image: "img1.jpg", items: [{ exerciseId: "flexiones", sets: 3, reps: 12 }, { exerciseId: "jalon", sets: 3, reps: 12 }, { exerciseId: "plancha", sets: 3, reps: 30 }] }
-        ],
-        memberRoutines: {},
-        memberNotes: {}
-    };
+    const storageKey = "fitpowerTrainerNotes";
 
     function load() {
-        const stored = localStorage.getItem(storageKey);
-        if (!stored) return structuredClone(seed);
-
         try {
-            const data = JSON.parse(stored);
-            if (!data || !Array.isArray(data.exercises) || !Array.isArray(data.routines)) {
-                throw new TypeError("El formato no es válido.");
-            }
-            const exercises = data.exercises.map(exercise => ({
-                ...exercise,
-                muscle: seed.muscleGroups.includes(exercise.muscle) ? exercise.muscle : "Cuerpo completo"
-            }));
-            return {
-                muscleGroups: seed.muscleGroups,
-                exercises,
-                routines: data.routines.map((routine, index) => {
-                    const items = Array.isArray(routine.items)
-                        ? routine.items
-                        : (routine.exerciseIds || []).map(exerciseId => ({ exerciseId, sets: 3, reps: 12 }));
-                    return {
-                        ...routine,
-                        image: routine.image || `img${(index % 2) + 1}.jpg`,
-                        items: items.map(item => ({
-                            exerciseId: item.exerciseId,
-                            sets: Number(item.sets) || 3,
-                            reps: Number(item.reps) || 12
-                        }))
-                    };
-                }),
-                memberRoutines: data.memberRoutines || {},
-                memberNotes: data.memberNotes || {}
-            };
+            const data = JSON.parse(localStorage.getItem(storageKey) || "{}");
+            return data && typeof data === "object" ? data : {};
         } catch {
-            return structuredClone(seed);
+            return {};
         }
     }
 
-    function save(data) {
-        localStorage.setItem(storageKey, JSON.stringify(data));
+    function get(memberId) {
+        return load()[memberId] || "";
     }
 
-    window.FitPowerTrainingData = { load, save };
-})();
+    function set(memberId, note) {
+        const notes = load();
+        if (note) notes[memberId] = note;
+        else delete notes[memberId];
+        localStorage.setItem(storageKey, JSON.stringify(notes));
+    }
+
+    window.FitPowerTrainerNotes = { get, set };
 })();
 
-// asignar  rutinas y notas 
+// Socios: listado real y asignación de rutinas y notas.
 (() => {
 if (document.getElementById("trainerMemberForm")) {
-const trainingState = window.FitPowerTrainingData.load();
+const membersBody = document.getElementById("trainerMembersBody");
 const trainerMemberModal = document.getElementById("trainerMemberModal");
 const trainerMemberForm = document.getElementById("trainerMemberForm");
-const trainerRoutineSelect = document.getElementById("trainerRoutineSelect");
+const routineOptions = document.getElementById("trainerRoutineOptions");
+const noRoutinesMessage = document.getElementById("trainerNoRoutines");
 const trainerMemberNote = document.getElementById("trainerMemberNote");
 const trainerMemberFeedback = document.getElementById("trainerMemberFeedback");
-let activeMemberId = "";
-let previousRoutineId = "";
-let previousMemberNote = "";
+const saveButton = trainerMemberForm.querySelector('[type="submit"]');
+let routines = [];
+let activeMemberId = null;
 
-trainingState.routines.forEach((routine) => {
-    trainerRoutineSelect.add(new Option(routine.name, routine.id));
-});
-document.querySelectorAll("[data-trainer-note]").forEach((noteDisplay) => {
-    const memberId = noteDisplay.dataset.trainerNote;
-    noteDisplay.textContent = trainingState.memberNotes[memberId] || "Sin nota";
-});
+function showFeedback(message, isError = false) {
+    trainerMemberFeedback.textContent = message;
+    trainerMemberFeedback.classList.toggle("is-error", isError);
+}
 
-function openTrainerMemberModal(memberId) {
-    activeMemberId = memberId.trim().toLocaleLowerCase("es");
-    previousRoutineId = trainingState.memberRoutines[activeMemberId] || "";
-    previousMemberNote = trainingState.memberNotes[activeMemberId] || "";
-    document.getElementById("trainerMemberName").textContent = memberId;
-    trainerRoutineSelect.value = previousRoutineId;
-    trainerMemberNote.value = previousMemberNote;
-    trainerMemberFeedback.textContent = "";
-    trainerMemberFeedback.classList.remove("is-error");
+function formatDate(value) {
+    if (!value) return "—";
+    const [year, month, day] = String(value).split("-");
+    return day ? `${day}/${month}/${year}` : String(value);
+}
 
-    const noteDisplay = document.querySelector(`[data-trainer-note="${CSS.escape(activeMemberId)}"]`);
-    if (noteDisplay) noteDisplay.textContent = previousMemberNote || "Sin nota";
+function tableMessage(text) {
+    const row = document.createElement("tr");
+    const cell = document.createElement("td");
+    cell.colSpan = 6;
+    cell.className = "text-center";
+    cell.textContent = text;
+    row.append(cell);
+    membersBody.replaceChildren(row);
+}
+
+function createMemberRow(member) {
+    const row = document.createElement("tr");
+    [member.name_client, member.ci, member.phone, formatDate(member.expiry_date)].forEach((value) => {
+        const cell = document.createElement("td");
+        cell.textContent = value || "—";
+        row.append(cell);
+    });
+
+    const noteCell = document.createElement("td");
+    noteCell.className = "nota";
+    const noteTitle = document.createElement("span");
+    noteTitle.className = "nota-titulo";
+    noteTitle.textContent = "Nota para el entrenador";
+    const noteText = document.createElement("span");
+    noteText.className = "nota-texto";
+    noteText.dataset.trainerNote = String(member.id_client);
+    noteText.textContent = window.FitPowerTrainerNotes.get(member.id_client) || "Sin nota";
+    noteCell.append(noteTitle, noteText);
+
+    const actionsCell = document.createElement("td");
+    actionsCell.className = "acciones";
+    const actionButton = document.createElement("button");
+    actionButton.type = "button";
+    actionButton.className = "action-button";
+    actionButton.setAttribute("aria-label", `Acciones para ${member.name_client}`);
+    actionButton.textContent = "\u22EE"; // tres puntitos verticales
+    const menu = document.createElement("div");
+    menu.className = "action-menu";
+    // Las filas se crean después de cargar la página: el botón necesita su propio listener.
+    actionButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        document.querySelectorAll(".action-menu").forEach((element) => {
+            if (element !== menu) element.classList.remove("mostrar");
+        });
+        menu.classList.toggle("mostrar");
+    });
+    const assignButton = document.createElement("button");
+    assignButton.type = "button";
+    assignButton.dataset.trainerMember = String(member.id_client);
+    assignButton.dataset.memberName = member.name_client;
+    const icon = document.createElement("span");
+    icon.className = "icono-ver";
+    icon.textContent = "◆";
+    assignButton.append(icon, "Asignar rutinas y nota");
+    menu.append(assignButton);
+    actionsCell.append(actionButton, menu);
+
+    row.append(noteCell, actionsCell);
+    return row;
+}
+
+function renderRoutineOptions(assignedIds) {
+    routineOptions.replaceChildren();
+    routines.forEach((routine) => {
+        const label = document.createElement("label");
+        label.className = "class-assignment-option";
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.name = "routineIds";
+        checkbox.value = String(routine.id_routine);
+        checkbox.checked = assignedIds.includes(routine.id_routine);
+        const text = document.createElement("span");
+        text.textContent = routine.name_routine;
+        label.append(checkbox, text);
+        routineOptions.append(label);
+    });
+    noRoutinesMessage.hidden = routines.length > 0;
+}
+
+async function openTrainerMemberModal(memberId, memberName) {
+    activeMemberId = memberId;
+    document.getElementById("trainerMemberName").textContent = memberName;
+    trainerMemberNote.value = window.FitPowerTrainerNotes.get(memberId);
+    showFeedback("Cargando rutinas…");
+    routineOptions.replaceChildren();
+    saveButton.disabled = true;
     bootstrap.Modal.getOrCreateInstance(trainerMemberModal).show();
+
+    const data = await API.request(`/socios/${memberId}/rutinas`);
+    if (!data.success) {
+        showFeedback(data.message || "No se pudieron cargar las rutinas del socio.", true);
+        return;
+    }
+    renderRoutineOptions(data.rutinas || []);
+    showFeedback("");
+    saveButton.disabled = false;
 }
 
 document.addEventListener("click", (event) => {
     const trigger = event.target.closest("[data-trainer-member]");
     if (!trigger) return;
     event.stopPropagation();
-    openTrainerMemberModal(trigger.dataset.trainerMember);
+    trigger.closest(".action-menu")?.classList.remove("mostrar");
+    openTrainerMemberModal(trigger.dataset.trainerMember, trigger.dataset.memberName);
 });
 
-trainerMemberForm.addEventListener("submit", (event) => {
+trainerMemberForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const selectedRoutineId = trainerRoutineSelect.value;
-    const selectedRoutine = trainingState.routines.find(routine => routine.id === selectedRoutineId);
-    if (selectedRoutineId && !selectedRoutine) {
-        trainerMemberFeedback.classList.add("is-error");
-        trainerMemberFeedback.textContent = "Selecciona una rutina válida.";
+    const selectedIds = new FormData(trainerMemberForm).getAll("routineIds").map(Number);
+    const note = trainerMemberNote.value.trim();
+
+    saveButton.disabled = true;
+    const data = await API.request(`/socios/${activeMemberId}/rutinas`, "PUT", { rutinas: selectedIds });
+    saveButton.disabled = false;
+    if (!data.success) {
+        showFeedback(data.message || "No se pudieron guardar las rutinas.", true);
         return;
     }
 
-    const note = trainerMemberNote.value.trim();
-    if (selectedRoutineId) trainingState.memberRoutines[activeMemberId] = selectedRoutineId;
-    else delete trainingState.memberRoutines[activeMemberId];
-    if (note) trainingState.memberNotes[activeMemberId] = note;
-    else delete trainingState.memberNotes[activeMemberId];
-
     try {
-        window.FitPowerTrainingData.save(trainingState);
-        const noteDisplay = document.querySelector(`[data-trainer-note="${CSS.escape(activeMemberId)}"]`);
+        window.FitPowerTrainerNotes.set(activeMemberId, note);
+        const noteDisplay = document.querySelector(`[data-trainer-note="${CSS.escape(String(activeMemberId))}"]`);
         if (noteDisplay) noteDisplay.textContent = note || "Sin nota";
-        trainerMemberFeedback.classList.remove("is-error");
-        trainerMemberFeedback.textContent = "Se guardaron la rutina y la nota.";
+        showFeedback(`Se guardaron las rutinas (${selectedIds.length}) y la nota.`);
     } catch {
-        if (previousRoutineId) trainingState.memberRoutines[activeMemberId] = previousRoutineId;
-        else delete trainingState.memberRoutines[activeMemberId];
-        if (previousMemberNote) trainingState.memberNotes[activeMemberId] = previousMemberNote;
-        else delete trainingState.memberNotes[activeMemberId];
-        trainerMemberFeedback.classList.add("is-error");
-        trainerMemberFeedback.textContent = "No se pudieron guardar los cambios.";
+        showFeedback("Las rutinas se guardaron, pero la nota no.", true);
     }
 });
+
+(async () => {
+    const [membersData, routinesData] = await Promise.all([API.request("/socios"), API.request("/rutinas")]);
+    routines = routinesData.success ? routinesData.rutinas : [];
+
+    if (!membersData.success) {
+        tableMessage(membersData.message || "No se pudieron cargar los socios.");
+        return;
+    }
+    if (!membersData.socios.length) {
+        tableMessage("No hay socios registrados.");
+        return;
+    }
+    membersBody.replaceChildren(...membersData.socios.map(createMemberRow));
+})();
 
 }
 })();
@@ -210,16 +261,17 @@ trainerMemberForm.addEventListener("submit", (event) => {
 // Biblioteca y filtrado de ejercicios
 (() => {
 if (document.getElementById("exerciseForm")) {
-const trainingData = window.FitPowerTrainingData.load();
 const exerciseForm = document.getElementById("exerciseForm");
 const exerciseList = document.getElementById("exerciseList");
 const exerciseSearch = document.getElementById("exerciseSearch");
 const muscleSelect = document.getElementById("exerciseMuscle");
 const muscleFilter = document.getElementById("exerciseMuscleFilter");
 const emptyExerciseList = document.getElementById("emptyExerciseList");
+const feedback = document.getElementById("exerciseFeedback");
+let exercises = [];
 
-function populateMuscleGroups() {
-    trainingData.muscleGroups.forEach((group) => {
+function populateMuscleGroups(groups) {
+    groups.forEach((group) => {
         muscleSelect.add(new Option(group, group));
         muscleFilter.add(new Option(group, group));
     });
@@ -232,18 +284,21 @@ function renderExercises() {
     const selectedMuscle = muscleFilter.value;
     exerciseList.replaceChildren();
 
-    trainingData.exercises
-        .filter(exercise => selectedMuscle === "all" || exercise.muscle === selectedMuscle)
-        .filter(exercise => `${exercise.name} ${exercise.muscle} ${exercise.equipment}`.toLocaleLowerCase("es").includes(query))
+    exercises
+        .filter(exercise => selectedMuscle === "all" || exercise.muscle_exercise === selectedMuscle)
+        .filter((exercise) => {
+            const text = `${exercise.name_exercise} ${exercise.muscle_exercise} ${exercise.equipment_exercise}`;
+            return text.toLocaleLowerCase("es").includes(query);
+        })
         .forEach((exercise) => {
             const row = document.createElement("article");
             row.className = "exercise-library-row";
             const name = document.createElement("h3");
-            name.textContent = exercise.name;
+            name.textContent = exercise.name_exercise;
             const muscle = document.createElement("span");
-            muscle.textContent = exercise.muscle;
+            muscle.textContent = exercise.muscle_exercise;
             const equipment = document.createElement("span");
-            equipment.textContent = exercise.equipment;
+            equipment.textContent = exercise.equipment_exercise;
             row.append(name, muscle, equipment);
             exerciseList.append(row);
         });
@@ -251,47 +306,49 @@ function renderExercises() {
     emptyExerciseList.hidden = exerciseList.childElementCount > 0;
 }
 
-exerciseForm.addEventListener("submit", (event) => {
+async function loadExercises() {
+    const data = await API.request("/ejercicios");
+    if (!data.success) {
+        feedback.classList.add("is-error");
+        feedback.textContent = data.message || "No se pudieron cargar los ejercicios.";
+        return null;
+    }
+    exercises = data.ejercicios;
+    return data;
+}
+
+exerciseForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!exerciseForm.reportValidity()) return;
 
-    const data = new FormData(exerciseForm);
-    const name = String(data.get("name")).trim();
-    const feedback = document.getElementById("exerciseFeedback");
-    if (trainingData.exercises.some(exercise => exercise.name.toLocaleLowerCase("es") === name.toLocaleLowerCase("es"))) {
-        feedback.classList.add("is-error");
-        feedback.textContent = "ejercicio ya existe.";
-        return;
-    }
-
-    const id = `ejercicio-${Date.now().toString(36)}`;
-    const previousExercises = [...trainingData.exercises];
-    trainingData.exercises.push({
-        id,
-        name,
-        muscle: String(data.get("muscle")).trim(),
-        equipment: String(data.get("equipment")).trim()
+    const formData = new FormData(exerciseForm);
+    const muscle = String(formData.get("muscle"));
+    const data = await API.request("/ejercicios", "POST", {
+        name: String(formData.get("name")).trim(),
+        muscle,
+        equipment: String(formData.get("equipment")).trim()
     });
 
-    try {
-        window.FitPowerTrainingData.save(trainingData);
-        muscleFilter.value = String(data.get("muscle"));
-        exerciseSearch.value = "";
-        renderExercises();
-        feedback.classList.remove("is-error");
-        feedback.textContent = "Ejercicio agregado.";
-        exerciseForm.reset();
-    } catch {
-        trainingData.exercises = previousExercises;
-        feedback.classList.add("is-error");
-        feedback.textContent = "No se pudo guardar el ejercicio.";
-    }
+    feedback.classList.toggle("is-error", !data.success);
+    feedback.textContent = data.message || "No se pudo guardar el ejercicio.";
+    if (!data.success) return;
+
+    exerciseForm.reset();
+    await loadExercises();
+    muscleFilter.value = muscle;
+    exerciseSearch.value = "";
+    renderExercises();
 });
 
 exerciseSearch.addEventListener("input", renderExercises);
 muscleFilter.addEventListener("change", renderExercises);
-populateMuscleGroups();
-renderExercises();
+
+(async () => {
+    const data = await loadExercises();
+    if (!data) return;
+    populateMuscleGroups(data.grupos);
+    renderExercises();
+})();
 
 }
 })();
@@ -299,7 +356,6 @@ renderExercises();
 // rutinas
 (() => {
 if (document.getElementById("routineForm")) {
-const trainingData = window.FitPowerTrainingData.load();
 const routineForm = document.getElementById("routineForm");
 const exerciseRows = document.getElementById("routineExerciseRows");
 const routineList = document.getElementById("routineList");
@@ -308,38 +364,45 @@ const emptyRoutineList = document.getElementById("emptyRoutineList");
 const routineModalElement = document.getElementById("routineModal");
 const routineModal = bootstrap.Modal.getOrCreateInstance(routineModalElement);
 const routineDetailModal = bootstrap.Modal.getOrCreateInstance(document.getElementById("routineDetailModal"));
-const previewImages = ["img1.jpg", "img2.jpg"];
 const pageFeedback = document.getElementById("routinePageFeedback");
+const routineFeedback = document.getElementById("routineFeedback");
+let exercises = [];
+let routines = [];
 let editingRoutineId = null;
 
-function getExerciseName(id) {
-    return trainingData.exercises.find(exercise => exercise.id === id)?.name || "Ejercicio";
+// La tabla Routine no guarda imagen: se alterna entre dos según el id.
+function routineImage(routine) {
+    return `assets/imagenes/img${(routine.id_routine % 2) + 1}.jpg`;
 }
 
-function normalizedItems(routine) {
-    if (Array.isArray(routine.items)) return routine.items;
-    return (routine.exerciseIds || []).map(exerciseId => ({ exerciseId, sets: 3, reps: 12 }));
+function showPageFeedback(message, isError = false) {
+    pageFeedback.textContent = message;
+    pageFeedback.classList.toggle("is-error", isError);
+}
+
+function showRoutineFeedback(message, isError = false) {
+    routineFeedback.textContent = message;
+    routineFeedback.classList.toggle("is-error", isError);
 }
 
 function renderRoutines() {
     routineList.replaceChildren();
-    trainingData.routines.forEach((routine) => {
+    routines.forEach((routine) => {
         const card = document.createElement("article");
         card.className = "routine-preview-card";
 
         const image = document.createElement("img");
         image.className = "routine-preview-image";
-        image.src = `assets/imagenes/${routine.image || previewImages[0]}`;
-        image.alt = `Vista previa de ${routine.name}`;
+        image.src = routineImage(routine);
+        image.alt = `Vista previa de ${routine.name_routine}`;
         image.loading = "lazy";
 
         const content = document.createElement("div");
         content.className = "routine-preview-content";
         const title = document.createElement("h2");
-        title.textContent = routine.name;
+        title.textContent = routine.name_routine;
         const summary = document.createElement("p");
-        const items = normalizedItems(routine);
-        summary.textContent = items.map(item => getExerciseName(item.exerciseId)).join(" · ") || "Rutina de entrenamiento";
+        summary.textContent = routine.items.map(item => item.exercise_name).join(" · ") || "Rutina de entrenamiento";
 
         const actions = document.createElement("div");
         actions.className = "routine-card-actions";
@@ -352,7 +415,7 @@ function renderRoutines() {
             button.type = "button";
             button.className = className;
             button.dataset.routineAction = action;
-            button.dataset.routineId = routine.id;
+            button.dataset.routineId = String(routine.id_routine);
             button.textContent = label;
             actions.append(button);
         });
@@ -361,7 +424,17 @@ function renderRoutines() {
         card.append(image, content);
         routineList.append(card);
     });
-    emptyRoutineList.hidden = trainingData.routines.length > 0;
+    emptyRoutineList.hidden = routines.length > 0;
+}
+
+async function loadRoutines() {
+    const data = await API.request("/rutinas");
+    if (!data.success) {
+        showPageFeedback(data.message || "No se pudieron cargar las rutinas.", true);
+        return;
+    }
+    routines = data.rutinas;
+    renderRoutines();
 }
 
 function updateExerciseOrder() {
@@ -385,9 +458,14 @@ function createExerciseRow(item = {}) {
     select.name = "exerciseId";
     select.setAttribute("aria-label", "Ejercicio");
     select.required = true;
-    select.add(new Option("Selecciona ejercicio", "", true, !item.exerciseId));
-    trainingData.exercises.forEach((exercise) => {
-        select.add(new Option(`${exercise.name} · ${exercise.muscle}`, exercise.id, false, exercise.id === item.exerciseId));
+    select.add(new Option("Selecciona ejercicio", "", true, !item.exercise_id));
+    exercises.forEach((exercise) => {
+        select.add(new Option(
+            `${exercise.name_exercise} · ${exercise.muscle_exercise}`,
+            String(exercise.id_exercise),
+            false,
+            exercise.id_exercise === item.exercise_id
+        ));
     });
 
     const setsLabel = document.createElement("label");
@@ -446,64 +524,53 @@ function resetRoutineForm() {
     routineForm.reset();
     document.getElementById("routineModalTitle").textContent = "Crear rutina";
     exerciseRows.replaceChildren();
-    document.getElementById("routineFeedback").textContent = "";
-    document.getElementById("routineFeedback").classList.remove("is-error");
-    noExercisesMessage.hidden = trainingData.exercises.length > 0;
-    if (trainingData.exercises.length) addExerciseRow();
+    showRoutineFeedback("");
+    noExercisesMessage.hidden = exercises.length > 0;
+    if (exercises.length) addExerciseRow();
 }
 
 function editRoutine(routine) {
-    editingRoutineId = routine.id;
+    editingRoutineId = routine.id_routine;
     routineForm.reset();
     document.getElementById("routineModalTitle").textContent = "Modificar rutina";
-    document.getElementById("routineName").value = routine.name;
+    document.getElementById("routineName").value = routine.name_routine;
     exerciseRows.replaceChildren();
-    normalizedItems(routine).forEach(item => addExerciseRow(item));
-    noExercisesMessage.hidden = trainingData.exercises.length > 0;
-    document.getElementById("routineFeedback").textContent = "";
-    document.getElementById("routineFeedback").classList.remove("is-error");
+    routine.items.forEach(item => addExerciseRow(item));
+    noExercisesMessage.hidden = exercises.length > 0;
+    showRoutineFeedback("");
     routineModal.show();
 }
 
 function showRoutine(routine) {
-    document.getElementById("routineDetailTitle").textContent = routine.name;
+    document.getElementById("routineDetailTitle").textContent = routine.name_routine;
     const image = document.getElementById("routineDetailImage");
-    image.src = `assets/imagenes/${routine.image || previewImages[0]}`;
-    image.alt = `Vista previa de ${routine.name}`;
+    image.src = routineImage(routine);
+    image.alt = `Vista previa de ${routine.name_routine}`;
 
     const list = document.getElementById("routineDetailExercises");
     list.replaceChildren();
-    normalizedItems(routine).forEach((item) => {
-        const exercise = trainingData.exercises.find(entry => entry.id === item.exerciseId);
+    routine.items.forEach((item) => {
         const line = document.createElement("li");
-        line.textContent = `${exercise?.name || "Ejercicio"} — ${item.sets} ${item.sets === 1 ? "serie" : "series"} × ${item.reps} ${item.reps === 1 ? "repetición" : "repeticiones"}`;
+        const series = item.sets === 1 ? "serie" : "series";
+        const repeticiones = item.reps === 1 ? "repetición" : "repeticiones";
+        line.textContent = `${item.exercise_name} — ${item.sets} ${series} × ${item.reps} ${repeticiones}`;
         list.append(line);
     });
     routineDetailModal.show();
 }
 
-function removeRoutine(id) {
-    const routine = trainingData.routines.find(entry => entry.id === id);
-    if (!routine || !window.confirm(`¿Eliminar la rutina “${routine.name}”?`)) return;
+async function removeRoutine(routine) {
+    const aviso = `¿Eliminar la rutina “${routine.name_routine}”?`
+        + " Los socios que la tengan asignada la van a perder.";
+    if (!window.confirm(aviso)) return;
 
-    const previousRoutines = [...trainingData.routines];
-    const previousAssignments = { ...trainingData.memberRoutines };
-    trainingData.routines = previousRoutines.filter(entry => entry.id !== id);
-    Object.keys(trainingData.memberRoutines).forEach((memberId) => {
-        if (trainingData.memberRoutines[memberId] === id) delete trainingData.memberRoutines[memberId];
-    });
-    try {
-        window.FitPowerTrainingData.save(trainingData);
-        pageFeedback.classList.remove("is-error");
-        pageFeedback.textContent = "";
-        renderRoutines();
-    } catch {
-        trainingData.routines = previousRoutines;
-        trainingData.memberRoutines = previousAssignments;
-        renderRoutines();
-        pageFeedback.classList.add("is-error");
-        pageFeedback.textContent = "No se pudo eliminar la rutina.";
+    const data = await API.request(`/rutinas/${routine.id_routine}`, "DELETE");
+    if (!data.success) {
+        showPageFeedback(data.message || "No se pudo eliminar la rutina.", true);
+        return;
     }
+    showPageFeedback("");
+    await loadRoutines();
 }
 
 routineModalElement.addEventListener("show.bs.modal", () => {
@@ -530,73 +597,49 @@ exerciseRows.addEventListener("click", (event) => {
     updateExerciseOrder();
 });
 
-routineForm.addEventListener("submit", (event) => {
+routineForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!routineForm.reportValidity()) return;
 
-    const name = String(new FormData(routineForm).get("name")).trim();
-    const feedback = document.getElementById("routineFeedback");
     const items = [...exerciseRows.querySelectorAll(".routine-exercise-row")].map(row => ({
-        exerciseId: row.querySelector('[name="exerciseId"]').value,
+        exercise_id: Number(row.querySelector('[name="exerciseId"]').value),
         sets: Number(row.querySelector('[name="sets"]').value),
         reps: Number(row.querySelector('[name="reps"]').value)
     }));
-
-    if (!items.length || items.some(item => !item.exerciseId)) {
-        feedback.classList.add("is-error");
-        feedback.textContent = "Agrega al menos un ejercicio.";
-        return;
-    }
-    const duplicateName = trainingData.routines.some(routine =>
-        routine.id !== editingRoutineId && routine.name.toLocaleLowerCase("es") === name.toLocaleLowerCase("es")
-    );
-    if (duplicateName) {
-        feedback.classList.add("is-error");
-        feedback.textContent = "Ya existe una rutina con ese título.";
+    if (!items.length || items.some(item => !item.exercise_id)) {
+        showRoutineFeedback("Agrega al menos un ejercicio.", true);
         return;
     }
 
-    const currentRoutine = trainingData.routines.find(routine => routine.id === editingRoutineId);
-    const routine = {
-        id: editingRoutineId || `rutina-${Date.now().toString(36)}`,
-        name,
-        image: currentRoutine?.image || previewImages[trainingData.routines.length % previewImages.length],
-        items,
-        exerciseIds: items.map(item => item.exerciseId)
-    };
+    const body = { name: String(new FormData(routineForm).get("name")).trim(), items };
+    const data = editingRoutineId
+        ? await API.request(`/rutinas/${editingRoutineId}`, "PUT", body)
+        : await API.request("/rutinas", "POST", body);
 
-    const previousRoutines = [...trainingData.routines];
-    if (editingRoutineId) {
-        trainingData.routines = trainingData.routines.map(entry => entry.id === editingRoutineId ? routine : entry);
-    } else {
-        trainingData.routines.push(routine);
+    if (!data.success) {
+        showRoutineFeedback(data.message || "No se pudo guardar la rutina.", true);
+        return;
     }
-
-    try {
-        window.FitPowerTrainingData.save(trainingData);
-        pageFeedback.classList.remove("is-error");
-        pageFeedback.textContent = "";
-        renderRoutines();
-        routineModal.hide();
-    } catch {
-        trainingData.routines = previousRoutines;
-        feedback.classList.add("is-error");
-        feedback.textContent = "No se pudo guardar la rutina.";
-    }
+    showPageFeedback("");
+    routineModal.hide();
+    await loadRoutines();
 });
 
 routineList.addEventListener("click", (event) => {
     const button = event.target.closest("[data-routine-action]");
     if (!button) return;
-    const routine = trainingData.routines.find(entry => entry.id === button.dataset.routineId);
+    const routine = routines.find(entry => entry.id_routine === Number(button.dataset.routineId));
     if (!routine) return;
-    if (button.dataset.routineAction === "delete") removeRoutine(routine.id);
+    if (button.dataset.routineAction === "delete") removeRoutine(routine);
     if (button.dataset.routineAction === "view") showRoutine(routine);
     if (button.dataset.routineAction === "edit") editRoutine(routine);
 });
 
-renderRoutines();
+(async () => {
+    const data = await API.request("/ejercicios");
+    exercises = data.success ? data.ejercicios : [];
+    await loadRoutines();
+})();
 
 }
 })();
-
