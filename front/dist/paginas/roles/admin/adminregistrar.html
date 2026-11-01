@@ -358,18 +358,20 @@
                     <div class="form-line"></div>
 
 
-                    <form>
+                    <form id="registrarSocioForm">
+
+                        <div id="alertContainer"></div>
 
 
                         <div class="row">
 
                             <div class="col-md-4 campo">
 
-                                <label for="rol">
+                                <label for="tipo">
                                     Tipo de usuario *
                                 </label>
 
-                                <select id="rol" name="rol" required>
+                                <select id="tipo" name="tipo" required>
                                     <option value="" selected disabled>Selecciona un tipo</option>
                                     <option value="socio">Socio</option>
                                     <option value="profesor">Profesor</option>
@@ -470,13 +472,13 @@
 
 
 
-                            <div class="col-md-4 campo" id="membershipField" hidden>
+                            <div class="col-md-4 campo" id="campoPlan" hidden>
 
                                 <label for="plan" id="membershipLabel">
                                     Membresía *
                                 </label>
 
-                                <select id="plan" name="membresia" disabled>
+                                <select id="plan" name="plan">
                                     <option value="">Selecciona una opción</option>
                                     <option value="basico">Básico</option>
                                     <option value="pro">Pro</option>
