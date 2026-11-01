@@ -320,6 +320,123 @@ if (assignClassesForm) {
 }
 })();
 
+// Listado de socios
+(() => {
+const tbody = document.getElementById("sociosTableBody");
+if (!tbody) return;
+
+const countEl = document.getElementById("sociosCount");
+
+const formatearVencimiento = (fecha) => {
+    if (!fecha) return "—";
+    const partes = String(fecha).split("-");
+    if (partes.length !== 3) return String(fecha);
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
+};
+
+const mostrarMensaje = (texto) => {
+    tbody.replaceChildren();
+    const fila = document.createElement("tr");
+    const celda = document.createElement("td");
+    celda.colSpan = 5;
+    celda.className = "socios-empty";
+    celda.textContent = texto;
+    fila.append(celda);
+    tbody.append(fila);
+};
+
+const crearBotonMenu = (texto, icono, atributo, nombreSocio) => {
+    const boton = document.createElement("button");
+    boton.type = "button";
+    boton.setAttribute(atributo, "");
+    boton.dataset.memberName = nombreSocio;
+
+    const span = document.createElement("span");
+    span.className = "icono-ver";
+    span.textContent = icono;
+
+    boton.append(span, ` ${texto}`);
+    return boton;
+};
+
+const crearFila = (socio) => {
+    const fila = document.createElement("tr");
+    const valores = [
+        socio.name_client || "—",
+        socio.ci || "—",
+        socio.phone || "—",
+        formatearVencimiento(socio.expiry_date)
+    ];
+
+    valores.forEach((valor) => {
+        const celda = document.createElement("td");
+        celda.textContent = valor;
+        fila.append(celda);
+    });
+
+    const acciones = document.createElement("td");
+    acciones.className = "acciones";
+
+    const botonAcciones = document.createElement("button");
+    botonAcciones.type = "button";
+    botonAcciones.className = "action-button";
+    botonAcciones.textContent = "⋮";
+
+    const menu = document.createElement("div");
+    menu.className = "action-menu";
+
+    // Las filas se crean después de cargar la página, así que el botón necesita
+    // su propio listener (el de la navegación solo se engancha al inicio).
+    botonAcciones.addEventListener("click", (event) => {
+        event.stopPropagation();
+        document.querySelectorAll(".action-menu").forEach((element) => {
+            if (element !== menu) element.classList.remove("mostrar");
+        });
+        menu.classList.toggle("mostrar");
+    });
+
+    const nombreSocio = socio.name_client || "";
+    menu.append(
+        crearBotonMenu("Ver/editar perfil", "●", "data-admin-profile", nombreSocio),
+        crearBotonMenu("Asignar clases", "▣", "data-open-class-assign", nombreSocio)
+    );
+
+    const darDeBaja = document.createElement("button");
+    darDeBaja.type = "button";
+    darDeBaja.className = "delete";
+    darDeBaja.innerHTML = "<span>⊗</span> Dar de baja";
+    menu.append(darDeBaja);
+
+    acciones.append(botonAcciones, menu);
+    fila.append(acciones);
+
+    return fila;
+};
+
+const cargarSocios = async () => {
+    const data = await API.request("/socios");
+
+    if (!data || !data.success) {
+        mostrarMensaje((data && data.message) || "No se pudieron cargar los socios.");
+        if (countEl) countEl.textContent = "—";
+        return;
+    }
+
+    const socios = Array.isArray(data.socios) ? data.socios : [];
+    if (countEl) countEl.textContent = String(data.total ?? socios.length);
+
+    if (!socios.length) {
+        mostrarMensaje("No hay socios registrados.");
+        return;
+    }
+
+    tbody.replaceChildren();
+    socios.forEach((socio) => tbody.append(crearFila(socio)));
+};
+
+cargarSocios();
+})();
+
 // Registro
 (() => {
 if (document.getElementById("registrarSocioForm")) {

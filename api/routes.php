@@ -8,6 +8,8 @@ $router->post('/api/register', 'AuthController@register');
 $router->get('/api/me', 'AuthController@me');
 $router->post('/api/logout', 'AuthController@logout');
 
+$router->get('/api/socios', 'SocioController@listar');
+
 ##Redirecciones front
 #Landing
 $router->get('/', 'AuthController@landing');
