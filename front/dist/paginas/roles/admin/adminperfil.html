@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <base href="/front/dist/">
+    <base href="../../../">
+    <link rel="icon" type="image/png" href="assets/iconos/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil de socio | FitPower</title>
@@ -20,7 +21,7 @@
             <div class="d-flex justify-content-between align-items-center header-contenido">
                 <h1 class="logo"><a href="../index.html">FitPower</a></h1>
                 <div class="header-derecha">
-                    <span class="header-text" data-session-name>Nombre Apellido</span>
+                    <span class="header-text" data-session-name></span>
                     <img src="assets/imagenes/img6.jpg" class="usuario-header" alt="Foto de perfil">
                     <button class="boton-menu role-nav-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#roleNavigation" aria-controls="roleNavigation" aria-label="Abrir navegación">
                         <span></span><span></span><span></span>
@@ -61,15 +62,15 @@
                 </div>
                 <div class="interface-actions">
                     <a class="interface-button-secondary" href="/dash/admin">Volver a socios</a>
-                    <button class="interface-button-secondary" type="button" data-open-class-assign data-member-name="miau">Asignar clases</button>
+                    <button class="interface-button-secondary" type="button" data-open-class-assign>Asignar clases</button>
                 </div>
             </div>
 
             <section class="interface-panel profile-summary" aria-label="Resumen del socio">
                 <img src="assets/imagenes/img6.jpg" alt="Foto del socio">
                 <div>
-                    <h2 id="profileName">miau</h2>
-                    <p>Miembro desde abril de 2026</p>
+                    <h2 id="profileName"></h2>
+                    <p id="profileSince">—</p>
                 </div>
             </section>
 
@@ -78,9 +79,9 @@
                     <div class="interface-panel-header"><h2>Información personal</h2></div>
                     <div class="interface-panel-body">
                         <div class="info-grid">
-                            <div class="info-item"><span>Documento</span><strong id="profileDocument">1.234.567-8</strong></div>
-                            <div class="info-item"><span>Teléfono</span><strong id="profilePhone">789 456 123</strong></div>
-                            <div class="info-item"><span>Correo</span><strong id="profileEmail">miau@fitpower.uy</strong></div>
+                            <div class="info-item"><span>Documento</span><strong id="profileDocument">—</strong></div>
+                            <div class="info-item"><span>Teléfono</span><strong id="profilePhone">—</strong></div>
+                            <div class="info-item"><span>Correo</span><strong id="profileEmail">—</strong></div>
                             <div class="info-item"><span>Estado</span><strong>Activo</strong></div>
                         </div>
                     </div>
@@ -90,8 +91,8 @@
                     <div class="interface-panel-header"><h2>Membresía</h2></div>
                     <div class="interface-panel-body">
                         <ul class="interface-list">
-                            <li><strong>Plan</strong><span>Plan Pro</span></li>
-                            <li><strong>Vencimiento</strong><span id="profileExpiration">14/11/2026</span></li>
+                            <li><strong>Plan</strong><span id="profilePlan">—</span></li>
+                            <li><strong>Vencimiento</strong><span id="profileExpiration">—</span></li>
                         </ul>
                     </div>
                 </section>

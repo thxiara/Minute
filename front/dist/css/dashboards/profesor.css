@@ -1,21 +1,3 @@
-.barra-lateral {
-    width: 165px;
-    min-width: 165px;
-}
-
-.seccion-barra-lateral {
-    margin-bottom: 12px;
-}
-
-.titulo-barra-lateral {
-    margin-bottom: 8px;
-}
-
-.enlace-barra-lateral {
-    padding-left: 4px;
-    margin-bottom: 6px;
-}
-
 .content-title {
     margin-bottom: 22px;
 }
@@ -62,7 +44,7 @@
 }
 
 .icono-evaluacion {
-    color: #C88CFF;
+    color: var(--color-accent-bright);
 }
 
 .leer-mas {
@@ -70,11 +52,11 @@
     margin-left: 4px;
     padding: 0;
     background-color: transparent;
-    color: #A25CFF;
+    color: var(--color-accent);
     font-family: "TASA Explorer", sans-serif;
     font-size: 11px;
 }
 
 .leer-mas:hover {
-    color: #FFFFFF;
+    color: var(--color-text);
 }

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <base href="/front/dist/">
+    <base href="../../../">
+    <link rel="icon" type="image/png" href="assets/iconos/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil de alumno | FitPower</title>
@@ -20,7 +21,7 @@
             <div class="d-flex justify-content-between align-items-center header-contenido">
                 <h1 class="logo"><a href="../index.html">FitPower</a></h1>
                 <div class="header-derecha">
-                    <span class="header-text" data-session-name>Nombre Apellido</span>
+                    <span class="header-text" data-session-name></span>
                     <img src="assets/imagenes/img6.jpg" class="usuario-header" alt="Foto de perfil">
                     <button class="boton-menu role-nav-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#roleNavigation" aria-controls="roleNavigation" aria-label="Abrir navegación">
                         <span></span><span></span><span></span>
@@ -63,10 +64,10 @@
             </div>
 
             <section class="interface-panel profile-summary student-profile" aria-label="Resumen del alumno">
-                <img src="assets/imagenes/img6.jpg" alt="Foto de Pepe">
+                <img src="assets/imagenes/img6.jpg" alt="Foto del alumno">
                 <div>
-                    <h2 id="studentName">Pepe</h2>
-                    <p>Socio desde abril de 2026</p>
+                    <h2 id="studentName"></h2>
+                    <p id="studentSince">—</p>
                 </div>
             </section>
 
@@ -75,10 +76,10 @@
                     <div class="interface-panel-header"><h2>Información personal</h2></div>
                     <div class="interface-panel-body">
                         <div class="info-grid">
-                            <div class="info-item"><span>Documento</span><strong id="studentDocument">1.123.456-7</strong></div>
-                            <div class="info-item"><span>Teléfono</span><strong id="studentPhone">123 456 789</strong></div>
-                            <div class="info-item"><span>Correo</span><strong id="studentEmail">pepe@fitpower.uy</strong></div>
-                            <div class="info-item"><span>Membresía</span><strong>Plan Pro</strong></div>
+                            <div class="info-item"><span>Documento</span><strong id="studentDocument">—</strong></div>
+                            <div class="info-item"><span>Teléfono</span><strong id="studentPhone">—</strong></div>
+                            <div class="info-item"><span>Correo</span><strong id="studentEmail">—</strong></div>
+                            <div class="info-item"><span>Membresía</span><strong id="studentMembership">—</strong></div>
                         </div>
                     </div>
                 </section>
@@ -87,16 +88,16 @@
                     <div class="interface-panel-header"><h2>Desempeño del mes</h2></div>
                     <div class="interface-panel-body">
                         <ul class="interface-list">
-                            <li><strong>Asistencia</strong><span>10 de 12 clases</span></li>
+                            <li><strong>Asistencia</strong><span id="studentAttendance">—</span></li>
                             <li class="evaluation-row">
                                 <label for="studentEvaluation">Evaluación (0 a 10)</label>
                                 <form id="evaluationForm" class="evaluation-form">
-                                    <input class="form-control" id="studentEvaluation" name="score" type="number" min="0" max="10" step="1" value="8" required>
+                                    <input class="form-control" id="studentEvaluation" name="score" type="number" min="0" max="10" step="1" required>
                                     <button class="interface-button-secondary" type="submit">Guardar</button>
                                 </form>
                                 <span id="evaluationFeedback" class="interface-feedback" role="status"></span>
                             </li>
-                            <li><strong>Próxima evaluación</strong><span>30/10/2026</span></li>
+                            <li><strong>Próxima evaluación</strong><span id="studentNextEvaluation">—</span></li>
                         </ul>
                     </div>
                 </section>

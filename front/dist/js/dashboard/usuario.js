@@ -99,7 +99,8 @@
 })();
 
 // Sección: Perfil, vencimiento, clases y rutinas del socio.
-(() => {
+(async () => {
+const sessionData = await (window.FitPowerSessionReady || Promise.resolve(null));
 const photoInput = document.getElementById("profilePhotoInput");
 const photoFeedback = document.getElementById("photoFeedback");
 const profileImages = document.querySelectorAll("[data-profile-photo]");
@@ -151,13 +152,16 @@ if (photoInput) {
 
 const memberClassesContainer = document.getElementById("memberClasses");
 const profileQuery = new URLSearchParams(window.location.search);
-// En el panel del socio el nombre viene de la sesión (data-member-name lo pone el servidor).
-const memberName = memberClassesContainer?.dataset.memberName || profileQuery.get("name") || "";
+const memberName = (sessionData?.success && sessionData.logged_in ? sessionData.name : "")
+    || profileQuery.get("name")
+    || "";
 const normalizedMemberName = memberName.trim().toLocaleLowerCase("es");
 const displayMemberName = memberName.trim().replace(/\b\p{L}/gu, letter => letter.toLocaleUpperCase("es"));
 if (memberClassesContainer) memberClassesContainer.dataset.memberName = normalizedMemberName;
 document.getElementById("memberHeaderName")?.replaceChildren(document.createTextNode(displayMemberName));
-document.getElementById("memberGreeting")?.replaceChildren(document.createTextNode(`Hola, ${displayMemberName}`));
+document.getElementById("memberGreeting")?.replaceChildren(
+    document.createTextNode(displayMemberName ? `Hola, ${displayMemberName}` : "Hola")
+);
 
 const expirationText = document.getElementById("membershipExpiration")?.textContent.trim();
 const expiryNotice = document.getElementById("membershipExpiryNotice");
@@ -243,7 +247,9 @@ if (reviewSection && window.FitPowerReviewData) {
     const reviewLink = document.getElementById("memberReviewLink");
     const feedback = document.getElementById("memberReviewFeedback");
     feedback.textContent = "";
-    reviewLink.href = `paginas/resenas.html?name=${encodeURIComponent(normalizedMemberName)}&editar=1`;
+    reviewLink.href = normalizedMemberName
+        ? `paginas/resenas.html?name=${encodeURIComponent(normalizedMemberName)}&editar=1`
+        : "paginas/resenas.html?editar=1";
     if (review) {
         emptyMessage.hidden = true;
         reviewContent.hidden = false;
@@ -266,7 +272,7 @@ if (reviewSection && window.FitPowerReviewData) {
 })();
 
 // Sección: Creación y modificación de reseñas.
-(() => {
+(async () => {
 if (document.getElementById("memberReviewForm")) {
 const reviewForm = document.getElementById("memberReviewForm");
 const reviewName = document.getElementById("reviewName");
@@ -274,8 +280,9 @@ const reviewRating = document.getElementById("reviewRating");
 const reviewText = document.getElementById("reviewText");
 const reviewFeedback = document.getElementById("reviewFeedback");
 const query = new URLSearchParams(window.location.search);
-const memberName = query.get("name") || "miau";
-const existingReview = window.FitPowerReviewData.get(memberName);
+const sessionData = await (window.FitPowerSessionReady || Promise.resolve(null));
+const memberName = query.get("name") || (sessionData?.success && sessionData.logged_in ? sessionData.name : "") || "";
+const existingReview = memberName ? window.FitPowerReviewData.get(memberName) : null;
 const reviewHeading = document.getElementById("reviewFormHeading");
 const submitButton = document.getElementById("reviewSubmit");
 
@@ -294,13 +301,14 @@ reviewForm.addEventListener("submit", (event) => {
     if (!reviewForm.reportValidity()) return;
 
     try {
-        window.FitPowerReviewData.save(memberName, {
-            name: reviewName.value.trim(),
+        const reviewerName = reviewName.value.trim();
+        window.FitPowerReviewData.save(reviewerName, {
+            name: reviewerName,
             rating: Number(reviewRating.value),
             text: reviewText.value.trim(),
             updatedAt: new Date().toISOString()
         });
-        window.location.href = `/dash/socio?name=${encodeURIComponent(memberName)}&resena=guardada`;
+        window.location.href = `/dash/socio?name=${encodeURIComponent(reviewerName)}&resena=guardada`;
     } catch {
         reviewFeedback.classList.add("is-error");
         reviewFeedback.textContent = "No se pudo guardar tu reseña.";

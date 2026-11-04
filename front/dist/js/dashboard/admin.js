@@ -256,7 +256,7 @@ function openClassAssignment(memberName) {
 document.addEventListener("click", (event) => {
     const profileTrigger = event.target.closest("[data-admin-profile]");
     if (profileTrigger) {
-        const memberName = profileTrigger.dataset.memberName || "Llalala";
+        const memberName = profileTrigger.dataset.memberName || "";
         window.location.href = `paginas/roles/admin/adminperfil.html?name=${encodeURIComponent(memberName)}`;
         return;
     }
@@ -277,17 +277,30 @@ if (profileName) {
     });
     if (profileNameElement) profileNameElement.textContent = profileName;
 
-    const sampleProfiles = {
-        miau: { document: "1.234.567-8", phone: "789 456 123", email: "miau@fitpower.uy", expiration: "14/11/2026" },
-        parapapapa: { document: "1.123.456-7", phone: "012 345 678", email: "parapapapa@fitpower.uy", expiration: "02/12/2026" }
-    };
-    const sampleProfile = Object.hasOwn(sampleProfiles, profileName) ? sampleProfiles[profileName] : null;
-    if (sampleProfile) {
-        Object.entries(sampleProfile).forEach(([field, value]) => {
-            const element = document.getElementById(`profile${field[0].toUpperCase()}${field.slice(1)}`);
-            if (element) element.textContent = value;
+    API.request("/socios").then((data) => {
+        if (!data?.success || !Array.isArray(data.socios)) return;
+
+        const profile = data.socios.find((socio) =>
+            normalizedName(String(socio.name_client || "")) === normalizedName(profileName)
+        );
+        if (!profile) return;
+
+        const values = {
+            Document: profile.ci,
+            Phone: profile.phone,
+            Email: profile.email,
+            Expiration: profile.expiry_date
+        };
+        Object.entries(values).forEach(([field, value]) => {
+            const element = document.getElementById(`profile${field}`);
+            if (!element || !value) return;
+
+            const text = field === "Expiration"
+                ? String(value).split("-").reverse().join("/")
+                : String(value);
+            element.textContent = text;
         });
-    }
+    });
 }
 
 const memberForProfile = profileName || document.querySelector("[data-open-class-assign]")?.dataset.memberName || "el socio";

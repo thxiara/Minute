@@ -1,64 +1,27 @@
-.admin-page .barra-lateral {
-    width: 175px;
-    min-width: 175px;
-    padding: 32px 18px;
-}
-
-.admin-page .seccion-barra-lateral {
-    margin-bottom: 20px;
-}
-
-.admin-page .titulo-barra-lateral {
-    margin-bottom: 10px;
-}
-
-.admin-page .boton-flecha {
-    width: 22px;
-    height: 22px;
-    color: var(--blanco);
-}
-
-.admin-page .enlace-barra-lateral {
-    padding-left: 5px;
-    margin-bottom: 8px;
-    font-size: 11px;
-}
-
-.admin-page .enlace-barra-lateral::before {
-    margin-right: 6px;
-}
-
-.admin-page .barra-lateral-movil {
-    width: 210px !important;
-    background-color: var(--panel);
-}
-
-.admin-page .barra-lateral-movil .offcanvas-body {
-    padding: 32px 18px;
-}
-
 .admin-header {
     width: 100%;
     height: 65px;
     flex-shrink: 0;
-    background-color: var(--azul);
+    background: linear-gradient(110deg, var(--color-primary-deep) 0%, var(--color-primary) 100%);
 }
 
 .admin-header .logo {
-    color: var(--blanco);
+    color: var(--color-text);
     font-family: "Pervitina Dex", sans-serif;
     font-size: 36px;
     line-height: 1;
     letter-spacing: -1px;
 }
 
-.admin-header .usuario-header {
+.admin-header .admin-header-profile {
+    width: auto;
     height: 65px;
+    flex-shrink: 0;
     gap: 15px;
 }
 
 .nombre-usuario {
-    color: var(--blanco);
+    color: var(--color-text);
     font-size: 17px;
     font-weight: 400;
 }
@@ -68,19 +31,23 @@
     height: 42px;
     border-radius: 50%;
     object-fit: cover;
-    background-color: var(--panel);
+    background-color: var(--color-surface-raised);
 }
 
 .admin-content {
     min-height: calc(100vh - 65px);
-    background-color: var(--negro);
+    background:
+        radial-gradient(ellipse at 86% 0, color-mix(in srgb, var(--color-accent) 12%, transparent), transparent 34rem),
+        var(--color-background);
 }
 
 .registrar-content {
     width: 100%;
     min-height: calc(100vh - 65px);
     padding: 50px;
-    background-color: var(--negro);
+    background:
+        radial-gradient(ellipse at 86% 0, color-mix(in srgb, var(--color-accent) 12%, transparent), transparent 34rem),
+        var(--color-background);
 }
 
 .registro-container {
@@ -88,15 +55,15 @@
     max-width: 950px;
     min-height: 430px;
     padding: 28px 32px 24px;
-    border-radius: 8px;
-    background-color: #050505;
-    border: 1px solid #171717;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+    border-radius: 14px;
+    background: linear-gradient(145deg, var(--color-surface-raised), var(--color-surface));
+    border: 1px solid color-mix(in srgb, var(--color-accent) 14%, transparent);
+    box-shadow: 0 18px 42px var(--color-shadow);
 }
 
 .registro-container h1 {
     margin: 0;
-    color: var(--morado);
+    color: var(--color-accent-bright);
     font-family: "Special Gothic Expanded One", sans-serif;
     font-size: 22px;
     font-weight: normal;
@@ -106,7 +73,7 @@
     width: 100%;
     height: 1px;
     margin: 10px 0 25px;
-    background-color: #262626;
+    background-color: color-mix(in srgb, var(--color-accent) 14%, transparent);
 }
 
 .campo {
@@ -116,7 +83,7 @@
 .campo label {
     display: block;
     margin-bottom: 7px;
-    color: #D5D5D5;
+    color: var(--color-text-secondary);
     font-size: 13px;
 }
 
@@ -125,19 +92,19 @@
     width: 100%;
     height: 42px;
     padding: 7px 10px;
-    border: 1px solid #343434;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 20%, transparent);
     border-radius: 6px;
     outline: none;
-    background-color: #050505;
-    color: var(--blanco);
+    background-color: var(--color-surface-raised);
+    color: var(--color-text);
     font-size: 13px;
     transition: border-color 150ms ease, box-shadow 150ms ease;
 }
 
 .campo input:focus,
 .campo select:focus {
-    border-color: var(--morado);
-    box-shadow: 0 0 0 3px rgba(162, 92, 255, 0.16);
+    border-color: var(--color-accent-bright);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 16%, transparent);
 }
 
 .campo select {
@@ -166,28 +133,28 @@
 }
 
 .btn-cancelar {
-    background-color: #1C1C1C;
-    color: var(--gris);
+    background-color: var(--color-primary-deep);
+    color: var(--color-text-muted);
 }
 
 .btn-guardar {
-    background-color: #C88CFF;
-    color: var(--negro);
+    background: linear-gradient(135deg, var(--color-primary-deep), var(--color-primary));
+    color: var(--color-text);
 }
 
 .btn-cancelar:hover {
-    background-color: #252525;
-    color: #AAAAAA;
+    background-color: var(--color-primary-deep);
+    color: var(--color-text-secondary);
 }
 
 .btn-guardar:hover {
-    background-color: var(--morado-claro);
+    background-color: var(--color-accent-bright);
 }
 
 .form-buttons button:focus-visible,
 .cerrar-sesion:focus-visible,
 .boton-ver:focus-visible,
 .menu-link:focus-visible {
-    outline: 2px solid #C88CFF;
+    outline: 2px solid var(--color-accent-bright);
     outline-offset: 3px;
 }

@@ -33,7 +33,7 @@
 .nota-titulo {
     display: block;
     margin-bottom: 3px;
-    color: #FFFFFF;
+    color: var(--color-text);
     font-size: 14px;
 }
 
@@ -41,7 +41,7 @@
     display: block;
     max-width: 210px;
     overflow: hidden;
-    color: #AAAAAA;
+    color: var(--color-accent-bright);
     font-size: 12px;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -50,11 +50,11 @@
 .leer-mas {
     display: inline-block;
     margin-top: 3px;
-    color: #A25CFF;
+    color: var(--color-accent);
     font-size: 11px;
     text-decoration: none;
 }
 
 .leer-mas:hover {
-    color: #FFFFFF;
+    color: var(--color-text);
 }

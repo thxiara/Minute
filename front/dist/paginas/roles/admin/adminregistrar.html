@@ -2,7 +2,8 @@
 <html lang="es">
 
 <head>
-    <base href="/front/dist/">
+    <base href="../../../">
+    <link rel="icon" type="image/png" href="assets/iconos/favicon.png">
 
     <meta charset="UTF-8">
 
@@ -80,10 +81,9 @@
 
                     <div class="col-auto">
 
-                        <div class="usuario-header d-flex align-items-center">
+                        <div class="admin-header-profile d-flex align-items-center">
 
-                            <span class="nombre-usuario">
-                                {{nombre}}
+                            <span class="nombre-usuario" data-session-name>
                             </span>
 
 
@@ -566,6 +566,7 @@
     </script>
 
     <script src="js/api.js"></script>
+    <script src="js/session.js"></script>
     <script src="js/dashboard/admin.js"></script>
 
 </body>

@@ -121,24 +121,10 @@ document.querySelectorAll("[data-profesor-profile]").forEach(button => {
 
 // Sección: Perfil, clases asignadas y evaluación numérica.
 (() => {
-const studentName = new URLSearchParams(window.location.search).get("name") || "Pepe";
+const studentName = new URLSearchParams(window.location.search).get("name") || "";
 const normalizedName = studentName.toLocaleLowerCase("es");
 const nameElement = document.getElementById("studentName");
-if (nameElement) nameElement.textContent = studentName;
-
-const sampleProfiles = {
-    pepe: { document: "1.123.456-7", phone: "123 456 789", email: "pepe@fitpower.uy" },
-    papa: { document: "987.654-3", phone: "987 654 321", email: "papa@fitpower.uy" },
-    miau: { document: "1.234.567-8", phone: "789 456 123", email: "miau@fitpower.uy" },
-    parapapapa: { document: "1.123.456-7", phone: "012 345 678", email: "parapapapa@fitpower.uy" }
-};
-const sampleProfile = Object.hasOwn(sampleProfiles, normalizedName) ? sampleProfiles[normalizedName] : null;
-if (sampleProfile) {
-    Object.entries(sampleProfile).forEach(([field, value]) => {
-        const element = document.getElementById(`student${field[0].toUpperCase()}${field.slice(1)}`);
-        if (element) element.textContent = value;
-    });
-}
+if (nameElement) nameElement.textContent = studentName || "—";
 
 const classState = window.FitPowerClassData.load();
 const assignedClasses = document.getElementById("studentAssignedClasses");
