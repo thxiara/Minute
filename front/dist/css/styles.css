@@ -12,24 +12,60 @@
 /* variables */
 
 :root {
-    --color-background: #080e18;
-    --color-surface: #0d1422;
-    --color-surface-raised: #17233a;
-    --color-primary: #5a48c2;
-    --color-primary-deep: #482e8f;
-    --color-accent: rgb(139, 96, 224);
-    --color-accent-bright: #966dff;
-    --color-violet-card: #4d3383;
-    --color-text: #f5edff;
-    --color-text-secondary: #d0c3e2;
-    --color-text-muted: #be8fff;
-    --color-border: rgba(158, 114, 245, 0.24);
-    --color-shadow: rgba(0, 0, 0, 0.24);
-    --color-success: #8fe2ba;
-    --color-warning: #ffd166;
-    --color-danger: #ff7777;
-    --color-danger-soft: color-mix(in srgb, var(--color-danger) 14%, transparent);
+    /* Fondo*/
+    --color-background: #0d0a14;
+
+    /* Superficie de tarjetas  */
+    --color-surface: #141021;
+
+    /* Fondos de controles, navegación y tarjetas  */
+    --color-surface-raised: #1f1832;
+
+    /* Encabezados, fondos y gradientes de botones */
+    --color-primary: #5c3fa2;
+
+    /* Oscuros de gradientes y botones */
+    --color-primary-deep: #432a79;
+
+    /* Botones, y resaltados  */
+    --color-accent: #8b6ccf;
+
+    /* Títulos, enlaces activos e iconos */
+    --color-accent-bright: #a88be4;
+
+    /* Fondo  tarjetas  */
+    --color-violet-card: #281d43;
+
+    /* Texto principal */
+    --color-text:#e9e2f5ff; /*#f3eef8; */
+
+    /* Descripciones y etiquetas secundarias */
+    --color-text-secondary:#c5b8d9;
+
+    /* Texto atenuado y placeholders */
+    --color-text-muted: #9a88b5;
+
+    /* Bordes y separadores  */
+    --color-border: rgba(154, 136, 181, 0.18);
+
+    /* Sombra */
+    --color-shadow: rgba(5, 3, 10, 0.45);
+
+    /* Confirmaciones y stock */
+    --color-success: #68c799;
+
+    /* Stock bajo y avisos  */
+    --color-warning: #e5b456;
+
+    /* Errores y acciones peligrosas  */
+    --color-danger: #d96868;
+
+    /* Fondo de errores y alertas */
+    --color-danger-soft: rgba(217, 104, 104, 0.12);
+
+    /* Layout */
     --dashboard-sidebar-width: 220px;
+
 }
 
 
