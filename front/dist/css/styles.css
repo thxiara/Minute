@@ -12,10 +12,10 @@
 /* variables */
 
 :root {
-    /* Fondo */
+    /* Fondo*/
     --color-background: #0d0a14;
 
-    /* paneles  */
+    /* Superficie de tarjetas  */
     --color-surface: #141021;
 
     /* Fondos de controles, navegación y tarjetas  */
@@ -30,25 +30,25 @@
     /* Botones, focos y resaltados */
     --color-accent: #8b6ccf;
 
-    /* Títulos, enlaces  e iconos */
     --color-accent-bright: #a88be4;
 
-    /* Fondo  tarjetas y bloques  */
+    /* Fondo  tarjetas  */
+
     --color-violet-card: #281d43;
 
     /* Texto principal */
     --color-text:#e9e2f5ff; /*#f3eef8; */
 
-    /* Descripciones  */
+    /* Descripciones y etiquetas secundarias */
     --color-text-secondary:#c5b8d9;
 
-    /* Texto atenuado */
+    /* Texto atenuado y placeholders */
     --color-text-muted: #9a88b5;
 
-    /* Bordes  */
+    /* Bordes y separadores  */
     --color-border: rgba(154, 136, 181, 0.18);
 
-    /* Sombra  */
+    /* Sombra */
     --color-shadow: rgba(5, 3, 10, 0.45);
 
     /* Confirmaciones y stock */
@@ -60,7 +60,7 @@
     /* Errores y acciones peligrosas  */
     --color-danger: #d96868;
 
-    /* Fondo errores  */
+    /* Fondo de errores y alertas */
     --color-danger-soft: rgba(217, 104, 104, 0.12);
 
     /* Layout */
