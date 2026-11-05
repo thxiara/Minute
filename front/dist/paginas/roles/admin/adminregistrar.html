@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="es" class="verificando-sesion">
+<html lang="es">
 
 <head>
+    <base href="../../../">
+    <link rel="icon" type="image/png" href="assets/iconos/favicon.png">
 
     <meta charset="UTF-8">
 
@@ -24,8 +26,8 @@
         href="https://fonts.gstatic.com"
         crossorigin
     >
-    <link rel="stylesheet" href="../../../css/styles.css">
-    <link rel="stylesheet" href="../../../css/dashboards/comun.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboards/comun.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&family=TASA+Explorer:wght@400;500;600;700&display=swap"
         rel="stylesheet"
@@ -33,24 +35,24 @@
 
     <link
         rel="stylesheet"
-        href="../../../css/dashboards/adminregistrar.css"
+        href="css/dashboards/adminregistrar.css"
     >
 
     <link
         rel="stylesheet"
-        href="../../../css/responsives/dashboardsresponsive/comunresponsive.css"
+        href="css/dashboards/interfaces.css"
     >
 
     <link
         rel="stylesheet"
-        href="../../../css/responsives/dashboardsresponsive/adminregistrarresponsive.css"
+        href="css/responsives/dashboardsresponsive/comunresponsive.css"
     >
 
-<!-- Oculta el panel hasta que Session.requireRole() confirme sesión y rol (ver js/session.js). 
-    <style>
-        html.verificando-sesion body { visibility: hidden; }
-    </style>
--->
+    <link
+        rel="stylesheet"
+        href="css/responsives/dashboardsresponsive/adminregistrarresponsive.css"
+    >
+
 
 </head>
 
@@ -71,7 +73,7 @@
                     <div class="col">
 
                         <div class="logo">
-                            <a href="../../../../index.html">FitPower</a>
+                            <a href="../index.html">FitPower</a>
                         </div>
 
                     </div>
@@ -79,15 +81,14 @@
 
                     <div class="col-auto">
 
-                        <div class="usuario-header d-flex align-items-center">
+                        <div class="admin-header-profile d-flex align-items-center">
 
-                            <span class="nombre-usuario">
-                                Nombre Apellido
+                            <span class="nombre-usuario" data-session-name>
                             </span>
 
 
                             <img
-                                src="../../../assets/imagenes/img6.jpg"
+                                src="assets/imagenes/img6.jpg"
                                 alt="Usuario"
                                 class="imagen-usuario"
                             >
@@ -157,7 +158,7 @@
                     >
 
                         <a
-                            href="#"
+                            href="/dash/admin/registrar#"
                             class="enlace-barra-lateral activo"
                         >
                             Nuevo socio
@@ -165,7 +166,7 @@
 
 
                         <a
-                            href="admin.html"
+                            href="/dash/admin"
                             class="enlace-barra-lateral"
                         >
                             Socios activos
@@ -175,7 +176,7 @@
 
                 </div>
 
-
+                <a href="paginas/roles/admin/admin-clases.html" class="enlace-barra-lateral">Administrar clases</a>
 
                 <div class="seccion-barra-lateral">
 
@@ -206,7 +207,7 @@
                     >
 
                         <a
-                            href="#"
+                            href="paginas/roles/admin/admin-producto.html"
                             class="enlace-barra-lateral"
                         >
                             Nuevo producto
@@ -214,7 +215,7 @@
 
 
                         <a
-                            href="#"
+                            href="paginas/roles/admin/admin-productos.html"
                             class="enlace-barra-lateral"
                         >
                             Productos activos
@@ -223,6 +224,8 @@
                     </div>
 
                 </div>
+
+                <a href="/logout" class="enlace-barra-lateral cerrar">Cerrar sesión</a>
 
             </aside>
 
@@ -267,7 +270,7 @@
                         >
 
                             <a
-                                href="adminregistrar.html"
+                                href="/dash/admin/registrar"
                                 class="enlace-barra-lateral activo"
                             >
                                 Nuevo socio
@@ -275,7 +278,7 @@
 
 
                             <a
-                                href="admin.html"
+                                href="/dash/admin"
                                 class="enlace-barra-lateral"
                             >
                                 Socios activos
@@ -285,6 +288,7 @@
 
                     </div>
 
+                    <a href="paginas/roles/admin/admin-clases.html" class="enlace-barra-lateral">Administrar clases</a>
 
 
                     <div class="seccion-barra-lateral">
@@ -316,7 +320,7 @@
                         >
 
                             <a
-                                href="#"
+                                href="paginas/roles/admin/admin-producto.html"
                                 class="enlace-barra-lateral"
                             >
                                 Nuevo producto
@@ -324,7 +328,7 @@
 
 
                             <a
-                                href="#"
+                                href="paginas/roles/admin/admin-productos.html"
                                 class="enlace-barra-lateral"
                             >
                                 Productos activos
@@ -333,6 +337,8 @@
                         </div>
 
                     </div>
+
+                    <a href="/logout" class="enlace-barra-lateral cerrar">Cerrar sesión</a>
 
                 </div>
 
@@ -356,18 +362,20 @@
                     <div class="form-line"></div>
 
 
-                    <form>
+                    <form id="registrarSocioForm">
+
+                        <div id="alertContainer"></div>
 
 
                         <div class="row">
 
                             <div class="col-md-4 campo">
 
-                                <label for="rol">
+                                <label for="tipo">
                                     Tipo de usuario *
                                 </label>
 
-                                <select id="rol" name="rol" required>
+                                <select id="tipo" name="tipo" required>
                                     <option value="" selected disabled>Selecciona un tipo</option>
                                     <option value="socio">Socio</option>
                                     <option value="profesor">Profesor</option>
@@ -389,6 +397,7 @@
                                     type="text"
                                     id="nombre"
                                     name="nombre"
+                                    required
                                 >
 
                             </div>
@@ -406,6 +415,7 @@
                                     type="text"
                                     id="ci"
                                     name="ci"
+                                    required
                                 >
 
                             </div>
@@ -423,6 +433,7 @@
                                     type="text"
                                     id="telefono"
                                     name="telefono"
+                                    required
                                 >
 
                             </div>
@@ -445,6 +456,7 @@
                                     type="email"
                                     id="email"
                                     name="email"
+                                    required
                                 >
 
                             </div>
@@ -468,13 +480,13 @@
 
 
 
-                            <div class="col-md-4 campo" id="membershipField" hidden>
+                            <div class="col-md-4 campo" id="campoPlan" hidden>
 
                                 <label for="plan" id="membershipLabel">
                                     Membresía *
                                 </label>
 
-                                <select id="plan" name="membresia" disabled>
+                                <select id="plan" name="plan">
                                     <option value="">Selecciona una opción</option>
                                     <option value="basico">Básico</option>
                                     <option value="pro">Pro</option>
@@ -501,6 +513,7 @@
                                     type="password"
                                     id="contrasena"
                                     name="contrasena"
+                                    required
                                 >
 
                             </div>
@@ -552,31 +565,9 @@
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
     </script>
 
-    <script src="../../../js/api.js"></script>
-    <script src="../../../js/dashboard/adminregistrar.js"></script>
-<!-- Sacar el chequeo de sesión de la vista, lo tiene que manejar el backend
-   <script src="../../../js/session.js"></script>
-
-    <script>
-        (async () => {
-            const sesion = await Session.requireRole([Session.ROLES.ADMIN]);
-            if (!sesion) return;
-
-            const nombreUsuario = document.querySelector('.nombre-usuario');
-            if (nombreUsuario) {
-                nombreUsuario.textContent = sesion.name;
-            }
-
-            const logoutLink = document.getElementById('logoutLink');
-            if (logoutLink) {
-                logoutLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    Session.logout('/front/index.html');
-                });
-            }
-        })();
-    </script>
--->
+    <script src="js/api.js"></script>
+    <script src="js/session.js"></script>
+    <script src="js/dashboard/admin.js"></script>
 
 </body>
 

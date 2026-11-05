@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="es" class="verificando-sesion">
+<html lang="es">
 
 <head>
+    <base href="../../../">
+    <link rel="icon" type="image/png" href="assets/iconos/favicon.png">
 
     <meta charset="UTF-8">
 
@@ -38,29 +40,24 @@
 
 
     <!-- css -->
-     <link rel="stylesheet" href="../../../css/styles.css">
-    <link rel="stylesheet" href="../../../css/dashboards/comun.css">
+     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboards/comun.css">
 
     <link
         rel="stylesheet"
-        href="../../../css/dashboards/entrenador.css"
+        href="css/dashboards/entrenador.css"
     >
 
     <link
         rel="stylesheet"
-        href="../../../css/responsives/dashboardsresponsive/comunresponsive.css"
+        href="css/responsives/dashboardsresponsive/comunresponsive.css"
     >
 
     <link
         rel="stylesheet"
-        href="../../../css/responsives/dashboardsresponsive/entrenadorresponsive.css"
+        href="css/responsives/dashboardsresponsive/entrenadorresponsive.css"
     >
-
-<!-- Oculta el panel hasta que Session.requireRole() confirme sesión y rol (ver js/session.js). -->
-    <style>
-        html.verificando-sesion body { visibility: hidden; }
-    </style>
-/style>
+    <link rel="stylesheet" href="css/dashboards/interfaces.css">
 
 </head>
 
@@ -75,17 +72,16 @@
                 <div class="d-flex justify-content-between align-items-center header-contenido">
 
                      <h1 class="logo">
-                        <a href="../../../../index.html">FitPower</a>
+                        <a href="../index.html">FitPower</a>
                     </h1>
 
                     <div class="header-derecha">
 
-                            <span class="header-text">
-                                Nombre Apellido
+                            <span class="header-text" data-session-name>
                             </span>
 
                                 <img
-                                src="../../../assets/imagenes/img6.jpg" class="usuario-header" alt="Usuario">
+                                src="assets/imagenes/img6.jpg" class="usuario-header" alt="Usuario">
 
                             <button
                                 class="boton-menu"
@@ -146,7 +142,7 @@
                         id="sociosMenu"
                     >
                         <a
-                            href="#"
+                            href="/dash/entrenador"
                             class="enlace-barra-lateral activo"
                         >
                             Socios activos
@@ -187,23 +183,24 @@
                     >
 
                         <a
-                            href="#"
+                            href="/dash/entrenador/ejercicios"
                             class="enlace-barra-lateral"
                         >
-                            Nuevo entrenamiento
+                            Ejercicios
                         </a>
 
-
                         <a
-                            href="#"
+                            href="/dash/entrenador/rutinas"
                             class="enlace-barra-lateral"
                         >
-                            Entrenamientos activos
+                            Rutinas
                         </a>
 
                     </div>
 
                 </div>
+
+                <a href="/logout" class="enlace-barra-lateral cerrar">Cerrar sesión</a>
 
             </aside>
 
@@ -248,7 +245,7 @@
                             id="sociosMobile"
                         >
                             <a
-                                href="#"
+                                href="/dash/entrenador"
                                 class="enlace-barra-lateral activo"
                             >
                                 Socios activos
@@ -289,23 +286,24 @@
                         >
 
                             <a
-                                href="#"
+                                href="/dash/entrenador/ejercicios"
                                 class="enlace-barra-lateral"
                             >
-                                Nuevo entrenamiento
+                                Ejercicios
                             </a>
 
-
                             <a
-                                href="#"
+                                href="/dash/entrenador/rutinas"
                                 class="enlace-barra-lateral"
                             >
-                                Entrenamientos activos
+                                Rutinas
                             </a>
 
                         </div>
 
                     </div>
+
+                    <a href="/logout" class="enlace-barra-lateral cerrar">Cerrar sesión</a>
 
                 </div>
 
@@ -435,162 +433,11 @@
 
                             <!-- cuerpo -->
 
-                            <tbody>
-
-
-                                <!-- socio 1 -->
-
+                            <!-- Las filas las arma entrenador.js con los socios de la base. -->
+                            <tbody id="trainerMembersBody">
                                 <tr>
-
-                                    <td>Llalala</td>
-
-                                    <td>1.123.456-7</td>
-
-                                    <td>012 345 678</td>
-
-                                    <td>22/11/2026</td>
-
-
-                                    <!-- nota -->
-
-                                    <td class="nota">
-
-                                        <span class="nota-titulo">titulo ok</span>
-
-                                        <span class="nota-texto">bien</span>
-
-                                        <a
-                                            href="#"
-                                            class="leer-mas"
-                                        >
-                                            Leer más
-                                        </a>
-
-                                    </td>
-
-
-                                    <!-- acciones -->
-
-                                    <td class="acciones">
-
-                                        <button
-                                            type="button"
-                                            class="action-button"
-                                        >
-                                            ⋮
-                                        </button>
-
-
-                                        <div class="action-menu">
-
-                                            <button type="button">
-
-                                                <span class="icono-ver">
-                                                    ●
-                                                </span>
-
-                                                Ver/editar perfil
-
-                                            </button>
-
-
-                                            <button
-                                                type="button"
-                                                class="delete"
-                                            >
-
-                                                <span>
-                                                    ⊗
-                                                </span>
-
-                                                Dar de baja
-
-                                            </button>
-
-                                        </div>
-
-                                    </td>
-
+                                    <td colspan="6" class="text-center">Cargando socios…</td>
                                 </tr>
-
-
-
-                                <!-- socio 2 -->
-
-                                <tr>
-
-                                    <td>Nombre</td>
-
-                                    <td>1.234.567-8</td>
-
-                                    <td>123 345 678</td>
-
-                                    <td>05/12/2026</td>
-
-
-                                    <!-- nota -->
-
-                                    <td class="nota">
-
-                                        <span class="nota-titulo">buu horrible</span>
-
-                                        <span class="nota-texto">no se no se</span>
-
-                                        <a
-                                            href="#"
-                                            class="leer-mas"
-                                        >
-                                            Leer más
-                                        </a>
-
-                                    </td>
-
-
-                                    <!-- acciones -->
-
-                                    <td class="acciones">
-
-                                        <button
-                                            type="button"
-                                            class="action-button"
-                                        >
-                                            ⋮
-                                        </button>
-
-
-                                        <div class="action-menu">
-
-                                            <button type="button">
-
-                                                <span class="icono-ver">
-                                                    ●
-                                                </span>
-
-                                                Ver/editar perfil
-
-                                            </button>
-
-
-                                            <button
-                                                type="button"
-                                                class="delete"
-                                            >
-
-                                                <span>
-                                                    ⊗
-                                                </span>
-
-                                                Dar de baja
-
-                                            </button>
-
-                                        </div>
-
-                                    </td>
-
-                                </tr>
-
-
                             </tbody>
 
                         </table>
@@ -622,6 +469,38 @@
     </div>
 
 
+    <div class="modal fade" id="trainerMemberModal" tabindex="-1" aria-labelledby="trainerMemberTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content interface-modal">
+                <form id="trainerMemberForm">
+                    <div class="modal-header">
+                        <div>
+                            <span class="interface-eyebrow">Seguimiento del socio</span>
+                            <h2 class="modal-title" id="trainerMemberTitle">Rutinas y nota</h2>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Socio: <strong id="trainerMemberName"></strong></p>
+                        <p class="form-label mb-2">Rutinas asignadas</p>
+                        <div class="class-assignment-options" id="trainerRoutineOptions"></div>
+                        <p class="interface-empty" id="trainerNoRoutines" hidden>
+                            Todavía no creaste rutinas. <a href="/dash/entrenador/rutinas">Crear una</a>
+                        </p>
+                        <label class="form-label mt-3" for="trainerMemberNote">Nota privada para tener en cuenta</label>
+                        <textarea class="form-control" id="trainerMemberNote" name="note" rows="3" maxlength="240" placeholder="Comentario breve para el seguimiento"></textarea>
+                        <p class="form-text text-secondary">Esta nota es interna del entrenador y no es una evaluación.</p>
+                        <p id="trainerMemberFeedback" class="interface-feedback" role="status"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="interface-button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="interface-button">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
     <!-- boostrap js -->
 
@@ -633,23 +512,9 @@
 
     <!--funciones -->
 
-   <script src="../../../js/api.js"></script>
-   <script src="../../../js/dashboard/entrenador.js"></script>
-<!-- Sacar el chequeo de sesión de la vista, lo tiene que manejar el backend
-   <script src="../../../js/session.js"></script>
-
-   <script>
-       (async () => {
-           const sesion = await Session.requireRole([Session.ROLES.ENTRENADOR]);
-           if (!sesion) return;
-
-           const nombreUsuario = document.querySelector('.nombre-usuario');
-           if (nombreUsuario) {
-               nombreUsuario.textContent = sesion.name;
-           }
-       })();
-  </script>
--->
+   <script src="js/api.js"></script>
+   <script src="js/session.js"></script>
+   <script src="js/dashboard/entrenador.js"></script>
 
 </body>
 

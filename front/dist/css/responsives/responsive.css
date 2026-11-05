@@ -35,12 +35,12 @@
 
 
     /* seccion de reseñas */
-    .reseñas-info{
+    .reviews-info{
         margin-bottom:35px;
         text-align:center;
     }
 
-    .reseñas-info p{
+    .reviews-info p{
         max-width:100%;
         margin-left:auto;
         margin-right:auto;
@@ -127,6 +127,11 @@
         height:42px;
     }
 
+    .header-btn{
+        padding:8px 14px;
+        font-size:.72rem;
+    }
+
 
     /* en el hero  */
     .hero{
@@ -171,7 +176,7 @@
 
 
     /*  reseñas */
-    .reseñas{
+    .reviews{
         padding:70px 0;
     }
 
@@ -329,15 +334,15 @@
 
 
     /* reseñas */
-    .reseñas{
+    .reviews{
         padding:55px 0;
     }
 
-    .reseñas-info h2{
+    .reviews-info h2{
         font-size:1.8rem;
     }
 
-    .reseñas-info p{
+    .reviews-info p{
         font-size:.95rem;
     }
 

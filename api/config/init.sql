@@ -17,6 +17,8 @@ CREATE TABLE IF NOT EXISTS `Role` (
 CREATE TABLE IF NOT EXISTS `Exercise` (
     `id_exercise`   INT AUTO_INCREMENT PRIMARY KEY,
     `name_exercise` VARCHAR(30) NOT NULL,
+    `muscle_exercise`    VARCHAR(30) NOT NULL DEFAULT 'Cuerpo completo',
+    `equipment_exercise` VARCHAR(50) NOT NULL DEFAULT '',
     `desc_exercise` TEXT,
     `media_exercise` VARCHAR(255)
 );
@@ -40,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `Client` (
     `id_client`     INT AUTO_INCREMENT PRIMARY KEY,
     `fr_credentials` INT NOT NULL,
     `fr_role`       INT NOT NULL,
-    `phone`         INT NOT NULL UNIQUE, 
+    `phone`         VARCHAR(20) NOT NULL UNIQUE,
     `name_client`   VARCHAR(50) NOT NULL,
     `ci`           VARCHAR(20) NOT NULL UNIQUE,
     CONSTRAINT `fk_client_credentials`
