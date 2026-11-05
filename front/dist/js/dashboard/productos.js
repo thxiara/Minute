@@ -152,7 +152,6 @@
     const priceInput = document.getElementById("productPrice");
     const descriptionInput = document.getElementById("productDescription");
     const stockInput = document.getElementById("productStock");
-    const adjustmentInput = document.getElementById("stockAdjustment");
     const summaryName = document.getElementById("productSummaryName");
     const summaryCategory = document.getElementById("productSummaryCategory");
     const summaryPrice = document.getElementById("productSummaryPrice");
@@ -191,7 +190,7 @@
                 nameInput.value = product.name;
                 categoryInput.value = product.category;
                 priceInput.value = String(product.price);
-                descriptionInput.value = product.description;
+                descriptionInput.value = product.description || "";
                 stockInput.value = String(product.stock);
             }
         } catch (error) {
@@ -215,20 +214,6 @@
             updateSummary();
         }
 
-        const adjustmentButton = event.target.closest("[data-stock-adjust]");
-        if (adjustmentButton) {
-            const amount = Math.floor(Number(adjustmentInput.value));
-            if (!Number.isInteger(amount) || amount < 1) {
-                adjustmentInput.setCustomValidity("Ingresa una cantidad entera mayor a cero.");
-                adjustmentInput.reportValidity();
-                return;
-            }
-
-            adjustmentInput.setCustomValidity("");
-            const direction = adjustmentButton.dataset.stockAdjust === "add" ? 1 : -1;
-            stockInput.value = String(Math.max(0, (Number(stockInput.value) || 0) + amount * direction));
-            updateSummary();
-        }
     });
 
     productForm.addEventListener("submit", event => {

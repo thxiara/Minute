@@ -1,10 +1,10 @@
 (() => {
     const storageKey = "fitpowerProducts";
     const initialProducts = [
-        { id: "whey", name: "Whey protein 1kg", category: "Suplementos", price: 1800, description: "N/A.", stock: 20 },
-        { id: "shaker", name: "Shaker FitPower", category: "Accesorio", price: 490, description: "N/A", stock: 4 },
-        { id: "bands", name: "Bandas elásticas", category: "Accesorio", price: 690, description: "N/A", stock: 18 },
-        { id: "gloves", name: "Guantes de entrenamiento", category: "Accesorio", price: 890, description: "N/A", stock: 0 }
+        { id: "whey", name: "Whey protein 1kg", category: "Suplementos", price: 1800, stock: 20 },
+        { id: "shaker", name: "Shaker FitPower", category: "Accesorio", price: 490, stock: 4 },
+        { id: "bands", name: "Bandas elásticas", category: "Accesorio", price: 690, stock: 18 },
+        { id: "gloves", name: "Guantes de entrenamiento", category: "Accesorio", price: 890, stock: 0 }
     ];
 
     function readProducts() {
@@ -25,6 +25,15 @@
         )) {
             throw new TypeError("Los datos del catálogo de productos tienen un formato inválido.");
         }
+
+        let placeholdersRemoved = false;
+        products.forEach(product => {
+            if (typeof product.description === "string" && /^n\/a\.?$/i.test(product.description.trim())) {
+                product.description = "";
+                placeholdersRemoved = true;
+            }
+        });
+        if (placeholdersRemoved) writeProducts(products);
 
         return products;
     }

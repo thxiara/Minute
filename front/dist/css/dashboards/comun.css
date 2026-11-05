@@ -1,3 +1,7 @@
+:root {
+    font-size: 18px;
+}
+
 .barra-lateral {
     width: var(--dashboard-sidebar-width);
     min-width: var(--dashboard-sidebar-width);
@@ -27,7 +31,7 @@
     justify-content: space-between;
     color: var(--color-text);
     font-family: "Special Gothic Expanded One", sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     margin-bottom: 9px;
 }
 
@@ -39,7 +43,7 @@
     background-color: transparent;
     color: var(--color-text);
     font-family: Arial, sans-serif;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .enlace-barra-lateral {
@@ -47,7 +51,7 @@
     color: var(--color-text-muted);
     text-decoration: none;
     font-family: "TASA Explorer", sans-serif;
-    font-size: 12px;
+    font-size: 13px;
     padding: 4px 6px;
     margin-bottom: 4px;
     border-radius: 4px;
@@ -102,7 +106,7 @@
     margin: 0;
     color: var(--color-accent-bright);
     font-family: "Special Gothic Expanded One", sans-serif;
-    font-size: 32px;
+    font-size: 33px;
     line-height: 1.2;
     font-weight: normal;
 }
@@ -125,7 +129,7 @@
 .registros {
     color: var(--color-text-secondary);
     font-family: "TASA Explorer", sans-serif;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .registros select {
@@ -134,7 +138,7 @@
     background-color: transparent;
     color: var(--color-text-secondary);
     font-family: "TASA Explorer", sans-serif;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .search {
@@ -150,7 +154,7 @@
     background-color: var(--color-background);
     color: var(--color-text);
     outline: none;
-    font-size: 14px;
+    font-size: 15px;
     padding: 4px 8px;
     transition: border-color 150ms ease, box-shadow 150ms ease;
 }
@@ -168,7 +172,7 @@
     border: none;
     background-color: transparent;
     color: var(--color-text);
-    font-size: 18px;
+    font-size: 19px;
     transition: background-color 150ms ease;
 }
 
@@ -194,7 +198,7 @@
     background-color: transparent;
     border: none;
     font-family: "TASA Explorer", sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
     padding: 0 8px 9px;
 }
@@ -230,7 +234,7 @@
     border-color: var(--color-background);
     color: var(--color-text-secondary);
     font-family: "TASA Explorer", sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     padding: 0 8px;
     vertical-align: middle;
 }
@@ -248,7 +252,7 @@
     border-radius: 4px;
     background-color: var(--color-surface-raised);
     color: var(--color-accent-bright);
-    font-size: 21px;
+    font-size: 22px;
     line-height: 28px;
     transition: background-color 150ms ease, color 150ms ease;
 }
@@ -279,7 +283,7 @@
     text-align: left;
     padding: 0;
     font-family: "TASA Explorer", sans-serif;
-    font-size: 12px;
+    font-size: 13px;
     white-space: nowrap;
 }
 
@@ -309,7 +313,7 @@
     border: none;
     background-color: transparent;
     color: var(--color-text-secondary);
-    font-size: 19px;
+    font-size: 20px;
     transition: background-color 150ms ease, color 150ms ease;
 }
 
@@ -387,7 +391,7 @@ body.interface-page > header {
 :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page, body.interface-page) .logo {
     flex-shrink: 0;
     margin: 0;
-    font-size: clamp(25px, 2.6vw, 36px);
+    font-size: clamp(26px, 2.6vw, 37px);
 }
 
 :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page, body.interface-page) .logo a,

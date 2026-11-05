@@ -336,7 +336,7 @@
 
 .product-inventory-controls {
     display: grid;
-    grid-template-columns: minmax(130px, 1fr) 90px auto auto;
+    grid-template-columns: minmax(130px, 280px);
     align-items: end;
     gap: 10px;
 }
@@ -371,16 +371,6 @@
     border-radius: 0;
     background: transparent;
     text-align: center;
-}
-
-.product-stock-adjustment .form-control {
-    min-height: 41px;
-}
-
-.product-inventory-controls > .interface-button-secondary {
-    min-height: 41px;
-    padding-inline: 12px;
-    font-size: 0.8rem;
 }
 
 .product-form-actions {
@@ -534,16 +524,7 @@
     }
 
     .product-inventory-controls {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .product-stock-field {
-        grid-column: 1 / -1;
-    }
-
-    .product-inventory-controls > .interface-button-secondary {
-        width: 100%;
-        min-height: 44px;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .product-form-actions {
