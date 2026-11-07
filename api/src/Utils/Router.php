@@ -3,7 +3,6 @@ namespace App\Utils;
 
 class Router {
     private $routes = [];
-    private $basePath;
     private $db;
 
     private function serverTimingEnabled(): bool {
@@ -15,8 +14,7 @@ class Router {
         return in_array($v, ['1', 'true', 'yes', 'on'], true);
     }
 
-    public function __construct($basePath, $db) {
-        $this->basePath = $basePath;
+    public function __construct($db) {
         $this->db = $db;
     }
 
@@ -30,7 +28,7 @@ class Router {
         
         $this->routes[] = [
             'method' => $method,
-            'pattern' => "#^" . $this->basePath . $pattern . "/?$#",
+            'pattern' => "#^" . $pattern . "/?$#",
             'handler' => $handler
         ];
     }
@@ -68,8 +66,6 @@ class Router {
         echo json_encode([
             "status" => "error", 
             "message" => "Ruta no encontrada en la API",
-            "debug_uri" => $uri,        
-            "debug_base" => $this->basePath
         ]);
     }
 
