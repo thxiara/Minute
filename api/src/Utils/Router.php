@@ -83,11 +83,12 @@ class Router {
         $controllerClass = "App\\Controllers\\" . $controllerName;
 
         if (class_exists($controllerClass)) {
+            #Se crea un objeto con el controlador, y se le da el PDO como parámetro
             $controller = new $controllerClass($this->db);
 
             if (method_exists($controller, $method)) {
-                #Se llama a la función (method) indicada dentro del controlador indicado
-                #Dandole como parametro a esta función el array de ids obtendidas con run() a partir de la ruta recibida
+                #Se llama a la función (method) indicada dentro del objeto creado con el controlador 
+                #Dandole como parámetro a la función el array de ids obtendidas de la ruta
                 return call_user_func_array([$controller, $method], $params);
             }
         }
