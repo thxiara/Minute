@@ -8,7 +8,7 @@
     # Solo se permite acceso a:
     RewriteCond %{REQUEST_URI} !^/$
     RewriteCond %{REQUEST_URI} !^/(api|front)(/|$)
-    RewriteCond %{REQUEST_URI} !^/(login|logout|dash)(/|$)
+    RewriteCond %{REQUEST_URI} !^/(login|logout|dash|resenas)(/|$)
     RewriteCond %{REQUEST_URI} !^/\.well-known(/|$)
     RewriteRule ^ - [R=404,L]
 
@@ -29,7 +29,7 @@
     # ====================================================
     # /login, /logout, /dash, /dash/admin, /dash/admin/registrar, ...
     # van al index.php de la API, que mira la sesión y decide qué mostrar.
-    RewriteRule ^(login|logout|dash)(/.*)?$ /api/index.php [L,QSA]
+    RewriteRule ^(login|logout|dash|resenas)(/.*)?$ /api/index.php [L,QSA]
     
     # ====================================================
     # 3. LANDING (pasa por PHP para poder usar la sesión)

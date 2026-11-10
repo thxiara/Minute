@@ -305,20 +305,10 @@
 
                             Mostrar
 
-                            <select>
-
-                                <option>
-                                    25
-                                </option>
-
-                                <option>
-                                    10
-                                </option>
-
-                                <option>
-                                    50
-                                </option>
-
+                            <select id="teacherStudentsPageSize" aria-label="Cantidad de registros">
+                                <option value="25">25</option>
+                                <option value="10">10</option>
+                                <option value="50">50</option>
                             </select>
 
                             registros
@@ -330,6 +320,7 @@
 
                             <input
                                 type="text"
+                                id="teacherStudentsSearch"
                                 aria-label="Buscar"
                                 placeholder="Buscar alumnos"
                             >
@@ -363,7 +354,7 @@
                                     </th>
 
                                     <th>
-                                        Desempeño(Mes)
+                                        Evaluación
                                     </th>
 
                                     <th>
@@ -379,121 +370,10 @@
                             </thead>
 
 
-                            <tbody>
-
+                            <tbody id="teacherStudentsBody">
                                 <tr>
-
-                                    <td>pepe</td>
-
-                                    <td>123 456 789</td>
-
-                                    <td>10/10</td>
-
-                                    <td class="nota">
-
-                                        <span class="nota-texto">
-                                            muy mal
-                                        </span>
-
-                                        <button type="button" class="leer-mas">
-                                            leer más
-                                        </button>
-
-                                    </td>
-
-                                    <td class="acciones">
-
-                                        <button
-                                            type="button"
-                                            class="action-button"
-                                        >
-                                            ⋮
-                                        </button>
-
-
-                                        <div class="action-menu">
-
-                                            <button type="button" data-profesor-profile data-student-name="pepe">
-
-                                                <span class="icono-ver">
-                                                    ●
-                                                </span>
-
-                                                Ver perfil
-
-                                            </button>
-
-
-                                            <button type="button" data-profesor-profile data-student-name="pepe">
-
-                                                <span class="icono-evaluacion">
-                                                    ◆
-                                                </span>
-
-                                                Dar evaluación
-
-                                            </button>
-
-                                        </div>
-
-                                    </td>
-
+                                    <td colspan="5" class="text-center">Cargando alumnos…</td>
                                 </tr>
-
-
-                                <tr>
-
-                                    <td>papa</td>
-                                    <td>987 654 321</td>
-                                    <td>0/10</td>
-                                    <td class="nota">
-                                        <span class="nota-texto">
-                                            Algo algo algo
-                                        </span>
-                                        <button type="button" class="leer-mas">
-                                            leer más
-                                        </button>
-                                    </td>
-
-                                    <td class="acciones">
-
-                                        <button
-                                            type="button"
-                                            class="action-button"
-                                        >
-                                            ⋮
-                                        </button>
-
-
-                                        <div class="action-menu">
-
-                                            <button type="button" data-profesor-profile data-student-name="papa">
-
-                                                <span class="icono-ver">
-                                                    ●
-                                                </span>
-
-                                                Ver perfil
-
-                                            </button>
-
-
-                                            <button type="button" data-profesor-profile data-student-name="papa">
-
-                                                <span class="icono-evaluacion">
-                                                    ◆
-                                                </span>
-
-                                                Dar evaluación
-
-                                            </button>
-
-                                        </div>
-
-                                    </td>
-
-                                </tr>
-
                             </tbody>
 
                         </table>

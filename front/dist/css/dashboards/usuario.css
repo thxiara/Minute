@@ -362,6 +362,13 @@
     margin-top: 5px;
 }
 
+.class-description {
+    display: block;
+    margin-top: 4px;
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+}
+
 .class-notice {
     display: block;
     margin-top: 8px;

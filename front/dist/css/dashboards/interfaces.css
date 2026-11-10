@@ -394,6 +394,15 @@ body.interface-page .logo a {
     width: 100px;
 }
 
+.evaluation-form {
+    flex-wrap: wrap;
+}
+
+.evaluation-form textarea {
+    flex: 1 1 100%;
+    order: 1;
+}
+
 .exercise-library-list,
 .exercise-selection-list {
     display: grid;

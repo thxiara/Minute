@@ -72,7 +72,7 @@
                         <div class="row g-3">
                             <div class="col-md-5">
                                 <label class="form-label" for="newClassName">Nombre</label>
-                                <input class="form-control" id="newClassName" name="name" maxlength="60" required>
+                                <input class="form-control" id="newClassName" name="name" maxlength="30" required>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label" for="newClassTime">Horario</label>
@@ -81,9 +81,12 @@
                             <div class="col-md-4">
                                 <label class="form-label" for="newClassTeacher">Profesor</label>
                                 <select class="form-select" id="newClassTeacher" name="teacherId" required>
-                                    <option value="profesor-demo">Profesor</option>
-                                    <option value="profesor-2">pepito</option>
+                                    <option value="" selected disabled>Cargando profesores…</option>
                                 </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="newClassDesc">Descripción (opcional)</label>
+                                <input class="form-control" id="newClassDesc" name="desc" maxlength="500">
                             </div>
                         </div>
                         <fieldset class="mt-4">

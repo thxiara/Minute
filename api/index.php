@@ -5,6 +5,27 @@ ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 error_reporting(E_ALL);
 
+#Si algo falla sin que nadie lo atrape (ej. a la base le falta una columna porque no se corrió
+#la migración), se responde un JSON con el error en vez de una respuesta vacía.
+set_exception_handler(function (Throwable $e) {
+    error_log('Error no controlado: ' . $e->getMessage());
+    while (ob_get_level() > 0) {
+        ob_end_clean();
+    }
+    http_response_code(500);
+    header('Content-Type: application/json; charset=UTF-8');
+    $faltaMigracion = $e instanceof PDOException && in_array($e->getCode(), ['42S22', '42S02'], true);
+    echo json_encode([
+        'success' => false,
+        'message' => $faltaMigracion
+            ? 'La base de datos está desactualizada: recreá la base con api/config/init.sql.'
+            : 'Error interno del servidor.',
+    ]);
+});
+
+#Las fechas ("hoy", vencimientos, etc.) se calculan con la hora de Uruguay
+date_default_timezone_set('America/Montevideo');
+
 #Se activa el buffer de salida para que este guarde todos los datos que se van a mandar al usuario, que estos puedan ser gestionados antes de su envio, y que el envio tenga que ser especificamente habilitado con una instrucción en el código
 ob_start(); 
 
@@ -70,6 +91,20 @@ try {
     exit;
 }
 
+
+#Si hay sesión, se confirma que el usuario siga activo y se refresca su rol
+#(así, si el admin lo da de baja, pierde el acceso en el siguiente pedido)
+if (!empty($_SESSION['client_id'])) {
+    $stmt = $db->prepare('SELECT fr_role FROM Client WHERE id_client = :id AND active_client = 1');
+    $stmt->execute(['id' => $_SESSION['client_id']]);
+    $rolActual = $stmt->fetchColumn();
+    if ($rolActual === false) {
+        $_SESSION = [];
+        session_destroy();
+    } else {
+        $_SESSION['role_id'] = (int) $rolActual;
+    }
+}
 
 #Se instancia el router y se le pasa la conexión a la db, la cuál despues podrá pasar al controlador correspondiente a la ruta recibida
 $router = new \App\Utils\Router($db);

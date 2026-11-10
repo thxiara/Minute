@@ -2,336 +2,414 @@
 (() => {
 
 document.querySelectorAll(".action-button").forEach(button => {
-
     button.addEventListener("click", function(event) {
-
         event.stopPropagation();
-
         const menu = this.nextElementSibling;
-
         document.querySelectorAll(".action-menu").forEach(element => {
-
-            if (element !== menu) {
-
-                element.classList.remove("mostrar");
-
-            }
-
+            if (element !== menu) element.classList.remove("mostrar");
         });
-
         menu.classList.toggle("mostrar");
-
     });
-
 });
-
 
 document.addEventListener("click", function() {
-
     document.querySelectorAll(".action-menu").forEach(menu => {
-
         menu.classList.remove("mostrar");
-
     });
-
 });
-
 
 document.querySelectorAll(".boton-flecha").forEach(button => {
-
     button.addEventListener("click", function() {
-
         setTimeout(() => {
-
-            const expanded =
-                this.getAttribute("aria-expanded");
-
-            this.innerHTML =
-                expanded === "true" ? "V" : "&lt;";
-
+            const expanded = this.getAttribute("aria-expanded");
+            this.innerHTML = expanded === "true" ? "V" : "&lt;";
         }, 50);
-
     });
-
 });
 })();
 
-// Almacenamiento clases.
+// Utilidades compartidas por las secciones de abajo.
+const AdminUtil = {
+    dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+
+    formatDays(days) {
+        return days.map(day => this.dayNames[day]).join(", ");
+    },
+
+    // "2026-11-10" o "2026-11-10 03:00:00" → "10/11/2026"
+    formatDate(value) {
+        if (!value) return "—";
+        const [year, month, day] = String(value).slice(0, 10).split("-");
+        return day ? `${day}/${month}/${year}` : String(value);
+    },
+
+    setFeedback(element, text, isError = false) {
+        if (!element) return;
+        element.textContent = text;
+        element.classList.toggle("is-error", isError);
+        element.hidden = !text;
+    }
+};
+
+// Administrar clases (crear, listar, eliminar).
 (() => {
-(() => {
-    const storageKey = "fitpowerClassData";
-    const seed = {
-        classes: [
-            { id: "zumba", name: "Zumba", days: [1], time: "18:00", teacherId: "profesor-demo", studentNames: ["pepe", "papa", "miau"] },
-            { id: "yoga", name: "Yoga", days: [2], time: "19:00", teacherId: "profesor-demo", studentNames: ["papa", "parapapapa"] },
-            { id: "pilates", name: "Pilates", days: [4], time: "17:30", teacherId: "profesor-demo", studentNames: ["pepe", "miau"] }
-        ],
-        attendance: {},
-        notes: {},
-        cancellations: [],
-        evaluations: {}
-    };
-
-    function load() {
-        const stored = localStorage.getItem(storageKey);
-        if (!stored) return structuredClone(seed);
-
-        try {
-            const data = JSON.parse(stored);
-            if (!data || !Array.isArray(data.classes)) throw new TypeError("Error.");
-            return {
-                classes: data.classes,
-                attendance: data.attendance || {},
-                notes: data.notes || {},
-                cancellations: Array.isArray(data.cancellations) ? data.cancellations : [],
-                evaluations: data.evaluations || {}
-            };
-        } catch {
-            return structuredClone(seed);
-        }
-    }
-
-    function save(data) {
-        localStorage.setItem(storageKey, JSON.stringify(data));
-    }
-
-    function formatDays(days) {
-        const names = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-        return days.map(day => names[day]).join(", ");
-    }
-
-    function formatDate(date) {
-        return new Intl.DateTimeFormat("es-UY", {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-            year: "numeric"
-        }).format(date);
-    }
-
-    window.FitPowerClassData = { load, save, formatDays, formatDate };
-})();
-})();
-
-//  listado  clases.
-(() => {
-if (document.getElementById("createClassForm")) {
-const classState = window.FitPowerClassData.load();
 const classForm = document.getElementById("createClassForm");
+if (!classForm) return;
+
 const classList = document.getElementById("managedClasses");
 const emptyMessage = document.getElementById("managedClassesEmpty");
+const feedback = document.getElementById("createClassFeedback");
+const teacherSelect = document.getElementById("newClassTeacher");
 
-function renderManagedClasses() {
+function renderManagedClasses(classes) {
     classList.replaceChildren();
-    classState.classes.forEach((session) => {
+    classes.forEach((session) => {
         const card = document.createElement("article");
         card.className = "schedule-card";
 
         const details = document.createElement("div");
         const title = document.createElement("h3");
-        title.textContent = session.name;
+        title.textContent = session.name_course;
         const schedule = document.createElement("p");
-        schedule.textContent = `${window.FitPowerClassData.formatDays(session.days)} · ${session.time}`;
+        schedule.textContent = `${AdminUtil.formatDays(session.days)} · ${session.time}`;
         details.append(title, schedule);
+        if (session.desc_course) {
+            const description = document.createElement("p");
+            description.textContent = session.desc_course;
+            details.append(description);
+        }
 
-        const teacher = document.createElement("span");
-        teacher.className = "schedule-meta";
-        teacher.textContent = session.teacherId === "profesor-2" ? "pepito" : "Profesor";
-        card.append(details, teacher);
+        const meta = document.createElement("span");
+        meta.className = "schedule-meta";
+        const alumnos = session.student_count === 1 ? "1 alumno" : `${session.student_count} alumnos`;
+        meta.textContent = `${session.teacher_name} · ${alumnos}`;
+
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.className = "interface-button-danger";
+        deleteButton.dataset.deleteClass = String(session.id_course);
+        deleteButton.dataset.className = session.name_course;
+        deleteButton.textContent = "Eliminar";
+
+        // La tarjeta es una grilla de dos columnas: datos a la izquierda, meta + botón a la derecha.
+        const side = document.createElement("div");
+        side.className = "d-flex flex-column align-items-end gap-2";
+        side.append(meta, deleteButton);
+        card.append(details, side);
         classList.append(card);
     });
-    emptyMessage.hidden = classState.classes.length > 0;
+    emptyMessage.hidden = classes.length > 0;
 }
 
-classForm.addEventListener("submit", (event) => {
+async function loadClasses() {
+    const data = await API.request("/clases");
+    if (!data?.success) {
+        AdminUtil.setFeedback(feedback, data?.message || "No se pudieron cargar las clases.", true);
+        return;
+    }
+    renderManagedClasses(data.clases);
+}
+
+async function loadTeachers() {
+    const data = await API.request("/profesores");
+    teacherSelect.replaceChildren();
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    placeholder.textContent = data?.success && data.profesores.length ? "Selecciona un profesor" : "No hay profesores registrados";
+    teacherSelect.append(placeholder);
+
+    (data?.profesores || []).forEach((teacher) => {
+        const option = document.createElement("option");
+        option.value = String(teacher.id_client);
+        option.textContent = teacher.name_client;
+        teacherSelect.append(option);
+    });
+}
+
+classForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!classForm.reportValidity()) return;
 
     const formData = new FormData(classForm);
     const days = formData.getAll("days").map(Number);
-    const feedback = document.getElementById("createClassFeedback");
     if (!days.length) {
-        feedback.textContent = "Selecciona al menos un día.";
-        feedback.classList.add("is-error");
+        AdminUtil.setFeedback(feedback, "Selecciona al menos un día.", true);
         return;
     }
 
-    const id = `clase-${Date.now().toString(36)}`;
-    classState.classes.push({
-        id,
+    const data = await API.request("/clases", "POST", {
         name: String(formData.get("name")).trim(),
+        desc: String(formData.get("desc") || "").trim(),
         days,
         time: String(formData.get("time")),
-        teacherId: String(formData.get("teacherId")),
-        studentNames: []
+        teacher_id: Number(formData.get("teacherId"))
     });
-
-    try {
-        window.FitPowerClassData.save(classState);
-        renderManagedClasses();
-        feedback.classList.remove("is-error");
-        feedback.textContent = "Clase creada.";
-        classForm.reset();
-    } catch {
-        feedback.classList.add("is-error");
-        feedback.textContent = "No se pudo crear la clase.";
+    if (!data?.success) {
+        AdminUtil.setFeedback(feedback, data?.message || "No se pudo crear la clase.", true);
+        return;
     }
+    AdminUtil.setFeedback(feedback, "Clase creada.");
+    classForm.reset();
+    loadClasses();
 });
 
-renderManagedClasses();
+classList.addEventListener("click", async (event) => {
+    const button = event.target.closest("[data-delete-class]");
+    if (!button) return;
+    if (!window.confirm(`¿Eliminar la clase "${button.dataset.className}"? También se borran sus alumnos y su asistencia.`)) return;
 
-}
+    const data = await API.request(`/clases/${button.dataset.deleteClass}`, "DELETE");
+    AdminUtil.setFeedback(feedback, data?.message || "No se pudo eliminar la clase.", !data?.success);
+    if (data?.success) loadClasses();
+});
+
+loadTeachers();
+loadClasses();
 })();
 
-// Perfil socio
-(() => {
-const classState = window.FitPowerClassData.load();
-let activeMemberName = "el socio";
+// Asignar clases a un socio (modal que está en el listado de socios y en su perfil).
+const AdminClassAssignment = (() => {
+const modal = document.getElementById("assignMemberClassesModal");
+const form = document.getElementById("assignMemberClassesForm");
+if (!modal || !form) return null;
 
-function normalizedName(name) {
-    return name.trim().toLocaleLowerCase("es");
-}
+const options = document.getElementById("memberClassOptions");
+const memberLabel = document.getElementById("assignClassesMember");
+const feedback = document.getElementById("memberClassFeedback");
+const submit = form.querySelector('[type="submit"]');
+let activeMemberId = null;
+let onSaved = () => {};
 
-function renderMemberClasses(memberName) {
-    const list = document.getElementById("memberAssignedClasses");
-    if (!list) return;
-
-    list.replaceChildren();
-    const classes = classState.classes.filter(session => session.studentNames.includes(normalizedName(memberName)));
-    if (!classes.length) {
-        const empty = document.createElement("li");
-        empty.textContent = "No tiene clases asignadas";
-        list.append(empty);
-        return;
-    }
-
-    classes.forEach((session) => {
-        const item = document.createElement("li");
-        const name = document.createElement("strong");
-        name.textContent = session.name;
-        const schedule = document.createElement("span");
-        schedule.textContent = `${window.FitPowerClassData.formatDays(session.days)} · ${session.time}`;
-        item.append(name, schedule);
-        list.append(item);
-    });
-}
-
-function openClassAssignment(memberName) {
-    const modal = document.getElementById("assignMemberClassesModal");
-    const options = document.getElementById("memberClassOptions");
-    const memberLabel = document.getElementById("assignClassesMember");
-    const form = document.getElementById("assignMemberClassesForm");
-    const feedback = document.getElementById("memberClassFeedback");
-    if (!modal || !options || !window.bootstrap?.Modal) {
-        return;
-    }
-
-    activeMemberName = memberName;
-    memberLabel.textContent = memberName;
+async function open(memberId, memberName) {
+    activeMemberId = memberId;
+    memberLabel.textContent = memberName || "el socio";
     options.replaceChildren();
-    form.reset();
-    feedback.hidden = true;
-    feedback.textContent = "";
+    AdminUtil.setFeedback(feedback, "Cargando clases…");
+    submit.disabled = true;
+    bootstrap.Modal.getOrCreateInstance(modal).show();
 
-    classState.classes.forEach((session) => {
+    const [allData, memberData] = await Promise.all([
+        API.request("/clases"),
+        API.request(`/socios/${encodeURIComponent(memberId)}/clases`)
+    ]);
+    if (!allData?.success || !memberData?.success) {
+        AdminUtil.setFeedback(feedback, (allData?.success ? memberData : allData)?.message || "No se pudieron cargar las clases.", true);
+        return;
+    }
+
+    const assigned = new Set(memberData.clases.map(session => session.id_course));
+    allData.clases.forEach((session) => {
         const label = document.createElement("label");
         label.className = "class-assignment-option";
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.name = "classIds";
-        checkbox.value = session.id;
-        checkbox.checked = session.studentNames.includes(normalizedName(memberName));
+        checkbox.value = String(session.id_course);
+        checkbox.checked = assigned.has(session.id_course);
         const description = document.createElement("span");
-        description.textContent = `${session.name} · ${window.FitPowerClassData.formatDays(session.days)} · ${session.time}`;
+        description.textContent = `${session.name_course} · ${AdminUtil.formatDays(session.days)} · ${session.time}`;
         label.append(checkbox, description);
         options.append(label);
     });
 
-    if (!classState.classes.length) {
+    if (!allData.clases.length) {
         options.textContent = "Primero crea una clase para poder asignarla.";
     }
-    bootstrap.Modal.getOrCreateInstance(modal).show();
+    AdminUtil.setFeedback(feedback, "");
+    submit.disabled = allData.clases.length === 0;
 }
 
+form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const clases = new FormData(form).getAll("classIds").map(Number);
+    submit.disabled = true;
+    const data = await API.request(`/socios/${encodeURIComponent(activeMemberId)}/clases`, "PUT", { clases });
+    submit.disabled = false;
+    if (!data?.success) {
+        AdminUtil.setFeedback(feedback, data?.message || "No se pudieron guardar las clases asignadas.", true);
+        return;
+    }
+    AdminUtil.setFeedback(feedback, "Clases asignadas al socio.");
+    onSaved(activeMemberId);
+});
+
+return {
+    open,
+    onSaved(callback) { onSaved = callback; }
+};
+})();
+
+// Perfil de socio (/dash/admin/perfil?id=...)
+(() => {
+const profileId = new URLSearchParams(window.location.search).get("id");
+if (!profileId || !document.getElementById("profileName")) return;
+
+const assignedList = document.getElementById("memberAssignedClasses");
+const statusButton = document.getElementById("toggleActiveButton");
+const profileFeedback = document.getElementById("profileFeedback");
+let profileData = null;
+
+function showProfile(usuario) {
+    profileData = usuario;
+    const values = {
+        Name: usuario.name_client,
+        Since: usuario.created_client ? `Registrado el ${AdminUtil.formatDate(usuario.created_client)}` : "—",
+        Document: usuario.ci,
+        Phone: usuario.phone,
+        Email: usuario.email,
+        Birth: usuario.birth_client ? AdminUtil.formatDate(usuario.birth_client) : "—",
+        Status: usuario.active_client ? "Activo" : "Dado de baja",
+        Plan: usuario.membership_name,
+        Expiration: usuario.expiry_date ? AdminUtil.formatDate(usuario.expiry_date) : null
+    };
+    Object.entries(values).forEach(([field, value]) => {
+        const element = document.getElementById(`profile${field}`);
+        if (element) element.textContent = value ? String(value) : "—";
+    });
+
+    const photo = document.getElementById("profilePhoto");
+    if (photo && usuario.has_photo) photo.src = `/api/usuarios/${usuario.id_client}/foto?v=${Date.now()}`;
+
+    if (statusButton) {
+        statusButton.textContent = usuario.active_client ? "Dar de baja" : "Reactivar";
+        statusButton.className = usuario.active_client ? "interface-button-danger" : "interface-button";
+    }
+    document.querySelectorAll("[data-open-class-assign]").forEach((trigger) => {
+        trigger.dataset.memberName = usuario.name_client;
+        trigger.dataset.memberId = String(usuario.id_client);
+    });
+}
+
+async function loadMemberClasses() {
+    if (!assignedList) return;
+    const data = await API.request(`/socios/${encodeURIComponent(profileId)}/clases`);
+    assignedList.replaceChildren();
+    const classes = data?.success ? data.clases : [];
+    if (!classes.length) {
+        const empty = document.createElement("li");
+        empty.textContent = data?.success ? "No tiene clases asignadas" : (data?.message || "No se pudieron cargar las clases.");
+        assignedList.append(empty);
+        return;
+    }
+    classes.forEach((session) => {
+        const item = document.createElement("li");
+        const name = document.createElement("strong");
+        name.textContent = session.name_course;
+        const schedule = document.createElement("span");
+        schedule.textContent = `${AdminUtil.formatDays(session.days)} · ${session.time} · ${session.teacher_name}`;
+        item.append(name, schedule);
+        assignedList.append(item);
+    });
+}
+
+API.request(`/usuarios/${encodeURIComponent(profileId)}`).then((data) => {
+    if (!data?.success || !data.usuario) {
+        document.getElementById("profileName").textContent = data?.message || "No se pudo cargar el usuario.";
+        return;
+    }
+    showProfile(data.usuario);
+    loadMemberClasses();
+});
+
+AdminClassAssignment?.onSaved(loadMemberClasses);
+
+// Dar de baja / reactivar.
+statusButton?.addEventListener("click", async () => {
+    if (!profileData) return;
+    const activo = profileData.active_client;
+    if (activo && !window.confirm(`¿Dar de baja a ${profileData.name_client}? No va a poder iniciar sesión.`)) return;
+
+    const data = activo
+        ? await API.request(`/usuarios/${profileData.id_client}`, "DELETE")
+        : await API.request(`/usuarios/${profileData.id_client}/reactivar`, "POST");
+    AdminUtil.setFeedback(profileFeedback, data?.message || "No se pudo completar la acción.", !data?.success);
+    if (data?.success) showProfile({ ...profileData, active_client: !activo });
+});
+
+// Renovar membresía.
+const renewForm = document.getElementById("renewMembershipForm");
+if (renewForm) {
+    const renewSelect = document.getElementById("renewMembershipPlan");
+    const renewFeedback = document.getElementById("renewMembershipFeedback");
+
+    API.request("/membresias").then((data) => {
+        (data?.membresias || []).forEach((plan) => {
+            const option = document.createElement("option");
+            option.value = String(plan.id_membership);
+            option.textContent = plan.name_membership;
+            renewSelect.append(option);
+        });
+    });
+
+    renewForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        if (!renewForm.reportValidity()) return;
+        const data = await API.request(`/usuarios/${encodeURIComponent(profileId)}/membresia`, "POST", {
+            membership: Number(renewSelect.value)
+        });
+        AdminUtil.setFeedback(renewFeedback, data?.message || "No se pudo renovar.", !data?.success);
+        if (data?.success) showProfile(data.usuario);
+    });
+}
+
+// Editar los datos del usuario (PUT /api/usuarios/:id).
+const editUserForm = document.getElementById("editUserForm");
+const editUserButton = document.getElementById("editUserButton");
+if (editUserForm && editUserButton) {
+    const editModal = document.getElementById("editUserModal");
+    const feedback = document.getElementById("editUserFeedback");
+
+    editUserButton.addEventListener("click", () => {
+        if (!profileData) return;
+        editUserForm.nombre.value = profileData.name_client || "";
+        editUserForm.ci.value = profileData.ci || "";
+        editUserForm.telefono.value = profileData.phone || "";
+        editUserForm.email.value = profileData.email || "";
+        editUserForm.contrasena.value = "";
+        AdminUtil.setFeedback(feedback, "");
+        bootstrap.Modal.getOrCreateInstance(editModal).show();
+    });
+
+    editUserForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        if (!editUserForm.reportValidity()) return;
+
+        const submit = editUserForm.querySelector("[type=submit]");
+        submit.disabled = true;
+        const data = await API.request(`/usuarios/${encodeURIComponent(profileId)}`, "PUT", {
+            name: editUserForm.nombre.value,
+            ci: editUserForm.ci.value,
+            phone: editUserForm.telefono.value,
+            email: editUserForm.email.value,
+            password: editUserForm.contrasena.value
+        });
+        submit.disabled = false;
+
+        if (!data?.success) {
+            AdminUtil.setFeedback(feedback, data?.message || "No se pudo guardar.", true);
+            return;
+        }
+        showProfile(data.usuario);
+        bootstrap.Modal.getOrCreateInstance(editModal).hide();
+    });
+}
+})();
+
+// Botones del menú de cada socio y del perfil.
 document.addEventListener("click", (event) => {
     const profileTrigger = event.target.closest("[data-admin-profile]");
     if (profileTrigger) {
-        const memberName = profileTrigger.dataset.memberName || "";
-        window.location.href = `/dash/admin/perfil?name=${encodeURIComponent(memberName)}`;
+        window.location.href = `/dash/admin/perfil?id=${encodeURIComponent(profileTrigger.dataset.memberId || "")}`;
         return;
     }
 
     const classTrigger = event.target.closest("[data-open-class-assign]");
-    if (classTrigger) {
-        openClassAssignment(classTrigger.dataset.memberName || "el socio");
-        return;
+    if (classTrigger && classTrigger.dataset.memberId) {
+        AdminClassAssignment?.open(classTrigger.dataset.memberId, classTrigger.dataset.memberName);
     }
-
 });
-
-const profileName = new URLSearchParams(window.location.search).get("name");
-if (profileName) {
-    const profileNameElement = document.getElementById("profileName");
-    document.querySelectorAll("[data-open-class-assign]").forEach((trigger) => {
-        trigger.dataset.memberName = profileName;
-    });
-    if (profileNameElement) profileNameElement.textContent = profileName;
-
-    API.request("/socios").then((data) => {
-        if (!data?.success || !Array.isArray(data.socios)) return;
-
-        const profile = data.socios.find((socio) =>
-            normalizedName(String(socio.name_client || "")) === normalizedName(profileName)
-        );
-        if (!profile) return;
-
-        const values = {
-            Document: profile.ci,
-            Phone: profile.phone,
-            Email: profile.email,
-            Expiration: profile.expiry_date
-        };
-        Object.entries(values).forEach(([field, value]) => {
-            const element = document.getElementById(`profile${field}`);
-            if (!element || !value) return;
-
-            const text = field === "Expiration"
-                ? String(value).split("-").reverse().join("/")
-                : String(value);
-            element.textContent = text;
-        });
-    });
-}
-
-const memberForProfile = profileName || document.querySelector("[data-open-class-assign]")?.dataset.memberName || "el socio";
-renderMemberClasses(memberForProfile);
-
-const assignClassesForm = document.getElementById("assignMemberClassesForm");
-if (assignClassesForm) {
-    assignClassesForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const selectedIds = new Set(new FormData(assignClassesForm).getAll("classIds").map(String));
-        const memberId = normalizedName(activeMemberName);
-        classState.classes.forEach((session) => {
-            session.studentNames = session.studentNames.filter(name => name !== memberId);
-            if (selectedIds.has(session.id)) session.studentNames.push(memberId);
-        });
-
-        const feedback = document.getElementById("memberClassFeedback");
-        try {
-            window.FitPowerClassData.save(classState);
-            renderMemberClasses(activeMemberName);
-            feedback.classList.remove("is-error");
-            feedback.textContent = "Clases asignadas al socio.";
-            feedback.hidden = false;
-        } catch {
-            feedback.classList.add("is-error");
-            feedback.textContent = "No se pudieron guardar las clases asignadas.";
-            feedback.hidden = false;
-        }
-    });
-}
-})();
 
 // Listado de socios
 (() => {
@@ -339,13 +417,9 @@ const tbody = document.getElementById("sociosTableBody");
 if (!tbody) return;
 
 const countEl = document.getElementById("sociosCount");
-
-const formatearVencimiento = (fecha) => {
-    if (!fecha) return "—";
-    const partes = String(fecha).split("-");
-    if (partes.length !== 3) return String(fecha);
-    return `${partes[2]}/${partes[1]}/${partes[0]}`;
-};
+const verBajasBtn = document.getElementById("verBajas");
+let verBajas = false;
+const titleEl = document.getElementById("sociosTitle");
 
 const mostrarMensaje = (texto) => {
     tbody.replaceChildren();
@@ -358,11 +432,12 @@ const mostrarMensaje = (texto) => {
     tbody.append(fila);
 };
 
-const crearBotonMenu = (texto, icono, atributo, nombreSocio) => {
+const crearBotonMenu = (texto, icono, atributo, socio) => {
     const boton = document.createElement("button");
     boton.type = "button";
     boton.setAttribute(atributo, "");
-    boton.dataset.memberName = nombreSocio;
+    boton.dataset.memberName = socio.name_client || "";
+    boton.dataset.memberId = String(socio.id_client);
 
     const span = document.createElement("span");
     span.className = "icono-ver";
@@ -378,7 +453,7 @@ const crearFila = (socio) => {
         socio.name_client || "—",
         socio.ci || "—",
         socio.phone || "—",
-        formatearVencimiento(socio.expiry_date)
+        AdminUtil.formatDate(socio.expiry_date)
     ];
 
     valores.forEach((valor) => {
@@ -408,17 +483,25 @@ const crearFila = (socio) => {
         menu.classList.toggle("mostrar");
     });
 
-    const nombreSocio = socio.name_client || "";
-    menu.append(
-        crearBotonMenu("Ver/editar perfil", "●", "data-admin-profile", nombreSocio),
-        crearBotonMenu("Asignar clases", "▣", "data-open-class-assign", nombreSocio)
-    );
+    menu.append(crearBotonMenu("Ver/editar perfil", "●", "data-admin-profile", socio));
+    if (!verBajas) menu.append(crearBotonMenu("Asignar clases", "▣", "data-open-class-assign", socio));
 
     const darDeBaja = document.createElement("button");
     darDeBaja.type = "button";
     darDeBaja.className = "delete";
-    darDeBaja.innerHTML = "<span>⊗</span> Dar de baja";
-    menu.append(darDeBaja);
+    const icono = document.createElement("span");
+    icono.textContent = "⊗";
+    darDeBaja.append(icono, " Dar de baja");
+    darDeBaja.addEventListener("click", async () => {
+        if (!window.confirm(`¿Dar de baja a ${socio.name_client}? No va a poder iniciar sesión.`)) return;
+        const data = await API.request(`/usuarios/${socio.id_client}`, "DELETE");
+        if (!data?.success) {
+            window.alert(data?.message || "No se pudo dar de baja al socio.");
+            return;
+        }
+        cargarSocios();
+    });
+    if (!verBajas) menu.append(darDeBaja);
 
     acciones.append(botonAcciones, menu);
     fila.append(acciones);
@@ -427,7 +510,10 @@ const crearFila = (socio) => {
 };
 
 const cargarSocios = async () => {
-    const data = await API.request("/socios");
+    const bajas = verBajas;
+    if (verBajasBtn) verBajasBtn.textContent = bajas ? "Volver a socios activos" : "Ver socios dados de baja";
+    if (titleEl) titleEl.textContent = bajas ? "Socios dados de baja" : "Socios Activos";
+    const data = await API.request(bajas ? "/socios?bajas=1" : "/socios");
 
     if (!data || !data.success) {
         mostrarMensaje((data && data.message) || "No se pudieron cargar los socios.");
@@ -439,7 +525,7 @@ const cargarSocios = async () => {
     if (countEl) countEl.textContent = String(data.total ?? socios.length);
 
     if (!socios.length) {
-        mostrarMensaje("No hay socios registrados.");
+        mostrarMensaje(bajas ? "No hay socios dados de baja." : "No hay socios registrados.");
         return;
     }
 
@@ -447,79 +533,103 @@ const cargarSocios = async () => {
     socios.forEach((socio) => tbody.append(crearFila(socio)));
 };
 
+verBajasBtn?.addEventListener("click", () => {
+    verBajas = !verBajas;
+    cargarSocios();
+});
 cargarSocios();
 })();
 
 // Registro
 (() => {
-if (document.getElementById("registrarSocioForm")) {
-const registrarSocioForm = document.getElementById('registrarSocioForm');
+const registrarSocioForm = document.getElementById("registrarSocioForm");
+if (!registrarSocioForm) return;
 
-    // Debe coincidir con los id_role insertados en Role (api/config/init.sql).
-    const ROLE_IDS = {
-        admin: 1,
-        entrenador: 2,
-        profesor: 3,
-        socio: 4
-    };
+// Debe coincidir con los id_role insertados en Role (api/config/init.sql).
+const ROLE_IDS = {
+    admin: 1,
+    entrenador: 2,
+    profesor: 3,
+    socio: 4
+};
 
-    // La membresía (plan) solo aplica a los socios: para entrenadores y profesores
-    // el campo se oculta y no se exige.
-    const campoPlan = document.getElementById('campoPlan');
+// La membresía (plan) solo aplica a los socios: para entrenadores y profesores
+// el campo se oculta y no se exige.
+const campoPlan = document.getElementById("campoPlan");
+const planSelect = registrarSocioForm.plan;
 
-    const actualizarCampoPlan = () => {
-        const esSocio = registrarSocioForm.tipo.value === 'socio';
-        campoPlan.hidden = !esSocio;
-        if (!esSocio) {
-            registrarSocioForm.plan.value = '';
-        }
-    };
-
-    registrarSocioForm.tipo.addEventListener('change', actualizarCampoPlan);
-    // 'reset' se dispara antes de que el formulario vuelva a sus valores iniciales.
-    registrarSocioForm.addEventListener('reset', () => setTimeout(actualizarCampoPlan, 0));
-
-    registrarSocioForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const alertContainer = document.getElementById('alertContainer');
-
-        const tipoSeleccionado = this.tipo.value;
-        if (!tipoSeleccionado) {
-            alertContainer.innerHTML = `<div class="alert alert-danger">Seleccioná un tipo de usuario.</div>`;
-            return;
-        }
-
-        if (tipoSeleccionado === 'socio' && !this.plan.value) {
-            alertContainer.innerHTML = `<div class="alert alert-danger">Seleccioná el plan de membresía del socio.</div>`;
-            return;
-        }
-
-        const datos = {
-            name: this.nombre.value,
-            ci: this.ci.value,
-            phone: this.telefono.value,
-            email: this.email.value,
-            password: this.contrasena.value,
-            // El formulario de socios pide una sola contraseña; se reutiliza
-            // el mismo valor para cumplir la confirmación que exige la API.
-            confirm_password: this.contrasena.value,
-            role: ROLE_IDS[tipoSeleccionado]
-        };
-
-        API.request('/register', 'POST', datos).then((data) => {
-            if (data.success) {
-                alertContainer.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
-                registrarSocioForm.reset();
-            } else {
-                alertContainer.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
-            }
-        });
+// Los planes salen de la base (tabla Membership).
+API.request("/membresias").then((data) => {
+    if (!data?.success) return;
+    planSelect.querySelectorAll("option:not([value=''])").forEach(option => option.remove());
+    data.membresias.forEach((plan) => {
+        const option = document.createElement("option");
+        option.value = String(plan.id_membership);
+        option.textContent = plan.name_membership;
+        planSelect.append(option);
     });
+});
 
-    const btnCancelar = registrarSocioForm.querySelector('.btn-cancelar');
-    if (btnCancelar) {
-        btnCancelar.addEventListener('click', () => registrarSocioForm.reset());
+const actualizarCampoPlan = () => {
+    const esSocio = registrarSocioForm.tipo.value === "socio";
+    campoPlan.hidden = !esSocio;
+    if (!esSocio) {
+        planSelect.value = "";
     }
+};
+
+registrarSocioForm.tipo.addEventListener("change", actualizarCampoPlan);
+// 'reset' se dispara antes de que el formulario vuelva a sus valores iniciales.
+registrarSocioForm.addEventListener("reset", () => setTimeout(actualizarCampoPlan, 0));
+
+const mostrarAlerta = (texto, tipo) => {
+    const alertContainer = document.getElementById("alertContainer");
+    const alerta = document.createElement("div");
+    alerta.className = `alert alert-${tipo}`;
+    alerta.textContent = texto;
+    alertContainer.replaceChildren(alerta);
+};
+
+registrarSocioForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const tipoSeleccionado = this.tipo.value;
+    if (!tipoSeleccionado) {
+        mostrarAlerta("Seleccioná un tipo de usuario.", "danger");
+        return;
+    }
+
+    if (tipoSeleccionado === "socio" && !planSelect.value) {
+        mostrarAlerta("Seleccioná el plan de membresía del socio.", "danger");
+        return;
+    }
+
+    const datos = {
+        name: this.nombre.value,
+        ci: this.ci.value,
+        phone: this.telefono.value,
+        email: this.email.value,
+        birth: this.fecha.value,
+        password: this.contrasena.value,
+        // El formulario pide una sola contraseña; se reutiliza
+        // el mismo valor para cumplir la confirmación que exige la API.
+        confirm_password: this.contrasena.value,
+        role: ROLE_IDS[tipoSeleccionado],
+        membership: tipoSeleccionado === "socio" ? Number(planSelect.value) : null
+    };
+
+    API.request("/register", "POST", datos).then((data) => {
+        if (data.success) {
+            mostrarAlerta(data.message, "success");
+            registrarSocioForm.reset();
+        } else {
+            mostrarAlerta(data.message || "No se pudo registrar.", "danger");
+        }
+    });
+});
+
+const btnCancelar = registrarSocioForm.querySelector(".btn-cancelar");
+if (btnCancelar) {
+    btnCancelar.addEventListener("click", () => registrarSocioForm.reset());
 }
 })();

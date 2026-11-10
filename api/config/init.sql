@@ -29,13 +29,15 @@ CREATE TABLE IF NOT EXISTS `Product` (
     `stock`        INT NOT NULL DEFAULT 0,
     `price`        DECIMAL(10,2) NOT NULL,
     `category`      VARCHAR(40) NOT NULL,
-    `media_product` VARCHAR(255) NOT NULL
+    `media_product` VARCHAR(255) NOT NULL DEFAULT '',
+    `desc_product`  VARCHAR(240) NOT NULL DEFAULT ''
 );
 
 CREATE TABLE IF NOT EXISTS `Membership` (
     `id_membership`   INT AUTO_INCREMENT PRIMARY KEY,
     `name_membership` VARCHAR(40) NOT NULL,
-    `desc_membership` TEXT
+    `desc_membership` TEXT,
+    `months_membership` INT NOT NULL DEFAULT 1
 );
 
 CREATE TABLE IF NOT EXISTS `Client` (
@@ -45,6 +47,12 @@ CREATE TABLE IF NOT EXISTS `Client` (
     `phone`         VARCHAR(20) NOT NULL UNIQUE,
     `name_client`   VARCHAR(50) NOT NULL,
     `ci`           VARCHAR(20) NOT NULL UNIQUE,
+    `birth_client`  DATE NULL,
+    `created_client` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    -- FALSE = dado de baja: no puede iniciar sesión ni aparece en los listados.
+    `active_client` BOOLEAN NOT NULL DEFAULT TRUE,
+    `photo_client`  MEDIUMBLOB NULL,
+    `photo_type`    VARCHAR(30) NULL,
     CONSTRAINT `fk_client_credentials`
         FOREIGN KEY (`fr_credentials`) REFERENCES `Credentials`(`id_credentials`)
         ON DELETE CASCADE ON UPDATE CASCADE,
@@ -58,6 +66,9 @@ CREATE TABLE IF NOT EXISTS `Review` (
     `fr_client`   INT NOT NULL,
     `desc_review` VARCHAR(300),
     `rating`      DECIMAL(3,1) NOT NULL,
+    `updated_review` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    -- Una reseña por socio: si escribe otra, se modifica la que ya tenía.
+    UNIQUE KEY `uq_review_client` (`fr_client`),
     CONSTRAINT `fk_review_client`
         FOREIGN KEY (`fr_client`) REFERENCES `Client`(`id_client`)
         ON DELETE CASCADE ON UPDATE CASCADE
@@ -143,6 +154,9 @@ CREATE TABLE IF NOT EXISTS `Course` (
     `fr_teacher`  INT NOT NULL,
     `name_course` VARCHAR(30) NOT NULL,
     `desc_course` TEXT,
+    -- Días de la semana separados por coma (0 = domingo ... 6 = sábado), ej: "1,3,5".
+    `days_course` VARCHAR(20) NOT NULL DEFAULT '',
+    `time_course` TIME NOT NULL DEFAULT '00:00:00',
     CONSTRAINT `fk_course_teacher`
         FOREIGN KEY (`fr_teacher`) REFERENCES `Client`(`id_client`)
         ON DELETE CASCADE ON UPDATE CASCADE
@@ -168,6 +182,9 @@ CREATE TABLE IF NOT EXISTS `Lesson` (
     `name_lesson`  VARCHAR(50) NOT NULL,
     `desc_lesson`  TEXT,
     `date_lesson`  DATE NOT NULL,
+    -- Un encuentro por clase y por día. Se crea cuando el profesor deja una nota,
+    -- cancela o toma asistencia.
+    UNIQUE KEY `uq_lesson_date` (`fr_course`, `date_lesson`),
     CONSTRAINT `fk_lesson_course`
         FOREIGN KEY (`fr_course`) REFERENCES `Course`(`id_course`)
         ON DELETE CASCADE ON UPDATE CASCADE
@@ -190,8 +207,29 @@ CREATE TABLE IF NOT EXISTS `student_lesson` (
 );
 
 
+-- Nota (y evaluación de 0 a 10) que un entrenador o profesor deja sobre un socio.
+CREATE TABLE IF NOT EXISTS `member_note` (
+    `id_member_note` INT AUTO_INCREMENT PRIMARY KEY,
+    `fr_author` INT NOT NULL,
+    `fr_client` INT NOT NULL,
+    `score`     TINYINT NULL,
+    `note`      VARCHAR(300) NOT NULL DEFAULT '',
+    `updated_note` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY `uq_member_note` (`fr_author`, `fr_client`),
+    CONSTRAINT `fk_membernote_author`
+        FOREIGN KEY (`fr_author`) REFERENCES `Client`(`id_client`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_membernote_client`
+        FOREIGN KEY (`fr_client`) REFERENCES `Client`(`id_client`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
 
-INSERT INTO `Role` (`id_role`, `name_role`) VALUES
+INSERT IGNORE INTO `Membership` (`id_membership`, `name_membership`, `desc_membership`, `months_membership`) VALUES
+    (1, 'Básico', 'Acceso a sala de musculación.', 1),
+    (2, 'Pro', 'Sala de musculación y clases grupales.', 1),
+    (3, 'Premium', 'Todo incluido, con seguimiento personalizado.', 1);
+
+INSERT IGNORE INTO `Role` (`id_role`, `name_role`) VALUES
     (1, 'admin'),
     (2, 'entrenador'),
     (3, 'profesor'),

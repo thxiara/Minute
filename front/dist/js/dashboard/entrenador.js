@@ -58,34 +58,6 @@ document.querySelectorAll(".boton-flecha").forEach(button => {
 });
 })();
 
-// Notas privadas del entrenador.
-// Siguen guardándose en este navegador: la base de datos todavía no tiene dónde guardarlas.
-(() => {
-    const storageKey = "fitpowerTrainerNotes";
-
-    function load() {
-        try {
-            const data = JSON.parse(localStorage.getItem(storageKey) || "{}");
-            return data && typeof data === "object" ? data : {};
-        } catch {
-            return {};
-        }
-    }
-
-    function get(memberId) {
-        return load()[memberId] || "";
-    }
-
-    function set(memberId, note) {
-        const notes = load();
-        if (note) notes[memberId] = note;
-        else delete notes[memberId];
-        localStorage.setItem(storageKey, JSON.stringify(notes));
-    }
-
-    window.FitPowerTrainerNotes = { get, set };
-})();
-
 // Socios: listado real y asignación de rutinas y notas.
 (() => {
 if (document.getElementById("trainerMemberForm")) {
@@ -137,7 +109,7 @@ function createMemberRow(member) {
     const noteText = document.createElement("span");
     noteText.className = "nota-texto";
     noteText.dataset.trainerNote = String(member.id_client);
-    noteText.textContent = window.FitPowerTrainerNotes.get(member.id_client) || "Sin nota";
+    noteText.textContent = member.my_note || "Sin nota";
     noteCell.append(noteTitle, noteText);
 
     const actionsCell = document.createElement("td");
@@ -190,10 +162,13 @@ function renderRoutineOptions(assignedIds) {
     noRoutinesMessage.hidden = routines.length > 0;
 }
 
+// Nota de cada socio (viene con el listado y se actualiza al guardar).
+const notes = new Map();
+
 async function openTrainerMemberModal(memberId, memberName) {
     activeMemberId = memberId;
     document.getElementById("trainerMemberName").textContent = memberName;
-    trainerMemberNote.value = window.FitPowerTrainerNotes.get(memberId);
+    trainerMemberNote.value = notes.get(String(memberId)) || "";
     showFeedback("Cargando rutinas…");
     routineOptions.replaceChildren();
     saveButton.disabled = true;
@@ -223,21 +198,24 @@ trainerMemberForm.addEventListener("submit", async (event) => {
     const note = trainerMemberNote.value.trim();
 
     saveButton.disabled = true;
-    const data = await API.request(`/socios/${activeMemberId}/rutinas`, "PUT", { rutinas: selectedIds });
+    const [data, noteData] = await Promise.all([
+        API.request(`/socios/${activeMemberId}/rutinas`, "PUT", { rutinas: selectedIds }),
+        API.request(`/socios/${activeMemberId}/nota`, "PUT", { note })
+    ]);
     saveButton.disabled = false;
     if (!data.success) {
         showFeedback(data.message || "No se pudieron guardar las rutinas.", true);
         return;
     }
-
-    try {
-        window.FitPowerTrainerNotes.set(activeMemberId, note);
-        const noteDisplay = document.querySelector(`[data-trainer-note="${CSS.escape(String(activeMemberId))}"]`);
-        if (noteDisplay) noteDisplay.textContent = note || "Sin nota";
-        showFeedback(`Se guardaron las rutinas (${selectedIds.length}) y la nota.`);
-    } catch {
-        showFeedback("Las rutinas se guardaron, pero la nota no.", true);
+    if (!noteData.success) {
+        showFeedback(`Las rutinas se guardaron, pero la nota no: ${noteData.message || "error"}`, true);
+        return;
     }
+
+    notes.set(String(activeMemberId), note);
+    const noteDisplay = document.querySelector(`[data-trainer-note="${CSS.escape(String(activeMemberId))}"]`);
+    if (noteDisplay) noteDisplay.textContent = note || "Sin nota";
+    showFeedback(`Se guardaron las rutinas (${selectedIds.length}) y la nota.`);
 });
 
 (async () => {
@@ -252,6 +230,7 @@ trainerMemberForm.addEventListener("submit", async (event) => {
         tableMessage("No hay socios registrados.");
         return;
     }
+    membersData.socios.forEach(member => notes.set(String(member.id_client), member.my_note || ""));
     membersBody.replaceChildren(...membersData.socios.map(createMemberRow));
 })();
 

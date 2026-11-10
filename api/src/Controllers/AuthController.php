@@ -26,7 +26,10 @@ class AuthController
 
     public function register(): void
     {
-        
+        // Solo el admin crea usuarios: si no, cualquiera podría registrarse como admin
+        // y entrar a /dash/admin.
+        \App\Utils\Auth::exigirRol(\App\Utils\Auth::ROL_ADMIN);
+
         $data = $this->getRequestData();
 
         $name = trim($data['name'] ?? '');
@@ -36,7 +39,10 @@ class AuthController
         // Solo dígitos: "099 123 456" y "099-123-456" se guardan igual y conservan el 0 inicial.
         $phone = preg_replace('/\D+/', '', (string) ($data['phone'] ?? ''));
         $ci = trim($data['ci'] ?? '');
-        $roleId = (int)($data['role'] ?? 1);
+        $roleId = (int)($data['role'] ?? 0);
+        if (!isset(self::DASHBOARDS[$roleId])) {
+            Response::json(false, 'El tipo de usuario no es válido.', [], 400);
+        }
 
         if ($name === '' || $email === '' || $password === '' || $confirmPassword === '' || $phone === '' || $ci === '') {
             Response::json(false, 'Todos los campos son obligatorios.', [], 400);
@@ -67,9 +73,28 @@ class AuthController
             Response::json(false, 'Ese teléfono ya está registrado.', [], 409);
         }
 
+        // Fecha de nacimiento (opcional): AAAA-MM-DD y no en el futuro.
+        $birth = trim((string) ($data['birth'] ?? ''));
+        if ($birth !== '') {
+            $fecha = \DateTime::createFromFormat('!Y-m-d', $birth);
+            if (!$fecha || $fecha->format('Y-m-d') !== $birth || $birth > date('Y-m-d')) {
+                Response::json(false, 'La fecha de nacimiento no es válida.', [], 400);
+            }
+        }
+
+        // Los socios arrancan con una membresía; el resto de los roles no tiene.
+        $membershipId = null;
+        if ($roleId === \App\Utils\Auth::ROL_SOCIO) {
+            $membershipId = (int) ($data['membership'] ?? 0);
+            if (!$this->userModel->existeMembresia($membershipId)) {
+                Response::json(false, 'Seleccioná el plan de membresía del socio.', [], 400);
+            }
+        }
+
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        $creado = $this->userModel->create($name, $email, $hashedPassword, $phone, $roleId, $ci);
+        $creado = $this->userModel->create($name, $email, $hashedPassword, $phone, $roleId, $ci,
+            $birth !== '' ? $birth : null, $membershipId);
         if ($creado) {
             Response::json(true, 'Usuario registrado correctamente.');
         } else {
@@ -92,6 +117,10 @@ class AuthController
 
         if (!$user || !password_verify($password, $user['password'])) {
             Response::json(false, 'Correo o contraseña incorrectos.', [], 401);
+        }
+
+        if (!$user['active_client']) {
+            Response::json(false, 'Tu cuenta fue dada de baja. Consultá en recepción.', [], 403);
         }
 
         session_regenerate_id(true);
@@ -140,6 +169,14 @@ class AuthController
         $this->enviarHtml('dist/paginas/login.html');
     }
     
+    // GET /resenas → página pública de reseñas. El formulario solo se muestra a socios.
+    public function paginaResenas(): void {
+        $esSocio = (int) ($_SESSION['role_id'] ?? 0) === \App\Utils\Auth::ROL_SOCIO && !empty($_SESSION['client_id']);
+        $this->enviarHtml('dist/paginas/resenas.html', [
+            '{{es_socio}}' => $esSocio ? '1' : '0',
+        ]);
+    }
+
     // GET /logout → cierra la sesión y vuelve al inicio.
     public function salir(): void {
         $this->destruirSesion();

@@ -89,15 +89,16 @@
                     <div class="interface-panel-body">
                         <ul class="interface-list">
                             <li><strong>Asistencia</strong><span id="studentAttendance">—</span></li>
-                            <li class="evaluation-row">
+                            <li class="evaluation-row" id="evaluacion">
                                 <label for="studentEvaluation">Evaluación (0 a 10)</label>
                                 <form id="evaluationForm" class="evaluation-form">
                                     <input class="form-control" id="studentEvaluation" name="score" type="number" min="0" max="10" step="1" required>
+                                    <textarea class="form-control" id="studentNote" name="note" rows="2" maxlength="300" placeholder="Nota sobre el alumno (opcional)" aria-label="Nota sobre el alumno"></textarea>
                                     <button class="interface-button-secondary" type="submit">Guardar</button>
                                 </form>
                                 <span id="evaluationFeedback" class="interface-feedback" role="status"></span>
                             </li>
-                            <li><strong>Próxima evaluación</strong><span id="studentNextEvaluation">—</span></li>
+                            <li><strong>Próxima clase</strong><span id="studentNextEvaluation">—</span></li>
                         </ul>
                     </div>
                 </section>

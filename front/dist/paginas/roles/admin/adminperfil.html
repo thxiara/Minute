@@ -67,17 +67,20 @@
                 </div>
                 <div class="interface-actions">
                     <a class="interface-button-secondary" href="/dash/admin">Volver a socios</a>
+                    <button class="interface-button" type="button" id="editUserButton">Editar datos</button>
+                    <button class="interface-button-danger" type="button" id="toggleActiveButton">Dar de baja</button>
                     <button class="interface-button-secondary" type="button" data-open-class-assign>Asignar clases</button>
                 </div>
             </div>
 
             <section class="interface-panel profile-summary" aria-label="Resumen del socio">
-                <img src="/front/dist/assets/imagenes/img6.jpg" alt="Foto del socio">
+                <img src="/front/dist/assets/imagenes/img6.jpg" alt="Foto del socio" id="profilePhoto">
                 <div>
                     <h2 id="profileName"></h2>
                     <p id="profileSince">—</p>
                 </div>
             </section>
+            <p id="profileFeedback" class="interface-feedback" role="status" hidden></p>
 
             <div class="interface-grid">
                 <section class="interface-panel">
@@ -87,7 +90,8 @@
                             <div class="info-item"><span>Documento</span><strong id="profileDocument">—</strong></div>
                             <div class="info-item"><span>Teléfono</span><strong id="profilePhone">—</strong></div>
                             <div class="info-item"><span>Correo</span><strong id="profileEmail">—</strong></div>
-                            <div class="info-item"><span>Estado</span><strong>Activo</strong></div>
+                            <div class="info-item"><span>Nacimiento</span><strong id="profileBirth">—</strong></div>
+                            <div class="info-item"><span>Estado</span><strong id="profileStatus">—</strong></div>
                         </div>
                     </div>
                 </section>
@@ -99,6 +103,13 @@
                             <li><strong>Plan</strong><span id="profilePlan">—</span></li>
                             <li><strong>Vencimiento</strong><span id="profileExpiration">—</span></li>
                         </ul>
+                        <form id="renewMembershipForm" class="d-flex flex-wrap gap-2 mt-3">
+                            <select class="form-select w-auto" id="renewMembershipPlan" aria-label="Plan para renovar" required>
+                                <option value="" selected disabled>Plan</option>
+                            </select>
+                            <button class="interface-button-secondary" type="submit">Renovar membresía</button>
+                        </form>
+                        <p id="renewMembershipFeedback" class="interface-feedback mt-2" role="status" hidden></p>
                     </div>
                 </section>
 
@@ -130,6 +141,46 @@
                     <div class="modal-footer">
                         <button type="button" class="interface-button-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="interface-button">Guardar clases</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content interface-modal">
+                <form id="editUserForm" novalidate>
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="editUserTitle">Editar datos</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label" for="editUserName">Nombre</label>
+                            <input class="form-control" id="editUserName" name="nombre" maxlength="50" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="editUserCi">C.I.</label>
+                            <input class="form-control" id="editUserCi" name="ci" maxlength="20" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="editUserPhone">Teléfono</label>
+                            <input class="form-control" id="editUserPhone" name="telefono" type="tel" maxlength="20" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="editUserEmail">Correo</label>
+                            <input class="form-control" id="editUserEmail" name="email" type="email" maxlength="100" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="editUserPassword">Nueva contraseña</label>
+                            <input class="form-control" id="editUserPassword" name="contrasena" type="password" minlength="8" autocomplete="new-password" placeholder="Dejar vacío para no cambiarla">
+                        </div>
+                        <p id="editUserFeedback" class="interface-feedback" role="status" hidden></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="interface-button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="interface-button">Guardar cambios</button>
                     </div>
                 </form>
             </div>
