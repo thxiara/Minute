@@ -1,6 +1,13 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # Solo se permite acceso a:
+    RewriteCond %{REQUEST_URI} !^/$
+    RewriteCond %{REQUEST_URI} !^/(api|front)(/|$)
+    RewriteCond %{REQUEST_URI} !^/(login|logout|dash)(/|$)
+    RewriteCond %{REQUEST_URI} !^/\.well-known(/|$)
+    RewriteRule ^ - [R=404,L]
+
     # ====================================================
     # 1. TRÁFICO DE LA API (Los repartidores)
     # ====================================================
@@ -21,10 +28,7 @@
     RewriteRule ^(login|logout|dash)(/.*)?$ /api/index.php [L,QSA]
     
     # ====================================================
-    # 3. PÁGINAS PÚBLICAS (URL linda → archivo real)
+    # 3. LANDING (pasa por PHP para poder usar la sesión)
     # ====================================================
-    # Sin [R]: el navegador sigue viendo la URL linda, Apache sirve el archivo por detrás.
-    RewriteRule ^$ /front/index.html [L]
-    # RewriteRule ^resenas/?$ /front/dist/paginas/resenas.html [L]
-    # RewriteRule ^pagar/?$ /front/dist/paginas/pagar.html [L]
+    RewriteRule ^$ /api/index.php [L,QSA]
 </IfModule>
