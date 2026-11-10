@@ -1,6 +1,10 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # La landing tiene marcadores ({{acceso_texto}}, etc.) que solo reemplaza PHP:
+    # si alguien abre el HTML directo, se lo manda a "/".
+    RewriteRule ^front/index\.html$ / [R=302,L]
+
     # Solo se permite acceso a:
     RewriteCond %{REQUEST_URI} !^/$
     RewriteCond %{REQUEST_URI} !^/(api|front)(/|$)
