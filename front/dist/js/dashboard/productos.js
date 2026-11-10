@@ -80,7 +80,7 @@
             const menu = document.createElement("div");
             menu.className = "product-actions-menu";
             const editLink = document.createElement("a");
-            editLink.href = `paginas/roles/admin/admin-producto.html?id=${encodeURIComponent(product.id)}`;
+            editLink.href = `/dash/admin/producto?id=${encodeURIComponent(product.id)}`;
             editLink.textContent = "Ver / editar";
             const deleteButton = document.createElement("button");
             deleteButton.type = "button";
@@ -239,7 +239,7 @@
             formFeedback.textContent = "Producto guardado correctamente.";
             saveButton.disabled = true;
             window.setTimeout(() => {
-                window.location.href = "paginas/roles/admin/admin-productos.html";
+                window.location.href = "/dash/admin/productos";
             }, 700);
         } catch (error) {
             showError(formFeedback, error, "No se pudo guardar el producto.");

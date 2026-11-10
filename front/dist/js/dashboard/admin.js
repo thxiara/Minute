@@ -257,7 +257,7 @@ document.addEventListener("click", (event) => {
     const profileTrigger = event.target.closest("[data-admin-profile]");
     if (profileTrigger) {
         const memberName = profileTrigger.dataset.memberName || "";
-        window.location.href = `paginas/roles/admin/adminperfil.html?name=${encodeURIComponent(memberName)}`;
+        window.location.href = `/dash/admin/perfil?name=${encodeURIComponent(memberName)}`;
         return;
     }
 
