@@ -162,10 +162,19 @@ class AuthController
     public function panelSocio(): void { $this->servirPanel(4, 'dist/paginas/roles/usuario/usuario.html'); }
     
     public function landing(): void {
+        $miPanel = $this->panelDeLaSesion();
+        $nombre = $_SESSION['name'] ?? '';
+
+        // Botón de acceso del header: con sesión lleva al panel, sin sesión al login.
         $this->enviarHtml('index.html', [
-            '{{nombre}}' => $_SESSION['name'] ?? '',
-        ]); 
-        }
+            '{{nombre}}' => $nombre,
+            '{{acceso_url}}' => $miPanel !== null ? '/dash' : '/login',
+            '{{acceso_texto}}' => $miPanel !== null ? 'IR AL DASHBOARD' : 'INICIAR SESIÓN',
+            '{{acceso_titulo}}' => $miPanel !== null
+                ? ($nombre !== '' ? "Panel de $nombre" : 'Ir al dashboard')
+                : 'Iniciar sesión',
+        ]);
+    }
     
     // El guardia: chequea sesión y rol; si todo está bien manda el HTML con el nombre ya puesto.
     private function servirPanel(int $rolPermitido, string $archivo): void {
