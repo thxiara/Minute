@@ -35,11 +35,19 @@ $router->get('/dash',   'AuthController@miPanel');
 #Admin
 $router->get('/dash/admin', 'AuthController@panelAdmin');
 $router->get('/dash/admin/registrar', 'AuthController@panelAdminRegistrar');
+$router->get('/dash/admin/clases', 'AuthController@panelAdminClases');
+$router->get('/dash/admin/productos', 'AuthController@panelAdminProductos');
+$router->get('/dash/admin/producto', 'AuthController@panelAdminProducto');
+$router->get('/dash/admin/perfil', 'AuthController@panelAdminPerfil');
 #Entrenador
 $router->get('/dash/entrenador', 'AuthController@panelEntrenador');
 $router->get('/dash/entrenador/ejercicios', 'AuthController@panelEntrenadorEjercicios');
 $router->get('/dash/entrenador/rutinas', 'AuthController@panelEntrenadorRutinas');
 #Profesor
 $router->get('/dash/profesor', 'AuthController@panelProfesor');
+$router->get('/dash/profesor/seleccionar-clase', 'AuthController@panelProfesorSeleccionarClase');
+$router->get('/dash/profesor/clases', 'AuthController@panelProfesorClases');
+$router->get('/dash/profesor/clase', 'AuthController@panelProfesorClase');
+$router->get('/dash/profesor/perfil', 'AuthController@panelProfesorPerfil');
 #Socio
 $router->get('/dash/socio', 'AuthController@panelSocio');

@@ -155,10 +155,18 @@ class AuthController
     // La URL de cada uno está en routes.php.
     public function panelAdmin(): void { $this->servirPanel(1, 'dist/paginas/roles/admin/admin.html'); }
     public function panelAdminRegistrar(): void { $this->servirPanel(1, 'dist/paginas/roles/admin/adminregistrar.html'); }
+    public function panelAdminClases(): void { $this->servirPanel(1, 'dist/paginas/roles/admin/admin-clases.html'); }
+    public function panelAdminProductos(): void { $this->servirPanel(1, 'dist/paginas/roles/admin/admin-productos.html'); }
+    public function panelAdminProducto(): void { $this->servirPanel(1, 'dist/paginas/roles/admin/admin-producto.html'); }
+    public function panelAdminPerfil(): void { $this->servirPanel(1, 'dist/paginas/roles/admin/adminperfil.html'); }
     public function panelEntrenador(): void { $this->servirPanel(2, 'dist/paginas/roles/entrenador/entrenador.html'); }
     public function panelEntrenadorEjercicios(): void { $this->servirPanel(2, 'dist/paginas/roles/entrenador/ejercicios.html'); }
     public function panelEntrenadorRutinas(): void { $this->servirPanel(2, 'dist/paginas/roles/entrenador/rutinas.html'); }
     public function panelProfesor(): void { $this->servirPanel(3, 'dist/paginas/roles/profesor/profesor.html'); }
+    public function panelProfesorSeleccionarClase(): void { $this->servirPanel(3, 'dist/paginas/roles/profesor/seleccionar-clase.html'); }
+    public function panelProfesorClases(): void { $this->servirPanel(3, 'dist/paginas/roles/profesor/clases.html'); }
+    public function panelProfesorClase(): void { $this->servirPanel(3, 'dist/paginas/roles/profesor/clase.html'); }
+    public function panelProfesorPerfil(): void { $this->servirPanel(3, 'dist/paginas/roles/profesor/perfi.html'); }
     public function panelSocio(): void { $this->servirPanel(4, 'dist/paginas/roles/usuario/usuario.html'); }
     
     public function landing(): void {
