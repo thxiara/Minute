@@ -3,7 +3,7 @@
 
 <head>
     <base href="../../../">
-    <link rel="icon" type="image/png" href="assets/iconos/favicon.png">
+    <link rel="icon" type="image/png" href="/front/dist/assets/iconos/favicon.png">
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,9 +25,9 @@
         href="https://fonts.gstatic.com"
         crossorigin
     >
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/dashboards/comun.css">
-    <link rel="stylesheet" href="css/dashboards/interfaces.css">
+    <link rel="stylesheet" href="/front/dist/css/styles.css">
+    <link rel="stylesheet" href="/front/dist/css/dashboards/comun.css">
+    <link rel="stylesheet" href="/front/dist/css/dashboards/interfaces.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&family=TASA+Explorer:wght@400;500;600;700&display=swap"
         rel="stylesheet"
@@ -35,17 +35,17 @@
 
     <link
         rel="stylesheet"
-        href="css/dashboards/admin.css"
+        href="/front/dist/css/dashboards/admin.css"
     >
 
     <link
         rel="stylesheet"
-        href="css/responsives/dashboardsresponsive/comunresponsive.css"
+        href="/front/dist/css/responsives/dashboardsresponsive/comunresponsive.css"
     >
 
     <link
         rel="stylesheet"
-        href="css/responsives/dashboardsresponsive/adminresponsive.css"
+        href="/front/dist/css/responsives/dashboardsresponsive/adminresponsive.css"
     >
 
 
@@ -66,16 +66,15 @@
                 <div class="d-flex justify-content-between align-items-center header-contenido">
 
                      <h1 class="logo">
-                        <a href="../index.html">FitPower</a>
+                        <a href="/">FitPower</a>
                     </h1>
 
                     <div class="header-derecha">
 
-                            <span class="header-text" data-session-name>
-                            </span>
+                            <span class="header-text">{{nombre}}</span>
 
                                 <img
-                                src="assets/imagenes/img6.jpg" class="usuario-header" alt="Usuario">
+                                src="/front/dist/assets/imagenes/img6.jpg" class="usuario-header" alt="Usuario">
 
                             <button
                                 class="boton-menu"
@@ -185,7 +184,7 @@
                     >
 
                         <a
-                            href="/dash/admin#"
+                            href="paginas/roles/admin/admin-producto.html"
                             class="enlace-barra-lateral"
                         >
                             Nuevo producto
@@ -193,7 +192,7 @@
 
 
                         <a
-                            href="/dash/admin#"
+                            href="paginas/roles/admin/admin-productos.html"
                             class="enlace-barra-lateral"
                         >
                             Productos activos
@@ -295,7 +294,7 @@
                         >
 
                             <a
-                                href="/dash/admin#"
+                                href="paginas/roles/admin/admin-producto.html"
                                 class="enlace-barra-lateral"
                             >
                                 Nuevo producto
@@ -303,7 +302,7 @@
 
 
                             <a
-                                href="/dash/admin#"
+                                href="paginas/roles/admin/admin-productos.html"
                                 class="enlace-barra-lateral"
                             >
                                 Productos activos
@@ -500,9 +499,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/session.js"></script>
-    <script src="js/dashboard/admin.js"></script>
+    <script src="/front/dist/js/api.js"></script>
+    <script src="/front/dist/js/dashboard/admin.js"></script>
 
 </body>
 </html>
