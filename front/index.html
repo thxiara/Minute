@@ -2,6 +2,39 @@
 <html lang="es">
 
 <head>
+    <script>
+        const assetFallbackPrefix = '/front/dist/';
+        const assetFallbackRoot = document.querySelector('base') ? '' : 'dist/';
+
+        document.addEventListener('error', (event) => {
+            const element = event.target;
+            if (!(element instanceof Element)) return;
+
+            const attribute = element.hasAttribute('href') ? 'href' : 'src';
+            const url = element.getAttribute(attribute);
+            if (!url?.startsWith(assetFallbackPrefix)) return;
+
+            const fallbackUrl = assetFallbackRoot + url.slice(assetFallbackPrefix.length);
+            if (element instanceof HTMLScriptElement) {
+                const replacement = document.createElement('script');
+                replacement.src = fallbackUrl;
+                element.after(replacement);
+                element.remove();
+            } else {
+                element.setAttribute(attribute, fallbackUrl);
+            }
+        }, true);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const isStaticPreview = location.protocol === 'file:' || document.getElementById('accesoBtn')?.textContent.includes('{{');
+            if (isStaticPreview) {
+                document.querySelectorAll('a[href^="/front/contactos.html"]').forEach((link) => {
+                    link.href = `contactos.html${new URL(link.href).hash}`;
+                });
+                document.querySelector('.logo-footer a')?.setAttribute('href', 'index.html');
+            }
+        }, { once: true });
+    </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +58,7 @@
 </head>
 
 
-<body>
+<body class="landing-page">
 
 
 <header>
@@ -76,12 +109,9 @@
             <div class="col-lg-8 text-center hero-contenido">
 
                 <h2>
-
-                    Supera tus límites,
+                    <span class="hero-line">Supera tus límites,</span>
                     <br>
-                    alcanza tu
-                    <span>mejor versión</span>
-
+                    <span class="hero-line hero-line-italic">alcanza tu mejor versión</span>
                 </h2>
 
 
@@ -479,7 +509,7 @@
         <div class="row justify-content-center align-items-end g-4">
 
 
-            <div class="col-12 col-md-6 col-lg-4 d-flex order-1">
+            <div class="col-12 col-md-6 col-lg-4 d-flex order-2 order-lg-1">
 
                 <div class="plan lateral h-100 w-100">
 
@@ -508,12 +538,8 @@
                     </ul>
 
 
-                    <a href="">
-
-                        <button type="button">
-                            Suscribirse
-                        </button>
-
+                    <a class="plan-button" href="/front/contactos.html">
+                        Consulta
                     </a>
 
                 </div>
@@ -522,7 +548,7 @@
 
 
 
-            <div class="col-12 col-md-12 col-lg-4 d-flex order-3 order-lg-2">
+            <div class="col-12 col-md-12 col-lg-4 d-flex order-1 order-lg-2">
 
                 <div class="plan principal h-100 w-100">
 
@@ -558,12 +584,8 @@
                     </ul>
 
 
-                    <a href="">
-
-                        <button type="button">
-                            Suscribirse
-                        </button>
-
+                    <a class="plan-button" href="/front/contactos.html">
+                        Consulta
                     </a>
 
                 </div>
@@ -572,7 +594,7 @@
 
 
 
-            <div class="col-12 col-md-6 col-lg-4 d-flex order-2 order-lg-3">
+            <div class="col-12 col-md-6 col-lg-4 d-flex order-3 order-lg-3">
 
                 <div class="plan lateral h-100 w-100">
 
@@ -601,12 +623,8 @@
                     </ul>
 
 
-                    <a href="">
-
-                        <button type="button">
-                            Suscribirse
-                        </button>
-
+                    <a class="plan-button" href="/front/contactos.html">
+                        Consulta
                     </a>
 
                 </div>
@@ -633,20 +651,20 @@
 
                 <div class="iconos justify-content-center justify-content-md-start">
 
-                    <a href="#">
+                    <a href="https://maps.app.goo.gl/tWAiNdM5aw4JdmwF6?g_st=aw" target="_blank" rel="noopener noreferrer" aria-label="Google Maps">
                         <i class="fa-solid fa-location-dot"></i>
                     </a>
 
-                    <a href="#">
+                    <a href="/front/contactos.html#instagram" aria-label="Instagram de FitPower">
                         <i class="fa-brands fa-instagram"></i>
                     </a>
 
-                    <a href="#">
+                    <a href="/front/contactos.html#facebook" aria-label="Facebook de FitPower">
                         <i class="fa-brands fa-facebook-f"></i>
                     </a>
 
-                    <a href="#">
-                        <i class="fa-solid fa-envelope"></i>
+                    <a href="mailto:fitpower.srl@gmail.com" aria-label="Enviar correo a FitPower">
+                        <i class="fa-regular fa-envelope"></i>
                     </a>
 
                 </div>
@@ -656,8 +674,8 @@
 
             <div class="col-md-8 text-center text-md-end">
 
-                <h2 class="logo-footer mb-0">
-                    FitPower
+                <h2 class="logo logo-footer mb-0">
+                    <a href="/">FitPower</a>
                 </h2>
 
             </div>
