@@ -94,7 +94,7 @@ body {
     .entrenador-page .barra-lateral-movil,
     .profesor-page .barra-lateral-movil {
         width: var(--dashboard-sidebar-width) !important;
-        max-width: 80%;
+        max-width: 85vw;
     }
 
     .admin-content,
@@ -216,13 +216,13 @@ body {
     .entrenador-page .barra-lateral-movil,
     .profesor-page .barra-lateral-movil {
         width: var(--dashboard-sidebar-width) !important;
-        max-width: 80%;
+        max-width: 85vw;
     }
 
     .admin-page .barra-lateral-movil .offcanvas-body,
     .entrenador-page .barra-lateral-movil .offcanvas-body,
     .profesor-page .barra-lateral-movil .offcanvas-body {
-        padding: 25px 14px;
+        padding: 26px 14px;
     }
 
     .content-title {
@@ -248,7 +248,7 @@ body {
 
     .registros,
     .registros select {
-        font-size: 13px;
+        font-size: 14px;
     }
 
     .search {
@@ -349,7 +349,7 @@ body {
     .tabla-socios tbody td:empty::after,
     .tabla-alumnos tbody td:empty::after {
         content: "—";
-        color: var(--color-primary);
+        color: var(--color-text-muted);
     }
 
     .tabla-socios tbody td.acciones,
@@ -448,5 +448,97 @@ body {
     .entrenador-page .logo,
     .profesor-page .logo {
         font-size: 22px;
+    }
+}
+
+@media (max-width: 991px) {
+    :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page) > header,
+    body.interface-page > header {
+        height: 68px;
+    }
+
+    :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page) > header .container-fluid,
+    body.interface-page > header .container-fluid {
+        height: 68px;
+    }
+
+    :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page) > header .header-contenido,
+    body.interface-page > header .header-contenido {
+        height: 68px;
+        align-items: center;
+    }
+
+    :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page) header .logo,
+    body.interface-page header .logo {
+        font-size: clamp(27px, 4vw, 32px) !important;
+    }
+
+    :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page) header .header-derecha,
+    body.interface-page header .header-derecha {
+        height: 68px;
+        align-items: center;
+        gap: 12px;
+    }
+
+    :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page) header img.usuario-header,
+    :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page) header .imagen-usuario,
+    body.interface-page header img.usuario-header {
+        width: 38px;
+        height: 38px;
+        flex: 0 0 38px;
+        object-fit: cover;
+        object-position: center;
+    }
+}
+
+@media (max-width: 575px) {
+    :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page) > header,
+    body.interface-page > header {
+        height: 64px;
+    }
+
+    :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page) > header .container-fluid,
+    body.interface-page > header .container-fluid {
+        height: 64px;
+        padding-inline: 14px;
+    }
+
+    :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page) > header .header-contenido,
+    body.interface-page > header .header-contenido {
+        height: 64px;
+        gap: 10px;
+    }
+
+    :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page) header .logo,
+    body.interface-page header .logo {
+        max-width: 48vw;
+        font-size: clamp(23px, 7vw, 29px) !important;
+    }
+
+    :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page) header .header-derecha,
+    body.interface-page header .header-derecha {
+        height: 64px;
+        gap: 9px;
+    }
+
+    :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page) header .header-text,
+    :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page) header .nombre-usuario,
+    body.interface-page header .header-text {
+        display: none !important;
+    }
+
+    :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page) header img.usuario-header,
+    :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page) header .imagen-usuario,
+    body.interface-page header img.usuario-header {
+        width: 36px;
+        height: 36px;
+        flex-basis: 36px;
+    }
+}
+
+@media (max-width: 360px) {
+    :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page) header .logo,
+    body.interface-page header .logo {
+        font-size: 22px !important;
     }
 }
