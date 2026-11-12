@@ -52,7 +52,7 @@
     margin-left: 4px;
     padding: 0;
     background-color: transparent;
-    color: var(--color-accent);
+    color: var(--color-accent-bright);
     font-family: "TASA Explorer", sans-serif;
     font-size: 11px;
 }

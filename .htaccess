@@ -1,6 +1,17 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # La landing tiene marcadores ({{acceso_texto}}, etc.) que solo reemplaza PHP:
+    # si alguien abre el HTML directo, se lo manda a "/".
+    RewriteRule ^front/index\.html$ / [R=302,L]
+
+    # Solo se permite acceso a:
+    RewriteCond %{REQUEST_URI} !^/$
+    RewriteCond %{REQUEST_URI} !^/(api|front)(/|$)
+    RewriteCond %{REQUEST_URI} !^/(login|logout|dash|resenas)(/|$)
+    RewriteCond %{REQUEST_URI} !^/\.well-known(/|$)
+    RewriteRule ^ - [R=404,L]
+
     # ====================================================
     # 1. TRÁFICO DE LA API (Los repartidores)
     # ====================================================
@@ -18,13 +29,10 @@
     # ====================================================
     # /login, /logout, /dash, /dash/admin, /dash/admin/registrar, ...
     # van al index.php de la API, que mira la sesión y decide qué mostrar.
-    RewriteRule ^(login|logout|dash)(/.*)?$ /api/index.php [L,QSA]
+    RewriteRule ^(login|logout|dash|resenas)(/.*)?$ /api/index.php [L,QSA]
     
     # ====================================================
-    # 3. PÁGINAS PÚBLICAS (URL linda → archivo real)
+    # 3. LANDING (pasa por PHP para poder usar la sesión)
     # ====================================================
-    # Sin [R]: el navegador sigue viendo la URL linda, Apache sirve el archivo por detrás.
-    RewriteRule ^$ /front/index.html [L]
-    # RewriteRule ^resenas/?$ /front/dist/paginas/resenas.html [L]
-    # RewriteRule ^pagar/?$ /front/dist/paginas/pagar.html [L]
+    RewriteRule ^$ /api/index.php [L,QSA]
 </IfModule>

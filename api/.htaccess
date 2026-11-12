@@ -1,9 +1,19 @@
-<IfModule mod_rewrite.c> 
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-d
+# El código depende de que Apache=>2.4 y que vhost tenga AllowOverride All/FileInfo
+<IfModule mod_rewrite.c>
+    RewriteEngine On
 
-RewriteCond %{REQUEST_FILENAME} !-f
+    # Sin listados de directorio.
+    Options -Indexes
 
-RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+    # 1) El front controller siempre se permite.
+    RewriteRule ^index\.php(/|$) - [END]
 
+    # 2) Cualquier otro archivo o directorio real dentro de /api/ se oculta.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [R=404,L]
+
+    # 3) El resto son rutas de la API: van al front controller.
+    #    END evita que la URL reescrita se vuelva a procesar.
+    RewriteRule ^(.*)$ index.php?url=$1 [QSA,END]
 </IfModule>

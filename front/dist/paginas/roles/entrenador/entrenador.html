@@ -3,7 +3,30 @@
 
 <head>
     <base href="../../../">
-    <link rel="icon" type="image/png" href="assets/iconos/favicon.png">
+    <script>
+        const assetFallbackPrefix = '/front/dist/';
+        const assetFallbackRoot = document.querySelector('base') ? '' : 'dist/';
+
+        document.addEventListener('error', (event) => {
+            const element = event.target;
+            if (!(element instanceof Element)) return;
+
+            const attribute = element.hasAttribute('href') ? 'href' : 'src';
+            const url = element.getAttribute(attribute);
+            if (!url?.startsWith(assetFallbackPrefix)) return;
+
+            const fallbackUrl = assetFallbackRoot + url.slice(assetFallbackPrefix.length);
+            if (element instanceof HTMLScriptElement) {
+                const replacement = document.createElement('script');
+                replacement.src = fallbackUrl;
+                element.after(replacement);
+                element.remove();
+            } else {
+                element.setAttribute(attribute, fallbackUrl);
+            }
+        }, true);
+    </script>
+    <link rel="icon" type="image/png" href="/front/dist/assets/iconos/favicon.png">
 
     <meta charset="UTF-8">
 
@@ -40,25 +63,27 @@
 
 
     <!-- css -->
-     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/dashboards/comun.css">
+     <link rel="stylesheet" href="/front/dist/css/styles.css">
+    <link rel="stylesheet" href="/front/dist/css/dashboards/comun.css">
 
     <link
         rel="stylesheet"
-        href="css/dashboards/entrenador.css"
+        href="/front/dist/css/dashboards/entrenador.css"
     >
 
     <link
         rel="stylesheet"
-        href="css/responsives/dashboardsresponsive/comunresponsive.css"
+        href="/front/dist/css/responsives/dashboardsresponsive/comunresponsive.css"
     >
 
     <link
         rel="stylesheet"
-        href="css/responsives/dashboardsresponsive/entrenadorresponsive.css"
+        href="/front/dist/css/responsives/dashboardsresponsive/entrenadorresponsive.css"
     >
-    <link rel="stylesheet" href="css/dashboards/interfaces.css">
+    <link rel="stylesheet" href="/front/dist/css/dashboards/interfaces.css">
 
+    <!-- Traducciones: tiene que cargarse antes que el resto de los scripts -->
+    <script src="/front/dist/js/i18n.js"></script>
 </head>
 
 
@@ -72,16 +97,15 @@
                 <div class="d-flex justify-content-between align-items-center header-contenido">
 
                      <h1 class="logo">
-                        <a href="../index.html">FitPower</a>
+                        <a href="/">FitPower</a>
                     </h1>
 
                     <div class="header-derecha">
 
-                            <span class="header-text" data-session-name>
-                            </span>
+                            <span class="header-text">{{nombre}}</span>
 
                                 <img
-                                src="assets/imagenes/img6.jpg" class="usuario-header" alt="Usuario">
+                                src="/front/dist/assets/imagenes/img6.jpg" class="usuario-header" alt="Usuario">
 
                             <button
                                 class="boton-menu"
@@ -371,6 +395,7 @@
 
                             <input
                                 type="text"
+                                maxlength="50"
                                 aria-label="Buscar"
                                 placeholder="Buscar socios"
                             >
@@ -512,9 +537,10 @@
 
     <!--funciones -->
 
-   <script src="js/api.js"></script>
-   <script src="js/session.js"></script>
-   <script src="js/dashboard/entrenador.js"></script>
+   <script src="/front/dist/js/api.js"></script>
+   <script src="/front/dist/js/foto-perfil.js"></script>
+   <script src="/front/dist/js/visor-imagen.js"></script>
+   <script src="/front/dist/js/dashboard/entrenador.js"></script>
 
 </body>
 

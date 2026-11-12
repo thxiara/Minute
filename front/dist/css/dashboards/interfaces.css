@@ -23,67 +23,6 @@ body.interface-page .logo {
     font-size: clamp(25px, 2.6vw, 36px);
 }
 
-body.interface-page .logo a {
-    color: var(--color-text);
-}
-
-.interface-sidebar {
-    padding: 28px 18px;
-    background: linear-gradient(180deg, var(--color-surface-raised), var(--color-surface));
-    border-right: 1px solid color-mix(in srgb, var(--color-accent) 14%, transparent);
-}
-
-.interface-sidebar h2 {
-    margin: 0 0 18px;
-    color: var(--color-text-secondary);
-    font-family: "TASA Explorer", sans-serif;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-}
-
-.interface-sidebar nav {
-    display: grid;
-    gap: 6px;
-}
-
-.interface-nav-group {
-    display: grid;
-    gap: 5px;
-    margin-bottom: 12px;
-}
-
-.interface-nav-group h3 {
-    margin: 0 0 3px;
-    padding: 5px 12px;
-    color: var(--color-primary);
-    font-family: "TASA Explorer", sans-serif;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-}
-
-.interface-sidebar a {
-    display: flex;
-    align-items: center;
-    min-height: 42px;
-    padding: 9px 12px;
-    border: 1px solid transparent;
-    border-radius: 9px;
-    color: var(--color-text-secondary);
-    font-size: 0.88rem;
-    transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
-}
-
-.interface-sidebar a:hover,
-.interface-sidebar a[aria-current="page"] {
-    border-color: color-mix(in srgb, var(--color-accent) 24%, transparent);
-    background: linear-gradient(100deg, color-mix(in srgb, var(--color-accent) 20%, transparent), color-mix(in srgb, var(--color-accent) 10%, transparent));
-    color: var(--color-text);
-}
-
 .interface-content {
     width: min(100%, 1440px);
     margin-inline: auto;
@@ -135,13 +74,17 @@ body.interface-page .logo a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-width: 0;
+    max-width: 100%;
     min-height: 42px;
     padding: 10px 16px;
     border: 1px solid transparent;
     border-radius: 9px;
     font-size: 0.88rem;
     font-weight: 700;
+    line-height: 1.35;
     text-decoration: none;
+    white-space: normal;
     transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
 }
 
@@ -345,6 +288,7 @@ body.interface-page .logo a {
 }
 
 .interface-button-danger {
+    max-width: 100%;
     min-height: 42px;
     padding: 9px 13px;
     border: 1px solid color-mix(in srgb, var(--color-danger) 35%, transparent);
@@ -353,6 +297,11 @@ body.interface-page .logo a {
     color: var(--color-danger);
     font-size: 0.83rem;
     font-weight: 700;
+}
+
+#exerciseForm .interface-button {
+    width: 100%;
+    padding-inline: 8px;
 }
 
 .interface-button-danger:hover {
@@ -387,6 +336,7 @@ body.interface-page .logo a {
 
 .evaluation-form {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
 }
 
@@ -394,8 +344,12 @@ body.interface-page .logo a {
     width: 100px;
 }
 
-.exercise-library-list,
-.exercise-selection-list {
+.evaluation-form textarea {
+    flex: 1 1 100%;
+    order: 1;
+}
+
+.exercise-library-list {
     display: grid;
     gap: 9px;
 }
@@ -453,23 +407,6 @@ body.interface-page .logo a {
 
 .member-review-text {
     white-space: pre-wrap;
-}
-
-.exercise-selection-option {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-height: 42px;
-    padding: 9px 12px;
-    border: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
-    border-radius: 8px;
-    background: color-mix(in srgb, var(--color-text) 2.5%, transparent);
-    color: var(--color-text-secondary);
-    cursor: pointer;
-}
-
-.exercise-selection-option input {
-    accent-color: var(--color-accent);
 }
 
 .exercise-library-filters {
@@ -646,28 +583,6 @@ body.interface-page .logo a {
     color: var(--color-text-secondary);
 }
 
-.status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 7px 11px;
-    border: 1px solid color-mix(in srgb, var(--color-success) 25%, transparent);
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--color-success) 10%, transparent);
-    color: var(--color-success);
-    font-size: 0.78rem;
-    font-weight: 700;
-    white-space: nowrap;
-}
-
-.status-pill::before {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: currentColor;
-    content: "";
-}
-
 .interface-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -732,39 +647,12 @@ body.interface-page .logo a {
     text-align: right;
 }
 
-.metric-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 14px;
-    margin-bottom: 20px;
-}
-
-.metric-card {
-    padding: 17px 18px;
-}
-
-.metric-card span {
-    display: block;
-    margin-bottom: 7px;
-    color: var(--color-accent-bright);
-    font-size: 0.8rem;
-}
-
-.metric-card strong {
-    color: var(--color-text);
-    font-family: "Special Gothic Expanded One", sans-serif;
-    font-size: 1.6rem;
-    font-weight: 400;
-}
-
-.schedule-list,
-.routine-list {
+.schedule-list {
     display: grid;
     gap: 12px;
 }
 
-.schedule-card,
-.routine-card {
+.schedule-card {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
@@ -775,8 +663,7 @@ body.interface-page .logo a {
     background: color-mix(in srgb, var(--color-text) 2.5%, transparent);
 }
 
-.schedule-card h3,
-.routine-card h3 {
+.schedule-card h3 {
     margin: 0 0 6px;
     color: var(--color-text-secondary);
     font-family: "TASA Explorer", sans-serif;
@@ -784,8 +671,7 @@ body.interface-page .logo a {
     font-weight: 700;
 }
 
-.schedule-card p,
-.routine-card p {
+.schedule-card p {
     margin: 0;
     color: var(--color-accent-bright);
     font-size: 0.84rem;
@@ -811,7 +697,7 @@ body.interface-page .logo a {
 }
 
 .interface-search::placeholder {
-    color: var(--color-primary);
+    color: var(--color-text-muted);
 }
 
 .interface-search:focus {
@@ -961,7 +847,7 @@ body.interface-page .logo a {
 }
 
 .btn-guardar:hover {
-    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-bright));
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
     color: var(--color-text);
 }
 
@@ -979,34 +865,6 @@ body.interface-page .logo a {
     .interface-layout {
         display: block;
         min-height: calc(100vh - 68px);
-    }
-
-    .interface-sidebar {
-        padding: 14px 18px;
-        border-right: 0;
-        border-bottom: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
-    }
-
-    .interface-sidebar h2 {
-        margin-bottom: 9px;
-    }
-
-    .interface-sidebar nav {
-        display: flex;
-        gap: 7px;
-        overflow-x: auto;
-        padding-bottom: 2px;
-        scrollbar-width: none;
-    }
-
-    .interface-sidebar nav::-webkit-scrollbar {
-        display: none;
-    }
-
-    .interface-sidebar a {
-        min-height: 36px;
-        padding: 7px 10px;
-        white-space: nowrap;
     }
 
     .interface-content {
@@ -1058,11 +916,6 @@ body.interface-page .logo a {
         padding: 18px;
     }
 
-    .profile-summary:not(.student-profile) .status-pill {
-        grid-column: 1 / -1;
-        justify-self: start;
-    }
-
     .profile-summary img {
         width: 70px;
         height: 70px;
@@ -1073,16 +926,7 @@ body.interface-page .logo a {
         grid-template-columns: 1fr;
     }
 
-    .metric-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .metric-card {
-        padding: 14px 16px;
-    }
-
-    .schedule-card,
-    .routine-card {
+    .schedule-card {
         grid-template-columns: 1fr;
         gap: 11px;
     }
@@ -1160,181 +1004,20 @@ body.interface-page .logo a {
     box-shadow: 0 18px 42px var(--color-shadow);
 }
 
-.interface-page.admin-interface .interface-sidebar,
-.interface-page.trainer-interface .interface-sidebar {
-    padding: 30px 14px;
-    background: linear-gradient(180deg, var(--color-surface-raised), var(--color-surface));
-}
-
-.interface-page.admin-interface .interface-sidebar > h2,
-.interface-page.trainer-interface .interface-sidebar > h2 {
-    display: none;
-}
-
-.interface-page.admin-interface .interface-sidebar nav,
-.interface-page.trainer-interface .interface-sidebar nav {
-    display: grid;
-    gap: 0;
-}
-
-.interface-page.admin-interface .interface-nav-group,
-.interface-page.trainer-interface .interface-nav-group {
-    gap: 0;
-    margin-bottom: 14px;
-}
-
-.interface-page.admin-interface .interface-nav-group h3,
-.interface-page.trainer-interface .interface-nav-group h3 {
-    margin: 0 0 9px;
-    padding: 0 6px;
-    color: var(--color-text);
-    font-family: "Special Gothic Expanded One", sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: normal;
-    text-transform: none;
-}
-
-.interface-page.admin-interface .interface-sidebar a,
-.interface-page.trainer-interface .interface-sidebar a {
-    display: block;
-    min-height: 0;
-    margin-bottom: 4px;
-    padding: 4px 6px;
-    border: 0;
-    border-radius: 4px;
-    color: var(--color-accent-bright);
-    font-family: "TASA Explorer", sans-serif;
-    font-size: 12px;
-}
-
-.interface-page.admin-interface .interface-sidebar a::before,
-.interface-page.trainer-interface .interface-sidebar a::before {
-    content: "•";
-    margin-right: 5px;
-    color: var(--color-accent-bright);
-}
-
-.interface-page.admin-interface .interface-sidebar a:hover,
-.interface-page.admin-interface .interface-sidebar a[aria-current="page"],
-.interface-page.trainer-interface .interface-sidebar a:hover,
-.interface-page.trainer-interface .interface-sidebar a[aria-current="page"] {
-    border-color: color-mix(in srgb, var(--color-accent) 24%, transparent);
-    background: linear-gradient(100deg, color-mix(in srgb, var(--color-accent) 20%, transparent), color-mix(in srgb, var(--color-accent) 10%, transparent));
-    color: var(--color-text);
-}
-
 @media (max-width: 991px) {
-    .interface-page.admin-interface .interface-layout {
+    body.interface-page .interface-layout {
         display: block;
         min-height: calc(100vh - 68px);
     }
 
-    .interface-page.trainer-interface .interface-layout {
-        display: block;
-        min-height: calc(100vh - 68px);
-    }
-
-    .interface-page.admin-interface .interface-sidebar.offcanvas,
-    .interface-page.trainer-interface .interface-sidebar.offcanvas {
-        z-index: 1060;
-        max-width: 85vw;
-        height: 100vh;
-        border: 0;
-        background: linear-gradient(180deg, var(--color-surface-raised), var(--color-surface));
-    }
-
-    .interface-page.admin-interface .interface-sidebar.offcanvas {
-        width: var(--dashboard-sidebar-width);
-    }
-
-    .interface-page.trainer-interface .interface-sidebar.offcanvas {
-        width: var(--dashboard-sidebar-width);
-    }
-
-    .interface-page.admin-interface .interface-sidebar .offcanvas-body,
-    .interface-page.trainer-interface .interface-sidebar .offcanvas-body {
-        padding: 30px 14px;
-    }
-
-    .interface-page.admin-interface .role-nav-toggle,
-    .interface-page.trainer-interface .role-nav-toggle {
+    body.interface-page .role-nav-toggle {
         display: flex !important;
     }
 }
 
-@media (max-width: 767px) {
-    .interface-page.admin-interface .interface-sidebar,
-    .interface-page.trainer-interface .interface-sidebar {
-        padding: 14px 18px;
-    }
-
-    .interface-page.admin-interface .interface-sidebar nav,
-    .interface-page.trainer-interface .interface-sidebar nav {
-        display: flex;
-        align-items: flex-start;
-        gap: 18px;
-    }
-
-    .interface-page.admin-interface .interface-nav-group,
-    .interface-page.trainer-interface .interface-nav-group {
-        flex: 0 0 auto;
-        margin: 0;
-    }
-
-    .interface-page.admin-interface .interface-sidebar .offcanvas-body,
-    .interface-page.trainer-interface .interface-sidebar .offcanvas-body {
-        padding: 30px 14px;
-    }
-
-    .interface-page.admin-interface .interface-sidebar.offcanvas nav,
-    .interface-page.trainer-interface .interface-sidebar.offcanvas nav {
-        display: grid;
-        gap: 0;
-        overflow: visible;
-    }
-
-    .interface-page.admin-interface .interface-sidebar.offcanvas .interface-nav-group,
-    .interface-page.trainer-interface .interface-sidebar.offcanvas .interface-nav-group {
-        flex: 0 0 auto;
-        margin-bottom: 14px;
-    }
-}
-
 @media (min-width: 992px) {
-    .interface-page.admin-interface .role-nav-toggle,
-    .interface-page.trainer-interface .role-nav-toggle {
+    body.interface-page .role-nav-toggle {
         display: none !important;
-    }
-
-    .interface-page.admin-interface .interface-sidebar.offcanvas,
-    .interface-page.trainer-interface .interface-sidebar.offcanvas {
-        position: relative;
-        top: auto;
-        right: auto;
-        bottom: auto;
-        left: auto;
-        z-index: auto;
-        display: block;
-        width: auto;
-        height: auto;
-        max-width: none;
-        border: 0;
-        visibility: visible !important;
-        transform: none !important;
-    }
-
-    .interface-page.admin-interface .interface-sidebar .offcanvas-header,
-    .interface-page.trainer-interface .interface-sidebar .offcanvas-header {
-        display: none !important;
-    }
-
-    .interface-page.admin-interface .interface-sidebar .offcanvas-body,
-    .interface-page.trainer-interface .interface-sidebar .offcanvas-body {
-        display: block;
-        flex-grow: 0;
-        padding: 0;
-        overflow: visible;
     }
 }
 
@@ -1350,22 +1033,6 @@ body.interface-page .interface-layout {
     background:
         radial-gradient(ellipse at 86% 0, color-mix(in srgb, var(--color-accent) 13%, transparent), transparent 34rem),
         var(--color-background);
-}
-
-body.interface-page .interface-sidebar {
-    background: linear-gradient(180deg, var(--color-surface-raised), var(--color-surface));
-    border-color: color-mix(in srgb, var(--color-accent) 14%, transparent);
-}
-
-body.interface-page .interface-sidebar a {
-    font-family: "TASA Explorer", sans-serif;
-}
-
-body.interface-page .interface-sidebar a[aria-current="page"],
-body.interface-page .interface-sidebar a:hover {
-    border-color: color-mix(in srgb, var(--color-accent) 24%, transparent);
-    background: linear-gradient(100deg, color-mix(in srgb, var(--color-accent) 20%, transparent), color-mix(in srgb, var(--color-accent) 10%, transparent));
-    color: var(--color-text);
 }
 
 body.interface-page .interface-heading h1 {
@@ -1403,7 +1070,7 @@ body.interface-page .interface-button {
 }
 
 body.interface-page .interface-button:hover {
-    background: linear-gradient(135deg, var(--color-accent-bright), var(--color-primary));
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
 }
 
 body.interface-page .interface-content .form-control,
@@ -1431,152 +1098,12 @@ body.interface-page .interface-empty {
     color: var(--color-text-secondary);
 }
 
-.interface-page.professor-interface .interface-layout {
-    grid-template-columns: var(--dashboard-sidebar-width) minmax(0, 1fr);
-}
-
-.interface-page.professor-interface .interface-sidebar {
-    padding: 30px 14px;
-    background: linear-gradient(180deg, var(--color-surface-raised), var(--color-surface));
-}
-
-.interface-page.professor-interface .interface-sidebar > h2 {
-    display: none;
-}
-
-.interface-page.professor-interface .interface-sidebar nav {
-    display: grid;
-    gap: 0;
-}
-
-.interface-page.professor-interface .interface-nav-group {
-    display: grid;
-    gap: 0;
-    margin-bottom: 14px;
-}
-
-.interface-page.professor-interface .interface-nav-group h3 {
-    margin: 0 0 9px;
-    padding: 0 6px;
-    color: var(--color-text);
-    font-family: "Special Gothic Expanded One", sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: normal;
-    text-transform: none;
-}
-
-.interface-page.professor-interface .interface-sidebar a {
-    display: block;
-    min-height: 0;
-    margin-bottom: 4px;
-    padding: 4px 6px;
-    border: 0;
-    border-radius: 4px;
-    color: var(--color-accent-bright);
-    font-size: 12px;
-}
-
-.interface-page.professor-interface .interface-sidebar a::before {
-    content: "•";
-    margin-right: 5px;
-    color: var(--color-accent-bright);
-}
-
-.interface-page.professor-interface .interface-sidebar a:hover,
-.interface-page.professor-interface .interface-sidebar a[aria-current="page"] {
-    border-color: color-mix(in srgb, var(--color-accent) 24%, transparent);
-    background: linear-gradient(100deg, color-mix(in srgb, var(--color-accent) 20%, transparent), color-mix(in srgb, var(--color-accent) 10%, transparent));
-    color: var(--color-text);
-}
-
-@media (max-width: 991px) {
-    .interface-page.professor-interface .interface-layout {
-        display: block;
-        min-height: calc(100vh - 68px);
-    }
-
-    .interface-page.professor-interface .interface-sidebar.offcanvas {
-        z-index: 1060;
-        width: var(--dashboard-sidebar-width);
-        max-width: 85vw;
-        height: 100vh;
-        border: 0;
-        background: linear-gradient(180deg, var(--color-surface-raised), var(--color-surface));
-    }
-
-    .interface-page.professor-interface .interface-sidebar .offcanvas-body {
-        padding: 30px 14px;
-    }
-
-    .interface-page.professor-interface .role-nav-toggle {
-        display: flex !important;
-    }
-}
-
-@media (max-width: 767px) {
-    .interface-page.professor-interface .interface-sidebar .offcanvas-body {
-        padding: 30px 14px;
-    }
-
-    .interface-page.professor-interface .interface-sidebar.offcanvas nav {
-        display: grid;
-        gap: 0;
-        overflow: visible;
-    }
-}
-
-@media (min-width: 992px) {
-    .interface-page.professor-interface .role-nav-toggle {
-        display: none !important;
-    }
-
-    .interface-page.professor-interface .interface-sidebar.offcanvas {
-        position: relative;
-        inset: auto;
-        z-index: auto;
-        display: block;
-        width: auto;
-        height: auto;
-        max-width: none;
-        border: 0;
-        visibility: visible !important;
-        transform: none !important;
-    }
-
-    .interface-page.professor-interface .interface-sidebar .offcanvas-header {
-        display: none !important;
-    }
-
-    .interface-page.professor-interface .interface-sidebar .offcanvas-body {
-        display: block;
-        flex-grow: 0;
-        padding: 0;
-        overflow: visible;
-    }
-}
-
-.admin-page .enlace-barra-lateral.activo,
-.entrenador-page .enlace-barra-lateral.activo,
-.profesor-page .enlace-barra-lateral.activo {
-    color: var(--color-text);
-    background: linear-gradient(100deg, color-mix(in srgb, var(--color-accent) 22%, transparent), color-mix(in srgb, var(--color-accent) 12%, transparent));
-}
-
 .usuario-page,
 .usuario-page .usuario-content {
     background:
         radial-gradient(ellipse at 86% 0, color-mix(in srgb, var(--color-accent) 12%, transparent), transparent 34rem),
         var(--color-background);
     color: var(--color-text);
-}
-
-.usuario-page .menu-usuario {
-    width: var(--dashboard-sidebar-width) !important;
-}
-
-.usuario-page .menu-link {
-    font-size: 13px;
 }
 
 .usuario-page .seccion-rutinas h2,
@@ -1586,12 +1113,6 @@ body.interface-page .interface-empty {
 .profesor-page .content-title h1 {
     color: var(--color-accent-bright);
     font-family: "Special Gothic Expanded One", sans-serif;
-}
-
-.usuario-page .menu-link:hover,
-.usuario-page .menu-link:focus-visible {
-    color: var(--color-text);
-    background: color-mix(in srgb, var(--color-accent) 16%, transparent);
 }
 
 .membership-expiry-notice {
@@ -1612,6 +1133,70 @@ body.interface-page .interface-empty {
     color: var(--color-danger);
 }
 
-body.interface-page .interface-sidebar a.cerrar {
-    color: var(--color-danger);
+/* ---- Animación (gif) de los ejercicios ---- */
+.exercise-library-row.has-media {
+    grid-template-columns: 64px minmax(0, 1.4fr) minmax(90px, 1fr) minmax(90px, 1fr) auto;
+}
+
+.exercise-gif-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    overflow: hidden;
+    border-radius: 7px;
+    background: color-mix(in srgb, var(--color-text) 6%, transparent);
+}
+
+.exercise-library-row .exercise-gif-slot.is-empty {
+    border: 1px dashed color-mix(in srgb, var(--color-text) 22%, transparent);
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-size: 0.68rem;
+    text-align: center;
+}
+
+.exercise-gif {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.exercise-gif-inline {
+    width: 44px;
+    height: 44px;
+    margin-right: 10px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--color-text) 6%, transparent);
+    vertical-align: middle;
+}
+
+.exercise-gif-button {
+    min-height: 36px;
+    padding: 7px 12px;
+    white-space: nowrap;
+}
+
+.exercise-image-help {
+    margin-top: 6px;
+    color: var(--color-text-secondary);
+    font-size: 0.8rem;
+}
+
+@media (max-width: 767.98px) {
+    .exercise-library-row.has-media {
+        grid-template-columns: 64px minmax(0, 1fr);
+        gap: 5px 14px;
+    }
+
+    .exercise-library-row.has-media .exercise-gif-slot {
+        grid-row: span 3;
+    }
+
+    .exercise-library-row.has-media .exercise-gif-button {
+        grid-column: 1 / -1;
+        justify-self: start;
+        margin-top: 6px;
+    }
 }

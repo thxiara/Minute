@@ -45,7 +45,7 @@
             const productName = document.createElement("div");
             productName.className = "product-name";
             const image = document.createElement("img");
-            image.src = "assets/imagenes/img6.jpg";
+            image.src = "/front/dist/assets/imagenes/img6.jpg";
             image.alt = "";
             image.className = "product-thumbnail";
             const name = document.createElement("span");
@@ -80,7 +80,7 @@
             const menu = document.createElement("div");
             menu.className = "product-actions-menu";
             const editLink = document.createElement("a");
-            editLink.href = `paginas/roles/admin/admin-producto.html?id=${encodeURIComponent(product.id)}`;
+            editLink.href = `/dash/admin/producto?id=${encodeURIComponent(product.id)}`;
             editLink.textContent = "Ver / editar";
             const deleteButton = document.createElement("button");
             deleteButton.type = "button";
@@ -109,8 +109,8 @@
             emptyMessage.hidden = visible > 0;
         }
 
-        function renderProducts() {
-            const products = window.ProductosStore.list();
+        async function renderProducts() {
+            const products = await window.ProductosStore.list();
             tableBody.replaceChildren(...products.map(createProductRow));
             filterProducts();
         }
@@ -118,28 +118,26 @@
         searchInput.addEventListener("input", filterProducts);
         pageSize.addEventListener("change", filterProducts);
 
-        tableBody.addEventListener("click", event => {
+        tableBody.addEventListener("click", async event => {
             const deleteButton = event.target.closest("[data-product-delete]");
             if (!deleteButton) return;
 
             if (!window.confirm("¿Eliminar este producto?")) return;
 
             try {
-                window.ProductosStore.remove(deleteButton.dataset.productDelete);
+                await window.ProductosStore.remove(deleteButton.dataset.productDelete);
                 feedback.classList.remove("is-error");
                 feedback.textContent = "Producto eliminado correctamente.";
-                renderProducts();
+                await renderProducts();
             } catch (error) {
                 showError(feedback, error, "No se pudo eliminar el producto.");
             }
         });
 
-        try {
-            renderProducts();
-        } catch (error) {
+        renderProducts().catch((error) => {
             showError(feedback, error, "No se pudo cargar la lista de productos.");
             emptyMessage.hidden = false;
-        }
+        });
     }
 
     if (!productForm) return;
@@ -180,23 +178,19 @@
         formTitle.textContent = "Editar producto";
         saveButton.textContent = "Guardar cambios";
 
-        try {
-            const product = window.ProductosStore.get(productId);
-            if (!product) {
-                formFeedback.textContent = "No se encontró el producto.";
-                saveButton.disabled = true;
-            } else {
-                editingProductFound = true;
-                nameInput.value = product.name;
-                categoryInput.value = product.category;
-                priceInput.value = String(product.price);
-                descriptionInput.value = product.description || "";
-                stockInput.value = String(product.stock);
-            }
-        } catch (error) {
+        saveButton.disabled = true;
+        window.ProductosStore.get(productId).then((product) => {
+            editingProductFound = true;
+            saveButton.disabled = false;
+            nameInput.value = product.name;
+            categoryInput.value = product.category;
+            priceInput.value = String(product.price);
+            descriptionInput.value = product.description || "";
+            stockInput.value = String(product.stock);
+            updateSummary();
+        }).catch((error) => {
             showError(formFeedback, error, "No se pudo cargar el producto.");
-            saveButton.disabled = true;
-        }
+        });
     } else {
         formTitle.textContent = "Agregar producto";
     }
@@ -216,7 +210,7 @@
 
     });
 
-    productForm.addEventListener("submit", event => {
+    productForm.addEventListener("submit", async event => {
         event.preventDefault();
         if (!productForm.reportValidity() || !editingProductFound) return;
 
@@ -229,19 +223,21 @@
         };
 
         try {
+            saveButton.disabled = true;
             if (productId) {
-                window.ProductosStore.update(productId, product);
+                await window.ProductosStore.update(productId, product);
             } else {
-                window.ProductosStore.create(product);
+                await window.ProductosStore.create(product);
             }
 
             formFeedback.classList.remove("is-error");
             formFeedback.textContent = "Producto guardado correctamente.";
             saveButton.disabled = true;
             window.setTimeout(() => {
-                window.location.href = "paginas/roles/admin/admin-productos.html";
+                window.location.href = "/dash/admin/productos";
             }, 700);
         } catch (error) {
+            saveButton.disabled = false;
             showError(formFeedback, error, "No se pudo guardar el producto.");
         }
     });

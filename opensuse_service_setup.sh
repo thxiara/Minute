@@ -25,5 +25,11 @@ sudo mariadb -e "CREATE DATABASE IF NOT EXISTS \`$newdb\` CHARACTER SET utf8mb4;
 sudo mariadb -e "CREATE USER IF NOT EXISTS '$newuser'@'localhost' IDENTIFIED BY '$newpass';"
 sudo mariadb -e "GRANT ALL PRIVILEGES ON \`$newdb\`.* TO '$newuser'@'localhost';"
 sudo mariadb -e "FLUSH PRIVILEGES;"
-printf "DB_HOST=localhost\nDB_NAME=$newdb\nDB_USER=$newuser\nDB_PASS=$newpass" | sudo tee /srv/www/htdocs/api/.env
+# Carpetas para las imágenes subidas (fuera de htdocs), donde solo escribe el usuario de Apache
+mediadir=/var/lib/minute
+echo -e "\e[1;34mCreando carpetas de imágenes en $mediadir...\e[0m"
+sudo mkdir -p "$mediadir/exercises" "$mediadir/pfp"
+sudo chown -R wwwrun:www "$mediadir"
+sudo chmod -R 750 "$mediadir"
+printf "DB_HOST=localhost\nDB_NAME=$newdb\nDB_USER=$newuser\nDB_PASS=$newpass\nEXERCISE_DIR=$mediadir/exercises\nPFP_DIR=$mediadir/pfp\n" | sudo tee /srv/www/htdocs/api/.env
 exit 0

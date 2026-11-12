@@ -3,7 +3,30 @@
 
 <head>
     <base href="../">
-    <link rel="icon" type="image/png" href="assets/iconos/favicon.png">
+    <script>
+        const assetFallbackPrefix = '/front/dist/';
+        const assetFallbackRoot = document.querySelector('base') ? '' : 'dist/';
+
+        document.addEventListener('error', (event) => {
+            const element = event.target;
+            if (!(element instanceof Element)) return;
+
+            const attribute = element.hasAttribute('href') ? 'href' : 'src';
+            const url = element.getAttribute(attribute);
+            if (!url?.startsWith(assetFallbackPrefix)) return;
+
+            const fallbackUrl = assetFallbackRoot + url.slice(assetFallbackPrefix.length);
+            if (element instanceof HTMLScriptElement) {
+                const replacement = document.createElement('script');
+                replacement.src = fallbackUrl;
+                element.after(replacement);
+                element.remove();
+            } else {
+                element.setAttribute(attribute, fallbackUrl);
+            }
+        }, true);
+    </script>
+    <link rel="icon" type="image/png" href="/front/dist/assets/iconos/favicon.png">
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,9 +35,9 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<link rel="stylesheet" href="css/styles.css">
-<link rel="stylesheet" href="css/auth.css">
-<link rel="stylesheet" href="css/responsives/authresponsive.css">
+<link rel="stylesheet" href="/front/dist/css/styles.css">
+<link rel="stylesheet" href="/front/dist/css/auth.css">
+<link rel="stylesheet" href="/front/dist/css/responsives/authresponsive.css">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,13 +46,15 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
+<!-- Traducciones: tiene que cargarse antes que el resto de los scripts -->
+<script src="/front/dist/js/i18n.js"></script>
 </head>
 
 
-<body>
+<body data-es-socio="{{es_socio}}">
 
 
-<a href="../index.html" class="volver">
+<a href="/" class="volver">
 
     <i class="fa-solid fa-arrow-left"></i>
     Volver al inicio
@@ -59,273 +84,20 @@
 
 
 
-    <div class="row g-4">
-
-
-        <div class="col-md-6 col-lg-4">
-
-            <div class="review-card h-100">
-
-                <img src="assets/imagenes/img6.jpg" alt="Usuario">
-
-                <div class="contenido">
-
-                    <h3>Martina, 21 años</h3>
-
-                    <span>★★★★★</span>
-
-                    <p>
-                        Desde que comencé a entrenar aquí me siento mucho mejor físicamente. El ambiente es excelente y siempre recibo ayuda cuando la necesito.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="col-md-6 col-lg-4">
-
-            <div class="review-card h-100">
-
-                <img src="assets/imagenes/img6.jpg" alt="Usuario">
-
-                <div class="contenido">
-
-                    <h3>Joaquín, 28 años</h3>
-
-                    <span>★★★★★</span>
-
-                    <p>
-                        Las instalaciones son muy modernas y los entrenadores explican cada ejercicio con paciencia. Lo recomiendo totalmente.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="col-md-6 col-lg-4">
-
-            <div class="review-card h-100">
-
-                <img src="assets/imagenes/img6.jpg" alt="Usuario">
-
-                <div class="contenido">
-
-                    <h3>Camila, 19 años</h3>
-
-                    <span>★★★★☆</span>
-
-                    <p>
-                        Me encanta la energía del gimnasio. Siempre encuentro las máquinas disponibles y el lugar está muy limpio.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="col-md-6 col-lg-4">
-
-            <div class="review-card h-100">
-
-                <img src="assets/imagenes/img6.jpg" alt="Usuario">
-
-                <div class="contenido">
-
-                    <h3>Santiago, 34 años</h3>
-
-                    <span>★★★★★</span>
-
-                    <p>
-                        Después de varios meses entrenando logré cumplir mis objetivos. El acompañamiento del equipo hace la diferencia.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="col-md-6 col-lg-4">
-
-            <div class="review-card h-100">
-
-                <img src="assets/imagenes/img6.jpg" alt="Usuario">
-
-                <div class="contenido">
-
-                    <h3>Lucía, 25 años</h3>
-
-                    <span>★★★★★</span>
-
-                    <p>
-                        Nunca pensé que disfrutaría tanto hacer ejercicio. Las clases grupales son dinámicas y motivadoras.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="col-md-6 col-lg-4">
-
-            <div class="review-card h-100">
-
-                <img src="assets/imagenes/img6.jpg" alt="Usuario">
-
-                <div class="contenido">
-
-                    <h3>Valentina, 22 años</h3>
-
-                    <span>★★★★★</span>
-
-                    <p>
-                        El mejor gimnasio en el que he estado. Hay un ambiente muy agradable y siempre salgo con ganas de volver.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="col-md-6 col-lg-4">
-
-            <div class="review-card h-100">
-
-                <img src="assets/imagenes/img6.jpg" alt="Usuario">
-
-                <div class="contenido">
-
-                    <h3>Nicolás, 30 años</h3>
-
-                    <span>★★★★★</span>
-
-                    <p>
-                        Los equipos son modernos y el personal está siempre atento. Se nota el compromiso con cada socio.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="col-md-6 col-lg-4">
-
-            <div class="review-card h-100">
-
-                <img src="assets/imagenes/img6.jpg" alt="Usuario">
-
-                <div class="contenido">
-
-                    <h3>Agustina, 27 años</h3>
-
-                    <span>★★★★☆</span>
-
-                    <p>
-                        Muy buena experiencia. Las clases son entretenidas y pude mejorar mucho mi condición física.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="col-md-6 col-lg-4">
-
-            <div class="review-card h-100">
-
-                <img src="assets/imagenes/img6.jpg" alt="Usuario">
-
-                <div class="contenido">
-
-                    <h3>Tomás, 20 años</h3>
-
-                    <span>★★★★★</span>
-
-                    <p>
-                        Entreno hace varios meses y los resultados fueron increíbles. Recomiendo FitPower a cualquiera que quiera empezar.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="col-md-6 col-lg-4">
-
-            <div class="review-card h-100">
-
-                <img src="assets/imagenes/img6.jpg" alt="Usuario">
-
-                <div class="contenido">
-
-                    <h3>Victoria, 32 años</h3>
-
-                    <span>★★★★★</span>
-
-                    <p>
-                        Excelente atención desde el primer día. Es un lugar cómodo, seguro y con un ambiente muy motivador.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
+    <div class="row g-4" id="reviewsList" aria-live="polite">
+        <p class="text-center">Cargando reseñas…</p>
     </div>
-
-
 
     <div class="row justify-content-center mt-5">
 
         <div class="col-12 col-lg-8">
 
-            <form class="formulario" id="memberReviewForm">
+            <p class="text-center" id="reviewLoginHint" hidden>
+                <a href="/login">Iniciá sesión</a> como socio para escribir tu reseña.
+            </p>
+            <form class="formulario" id="memberReviewForm" hidden>
 
                 <h2 id="reviewFormHeading">Escribe tu reseña</h2>
-
-
-
-                <div class="mb-3">
-
-                    <input
-                    type="text"
-                    class="form-control"
-                    id="reviewName"
-                    name="name"
-                    placeholder="Nombre completo"
-                    required>
-
-                </div>
 
 
 
@@ -354,6 +126,7 @@
                     <textarea
                     class="form-control"
                     id="reviewText"
+                    maxlength="300"
                     name="text"
                     rows="5"
                     placeholder="Comparte tu experiencia en FitPower..."
@@ -383,9 +156,8 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/api.js"></script>
-<script src="js/session.js"></script>
-<script src="js/dashboard/usuario.js"></script>
+<script src="/front/dist/js/api.js"></script>
+<script src="/front/dist/js/pages/resenas.js"></script>
 
 </body>
 

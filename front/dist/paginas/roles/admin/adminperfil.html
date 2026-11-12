@@ -2,7 +2,30 @@
 <html lang="es">
 <head>
     <base href="../../../">
-    <link rel="icon" type="image/png" href="assets/iconos/favicon.png">
+    <script>
+        const assetFallbackPrefix = '/front/dist/';
+        const assetFallbackRoot = document.querySelector('base') ? '' : 'dist/';
+
+        document.addEventListener('error', (event) => {
+            const element = event.target;
+            if (!(element instanceof Element)) return;
+
+            const attribute = element.hasAttribute('href') ? 'href' : 'src';
+            const url = element.getAttribute(attribute);
+            if (!url?.startsWith(assetFallbackPrefix)) return;
+
+            const fallbackUrl = assetFallbackRoot + url.slice(assetFallbackPrefix.length);
+            if (element instanceof HTMLScriptElement) {
+                const replacement = document.createElement('script');
+                replacement.src = fallbackUrl;
+                element.after(replacement);
+                element.remove();
+            } else {
+                element.setAttribute(attribute, fallbackUrl);
+            }
+        }, true);
+    </script>
+    <link rel="icon" type="image/png" href="/front/dist/assets/iconos/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil de socio | FitPower</title>
@@ -10,19 +33,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&family=TASA+Explorer:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/dashboards/comun.css">
-    <link rel="stylesheet" href="css/dashboards/interfaces.css">
-    <link rel="stylesheet" href="css/responsives/dashboardsresponsive/comunresponsive.css">
+    <link rel="stylesheet" href="/front/dist/css/styles.css">
+    <link rel="stylesheet" href="/front/dist/css/dashboards/comun.css">
+    <link rel="stylesheet" href="/front/dist/css/dashboards/interfaces.css">
+    <link rel="stylesheet" href="/front/dist/css/responsives/dashboardsresponsive/comunresponsive.css">
+    <!-- Traducciones: tiene que cargarse antes que el resto de los scripts -->
+    <script src="/front/dist/js/i18n.js"></script>
 </head>
 <body class="interface-page admin-interface">
     <header>
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center header-contenido">
-                <h1 class="logo"><a href="../index.html">FitPower</a></h1>
+                <h1 class="logo"><a href="/">FitPower</a></h1>
                 <div class="header-derecha">
-                    <span class="header-text" data-session-name></span>
-                    <img src="assets/imagenes/img6.jpg" class="usuario-header" alt="Foto de perfil">
+                    <span class="header-text">{{nombre}}</span>
+                    <img src="/front/dist/assets/imagenes/img6.jpg" class="usuario-header" alt="Foto de perfil">
                     <button class="boton-menu role-nav-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#roleNavigation" aria-controls="roleNavigation" aria-label="Abrir navegación">
                         <span></span><span></span><span></span>
                     </button>
@@ -43,16 +68,16 @@
                     <h3>Socios</h3>
                     <a href="/dash/admin">Socios activos</a>
                     <a href="/dash/admin/registrar">Nuevo socio</a>
-                    <a href="paginas/roles/admin/adminperfil.html" aria-current="page">Perfil de socio</a>
+                    <a href="/dash/admin/perfil" aria-current="page">Perfil de socio</a>
                 </div>
                 <div class="interface-nav-group">
                     <h3>Clases</h3>
-                    <a href="paginas/roles/admin/admin-clases.html">Administrar clases</a>
+                    <a href="/dash/admin/clases">Administrar clases</a>
                 </div>
                 <div class="interface-nav-group">
                     <h3>Productos</h3>
-                    <a href="paginas/roles/admin/admin-productos.html">Productos activos</a>
-                    <a href="paginas/roles/admin/admin-producto.html">Agregar producto</a>
+                    <a href="/dash/admin/productos">Productos activos</a>
+                    <a href="/dash/admin/producto">Agregar producto</a>
                 </div>
                   <a href="/logout" class="cerrar">Cerrar sesión</a>
               </nav>
@@ -67,17 +92,20 @@
                 </div>
                 <div class="interface-actions">
                     <a class="interface-button-secondary" href="/dash/admin">Volver a socios</a>
+                    <button class="interface-button" type="button" id="editUserButton">Editar datos</button>
+                    <button class="interface-button-danger" type="button" id="toggleActiveButton">Dar de baja</button>
                     <button class="interface-button-secondary" type="button" data-open-class-assign>Asignar clases</button>
                 </div>
             </div>
 
             <section class="interface-panel profile-summary" aria-label="Resumen del socio">
-                <img src="assets/imagenes/img6.jpg" alt="Foto del socio">
+                <img src="/front/dist/assets/imagenes/img6.jpg" alt="Foto del socio" id="profilePhoto">
                 <div>
                     <h2 id="profileName"></h2>
                     <p id="profileSince">—</p>
                 </div>
             </section>
+            <p id="profileFeedback" class="interface-feedback" role="status" hidden></p>
 
             <div class="interface-grid">
                 <section class="interface-panel">
@@ -87,7 +115,8 @@
                             <div class="info-item"><span>Documento</span><strong id="profileDocument">—</strong></div>
                             <div class="info-item"><span>Teléfono</span><strong id="profilePhone">—</strong></div>
                             <div class="info-item"><span>Correo</span><strong id="profileEmail">—</strong></div>
-                            <div class="info-item"><span>Estado</span><strong>Activo</strong></div>
+                            <div class="info-item"><span>Nacimiento</span><strong id="profileBirth">—</strong></div>
+                            <div class="info-item"><span>Estado</span><strong id="profileStatus">—</strong></div>
                         </div>
                     </div>
                 </section>
@@ -99,6 +128,13 @@
                             <li><strong>Plan</strong><span id="profilePlan">—</span></li>
                             <li><strong>Vencimiento</strong><span id="profileExpiration">—</span></li>
                         </ul>
+                        <form id="renewMembershipForm" class="d-flex flex-wrap gap-2 mt-3">
+                            <select class="form-select w-auto" id="renewMembershipPlan" aria-label="Plan para renovar" required>
+                                <option value="" selected disabled>Plan</option>
+                            </select>
+                            <button class="interface-button-secondary" type="submit">Renovar membresía</button>
+                        </form>
+                        <p id="renewMembershipFeedback" class="interface-feedback mt-2" role="status" hidden></p>
                     </div>
                 </section>
 
@@ -136,9 +172,50 @@
         </div>
     </div>
 
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content interface-modal">
+                <form id="editUserForm" novalidate>
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="editUserTitle">Editar datos</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label" for="editUserName">Nombre</label>
+                            <input class="form-control" id="editUserName" name="nombre" maxlength="30" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="editUserCi">C.I.</label>
+                            <input class="form-control" id="editUserCi" name="ci" maxlength="20" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="editUserPhone">Teléfono</label>
+                            <input class="form-control" id="editUserPhone" name="telefono" type="tel" maxlength="20" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="editUserEmail">Correo</label>
+                            <input class="form-control" id="editUserEmail" name="email" type="email" maxlength="50" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="editUserPassword">Nueva contraseña</label>
+                            <input class="form-control" id="editUserPassword" name="contrasena" type="password" minlength="8" maxlength="50" autocomplete="new-password" placeholder="Dejar vacío para no cambiarla">
+                        </div>
+                        <p id="editUserFeedback" class="interface-feedback" role="status" hidden></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="interface-button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="interface-button">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/session.js"></script>
-    <script src="js/dashboard/admin.js"></script>
+    <script src="/front/dist/js/api.js"></script>
+    <script src="/front/dist/js/foto-perfil.js"></script>
+    <script src="/front/dist/js/visor-imagen.js"></script>
+    <script src="/front/dist/js/dashboard/admin.js"></script>
 </body>
 </html>
