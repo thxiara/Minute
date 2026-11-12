@@ -8,7 +8,7 @@
 /* Base */
 body{
     font-size:1rem;
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
 }
 
 body.login-page {
@@ -48,7 +48,7 @@ body.login-page {
     left:30px;
     z-index:5;
     color:var(--color-text);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-size:.9rem;
     font-weight:600;
     text-decoration:none;
@@ -75,8 +75,8 @@ body.login-page {
 .formulario h1{
     text-align:center;
     color:var(--color-accent-bright);
-    font-family:'Pervitina Dex',sans-serif;
-    font-size:2rem;
+    font-family: 'Pervitina Dex', sans-serif;
+    font-size:clamp(1.5rem, 4vw, 2rem);
     font-weight:800;
     margin-bottom:25px;
 }
@@ -90,7 +90,7 @@ body.login-page {
     border-radius:0;
     background:transparent;
     color:var(--color-text-secondary);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-size:.95rem;
     outline:none;
     transition:.3s;
@@ -113,7 +113,7 @@ body.login-page {
     border-radius:8px;
     background:linear-gradient(135deg, var(--color-primary-deep), var(--color-primary));
     color:var(--color-text);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-size:1rem;
     font-weight:700;
     cursor:pointer;
@@ -142,7 +142,7 @@ body.login-page {
     text-align:center;
     margin-top:15px;
     color:var(--color-accent-bright);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-size:.9rem;
     font-weight:600;
     text-decoration:none;
@@ -162,8 +162,8 @@ body.login-page {
 
 .reviews h1{
     color:var(--color-accent-bright);
-    font-family:'Pervitina Dex',sans-serif;
-    font-size:2.8rem;
+    font-family: 'Pervitina Dex', sans-serif;
+    font-size:clamp(1.8rem, 4vw, 2.8rem);
     font-weight:800;
     text-align:center;
     margin-bottom:15px;
@@ -171,7 +171,7 @@ body.login-page {
 
 .subtitulo{
     color:var(--color-text-secondary);
-    font-family:'Special Gothic Expanded One',sans-serif;
+    font-family: 'Special Gothic Expanded One', sans-serif;
     text-align:center;
     max-width:650px;
     margin:0 auto 50px;
@@ -210,7 +210,7 @@ body.login-page {
 
 .review-card h3{
     color:var(--color-accent-bright);
-    font-family:'Pervitina Dex',sans-serif;
+    font-family: 'Pervitina Dex', sans-serif;
     font-size:1rem;
     font-weight:700;
     margin-bottom:6px;
@@ -219,14 +219,14 @@ body.login-page {
 .review-card span{
     display:block;
     color:var(--color-warning);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     letter-spacing:2px;
     margin-bottom:10px;
 }
 
 .review-card p{
     color:var(--color-text-secondary);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-size:.88rem;
     line-height:1.6;
     margin:0;
@@ -234,9 +234,9 @@ body.login-page {
 
 .formulario h2{
     color:var(--color-accent-bright);
-    font-family:'Pervitina Dex',sans-serif;
+    font-family: 'Pervitina Dex', sans-serif;
     text-align:center;
-    font-size:2rem;
+    font-size:clamp(1.5rem, 4vw, 2rem);
     font-weight:800;
     margin-bottom:25px;
 }
