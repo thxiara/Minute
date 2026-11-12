@@ -92,6 +92,7 @@ $router->get('/dash/admin/clases', 'AuthController@panelAdminClases');
 $router->get('/dash/admin/productos', 'AuthController@panelAdminProductos');
 $router->get('/dash/admin/producto', 'AuthController@panelAdminProducto');
 $router->get('/dash/admin/perfil', 'AuthController@panelAdminPerfil');
+$router->get('/dash/admin/resenas', 'AuthController@panelAdminResenas');
 #Entrenador
 $router->get('/dash/entrenador', 'AuthController@panelEntrenador');
 $router->get('/dash/entrenador/ejercicios', 'AuthController@panelEntrenadorEjercicios');
