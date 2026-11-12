@@ -16,7 +16,9 @@ sudo a2enmod rewrite
 sudo tee /etc/apache2/conf.d/zz-htdocs-allowoverride.conf >/dev/null <<'EOF'
 # Allow .htaccess in the application docroot (added by opensuse_service_setup.sh)
 <Directory "/srv/www/htdocs">
-    AllowOverride All
+	Options FollowSymLinks
+	AllowOverride All
+	Require all granted
 </Directory>
 EOF
 sudo systemctl restart apache2
