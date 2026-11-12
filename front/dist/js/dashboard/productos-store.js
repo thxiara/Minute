@@ -1,3 +1,4 @@
+// Catálogo
 // Catálogo de productos: habla con la API (/api/productos). Cada función devuelve una
 // promesa y, si la API responde con error, la rechaza con el mensaje que mandó el servidor.
 (() => {

@@ -1,3 +1,5 @@
+/* Usuario responsive */
+
 @media (max-width: 1199px) {
     .usuario-content {
         padding: 28px 30px 45px;
@@ -22,6 +24,7 @@
 }
 
 @media (max-width: 767px) {
+    /* Encabezado */
     .usuario-page > header,
     .usuario-page .header-contenido {
         height: 64px;

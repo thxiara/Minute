@@ -1,3 +1,5 @@
+/* Interfaces */
+
 .interface-layout {
     display: grid;
     grid-template-columns: var(--dashboard-sidebar-width) minmax(0, 1fr);
@@ -8,6 +10,7 @@
         var(--color-background);
 }
 
+/* Encabezado */
 body.interface-page > header .container-fluid {
     max-width: 1540px;
     padding-inline: clamp(16px, 3vw, 40px);
@@ -231,6 +234,7 @@ body.interface-page .logo {
     accent-color: var(--color-accent);
 }
 
+/* Formularios */
 .interface-content .form-control,
 .interface-content .form-select {
     min-height: 43px;
@@ -719,6 +723,7 @@ body.interface-page .logo {
     font-size: 0.86rem;
 }
 
+/* Modales */
 .modal-content.interface-modal {
     border: 1px solid color-mix(in srgb, var(--color-text) 12%, transparent);
     border-radius: 15px;
@@ -851,6 +856,7 @@ body.interface-page .logo {
     color: var(--color-text);
 }
 
+/* Responsive */
 @media (max-width: 991px) {
     .interface-layout {
         grid-template-columns: var(--dashboard-sidebar-width) minmax(0, 1fr);

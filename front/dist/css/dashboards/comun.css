@@ -1,7 +1,11 @@
+/* Común */
+
+/* Variables */
 :root {
     font-size: 19px;
 }
 
+/* Barra lateral */
 .barra-lateral .collapse,
 .barra-lateral-movil .collapse {
     display: block !important;
@@ -9,6 +13,7 @@
     visibility: visible !important;
 }
 
+/* Responsive */
 @media (max-width: 991px) {
     .interface-sidebar.offcanvas {
         padding: 0;
@@ -141,6 +146,7 @@
     background-color: var(--color-surface-raised);
 }
 
+/* Tablas */
 .tabla-socios,
 .tabla-alumnos {
     width: 100%;
