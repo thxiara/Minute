@@ -11,12 +11,32 @@ echo -e "\e[1;34mPrendiendo servicio de MariaDB...\e[0m"
 sudo systemctl enable --now mariadb
 echo -e "\e[1;34mConfigurando base de datos de MariaDB...\e[0m"
 
-##Habilitado de modulo rewrite y AllowOverride para Apache
+##Habilitado de modulo rewrite, AllowOverride y FollowSymLinks para Apache
 sudo a2enmod rewrite
-sudo tee /etc/apache2/conf.d/zz-htdocs-allowoverride.conf >/dev/null <<'EOF'
+
+sudo mkdir -p /etc/apache2/conf.d/
+[[ -f /etc/apache2/conf.d/zz-htdocs.conf ]] \
+|| sudo tee /etc/apache2/conf.d/zz-htdocs.conf >/dev/null <<'EOF'
 # Allow .htaccess in the application docroot (added by opensuse_service_setup.sh)
 <Directory "/srv/www/htdocs">
-    AllowOverride All
+	Options FollowSymLinks
+	AllowOverride All
+	Require all granted
 </Directory>
 EOF
-sudo apache2ctl configtest && sudo systemctl restart apache2
+
+## Habilitado de la redirección para phpMyAdmin
+sudo mkdir -p /usr/share/phpMyAdmin
+[[ -f /etc/apache2/conf.d/phpMyAdmin.conf ]] \
+|| sudo tee /etc/apache2/conf.d/phpMyAdmin.conf >/dev/null <<'EOF'
+Alias /phpMyAdmin /usr/share/phpMyAdmin
+
+<Directory /usr/share/phpMyAdmin>
+	Options FollowSymLinks
+	DirectoryIndex index.php
+	AllowOverride None
+	Require local
+</Directory>
+EOF
+
+sudo systemctl restart apache2
