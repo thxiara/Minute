@@ -809,7 +809,7 @@ body.interface-page .logo {
     border-radius: 999px;
     background: var(--color-surface-raised);
     color: var(--color-text-secondary);
-    font-size: 10px;
+    font-size: 12px;
     white-space: nowrap;
 }
 
@@ -903,7 +903,7 @@ body.interface-page .logo {
 
     .foto-usuario-trigger span {
         right: -10px;
-        font-size: 9px;
+        font-size: 12px;
     }
 
     .interface-heading h1 {

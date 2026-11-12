@@ -1,5 +1,6 @@
-// Carrusel de reseñas de la landing. Si en la base hay al menos dos reseñas, se muestran
-// esas; si no, quedan las de ejemplo que trae el HTML.
+// Carrusel de reseñas de la landing. Si la base tiene reseñas, se muestran las que el
+// admin dejó elegidas en el panel de reseñas (o las más recientes si no eligió ninguna);
+// si no alcanza, quedan las de ejemplo que trae el HTML.
 (async () => {
 const slider = document.querySelector(".slider");
 if (!slider) return;
@@ -31,12 +32,32 @@ function crearComentario(resena, indice) {
     return comentario;
 }
 
-if (window.API) {
-    const data = await API.request("/resenas");
-    if (data?.success && data.resenas.length >= visibles) {
-        slider.replaceChildren(...data.resenas.slice(0, 10).map(crearComentario));
+// El toggle de idioma (botón único ES/EN) lo inyecta i18n.js en el header de todas las páginas.
+
+// Ocultar avatar si no hay sesión (el servidor lo renderiza siempre con la img por defecto,
+// así que la señal es {{acceso_url}}: "/login" = sin sesión, "/dash" = con sesión).
+const usuarioHeader = document.querySelector(".usuario-header");
+if (usuarioHeader) {
+    const accesoHref = document.getElementById("accesoBtn")?.getAttribute("href") || "";
+    // En el preview estático los {{...}} llegan sin procesar: también cuenta como "sin sesión".
+    const sinSesion = accesoHref.trim() === ""
+        || accesoHref.includes("{{")
+        || accesoHref.endsWith("/login");
+    if (sinSesion) {
+        usuarioHeader.style.display = "none";
     }
 }
+
+    if (typeof API === "undefined") return; // api.js no está disponible en esta página
+    const data = await API.request("/resenas");
+    if (data?.success && Array.isArray(data.resenas)) {
+        // Respeta el panel de reseñas del admin: oculta las eliminadas y acota a las elegidas.
+        const resenas = window.ResenasStore ? window.ResenasStore.paraElCarrusel(data.resenas) : data.resenas;
+        const minimo = window.ResenasStore?.haySeleccionCarrusel() ? 1 : visibles;
+        if (resenas.length >= minimo) {
+            slider.replaceChildren(...resenas.slice(0, 10).map(crearComentario));
+        }
+    }
 
 const comentarios = slider.querySelectorAll(".comentario");
 let actual = 0;

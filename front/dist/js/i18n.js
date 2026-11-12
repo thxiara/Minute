@@ -231,24 +231,33 @@ const I18n = (() => {
         });
     }
 
+    // Estilos del control de idioma: botón con globo + iniciales del idioma activo.
+    // En las páginas con header va dentro del contenedor derecho (extremo del header);
+    // las que no tienen header (login, reseñas...) lo usan como pastilla flotante.
     const ESTILOS = `
         html.${CLASE_CARGANDO} body { visibility: hidden; }
-        .i18n-selector {
-            position: fixed; left: 12px; bottom: 12px; z-index: 2000;
-            display: flex; gap: 2px; padding: 3px;
-            background: rgba(20, 20, 20, .88); border: 1px solid rgba(255, 255, 255, .25);
-            border-radius: 999px; box-shadow: 0 2px 8px rgba(0, 0, 0, .35);
-            font: 600 12px/1 system-ui, sans-serif;
-        }
-        .i18n-selector button {
+        .idioma-header {
             all: unset; box-sizing: border-box; cursor: pointer;
-            min-width: 34px; padding: 7px 9px; border-radius: 999px;
-            color: #ddd; text-align: center; letter-spacing: .04em;
+            display: inline-flex; align-items: center; gap: 7px;
+            height: 38px; padding: 0 14px;
+            border: 1px solid rgba(255, 255, 255, .28); border-radius: 999px;
+            background: rgba(255, 255, 255, .12);
+            color: #fff;
+            font: 700 11.5px/1 system-ui, sans-serif; letter-spacing: .09em;
+            transition: background .2s ease, border-color .2s ease, transform .2s ease;
         }
-        .i18n-selector button:hover { color: #fff; background: rgba(255, 255, 255, .14); }
-        .i18n-selector button:focus-visible { outline: 2px solid #fff; outline-offset: 1px; }
-        .i18n-selector button[aria-pressed="true"] { background: #fff; color: #111; }
-        @media print { .i18n-selector { display: none; } }
+        .idioma-header:hover { background: rgba(255, 255, 255, .22); border-color: rgba(255, 255, 255, .5); }
+        .idioma-header:active { transform: scale(.95); }
+        .idioma-header:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+        .idioma-header svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        .idioma-header-flotante {
+            position: fixed; left: 12px; bottom: 12px; z-index: 2000;
+            height: 44px; padding: 0 16px;
+            background: rgba(20, 20, 20, .9); border-color: rgba(255, 255, 255, .25);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .35); font-size: 12px;
+        }
+        .idioma-header-flotante:hover { background: rgba(20, 20, 20, .98); border-color: rgba(255, 255, 255, .45); }
+        @media print { .idioma-header { display: none; } }
     `;
 
     function agregarEstilos() {
@@ -257,34 +266,37 @@ const I18n = (() => {
         document.head.append(estilos);
     }
 
-    // Botones "ES | EN". Van dentro de un elemento con data-i18n-selector si la página tiene
-    // uno; si no, en una pastilla flotante abajo a la izquierda.
-    function agregarSelector() {
-        if (document.querySelector(".i18n-selector")) return;
-        const selector = document.createElement("div");
-        selector.className = "i18n-selector";
-        selector.setAttribute("role", "group");
-        selector.setAttribute("aria-label", "Idioma / Language");
-        selector.setAttribute("data-i18n-skip", "");
+    // Botón de un toque que muestra solo las iniciales del idioma actual y lo alterna
+    // con el otro (ES ↔ EN). Va en el header (extremo derecho, al final de .header-derecha
+    // o .contact-header-inner). En las páginas sin header (login, reseñas...) se usa como
+    // pastilla flotante. Una página puede ocultarlo con <html data-i18n-sin-selector>.
+    function agregarToggleDeIdioma() {
+        if (document.documentElement.hasAttribute("data-i18n-sin-selector")) return;
+        if (document.querySelector(".idioma-header")) return;
 
-        Object.entries(IDIOMAS).forEach(([codigo, nombre]) => {
-            const boton = document.createElement("button");
-            boton.type = "button";
-            boton.textContent = codigo.toUpperCase();
-            boton.title = nombre;
-            boton.lang = codigo;
-            boton.setAttribute("aria-label", nombre);
-            boton.setAttribute("aria-pressed", String(codigo === idioma));
-            boton.addEventListener("click", () => cambiar(codigo));
-            selector.append(boton);
+        const boton = document.createElement("button");
+        boton.type = "button";
+        boton.className = "idioma-header";
+        boton.setAttribute("aria-label", "Cambiar idioma");
+        boton.title = "Cambiar idioma";
+        boton.innerHTML =
+            '<svg viewBox="0 0 24 24" aria-hidden="true">'
+            + '<circle cx="12" cy="12" r="9"/>'
+            + '<path d="M3 12h18M12 3a15.3 15.3 0 0 1 0 18M12 3a15.3 15.3 0 0 0 0 18"/>'
+            + "</svg>"
+            + `<span>${idioma.toUpperCase()}</span>`;
+        boton.addEventListener("click", () => {
+            const otro = Object.keys(IDIOMAS).find((codigo) => codigo !== idioma);
+            if (otro) cambiar(otro);
         });
 
-        const lugar = document.querySelector("[data-i18n-selector]");
-        if (lugar) {
-            selector.style.position = "static";
-            lugar.append(selector);
+        const destino = document.querySelector(".header-derecha, .contact-header-inner");
+        if (destino) {
+            // Al final del contenedor derecho: queda como último elemento del header.
+            destino.append(boton);
         } else {
-            document.body.append(selector);
+            boton.classList.add("idioma-header-flotante");
+            document.body.append(boton);
         }
     }
 
@@ -311,7 +323,7 @@ const I18n = (() => {
         : accion());
 
     agregarEstilos();
-    alCargarLaPagina(agregarSelector);
+    alCargarLaPagina(agregarToggleDeIdioma);
 
     // Se resuelve cuando la página ya quedó traducida (enseguida si el idioma es español).
     const lista = new Promise((resolver) => {

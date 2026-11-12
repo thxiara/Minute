@@ -3,6 +3,29 @@
 
 <head>
     <meta charset="UTF-8">
+    <script>
+        const assetFallbackPrefix = '/front/dist/';
+        const assetFallbackRoot = document.querySelector('base') ? '' : 'dist/';
+
+        document.addEventListener('error', (event) => {
+            const element = event.target;
+            if (!(element instanceof Element)) return;
+
+            const attribute = element.hasAttribute('href') ? 'href' : 'src';
+            const url = element.getAttribute(attribute);
+            if (!url?.startsWith(assetFallbackPrefix)) return;
+
+            const fallbackUrl = assetFallbackRoot + url.slice(assetFallbackPrefix.length);
+            if (element instanceof HTMLScriptElement) {
+                const replacement = document.createElement('script');
+                replacement.src = fallbackUrl;
+                element.after(replacement);
+                element.remove();
+            } else {
+                element.setAttribute(attribute, fallbackUrl);
+            }
+        }, true);
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>FitPower</title>
@@ -33,12 +56,11 @@
 
     <div class="container-fluid">
 
-        <div class="d-flex justify-content-between align-items-center header-contenido">
+                <div class="d-flex justify-content-between align-items-center header-contenido">
 
             <h1 class="logo">
                 <a href="#">FitPower</a>
             </h1>
-
 
             <div class="header-derecha">
 
@@ -50,9 +72,7 @@
                     src="{{foto_url}}"
                     class="usuario-header"
                     alt="Usuario">
-
             </div>
-
         </div>
 
     </div>
@@ -552,7 +572,7 @@
                     </ul>
 
 
-                    <a class="plan-button" href="/front/contactos.html">
+                    <a class="plan-button btn-pro" href="/front/contactos.html">
                         Consulta
                     </a>
 
@@ -623,12 +643,24 @@
                         <i class="fa-solid fa-location-dot"></i>
                     </a>
 
-                    <a href="/front/contactos.html#instagram" aria-label="Instagram de FitPower">
+                    <a href="https://www.instagram.com/fitpowergym.uy/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de FitPower">
                         <i class="fa-brands fa-instagram"></i>
                     </a>
 
-                    <a href="/front/contactos.html#facebook" aria-label="Facebook de FitPower">
+                    <a href="https://www.facebook.com/people/FitPower-GymUy/pfbid0vg9438TVJ1XknVySChjdA5nMTYgh7GqXPQRra8MQeMKisGRPjpVftak7eaT52JH2l/" target="_blank" rel="noopener noreferrer" aria-label="Facebook de FitPower">
                         <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+
+                    <a href="https://www.youtube.com/@FitPowerGym" target="_blank" rel="noopener noreferrer" aria-label="YouTube de FitPower">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+
+                    <a href="https://www.linkedin.com/in/fit-power-458a99443" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de FitPower">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+
+                    <a href="https://x.com/FitPowerGym" target="_blank" rel="noopener noreferrer" aria-label="Twitter de FitPower">
+                        <i class="fa-brands fa-x-twitter"></i>
                     </a>
 
                     <a href="mailto:fitpower.srl@gmail.com" aria-label="Enviar correo a FitPower">
@@ -656,6 +688,7 @@
 </footer>
 
 <script src="/front/dist/js/api.js"></script>
+<script src="/front/dist/js/resenas-store.js"></script>
 <script src="/front/dist/js/pages/index.js"></script>
 
 </body>

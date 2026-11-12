@@ -1,12 +1,10 @@
 @media (max-width: 575px) {
-    .registro-container {
-        padding: 20px !important;
+    .registro-panel {
+        border-radius: 12px;
     }
 
-    .registro-container h1 {
-        margin-bottom: 22px;
-        font-size: 22px;
-        line-height: 1.25;
+    .registro-panel .interface-panel-body {
+        padding: 16px;
     }
 
     .campo {
@@ -19,7 +17,6 @@
         display: block;
         width: 100%;
         margin-bottom: 7px;
-        font-size: 13px;
     }
 
     .campo input,
@@ -39,6 +36,5 @@
         flex: 1;
         height: 42px;
         min-width: 0;
-        font-size: 13px;
     }
 }
