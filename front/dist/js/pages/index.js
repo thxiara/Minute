@@ -1,3 +1,4 @@
+// Carrusel
 // Carrusel de reseñas de la landing. Si en la base hay al menos dos reseñas, se muestran
 // esas; si no, quedan las de ejemplo que trae el HTML.
 (async () => {

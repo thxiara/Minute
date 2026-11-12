@@ -1,19 +1,46 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <base href="./">
+    <script>
+        const assetFallbackPrefix = '/front/dist/';
+        const assetFallbackRoot = 'dist/';
+
+        document.addEventListener('error', (event) => {
+            const element = event.target;
+            if (!(element instanceof Element)) return;
+
+            const attribute = element.hasAttribute('href') ? 'href' : 'src';
+            const url = element.getAttribute(attribute);
+            if (!url?.startsWith(assetFallbackPrefix)) return;
+
+            const fallbackUrl = assetFallbackRoot + url.slice(assetFallbackPrefix.length);
+            if (element instanceof HTMLScriptElement) {
+                const replacement = document.createElement('script');
+                replacement.src = fallbackUrl;
+                element.after(replacement);
+                element.remove();
+            } else {
+                element.setAttribute(attribute, fallbackUrl);
+            }
+        }, true);
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Contacta con FitPower para consultar por nuestras membresías.">
     <title>Contacto | FitPower</title>
-    <link rel="stylesheet" href="dist/css/styles.css">
-    <link rel="stylesheet" href="dist/css/contactos.css">
+    <link rel="stylesheet" href="/front/dist/css/styles.css">
+    <link rel="stylesheet" href="/front/dist/css/contactos.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&family=TASA+Explorer:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Traducciones: tiene que cargarse antes que el resto de los scripts -->
-    <script src="dist/js/i18n.js"></script>
+    <!-- Traducciones -->
+    <script src="/front/dist/js/i18n.js"></script>
+    <link rel="stylesheet" href="/front/dist/css/efectos.css">
+    <script src="/front/dist/js/efectos.js"></script>
 </head>
 <body class="contactos-page">
+    <!-- Encabezado -->
     <header>
         <div class="contact-header-inner">
             <h1 class="logo"><a href="index.html">FitPower</a></h1>
@@ -21,6 +48,7 @@
         </div>
     </header>
 
+    <!-- Contenido -->
     <main class="contactos-main">
         <div class="contactos-intro">
             <p class="contactos-eyebrow">Estamos para ayudarte</p>

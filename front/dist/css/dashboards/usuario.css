@@ -1,3 +1,5 @@
+/* Usuario */
+
 /* contenido */
 
 .usuario-content {
@@ -253,6 +255,7 @@
 
 /* sacar menu hamburguesa en pc */
 
+/* Responsive */
 @media (min-width: 1200px) {
 
     .boton-menu {

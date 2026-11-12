@@ -1,3 +1,4 @@
+// Visor
 // Visor de imágenes en grande. Cualquier <img data-zoom> se abre a pantalla completa al tocarla
 // (sirve también para las que el JavaScript agrega después, como los gifs de los ejercicios).
 // Se cierra con Escape, con el botón × o tocando afuera de la imagen.

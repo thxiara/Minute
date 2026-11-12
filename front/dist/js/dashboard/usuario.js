@@ -1,5 +1,7 @@
+// Socio
 // Panel del socio (/dash/socio). Todo sale de la API.
 
+// Utilidades
 const SocioUtil = {
     // "2026-11-10" o "2026-11-10 03:00:00" → Date local de ese día
     parseDate(value) {
@@ -135,6 +137,7 @@ function createCard(session, dates) {
     return card;
 }
 
+window.Skeleton?.blocks(container, 2);
 API.request("/mis-clases").then((data) => {
     if (!data?.success) {
         showMessage(data?.message || "No se pudieron cargar tus clases.");
@@ -152,6 +155,8 @@ API.request("/mis-clases").then((data) => {
         .sort((a, b) => (a.dates[0] ?? Infinity) - (b.dates[0] ?? Infinity));
 
     container.replaceChildren(...items.map(({ session, dates }) => createCard(session, dates)));
+}).catch((error) => {
+    showMessage(error.message || "No se pudieron cargar tus clases.");
 });
 })();
 
