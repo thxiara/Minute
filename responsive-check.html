@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>responsive-check</title>
+<style>
+    body { margin: 0; background: #1c1c1e; display: flex; gap: 20px; padding: 16px; align-items: flex-start; font-family: monospace; }
+    figure { margin: 0; color: #aaa; font-size: 12px; }
+    iframe { background: #fff; border: 0; display: block; margin-bottom: 6px; overflow: hidden; }
+</style>
+</head>
+<body>
+<script>
+    const params = new URLSearchParams(location.search);
+    const src = params.get('src');
+    const widths = (params.get('widths') || '390,768,1280').split(',').map(Number);
+    const minHeight = Number(params.get('h') || 600);
+    widths.forEach((width) => {
+        const figure = document.createElement('figure');
+        const iframe = document.createElement('iframe');
+        iframe.width = width;
+        iframe.height = minHeight;
+        const sep = src.includes('?') ? '&' : '?';
+        const cb = '_cb=' + Date.now();
+        iframe.src = (params.get('demo') === '0' ? src : src + sep + 'demo=1') + '&' + cb;
+        const resize = () => {
+            try {
+                const doc = iframe.contentDocument;
+                iframe.height = Math.max(minHeight, doc.documentElement.scrollHeight + 4);
+            } catch (error) { /* cross-origin: se deja el alto fijo */ }
+        };
+        iframe.addEventListener('load', () => {
+            resize();
+            setInterval(resize, 800);
+        });
+        const caption = document.createElement('figcaption');
+        caption.textContent = width + 'px';
+        figure.append(iframe, caption);
+        document.body.append(figure);
+    });
+</script>
+</body>
+</html>

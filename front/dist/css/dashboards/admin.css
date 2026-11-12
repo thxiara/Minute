@@ -102,6 +102,8 @@
     width: 24%;
 }
 
-.tabla-usuarios tbody tr {
-    height: 62px;
+@media (min-width: 768px) {
+    .tabla-usuarios tbody tr {
+        height: 62px;
+    }
 }

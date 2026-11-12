@@ -1,31 +1,25 @@
-@media (min-width: 576px) and (max-width: 1199px) {
-    .tabla-socios {
-        min-width: 820px;
-    }
-}
-
-@media (max-width: 575px) {
-    .tabla-socios tbody td:nth-child(1)::before {
+@media (max-width: 767px) {
+    .tabla-socios tbody tr:not(:has(td[colspan])) td:nth-child(1)::before {
         content: "Nombre";
     }
 
-    .tabla-socios tbody td:nth-child(2)::before {
+    .tabla-socios tbody tr:not(:has(td[colspan])) td:nth-child(2)::before {
         content: "C.I";
     }
 
-    .tabla-socios tbody td:nth-child(3)::before {
+    .tabla-socios tbody tr:not(:has(td[colspan])) td:nth-child(3)::before {
         content: "Cel.";
     }
 
-    .tabla-socios tbody td:nth-child(4)::before {
+    .tabla-socios tbody tr:not(:has(td[colspan])) td:nth-child(4)::before {
         content: "Vencimiento";
     }
 
-    .tabla-socios tbody td:nth-child(5)::before {
+    .tabla-socios tbody tr:not(:has(td[colspan])) td:nth-child(5)::before {
         content: "Nota";
     }
 
-    .tabla-socios tbody td:nth-child(6)::before {
+    .tabla-socios tbody tr:not(:has(td[colspan])) td:nth-child(6)::before {
         content: "Acciones";
     }
 }
