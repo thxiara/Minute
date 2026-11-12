@@ -891,6 +891,10 @@ body.interface-page .logo {
     }
 
     body.interface-page .header-derecha {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
         gap: 9px;
     }
 

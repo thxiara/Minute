@@ -101,7 +101,7 @@ body{
         radial-gradient(ellipse at 5% 80%, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 28rem),
         var(--color-background);
     color:var(--color-text);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-size:1rem;
     overflow-x:hidden;
 }
@@ -125,7 +125,7 @@ h3,
 h4,
 h5,
 h6{
-    font-family:'Pervitina Dex',sans-serif;
+    font-family: 'Pervitina Dex', sans-serif;
 }
 
 /* Subtítulos */
@@ -136,7 +136,7 @@ h6{
 .planes h2,
 .plan h3,
 .plan h4{
-    font-family:'Special Gothic Expanded One',sans-serif;
+    font-family: 'Special Gothic Expanded One', sans-serif;
 }
 
 /* Texto normal */
@@ -148,7 +148,7 @@ textarea,
 select,
 button,
 a{
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
 }
 
 
@@ -157,7 +157,7 @@ a{
 .logo, .logo a,
 .logo-footer{
     display:inline-block;
-    font-family:'Pervitina Dex',sans-serif;
+    font-family: 'Pervitina Dex', sans-serif;
     font-style:normal;
     font-weight:400;
     letter-spacing:0;
@@ -224,13 +224,13 @@ header{
     height:78px;
 }
 
-.header-derecha{
+.header-derecha,
+.iconos{
     display:flex;
     align-items:center;
     gap:18px;
 }
 .header-derecha img{
-    height:auto;
     object-fit:cover;
     object-position: center;
 }
@@ -244,7 +244,7 @@ header{
 
 .header-text{
     color:var(--color-text);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-size:.9rem;
     font-weight:700;
     transition:.3s;
@@ -260,7 +260,7 @@ header{
     border-radius:8px;
     background:linear-gradient(135deg, var(--color-primary-deep), var(--color-primary));
     color:var(--color-text);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-size:.85rem;
     font-weight:700;
     letter-spacing:.5px;
@@ -269,10 +269,6 @@ header{
     transition:.3s;
 }
 
-.header-btn:hover{
-    background:linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
-    color:var(--color-text);
-}
 
 .usuario-header{
     width:48px;
@@ -326,8 +322,8 @@ header{
 }
 
 .hero-contenido h2{
-    font-family:'Pervitina Dex',sans-serif;
-    font-size:3rem;
+    font-family: 'Pervitina Dex', sans-serif;
+    font-size:clamp(1.8rem, 5vw, 3rem);
     line-height:1.2;
     margin-bottom:35px;
     font-weight:400;
@@ -335,7 +331,7 @@ header{
 }
 
 .hero-contenido .hero-line {
-    font-family:'Pervitina Dex',sans-serif;
+    font-family: 'Pervitina Dex', sans-serif;
     font-style:normal;
 }
 
@@ -349,16 +345,12 @@ header{
     border-radius:10px;
     background:var(--gradient-button);
     color:var(--color-text);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-weight:600;
     transition:.3s;
     cursor:pointer;
 }
 
-.btn-hero:hover{
-    background:linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
-    color:var(--color-text);
-}
 
 
 /*  seccion nosotros */
@@ -370,8 +362,8 @@ header{
 
 .texto h2{
     color:var(--color-accent);
-    font-family:'Pervitina Dex',sans-serif;
-    font-size:2.2rem;
+    font-family: 'Pervitina Dex', sans-serif;
+    font-size:clamp(1.4rem, 3vw, 2.2rem);
     font-weight:400;
     margin-bottom:20px;
     text-transform:uppercase;
@@ -380,7 +372,7 @@ header{
 .texto p{
     max-width:470px;
     color:var(--color-text);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-size:1rem;
     line-height:1.9;
 }
@@ -393,7 +385,8 @@ header{
     box-shadow:0 16px 40px var(--color-shadow);
 }
 
-.imagen img{
+.imagen img,
+.imagen-instalaciones img{
     width:100%;
     height:100%;
     object-fit:cover;
@@ -401,7 +394,8 @@ header{
     transition:transform 450ms ease;
 }
 
-.imagen:hover img{
+.imagen:hover img,
+.imagen-instalaciones:hover img{
     transform:scale(1.025);
 }
 
@@ -451,7 +445,7 @@ header{
 
 .servicio p{
     color:var(--color-text-on-light);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-size:.9rem;
     line-height:1.7;
 }
@@ -473,18 +467,6 @@ header{
     box-shadow:0 16px 40px var(--color-shadow);
 }
 
-.imagen-instalaciones img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    user-select:none;
-    transition:transform 450ms ease;
-}
-
-.imagen-instalaciones:hover img{
-    transform:scale(1.025);
-}
-
 .instalaciones-texto{
     padding-left:35px;
 }
@@ -492,8 +474,8 @@ header{
 .instalaciones-texto h2{
     margin-bottom:25px;
     color:var(--color-accent);
-    font-family:'Pervitina Dex',sans-serif;
-    font-size:2.4rem;
+    font-family: 'Pervitina Dex', sans-serif;
+    font-size:clamp(1.6rem, 3.5vw, 2.4rem);
     font-weight:400;
 }
 
@@ -501,7 +483,7 @@ header{
     max-width:560px;
     margin-bottom:35px;
     color:var(--color-text);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-size:1rem;
     line-height:1.9;
 }
@@ -512,7 +494,7 @@ header{
     border-radius:12px;
     background:var(--gradient-vibrant);
     color:var(--color-text-on-light);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-weight:600;
     transition:.3s;
     cursor:pointer;
@@ -533,8 +515,8 @@ header{
 
 .reviews-info h2{
     color:var(--color-accent);
-    font-family:'Pervitina Dex',sans-serif;
-    font-size:2.3rem;
+    font-family: 'Pervitina Dex', sans-serif;
+    font-size:clamp(1.5rem, 3.5vw, 2.3rem);
     font-weight:400;
     line-height:1.2;
     margin-bottom:22px;
@@ -544,7 +526,7 @@ header{
     max-width:360px;
     margin-bottom:35px;
     color:var(--color-text);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-size:1rem;
     line-height:1.9;
 }
@@ -555,16 +537,12 @@ header{
     border-radius:10px;
     background:var(--gradient-button);
     color:var(--color-text);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-weight:600;
     transition:.3s;
     cursor:pointer;
 }
 
-.review-button:hover{
-    background:linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
-    color:var(--color-text);
-}
 
 
 /* comentarios*/
@@ -626,7 +604,7 @@ header{
 .comentario h3{
     margin-bottom:8px;
     color:var(--color-text);
-    font-family:'Pervitina Dex',sans-serif;
+    font-family: 'Pervitina Dex', sans-serif;
     font-size:1.05rem;
     font-weight:400;
 }
@@ -636,12 +614,12 @@ header{
     margin-bottom:12px;
     color:#fff0a8;
     letter-spacing:2px;
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
 }
 
 .comentario p{
     color:var(--color-text);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-size:.9rem;
     line-height:1.7;
 }
@@ -683,8 +661,8 @@ header{
 .planes h2{
     margin-bottom:65px;
     color:var(--color-accent);
-    font-family:'Pervitina Dex',sans-serif;
-    font-size:2.5rem;
+    font-family: 'Pervitina Dex', sans-serif;
+    font-size:clamp(1.6rem, 4vw, 2.5rem);
     font-weight:400;
     text-transform:uppercase;
 }
@@ -721,20 +699,20 @@ header{
 
 .plan h3{
     margin-bottom:20px;
-    font-family:'Pervitina Dex',sans-serif;
-    font-size:2rem;
+    font-family: 'Pervitina Dex', sans-serif;
+    font-size:clamp(1.4rem, 3vw, 2rem);
     font-weight:400;
 }
 
 .plan h4{
     margin-bottom:30px;
-    font-family:'Special Gothic Expanded One',sans-serif;
-    font-size:2.1rem;
+    font-family: 'Special Gothic Expanded One', sans-serif;
+    font-size:clamp(1.5rem, 3vw, 2.1rem);
     font-weight:400;
 }
 
 .plan h4 span{
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-size:1rem;
     font-weight:400;
 }
@@ -750,7 +728,7 @@ header{
     position:relative;
     padding-left:24px;
     margin-bottom:16px;
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-size:.92rem;
     line-height:1.8;
 }
@@ -760,7 +738,7 @@ header{
     position:absolute;
     left:0;
     color:var(--color-text);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-weight:700;
 }
 
@@ -775,7 +753,7 @@ header{
     border-radius:10px;
     background:var(--gradient-vibrant);
     color:var(--color-text-on-light);
-    font-family:'TASA Explorer',sans-serif;
+    font-family: 'TASA Explorer', sans-serif;
     font-size:1rem;
     font-weight:600;
     cursor:pointer;
@@ -783,11 +761,6 @@ header{
     transition:.3s;
 }
 
-.plan button:hover,
-.plan-button:hover{
-    background:linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
-    color:var(--color-text);
-}
 
 /* footer */
 
@@ -798,13 +771,7 @@ footer{
 
 .logo-footer{
     margin:0;
-    font-size:2rem;
-}
-
-.iconos{
-    display:flex;
-    align-items:center;
-    gap:18px;
+    font-size:clamp(1.4rem, 3vw, 2rem);
 }
 
 .iconos a{
@@ -889,6 +856,15 @@ a:focus{
 .review-button,
 .plan-button {
     box-shadow: 0 9px 22px color-mix(in srgb, var(--color-accent) 22%, transparent);
+}
+
+.header-btn:hover,
+.btn-hero:hover,
+.review-button:hover,
+.plan button:hover,
+.plan-button:hover{
+    background:linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+    color:var(--color-text);
 }
 
 .btn-hero:hover,
