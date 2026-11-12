@@ -1,3 +1,5 @@
+/* Productos */
+
 .products-panel .interface-panel-body {
     padding-top: 16px;
 }
@@ -302,6 +304,7 @@
     gap: 18px;
 }
 
+/* Formularios */
 .product-fields .form-label,
 .product-stock-field .form-label {
     color: var(--color-text-secondary);
@@ -383,6 +386,7 @@
     min-width: 130px;
 }
 
+/* Responsive */
 @media (max-width: 991px) {
     .product-editor-grid {
         grid-template-columns: minmax(0, 1fr);

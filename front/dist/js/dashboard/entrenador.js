@@ -58,7 +58,8 @@ document.querySelectorAll(".boton-flecha").forEach(button => {
 });
 })();
 
-// Socios: listado real y asignación de rutinas y notas.
+// Socios
+// Listado real y asignación de rutinas y notas.
 (() => {
 if (document.getElementById("trainerMemberForm")) {
 const membersBody = document.getElementById("trainerMembersBody");
@@ -71,10 +72,16 @@ const trainerMemberFeedback = document.getElementById("trainerMemberFeedback");
 const saveButton = trainerMemberForm.querySelector('[type="submit"]');
 let routines = [];
 let activeMemberId = null;
+let activeMemberName = "";
+// La celda de la tabla recorta la nota; a partir de este largo se ofrece "Leer más".
+const NOTE_PREVIEW_LENGTH = 60;
 
 function showFeedback(message, isError = false) {
     trainerMemberFeedback.textContent = message;
     trainerMemberFeedback.classList.toggle("is-error", isError);
+    if (window.Toast && message && !/cargando/i.test(message)) {
+        window.Toast.show(message, isError ? "error" : "success");
+    }
 }
 
 function formatDate(value) {
@@ -93,6 +100,36 @@ function tableMessage(text) {
     membersBody.replaceChildren(row);
 }
 
+function renderNote(noteCell, note, memberId, memberName) {
+    noteCell.replaceChildren();
+
+    const noteTitle = document.createElement("span");
+    noteTitle.className = "nota-titulo";
+    noteTitle.textContent = "Nota para el entrenador";
+
+    const noteText = document.createElement("span");
+    noteText.className = "nota-texto";
+    noteText.dataset.trainerNote = String(memberId);
+    noteText.textContent = note || "Sin nota";
+    noteCell.append(noteTitle, noteText);
+
+    // La nota se muestra recortada en la tabla; el botón permite leerla completa.
+    if (!note || note.length <= NOTE_PREVIEW_LENGTH) return;
+
+    const more = document.createElement("button");
+    more.type = "button";
+    more.className = "leer-mas";
+    more.textContent = "Leer más";
+    more.setAttribute("aria-expanded", "false");
+    more.setAttribute("aria-label", `Leer la nota completa de ${memberName}`);
+    more.addEventListener("click", () => {
+        const expanded = noteText.classList.toggle("nota-texto-expandida");
+        more.setAttribute("aria-expanded", String(expanded));
+        more.textContent = expanded ? "Leer menos" : "Leer más";
+    });
+    noteCell.append(more);
+}
+
 function createMemberRow(member) {
     const row = document.createElement("tr");
     [member.name_client, member.ci, member.phone, formatDate(member.expiry_date)].forEach((value) => {
@@ -103,14 +140,7 @@ function createMemberRow(member) {
 
     const noteCell = document.createElement("td");
     noteCell.className = "nota";
-    const noteTitle = document.createElement("span");
-    noteTitle.className = "nota-titulo";
-    noteTitle.textContent = "Nota para el entrenador";
-    const noteText = document.createElement("span");
-    noteText.className = "nota-texto";
-    noteText.dataset.trainerNote = String(member.id_client);
-    noteText.textContent = member.my_note || "Sin nota";
-    noteCell.append(noteTitle, noteText);
+    renderNote(noteCell, member.my_note, member.id_client, member.name_client);
 
     const actionsCell = document.createElement("td");
     actionsCell.className = "acciones";
@@ -167,6 +197,7 @@ const notes = new Map();
 
 async function openTrainerMemberModal(memberId, memberName) {
     activeMemberId = memberId;
+    activeMemberName = memberName;
     document.getElementById("trainerMemberName").textContent = memberName;
     trainerMemberNote.value = notes.get(String(memberId)) || "";
     showFeedback("Cargando rutinas…");
@@ -213,13 +244,21 @@ trainerMemberForm.addEventListener("submit", async (event) => {
     }
 
     notes.set(String(activeMemberId), note);
-    const noteDisplay = document.querySelector(`[data-trainer-note="${CSS.escape(String(activeMemberId))}"]`);
-    if (noteDisplay) noteDisplay.textContent = note || "Sin nota";
+    const noteCell = document.querySelector(`[data-trainer-note="${CSS.escape(String(activeMemberId))}"]`)?.closest("td.nota");
+    if (noteCell) renderNote(noteCell, note, activeMemberId, activeMemberName);
     showFeedback(`Se guardaron las rutinas (${selectedIds.length}) y la nota.`);
 });
 
 (async () => {
-    const [membersData, routinesData] = await Promise.all([API.request("/socios"), API.request("/rutinas")]);
+    window.Skeleton?.rows(membersBody, 5, 6);
+    let membersData;
+    let routinesData;
+    try {
+        [membersData, routinesData] = await Promise.all([API.request("/socios"), API.request("/rutinas")]);
+    } catch (error) {
+        tableMessage(error.message || "No se pudieron cargar los socios.");
+        return;
+    }
     routines = routinesData.success ? routinesData.rutinas : [];
 
     if (!membersData.success) {
@@ -237,7 +276,8 @@ trainerMemberForm.addEventListener("submit", async (event) => {
 }
 })();
 
-// Biblioteca y filtrado de ejercicios
+// Ejercicios
+// Biblioteca y filtrado de ejercicios.
 (() => {
 if (document.getElementById("exerciseForm")) {
 const exerciseForm = document.getElementById("exerciseForm");
@@ -266,6 +306,9 @@ let replacingExerciseId = null;
 function showFeedback(message, isError = false) {
     feedback.classList.toggle("is-error", isError);
     feedback.textContent = message;
+    if (window.Toast && message && !/cargando/i.test(message)) {
+        window.Toast.show(message, isError ? "error" : "success");
+    }
 }
 
 function gifUrl(exerciseId) {
@@ -343,8 +386,17 @@ function renderExercises() {
 }
 
 async function loadExercises() {
-    const data = await API.request("/ejercicios");
+    window.Skeleton?.blocks(exerciseList, 5);
+    let data;
+    try {
+        data = await API.request("/ejercicios");
+    } catch (error) {
+        exerciseList.replaceChildren();
+        showFeedback(error.message || "No se pudieron cargar los ejercicios.", true);
+        return null;
+    }
     if (!data.success) {
+        exerciseList.replaceChildren();
         showFeedback(data.message || "No se pudieron cargar los ejercicios.", true);
         return null;
     }
@@ -432,7 +484,7 @@ muscleFilter.addEventListener("change", renderExercises);
 }
 })();
 
-// rutinas
+// Rutinas
 (() => {
 if (document.getElementById("routineForm")) {
 const routineForm = document.getElementById("routineForm");
@@ -457,11 +509,17 @@ function routineImage(routine) {
 function showPageFeedback(message, isError = false) {
     pageFeedback.textContent = message;
     pageFeedback.classList.toggle("is-error", isError);
+    if (window.Toast && message && !/cargando/i.test(message)) {
+        window.Toast.show(message, isError ? "error" : "success");
+    }
 }
 
 function showRoutineFeedback(message, isError = false) {
     routineFeedback.textContent = message;
     routineFeedback.classList.toggle("is-error", isError);
+    if (window.Toast && message && !/cargando/i.test(message)) {
+        window.Toast.show(message, isError ? "error" : "success");
+    }
 }
 
 function renderRoutines() {
