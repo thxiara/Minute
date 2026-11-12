@@ -18,7 +18,22 @@ class UsuarioController
         $this->usuarios = new UserModel($db);
     }
 
-    // GET /api/usuarios/:id → datos de un usuario.
+    // GET /api/admin/usuarios[?role=all|socio|profesor|entrenador|admin][&bajas=1]
+    // Listado de todos los usuarios para el panel de administración.
+    public function listar(): void
+    {
+        Auth::exigirRol(Auth::ROL_ADMIN);
+
+        $rol = (string) ($_GET['role'] ?? 'all');
+        $bajas = ($_GET['bajas'] ?? '') === '1';
+        $usuarios = $this->usuarios->listarTodos($rol, $bajas);
+
+        Response::json(true, 'Usuarios obtenidos.', [
+            'usuarios' => $usuarios,
+            'total' => count($usuarios),
+        ]);
+    }
+
     public function ver(string $id): void
     {
         Auth::exigirRol(Auth::ROL_ADMIN);

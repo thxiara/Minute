@@ -59,7 +59,14 @@ async function loadReviews() {
         showMessage("Todavía no hay reseñas. ¡Sé el primero en escribir una!");
         return;
     }
-    list.replaceChildren(...data.resenas.map(createCard));
+    // Oculta las que el admin eliminó desde el panel de reseñas (solo en este navegador).
+    const ocultas = window.ResenasStore ? window.ResenasStore.ocultas() : [];
+    const resenas = data.resenas.filter((resena) => !ocultas.includes(Number(resena.id_review)));
+    if (!resenas.length) {
+        showMessage("Todavía no hay reseñas. ¡Sé el primero en escribir una!");
+        return;
+    }
+    list.replaceChildren(...resenas.map(createCard));
 }
 
 loadReviews();

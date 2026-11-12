@@ -284,6 +284,7 @@ body {
 
     /* Tablas */
     .tabla-socios,
+.tabla-usuarios,
     .tabla-alumnos {
         width: 100% !important;
         min-width: 0 !important;
@@ -293,17 +294,20 @@ body {
     }
 
     .tabla-socios thead,
+.tabla-usuarios thead,
     .tabla-alumnos thead {
         display: none;
     }
 
     .tabla-socios tbody,
+.tabla-usuarios tbody,
     .tabla-alumnos tbody {
         display: block;
         width: 100%;
     }
 
     .tabla-socios tbody tr,
+.tabla-usuarios tbody tr,
     .tabla-alumnos tbody tr {
         display: block;
         width: 100%;
@@ -316,6 +320,7 @@ body {
     }
 
     .tabla-socios tbody td,
+.tabla-usuarios tbody td,
     .tabla-alumnos tbody td {
         display: flex;
         min-width: 0;
@@ -337,11 +342,13 @@ body {
     }
 
     .tabla-socios tbody td:last-child,
+.tabla-usuarios tbody td:last-child,
     .tabla-alumnos tbody td:last-child {
         border-bottom: 0 !important;
     }
 
     .tabla-socios tbody td::before,
+.tabla-usuarios tbody td::before,
     .tabla-alumnos tbody td::before {
         display: block;
         flex: 0 0 38%;
@@ -353,18 +360,21 @@ body {
     }
 
     .tabla-socios tbody td:empty::after,
+.tabla-usuarios tbody td:empty::after,
     .tabla-alumnos tbody td:empty::after {
         content: "—";
         color: var(--color-text-muted);
     }
 
     .tabla-socios tbody td.acciones,
+.tabla-usuarios tbody td.acciones,
     .tabla-alumnos tbody td.acciones {
         align-items: center;
         justify-content: space-between;
     }
 
     .tabla-socios tbody td.nota,
+.tabla-usuarios tbody td.nota,
     .tabla-alumnos tbody td.nota {
         display: grid;
         grid-template-columns: minmax(88px, 38%) minmax(0, 1fr);
@@ -375,14 +385,18 @@ body {
     }
 
     .tabla-socios tbody td.nota::before,
+.tabla-usuarios tbody td.nota::before,
     .tabla-alumnos tbody td.nota::before {
         grid-column: 1;
         grid-row: 1 / span 3;
     }
 
     .tabla-socios tbody td.nota .nota-titulo,
+.tabla-usuarios tbody td.nota .nota-titulo,
     .tabla-socios tbody td.nota .nota-texto,
+.tabla-usuarios tbody td.nota .nota-texto,
     .tabla-socios tbody td.nota .leer-mas,
+.tabla-usuarios tbody td.nota .leer-mas,
     .tabla-alumnos tbody td.nota .nota-texto,
     .tabla-alumnos tbody td.nota .leer-mas {
         grid-column: 2;
@@ -393,11 +407,13 @@ body {
     }
 
     .tabla-socios tbody td.nota .nota-titulo,
+.tabla-usuarios tbody td.nota .nota-titulo,
     .tabla-alumnos tbody td.nota .nota-texto {
         grid-row: 1;
     }
 
     .tabla-socios tbody .nota-texto,
+.tabla-usuarios tbody .nota-texto,
     .tabla-alumnos tbody .nota-texto {
         max-width: none;
         overflow: visible;
@@ -406,11 +422,13 @@ body {
         white-space: normal;
     }
 
-    .tabla-socios tbody td.nota .nota-texto {
+    .tabla-socios tbody td.nota .nota-texto ,
+.tabla-usuarios tbody td.nota .nota-texto {
         grid-row: 2;
     }
 
-    .tabla-socios tbody td.nota .leer-mas {
+    .tabla-socios tbody td.nota .leer-mas ,
+.tabla-usuarios tbody td.nota .leer-mas {
         grid-row: 3;
         justify-self: start;
     }
@@ -436,7 +454,7 @@ body {
     }
 
     .action-menu button {
-        font-size: 9px;
+        font-size: 12px;
     }
 
     .pagination {

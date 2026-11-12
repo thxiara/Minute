@@ -145,6 +145,7 @@
 
 /* Tablas */
 .tabla-socios,
+.tabla-usuarios,
 .tabla-alumnos {
     width: 100%;
     margin-bottom: 0;
@@ -152,11 +153,13 @@
 }
 
 .tabla-socios thead,
+.tabla-usuarios thead,
 .tabla-alumnos thead {
     height: 34px;
 }
 
 .tabla-socios th,
+.tabla-usuarios th,
 .tabla-alumnos th {
     color: var(--color-accent-bright);
     background-color: transparent;
@@ -168,6 +171,7 @@
 }
 
 .tabla-socios tbody td,
+.tabla-usuarios tbody td,
 .tabla-alumnos tbody td {
     background-color: var(--color-background) !important;
     color: var(--color-text-secondary);
@@ -175,26 +179,31 @@
 }
 
 .tabla-socios tbody tr:nth-child(even) td,
+.tabla-usuarios tbody tr:nth-child(even) td,
 .tabla-alumnos tbody tr:nth-child(even) td {
     background-color: var(--color-background) !important;
 }
 
 .tabla-socios tbody tr,
+.tabla-usuarios tbody tr,
 .tabla-alumnos tbody tr {
     background-color: var(--color-background);
 }
 
 .tabla-socios tbody tr:nth-child(even),
+.tabla-usuarios tbody tr:nth-child(even),
 .tabla-alumnos tbody tr:nth-child(even) {
     background-color: var(--color-background);
 }
 
 .tabla-socios tbody tr:hover td,
+.tabla-usuarios tbody tr:hover td,
 .tabla-alumnos tbody tr:hover td {
     background-color: color-mix(in srgb, var(--color-accent) 11%, transparent) !important;
 }
 
 .tabla-socios td,
+.tabla-usuarios td,
 .tabla-alumnos td {
     border-color: var(--color-background);
     color: var(--color-text-secondary);
@@ -432,19 +441,23 @@ body.interface-page > header {
 }
 
 :is(.admin-page, .entrenador-page, .profesor-page) .tabla-socios tbody td,
+.tabla-usuarios tbody td,
 :is(.admin-page, .entrenador-page, .profesor-page) .tabla-alumnos tbody td,
 :is(.admin-page, .entrenador-page, .profesor-page) .tabla-socios tbody tr,
+.tabla-usuarios tbody tr,
 :is(.admin-page, .entrenador-page, .profesor-page) .tabla-alumnos tbody tr {
     background-color: var(--color-surface-raised) !important;
     color: var(--color-text-secondary);
 }
 
 :is(.admin-page, .entrenador-page, .profesor-page) .tabla-socios tbody tr:nth-child(even) td,
+.tabla-usuarios tbody tr:nth-child(even) td,
 :is(.admin-page, .entrenador-page, .profesor-page) .tabla-alumnos tbody tr:nth-child(even) td {
     background-color: var(--color-surface-raised) !important;
 }
 
 :is(.admin-page, .entrenador-page, .profesor-page) .tabla-socios tbody tr:hover td,
+.tabla-usuarios tbody tr:hover td,
 :is(.admin-page, .entrenador-page, .profesor-page) .tabla-alumnos tbody tr:hover td {
     background-color: color-mix(in srgb, var(--color-accent) 22%, transparent) !important;
 }
@@ -463,6 +476,7 @@ body.interface-page > header {
 }
 
 .tabla-socios .leer-mas,
+.tabla-usuarios .leer-mas,
 .tabla-alumnos .leer-mas {
     color: var(--color-accent-bright);
 }

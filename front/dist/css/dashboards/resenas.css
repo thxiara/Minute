@@ -1,0 +1,200 @@
+/* Dashboard de reseñas (admin): resumen, grilla de tarjetas y acciones.
+   El listado y la selección para el carrusel se manejan en js/dashboard/resenas.js
+   con la ayuda de js/resenas-store.js (localStorage). */
+
+.reviews-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.reviews-stat {
+    display: grid;
+    gap: 4px;
+    padding: 16px 18px;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-surface-raised);
+}
+
+.reviews-stat-value {
+    color: var(--color-text);
+    font-family: "TASA Explorer", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.reviews-stat-label {
+    color: var(--color-text-secondary);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.reviews-selection-summary {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+}
+
+.reviews-admin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 14px;
+}
+
+.review-admin-card {
+    display: flex;
+    gap: 14px;
+    padding: 14px;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--color-background) 72%, var(--color-surface-raised));
+}
+
+.review-admin-card:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+}
+
+.review-admin-card.is-hidden-review {
+    opacity: 0.66;
+    border-style: dashed;
+}
+
+.review-admin-photo {
+    width: 56px;
+    height: 56px;
+    flex: 0 0 56px;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    background: var(--color-surface-raised);
+    object-fit: cover;
+}
+
+.review-admin-body {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.review-admin-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 10px;
+}
+
+.review-admin-name {
+    color: var(--color-text);
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.review-admin-stars {
+    color: var(--color-accent-bright);
+    font-size: 0.82rem;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.review-admin-date {
+    color: var(--color-text-secondary);
+    font-size: 0.75rem;
+}
+
+.review-admin-text {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.review-admin-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px solid color-mix(in srgb, var(--color-accent) 12%, transparent);
+}
+
+.review-admin-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+}
+
+.review-admin-toggle input {
+    width: 17px;
+    height: 17px;
+    margin: 0;
+    accent-color: var(--color-accent);
+    cursor: pointer;
+}
+
+.review-admin-toggle input:focus-visible {
+    outline: 2px solid var(--color-accent-bright);
+    outline-offset: 2px;
+}
+
+.review-admin-delete {
+    padding: 7px 12px;
+    border: 1px solid color-mix(in srgb, var(--color-danger) 35%, transparent);
+    border-radius: 8px;
+    background: var(--color-danger-soft);
+    color: var(--color-danger);
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 160ms ease, color 160ms ease;
+}
+
+.review-admin-delete:hover {
+    background: color-mix(in srgb, var(--color-danger) 30%, transparent);
+    color: var(--color-text);
+}
+
+.review-admin-delete.is-restore {
+    border-color: color-mix(in srgb, var(--color-success) 40%, transparent);
+    background: color-mix(in srgb, var(--color-success) 14%, transparent);
+    color: var(--color-success);
+}
+
+.review-admin-delete.is-restore:hover {
+    background: color-mix(in srgb, var(--color-success) 22%, transparent);
+    color: var(--color-text);
+}
+
+.review-admin-delete:focus-visible,
+.review-admin-toggle input:focus-visible {
+    outline-offset: 2px;
+}
+
+@media (max-width: 767px) {
+    .reviews-stats {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+    }
+
+    .reviews-admin-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .reviews-selection-summary {
+        width: 100%;
+    }
+}
