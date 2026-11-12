@@ -69,6 +69,7 @@ $router->delete('/api/productos/:id', 'ProductoController@eliminar');
 
 #Reseñas: las ve cualquiera, las escribe el socio
 $router->get('/api/resenas', 'ResenaController@listar');
+$router->get('/api/resenas/:id/foto', 'ResenaController@foto');
 $router->get('/api/mi-resena', 'ResenaController@mia');
 $router->put('/api/mi-resena', 'ResenaController@guardar');
 

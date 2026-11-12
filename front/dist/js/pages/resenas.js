@@ -15,7 +15,8 @@ function createCard(review) {
     card.className = "review-card h-100";
 
     const image = document.createElement("img");
-    image.src = "/front/dist/assets/imagenes/img6.jpg";
+    image.src = review.photo || "/front/dist/assets/imagenes/img6.jpg";
+    image.className = "review-photo";
     image.alt = "Socio";
 
     const content = document.createElement("div");

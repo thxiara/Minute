@@ -654,3 +654,97 @@ body.interface-page > header {
 :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page, body.interface-page) > header .header-derecha {
     align-items: center;
 }
+
+/* ---- Foto de perfil editable (todos los paneles) ---- */
+.foto-perfil-editable {
+    cursor: pointer;
+    object-fit: cover;
+    transition: filter .15s ease, box-shadow .15s ease;
+}
+
+.foto-perfil-editable:hover,
+.foto-perfil-editable:focus-visible {
+    filter: brightness(1.12);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, .55);
+    outline: none;
+}
+
+.foto-perfil-aviso {
+    position: fixed;
+    top: 90px;
+    right: 16px;
+    z-index: 2100;
+    max-width: min(320px, calc(100vw - 32px));
+    margin: 0;
+    padding: 10px 14px;
+    border-radius: 9px;
+    background: #1f7a4d;
+    color: #fff;
+    font-size: .88rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .35);
+}
+
+.foto-perfil-aviso.is-error {
+    background: #a93a3a;
+}
+
+/* ---- Visor de imágenes en grande ---- */
+img[data-zoom] {
+    cursor: zoom-in;
+}
+
+.visor-imagen {
+    position: fixed;
+    inset: 0;
+    z-index: 2200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 56px 16px 24px;
+    background: rgba(0, 0, 0, .85);
+}
+
+.visor-imagen[hidden] {
+    display: none;
+}
+
+.visor-imagen img {
+    max-width: min(100%, 900px);
+    max-height: calc(100vh - 140px);
+    width: auto;
+    min-width: min(100%, 320px);
+    object-fit: contain;
+    border-radius: 10px;
+    background: #fff;
+    image-rendering: auto;
+}
+
+.visor-imagen-leyenda {
+    margin: 0;
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.visor-imagen-cerrar {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .15);
+    color: #fff;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.visor-imagen-cerrar:hover,
+.visor-imagen-cerrar:focus-visible {
+    background: rgba(255, 255, 255, .3);
+    outline: none;
+}

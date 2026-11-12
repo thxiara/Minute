@@ -253,7 +253,6 @@ let exercises = [];
 // Animación de cada ejercicio. El servidor la guarda siempre como GIF (sin recortarla) y,
 // si el ejercicio ya tenía una, la reemplaza.
 const IMAGE_TYPES = ["image/gif", "image/jpeg", "image/png", "image/webp"];
-const IMAGE_MAX_BYTES = 5 * 1024 * 1024;
 // Después de cambiar un gif se le agrega ?v=... a su dirección para que el navegador lo vuelva a pedir.
 const gifVersions = new Map();
 // Un solo selector de archivos (oculto) para el botón "Cambiar GIF" de todas las filas.
@@ -274,14 +273,7 @@ function gifUrl(exerciseId) {
     return `/api/ejercicios/${exerciseId}/gif${version ? `?v=${version}` : ""}`;
 }
 
-// Devuelve un mensaje de error si el archivo no sirve, o "" si está bien.
-function imageProblem(file) {
-    if (!IMAGE_TYPES.includes(file.type)) return "La imagen tiene que ser GIF, JPG, PNG o WEBP.";
-    if (file.size > IMAGE_MAX_BYTES) return "La imagen debe pesar 5 MB o menos.";
-    return "";
-}
 
-// Archivo → "data:image/gif;base64,..." (así viaja dentro del JSON).
 function readAsDataUrl(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -315,7 +307,6 @@ function renderExercises() {
             const row = document.createElement("article");
             row.className = "exercise-library-row has-media";
 
-            // Miniatura de la animación (o un recuadro vacío si todavía no tiene).
             const media = document.createElement("div");
             media.className = "exercise-gif-slot";
             if (exercise.has_gif) {
@@ -324,6 +315,7 @@ function renderExercises() {
                 image.src = gifUrl(exercise.id_exercise);
                 image.alt = `Animación de ${exercise.name_exercise}`;
                 image.loading = "lazy";
+                image.dataset.zoom = "";
                 media.append(image);
             } else {
                 media.classList.add("is-empty");
@@ -360,7 +352,6 @@ async function loadExercises() {
     return data;
 }
 
-// Botón "Cargar GIF" / "Cambiar GIF" de una fila: abre el selector de archivos.
 exerciseList.addEventListener("click", (event) => {
     const button = event.target.closest("[data-exercise-gif]");
     if (!button) return;
@@ -374,12 +365,7 @@ replaceInput.addEventListener("change", async () => {
     const exerciseId = replacingExerciseId;
     if (!file || !exerciseId) return;
 
-    const problem = imageProblem(file);
-    if (problem) {
-        showFeedback(problem, true);
-        return;
-    }
-
+    // Tipo, peso y contenido los revisa la API.
     try {
         showFeedback("Subiendo imagen…");
         const image = await readAsDataUrl(file);
@@ -410,14 +396,8 @@ exerciseForm.addEventListener("submit", async (event) => {
         equipment: String(formData.get("equipment")).trim()
     };
 
-    // La imagen es opcional: si se eligió una, viaja junto con los datos del ejercicio.
     const [file] = imageInput?.files || [];
     if (file) {
-        const problem = imageProblem(file);
-        if (problem) {
-            showFeedback(problem, true);
-            return;
-        }
         try {
             body.image = await readAsDataUrl(file);
         } catch (error) {
@@ -471,7 +451,7 @@ let editingRoutineId = null;
 
 // La tabla Routine no guarda imagen: se alterna entre dos según el id.
 function routineImage(routine) {
-    return `assets/imagenes/img${(routine.id_routine % 2) + 1}.jpg`;
+    return `/front/dist/assets/imagenes/img${(routine.id_routine % 2) + 1}.jpg`;
 }
 
 function showPageFeedback(message, isError = false) {
@@ -659,6 +639,7 @@ function showRoutine(routine) {
             gif.src = `/api/ejercicios/${item.exercise_id}/gif`;
             gif.alt = `Animación de ${item.exercise_name}`;
             gif.loading = "lazy";
+            gif.dataset.zoom = "";
             line.prepend(gif);
         }
         list.append(line);

@@ -5,7 +5,6 @@ namespace App\Utils;
 class Response
 {
     // $message se escribe en español y sale traducido al idioma del pedido (ver I18n).
-    // $valores reemplaza las marcas {nombre} del mensaje.
     public static function json(bool $success, string $message, array $extra = [], int $statusCode = 200, array $valores = []): void
     {
         http_response_code($statusCode);

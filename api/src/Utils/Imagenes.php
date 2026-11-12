@@ -15,13 +15,11 @@ class Imagenes
     private const TIPOS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
 
-    // Ruta de la foto de perfil del usuario, o null si no tiene.
     public static function rutaPfp(int $id): ?string
     {
         return self::rutaSiExiste('PFP_DIR', $id, 'jpg');
     }
 
-    // Ruta del gif del ejercicio, o null si no tiene.
     public static function rutaEjercicio(int $id): ?string
     {
         return self::rutaSiExiste('EXERCISE_DIR', $id, 'gif');
@@ -63,7 +61,6 @@ class Imagenes
             return;
         }
 
-        // Misma proporción que el original; solo se achica si es muy grande.
         $ancho = imagesx($original);
         $alto = imagesy($original);
         $escala = min(1, self::MAX_LADO_EJERCICIO / max($ancho, $alto));
@@ -78,13 +75,11 @@ class Imagenes
         self::escribir('EXERCISE_DIR', $id, 'gif', fn(string $temporal) => imagegif($imagen, $temporal));
     }
 
-    // Confirma que los bytes son una imagen que se puede guardar (sin guardarla todavía).
     public static function comprobar(string $bytes, int $maxBytes): void
     {
         self::abrir($bytes, self::inspeccionar($bytes, $maxBytes)['mime']);
     }
 
-    // "data:image/png;base64,AAAA..." → los bytes de la imagen.
     public static function desdeDataUrl($dataUrl, int $maxBytes): string
     {
         if (!is_string($dataUrl) || !preg_match('#^data:image/[a-z0-9.+-]+;base64,(.+)$#s', $dataUrl, $partes)) {
@@ -103,7 +98,6 @@ class Imagenes
     }
 
 
-    // Manda el archivo al navegador y termina el pedido.
     public static function enviar(string $ruta, string $tipo): void
     {
         // El navegador puede guardar la imagen pero siempre pregunta si cambió:
@@ -130,7 +124,6 @@ class Imagenes
     }
 
 
-    // Carpeta indicada en api/.env por la variable $variable. Se crea si todavía no existe.
     private static function carpeta(string $variable): string
     {
         $carpeta = trim((string) getenv($variable));

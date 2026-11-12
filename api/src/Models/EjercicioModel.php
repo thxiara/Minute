@@ -14,8 +14,6 @@ class EjercicioModel
     }
 
     // Toda la biblioteca de ejercicios, ordenada por nombre.
-    // has_gif: si el ejercicio tiene animación, que es el archivo <id>.gif de la carpeta
-    // EXERCISE_DIR (ver Utils\Imagenes); se pide en GET /api/ejercicios/:id/gif.
     public function listar(): array
     {
         $query = "SELECT id_exercise, name_exercise, muscle_exercise, equipment_exercise

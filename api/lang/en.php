@@ -1,6 +1,5 @@
 <?php
 return [
-    // ---- Generales / sesión
     'Tenés que iniciar sesión.' => 'You need to log in.',
     'No autorizado.' => 'Not authorized.',
     'Error interno del servidor.' => 'Internal server error.',
@@ -17,14 +16,12 @@ return [
     'Sesión activa.' => 'Active session.',
     'Sesión cerrada.' => 'Logged out.',
 
-    // ---- Landing
     'IR AL DASHBOARD' => 'GO TO DASHBOARD',
     'INICIAR SESIÓN' => 'LOG IN',
     'Panel de {nombre}' => "{nombre}'s dashboard",
     'Ir al dashboard' => 'Go to dashboard',
     'Iniciar sesión' => 'Log in',
 
-    // ---- Usuarios
     'El tipo de usuario no es válido.' => 'The user type is not valid.',
     'El nombre puede tener hasta {max} caracteres.' => 'The name can be up to {max} characters long.',
     'La C.I. puede tener hasta {max} caracteres.' => 'The ID number can be up to {max} characters long.',
@@ -60,7 +57,6 @@ return [
     'Socios obtenidos.' => 'Members retrieved.',
     'Profesores obtenidos.' => 'Teachers retrieved.',
 
-    // ---- Imágenes (fotos de perfil y gifs de ejercicios)
     'Sin foto.' => 'No photo.',
     'Sin imagen.' => 'No image.',
     'Foto actualizada.' => 'Photo updated.',
@@ -73,7 +69,6 @@ return [
     'La imagen es demasiado grande.' => 'The image is too large.',
     'La imagen no puede pesar más de {mb} MB.' => 'The image cannot be larger than {mb} MB.',
 
-    // ---- Notas y evaluaciones
     'La nota puede tener hasta 300 caracteres.' => 'The note can be up to 300 characters long.',
     'La nota tiene que tener entre 1 y 240 caracteres.' => 'The note must be between 1 and 240 characters long.',
     'No se pudo guardar la nota.' => 'The note could not be saved.',
@@ -82,7 +77,6 @@ return [
     'No se pudo guardar la evaluación.' => 'The evaluation could not be saved.',
     'Evaluación guardada.' => 'Evaluation saved.',
 
-    // ---- Ejercicios y rutinas
     'Ejercicios obtenidos.' => 'Exercises retrieved.',
     'Completá el nombre y el equipamiento.' => 'Fill in the name and the equipment.',
     'El nombre puede tener hasta 30 caracteres.' => 'The name can be up to 30 characters long.',
@@ -107,7 +101,6 @@ return [
     'Agregá al menos un ejercicio.' => 'Add at least one exercise.',
     'Alguno de los ejercicios no existe.' => 'One of the exercises does not exist.',
 
-    // ---- Clases
     'Clases obtenidas.' => 'Classes retrieved.',
     'Clase creada.' => 'Class created.',
     'Clase actualizada.' => 'Class updated.',
@@ -138,7 +131,6 @@ return [
     'Esa clase no se dicta ese día.' => 'That class is not held on that day.',
     'La asistencia solo se toma para hoy o fechas pasadas.' => 'Attendance can only be taken for today or past dates.',
 
-    // ---- Productos
     'Productos obtenidos.' => 'Products retrieved.',
     'Producto obtenido.' => 'Product retrieved.',
     'Producto creado.' => 'Product created.',
@@ -154,7 +146,6 @@ return [
     'El stock debe ser un entero entre 0 y 999999.' => 'The stock must be a whole number between 0 and 999999.',
     'La descripción puede tener hasta 240 caracteres.' => 'The description can be up to 240 characters long.',
 
-    // ---- Reseñas
     'Reseñas obtenidas.' => 'Reviews retrieved.',
     'Reseña obtenida.' => 'Review retrieved.',
     'Elegí una calificación de 1 a 5 estrellas.' => 'Choose a rating from 1 to 5 stars.',

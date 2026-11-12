@@ -14,7 +14,7 @@ function crearComentario(resena, indice) {
     comentario.className = "comentario";
 
     const imagen = document.createElement("img");
-    imagen.src = `/front/dist/assets/imagenes/${fotos[indice % fotos.length]}`;
+    imagen.src = resena.photo || `/front/dist/assets/imagenes/${fotos[indice % fotos.length]}`;
     imagen.alt = "Socio";
 
     const contenido = document.createElement("div");

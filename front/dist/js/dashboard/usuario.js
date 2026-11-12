@@ -14,7 +14,6 @@ const SocioUtil = {
     },
 
     formatLong(date) {
-        // El formato de la fecha sigue al idioma elegido (ver i18n.js).
         return new Intl.DateTimeFormat(window.I18n?.locale || "es-UY", { weekday: "long", day: "numeric", month: "long" }).format(date);
     },
 
@@ -47,12 +46,6 @@ API.request("/mi-perfil").then((data) => {
     setText("membershipExpiration", SocioUtil.formatShort(user.expiry_date));
     setText("memberSince", SocioUtil.formatShort(user.created_client));
 
-    if (user.has_photo) {
-        document.querySelectorAll("[data-profile-photo]").forEach((image) => {
-            image.src = `/api/usuarios/${user.id_client}/foto?v=${Date.now()}`;
-        });
-    }
-
     // Aviso de vencimiento.
     const expiryNotice = document.getElementById("membershipExpiryNotice");
     if (!expiryNotice) return;
@@ -78,80 +71,7 @@ API.request("/mi-perfil").then((data) => {
 });
 })();
 
-// Sección: Foto de perfil. Se achica en el navegador para subir menos datos; el servidor la
-// deja en JPG de 128 × 128 y reemplaza la anterior (ver api/src/Utils/Imagenes.php).
-(() => {
-const photoInput = document.getElementById("profilePhotoInput");
-if (!photoInput) return;
-
-const photoFeedback = document.getElementById("photoFeedback");
-const changePhotoButton = document.getElementById("changePhotoButton");
-
-function showPhotoFeedback(message, isError = false) {
-    if (!photoFeedback) return;
-    photoFeedback.textContent = message;
-    photoFeedback.classList.toggle("is-error", isError);
-}
-
-// Recorta al centro en un cuadrado de hasta 400 px y la pasa a JPEG: queda en ~50 KB.
-// (Como sale de un <canvas>, la miniatura que se muestra al instante es la misma que se sube.)
-function toSquareJpeg(file) {
-    return new Promise((resolve, reject) => {
-        const url = URL.createObjectURL(file);
-        const image = new Image();
-        image.onload = () => {
-            const size = Math.min(image.width, image.height);
-            const canvas = document.createElement("canvas");
-            canvas.width = canvas.height = Math.min(400, size);
-            canvas.getContext("2d").drawImage(
-                image,
-                (image.width - size) / 2, (image.height - size) / 2, size, size,
-                0, 0, canvas.width, canvas.height
-            );
-            URL.revokeObjectURL(url);
-            resolve(canvas.toDataURL("image/jpeg", 0.85));
-        };
-        image.onerror = () => {
-            URL.revokeObjectURL(url);
-            reject(new Error("No se pudo leer la imagen seleccionada."));
-        };
-        image.src = url;
-    });
-}
-
-changePhotoButton?.addEventListener("click", () => photoInput.click());
-
-photoInput.addEventListener("change", async () => {
-    const [file] = photoInput.files || [];
-    photoInput.value = "";
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-        showPhotoFeedback("El archivo debe ser una imagen.", true);
-        return;
-    }
-    if (file.size > 10 * 1024 * 1024) {
-        showPhotoFeedback("La imagen debe pesar 10 MB o menos.", true);
-        return;
-    }
-
-    try {
-        showPhotoFeedback("Subiendo foto…");
-        const image = await toSquareJpeg(file);
-        const data = await API.request("/mi-foto", "PUT", { image });
-        if (!data?.success) {
-            showPhotoFeedback(data?.message || "No se pudo guardar la foto.", true);
-            return;
-        }
-        document.querySelectorAll("[data-profile-photo]").forEach((element) => {
-            element.src = image;
-        });
-        showPhotoFeedback("Foto actualizada.");
-    } catch (error) {
-        showPhotoFeedback(error.message, true);
-    }
-});
-})();
+// Sección: Foto de perfil → la maneja foto-perfil.js (compartido por todos los paneles).
 
 // Sección: Próximas clases grupales.
 (() => {
@@ -293,13 +213,13 @@ function createRoutineCard(routine) {
     routine.items.forEach((item) => {
         const line = document.createElement("li");
         line.textContent = `${item.exercise_name} — ${item.sets} series × ${item.reps} repeticiones`;
-        // Animación del ejercicio, si el entrenador le cargó una.
         if (item.has_gif) {
             const gif = document.createElement("img");
             gif.className = "exercise-gif exercise-gif-inline";
             gif.src = `/api/ejercicios/${item.exercise_id}/gif`;
             gif.alt = `Animación de ${item.exercise_name}`;
             gif.loading = "lazy";
+            gif.dataset.zoom = "";
             line.prepend(gif);
         }
         exerciseList.append(line);

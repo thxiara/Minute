@@ -14,7 +14,6 @@ set_exception_handler(function (Throwable $e) {
     }
     http_response_code(500);
     header('Content-Type: application/json; charset=UTF-8');
-    #El mensaje sale en el idioma del pedido (si el error fue antes de cargar el autoloader, en español)
     $traducir = fn(string $texto) => class_exists('\\App\\Utils\\I18n') ? \App\Utils\I18n::t($texto) : $texto;
     $faltaMigracion = $e instanceof PDOException && in_array($e->getCode(), ['42S22', '42S02'], true);
     echo json_encode([

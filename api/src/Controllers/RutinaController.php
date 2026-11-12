@@ -44,7 +44,6 @@ class RutinaController
     }
 
     // POST /api/ejercicios   { name, muscle, equipment, image? }
-    // image (opcional) es la animación del ejercicio como "data:image/...;base64,...".
     public function crearEjercicio(): void
     {
         $this->exigirRol(self::ROL_ENTRENADOR);
@@ -85,9 +84,6 @@ class RutinaController
     }
 
     // PUT /api/ejercicios/:id/gif   { image: "data:image/...;base64,..." }
-    // Carga (o reemplaza) la animación del ejercicio. Siempre queda guardada como
-    // EXERCISE_DIR/<id>.gif, sin recortar: un GIF se guarda tal cual y un JPG, PNG o WEBP
-    // se convierte a GIF.
     public function subirGif(string $id): void
     {
         $this->exigirRol(self::ROL_ENTRENADOR);
@@ -101,7 +97,6 @@ class RutinaController
     }
 
     // GET /api/ejercicios/:id/gif → la animación (o 404 si no tiene). Cualquier usuario logueado:
-    // el entrenador la ve en la biblioteca y el socio en sus rutinas.
     public function gif(string $id): void
     {
         if (empty($_SESSION['client_id'])) {
@@ -290,7 +285,6 @@ class RutinaController
         return $socioId;
     }
 
-    // Bytes de la imagen que vino en el pedido, o corta con 400.
     private function leerImagen($dataUrl): string
     {
         try {
@@ -305,7 +299,6 @@ class RutinaController
         }
     }
 
-    // Guarda la animación del ejercicio (reemplaza la anterior), o corta con 400/500.
     private function guardarGif(int $ejercicioId, string $bytes, string $mensajeSiFalla): void
     {
         try {

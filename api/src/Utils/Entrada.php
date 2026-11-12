@@ -2,7 +2,6 @@
 
 namespace App\Utils;
 
-// Lectura y límites de los datos que llegan en los pedidos.
 class Entrada
 {
     // Largo máximo (en caracteres) de cada tipo de campo. Los formularios del front
@@ -14,7 +13,6 @@ class Entrada
     public const MAX_TELEFONO = 20;
     public const MAX_CI = 20;
 
-    // Cuerpo JSON del pedido como array ([] si no vino o no es un objeto JSON).
     public static function json(): array
     {
         $datos = json_decode((string) file_get_contents('php://input'), true);

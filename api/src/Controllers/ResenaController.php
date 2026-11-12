@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Utils\Auth;
 use App\Utils\Entrada;
+use App\Utils\Imagenes;
 use App\Utils\Response;
 
 // Reseñas de los socios: las ve cualquiera, solo un socio puede escribir (una por socio).
@@ -29,6 +30,9 @@ class ResenaController
 
         $resenas = array_map(fn($fila) => [
             'id_review' => (int) $fila['id_review'],
+            // Foto del autor (null si no subió una). Es pública solo a través de la reseña:
+            // no se expone la id del usuario.
+            'photo' => $this->urlFoto((int) $fila['id_review'], (int) $fila['id_client']),
             // Solo el primer nombre: la página es pública.
             'name' => explode(' ', trim($fila['name_client']))[0],
             'rating' => (int) round((float) $fila['rating']),
@@ -37,6 +41,29 @@ class ResenaController
         ], $filas);
 
         Response::json(true, 'Reseñas obtenidas.', ['resenas' => $resenas, 'total' => count($resenas)]);
+    }
+
+    // GET /api/resenas/:id/foto → foto de quien escribió la reseña (público, como las reseñas).
+    public function foto(string $id): void
+    {
+        $stmt = $this->db->prepare(
+            "SELECT cl.id_client FROM Review r
+              INNER JOIN Client cl ON cl.id_client = r.fr_client AND cl.active_client = 1
+              WHERE r.id_review = :id"
+        );
+        $stmt->execute(['id' => (int) $id]);
+        $ruta = Imagenes::rutaPfp((int) $stmt->fetchColumn());
+        if ($ruta === null) {
+            Response::json(false, 'Sin foto.', [], 404);
+        }
+
+        Imagenes::enviar($ruta, 'image/jpeg');
+    }
+
+    private function urlFoto(int $resenaId, int $clienteId): ?string
+    {
+        $ruta = Imagenes::rutaPfp($clienteId);
+        return $ruta !== null ? '/api/resenas/' . $resenaId . '/foto?v=' . filemtime($ruta) : null;
     }
 
     // GET /api/mi-resena → la reseña del socio logueado (o null).

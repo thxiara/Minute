@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use App\Utils\Entrada;
+use App\Utils\Imagenes;
 use App\Utils\I18n;
 use App\Utils\Response;
 
@@ -34,8 +35,6 @@ class AuthController
 
         $data = $this->getRequestData();
 
-        // Todas las credenciales se leen y se guardan como texto, también las que son solo
-        // números (C.I., teléfono, o una contraseña como 12345678): ver Entrada::texto().
         $name = Entrada::texto($data, 'name');
         $email = Entrada::texto($data, 'email');
         // La contraseña no se recorta: los espacios también cuentan.
@@ -102,7 +101,6 @@ class AuthController
         }
     }
 
-    // Límites de largo y formato de los datos de un usuario (registro y edición). Corta con 400.
     public static function validarDatosDeUsuario(string $name, string $email, string $phone, string $ci): void
     {
         if (Entrada::largo($name) > Entrada::MAX_NOMBRE) {
@@ -245,6 +243,7 @@ class AuthController
         // Botón de acceso del header: con sesión lleva al panel, sin sesión al login.
         $this->enviarHtml('index.html', [
             '{{nombre}}' => $nombre,
+            '{{foto_url}}' => $this->fotoDeLaSesion(),
             '{{acceso_url}}' => $miPanel !== null ? '/dash' : '/login',
             '{{acceso_texto}}' => I18n::t($miPanel !== null ? 'IR AL DASHBOARD' : 'INICIAR SESIÓN'),
             '{{acceso_titulo}}' => $miPanel !== null
@@ -269,6 +268,15 @@ class AuthController
         $this->enviarHtml($archivo, [
             '{{nombre}}' => $_SESSION['name'] ?? '',
         ]);
+    }
+
+    // El ?v=<fecha del archivo> hace que el navegador pida la foto nueva cuando cambia.
+    private function fotoDeLaSesion(): string {
+        $id = (int) ($_SESSION['client_id'] ?? 0);
+        $ruta = $id > 0 ? Imagenes::rutaPfp($id) : null;
+        return $ruta !== null
+            ? '/api/usuarios/' . $id . '/foto?v=' . filemtime($ruta)
+            : '/front/dist/assets/imagenes/img6.jpg';
     }
 
     // URL del panel del usuario logueado, o null si no hay sesión (o el rol no tiene panel).

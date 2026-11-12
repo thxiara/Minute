@@ -2,29 +2,6 @@
 <html lang="es">
 <head>
     <base href="../../../">
-    <script>
-        const assetFallbackPrefix = '/front/dist/';
-        const assetFallbackRoot = document.querySelector('base') ? '' : 'dist/';
-
-        document.addEventListener('error', (event) => {
-            const element = event.target;
-            if (!(element instanceof Element)) return;
-
-            const attribute = element.hasAttribute('href') ? 'href' : 'src';
-            const url = element.getAttribute(attribute);
-            if (!url?.startsWith(assetFallbackPrefix)) return;
-
-            const fallbackUrl = assetFallbackRoot + url.slice(assetFallbackPrefix.length);
-            if (element instanceof HTMLScriptElement) {
-                const replacement = document.createElement('script');
-                replacement.src = fallbackUrl;
-                element.after(replacement);
-                element.remove();
-            } else {
-                element.setAttribute(attribute, fallbackUrl);
-            }
-        }, true);
-    </script>
     <link rel="icon" type="image/png" href="/front/dist/assets/iconos/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -147,6 +124,8 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/front/dist/js/api.js"></script>
+    <script src="/front/dist/js/foto-perfil.js"></script>
+    <script src="/front/dist/js/visor-imagen.js"></script>
     <script src="/front/dist/js/dashboard/admin.js"></script>
 </body>
 </html>

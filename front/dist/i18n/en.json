@@ -451,5 +451,7 @@
     "Esta clase fue cancelada.": "This class was cancelled.",
     "No tienes clases asignadas.": "You do not have any classes assigned.",
     "Entrenador: {nombre}": "Trainer: {nombre}",
-    "No se pudieron cargar tus rutinas.": "Your routines could not be loaded."
+    "No se pudieron cargar tus rutinas.": "Your routines could not be loaded.",
+    "Ver en grande": "View larger",
+    "Imagen ampliada": "Enlarged image"
 }

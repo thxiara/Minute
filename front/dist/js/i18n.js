@@ -1,7 +1,5 @@
 // Internacionalización (i18n) del front.
 //
-// Cómo funciona
-// -------------
 // * El sitio está escrito en español: el texto en español ES la clave de traducción.
 // * Cada idioma extra tiene un diccionario en /front/dist/i18n/<idioma>.json:
 //       { "Texto en español": "Texto traducido", ... }
@@ -33,10 +31,7 @@ const I18n = (() => {
     const NO_RECORRER = new Set(["SCRIPT", "STYLE", "TEXTAREA", "NOSCRIPT", "CODE", "PRE"]);
     const CLASE_CARGANDO = "i18n-cargando";
 
-    // La carpeta de diccionarios se ubica a partir de la dirección de este mismo archivo.
     const origenScript = document.currentScript?.src || "";
-
-    // ------------------------------------------------------------------ Idioma actual
 
     function leerCookie() {
         const coincidencia = document.cookie.match(new RegExp(`(?:^|;\\s*)${COOKIE}=([^;]*)`));
@@ -44,11 +39,9 @@ const I18n = (() => {
     }
 
     function guardarCookie(idioma) {
-        // Dura un año y vale para todo el sitio (la API también la lee).
         document.cookie = `${COOKIE}=${encodeURIComponent(idioma)}; path=/; max-age=31536000; samesite=lax`;
     }
 
-    // Primero la cookie; si no hay, el idioma preferido del navegador.
     function detectar() {
         const guardado = leerCookie();
         if (IDIOMAS[guardado]) return guardado;
@@ -64,8 +57,6 @@ const I18n = (() => {
     // Se guarda para que el servidor use el mismo idioma que el navegador desde el primer pedido.
     if (leerCookie() !== idioma) guardarCookie(idioma);
     document.documentElement.lang = idioma;
-
-    // ------------------------------------------------------------------ Diccionario
 
     let exactos = new Map();   // "Texto en español" → "traducción"
     let patrones = [];         // textos con {marcas}: [{ regex, nombres, traduccion }]
@@ -102,7 +93,6 @@ const I18n = (() => {
         Object.prototype.hasOwnProperty.call(valores, nombre) ? String(valores[nombre]) : marca
     ));
 
-    // Traducción de un texto completo, o null si no está en el diccionario.
     function buscar(clave) {
         const exacto = exactos.get(clave);
         if (exacto !== undefined) return exacto;
@@ -121,7 +111,6 @@ const I18n = (() => {
         return null;
     }
 
-    // Traduce un texto ya normalizado. Devuelve null si no hay nada para traducir.
     function traducirTexto(clave) {
         if (!clave || !/\p{L}/u.test(clave)) return null;
 
@@ -154,8 +143,6 @@ const I18n = (() => {
         if (traduccion === null) return null;
         return valor.match(/^\s*/)[0] + traduccion + valor.match(/\s*$/)[0];
     }
-
-    // ------------------------------------------------------------------ Recorrido de la página
 
     // Lo último que este script escribió en cada nodo/atributo: evita volver a procesar
     // sus propios cambios cuando el observador avisa de ellos.
@@ -220,7 +207,6 @@ const I18n = (() => {
         }
     }
 
-    // Vigila todo lo que los demás scripts agreguen o cambien después.
     function observar() {
         new MutationObserver((cambios) => {
             cambios.forEach((cambio) => {
@@ -244,8 +230,6 @@ const I18n = (() => {
             window[nombre] = (mensaje, ...resto) => original(t(String(mensaje ?? "")), ...resto);
         });
     }
-
-    // ------------------------------------------------------------------ Selector de idioma
 
     const ESTILOS = `
         html.${CLASE_CARGANDO} body { visibility: hidden; }
@@ -304,8 +288,6 @@ const I18n = (() => {
         }
     }
 
-    // ------------------------------------------------------------------ API pública
-
     // Traduce un texto desde JavaScript. Los valores variables van como {marcas}:
     //     I18n.t("Hola, {nombre}", { nombre: "Ana" })
     // Casi nunca hace falta llamarla: lo que se escribe en la página se traduce solo.
@@ -327,8 +309,6 @@ const I18n = (() => {
     const alCargarLaPagina = accion => (document.readyState === "loading"
         ? document.addEventListener("DOMContentLoaded", accion, { once: true })
         : accion());
-
-    // ------------------------------------------------------------------ Arranque
 
     agregarEstilos();
     alCargarLaPagina(agregarSelector);

@@ -43,7 +43,6 @@ class UsuarioController
 
         $data = Entrada::json();
 
-        // Todo se lee como texto (aunque el cliente mande números): ver Entrada::texto().
         $name = Entrada::texto($data, 'name');
         $email = Entrada::texto($data, 'email');
         // Igual que en el registro: solo dígitos.
@@ -154,7 +153,6 @@ class UsuarioController
     }
 
     // GET /api/usuarios/:id/foto → la imagen (o 404 si no tiene). Cualquier usuario logueado.
-    // La foto es el archivo <id>.jpg de la carpeta PFP_DIR (api/.env).
     public function foto(string $id): void
     {
         Auth::exigirRol(Auth::ROL_ADMIN, Auth::ROL_ENTRENADOR, Auth::ROL_PROFESOR, Auth::ROL_SOCIO);
@@ -168,8 +166,6 @@ class UsuarioController
     }
 
     // PUT /api/mi-foto { image: "data:image/...;base64,..." } → cambia la foto propia.
-    // Acepta JPG, PNG, WEBP o GIF; el servidor la recorta en cuadrado, la lleva a 128 × 128,
-    // la convierte a JPG y reemplaza la que hubiera antes.
     public function cambiarMiFoto(): void
     {
         $id = Auth::exigirRol(Auth::ROL_ADMIN, Auth::ROL_ENTRENADOR, Auth::ROL_PROFESOR, Auth::ROL_SOCIO);
@@ -184,6 +180,6 @@ class UsuarioController
             Response::json(false, 'No se pudo guardar la foto.', [], 500);
         }
 
-        Response::json(true, 'Foto actualizada.');
+        Response::json(true, 'Foto actualizada.', ['id_client' => $id]);
     }
 }
