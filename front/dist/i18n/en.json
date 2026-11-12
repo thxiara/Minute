@@ -135,19 +135,6 @@
     "Fondo": "Background",
     "Iniciar Sesión": "Log in",
     "Ingresar": "Sign in",
-    "Pagar | FitPower": "Pay | FitPower",
-    "Realizar pago": "Make a payment",
-    "Ingresa los datos de tu tarjeta para completar la compra": "Enter your card details to complete the purchase",
-    "NOMBRE TITULAR": "CARDHOLDER NAME",
-    "MM/AA": "MM/YY",
-    "Tipo de tarjeta": "Card type",
-    "Selecciona tu tarjeta": "Select your card",
-    "Otra": "Other",
-    "Número de tarjeta": "Card number",
-    "Nombre del titular": "Cardholder name",
-    "Nombre completo": "Full name",
-    "Confirmo que los datos ingresados son correctos y acepto ser responsable de esta compra.": "I confirm that the details entered are correct and I accept responsibility for this purchase.",
-    "Confirmar compra": "Confirm purchase",
     "Reseñas | FitPower": "Reviews | FitPower",
     "Reseñas": "Reviews",
     "Conoce las experiencias de quienes entrenan diariamente en FitPower.": "Read about the experiences of those who train at FitPower every day.",
@@ -515,6 +502,5 @@
     "No se pudo restablecer la selección.": "The selection could not be reset.",
     "Mostrar la reseña de {nombre} en el carrusel": "Show {nombre}'s review in the carousel",
     "Foto de quien escribió la reseña": "Photo of the review author",
-    "Restaurar": "Restore",
-    "Reseñas | FitPower": "Reviews | FitPower"
+    "Restaurar": "Restore"
 }

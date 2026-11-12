@@ -1,46 +1,25 @@
-@media (min-width: 576px) and (max-width: 1199px) {
-    .tabla-usuarios {
-        min-width: 760px;
-    }
-}
-
-@media (max-width: 575px) {
-    .users-filters {
-        gap: 6px;
-    }
-
-    .users-filter {
-        padding: 6px 10px;
-        font-size: 12px;
-    }
-
-    .interface-heading .interface-button {
-        padding: 9px 12px;
-        min-height: 38px;
-        font-size: 13px;
-    }
-
-    .tabla-usuarios tbody td:nth-child(1)::before {
+@media (max-width: 767px) {
+    .tabla-usuarios tbody tr:not(:has(td[colspan])) td:nth-child(1)::before {
         content: "Nombre";
     }
 
-    .tabla-usuarios tbody td:nth-child(2)::before {
+    .tabla-usuarios tbody tr:not(:has(td[colspan])) td:nth-child(2)::before {
         content: "Rol";
     }
 
-    .tabla-usuarios tbody td:nth-child(3)::before {
+    .tabla-usuarios tbody tr:not(:has(td[colspan])) td:nth-child(3)::before {
         content: "C.I";
     }
 
-    .tabla-usuarios tbody td:nth-child(4)::before {
+    .tabla-usuarios tbody tr:not(:has(td[colspan])) td:nth-child(4)::before {
         content: "Cel.";
     }
 
-    .tabla-usuarios tbody td:nth-child(5)::before {
+    .tabla-usuarios tbody tr:not(:has(td[colspan])) td:nth-child(5)::before {
         content: "Vencimiento";
     }
 
-    .tabla-usuarios tbody td:nth-child(6)::before {
+    .tabla-usuarios tbody tr:not(:has(td[colspan])) td:nth-child(6)::before {
         content: "Acciones";
     }
 }
