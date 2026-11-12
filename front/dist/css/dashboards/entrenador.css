@@ -1,6 +1,3 @@
-/* Entrenador */
-
-/* Tablas */
 .tabla-socios th:nth-child(1) {
     width: 15%;
 }
@@ -50,23 +47,12 @@
     white-space: nowrap;
 }
 
-.nota-texto.nota-texto-expandida {
-    max-width: none;
-    overflow: visible;
-    white-space: normal;
-}
-
 .leer-mas {
     display: inline-block;
     margin-top: 3px;
-    padding: 0;
-    border: none;
-    background: transparent;
     color: var(--color-accent-bright);
-    font-family: "TASA Explorer", sans-serif;
-    font-size: 11px;
+    font-size: 12px;
     text-decoration: none;
-    cursor: pointer;
 }
 
 .leer-mas:hover {

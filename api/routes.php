@@ -48,7 +48,8 @@ $router->get('/api/profesor/alumnos', 'ClaseController@alumnosDeProfesor');
 $router->get('/api/profesor/alumnos/:id', 'ClaseController@alumnoDeProfesor');
 $router->put('/api/profesor/alumnos/:id/evaluacion', 'ClaseController@evaluarAlumno');
 
-#Usuarios (admin): editar, dar de baja, membresías
+#Usuarios (admin): listado completo y gestión de cuentas
+$router->get('/api/admin/usuarios', 'UsuarioController@listar');
 $router->get('/api/usuarios/:id', 'UsuarioController@ver');
 $router->put('/api/usuarios/:id', 'UsuarioController@actualizar');
 $router->delete('/api/usuarios/:id', 'UsuarioController@baja');

@@ -94,12 +94,23 @@ html{
     overflow-x:hidden;
 }
 
-/* Base */
+/* exp-landing-gradient:
+   - Degradé continuo en toda la página (el body pinta un gradiente largo; las secciones
+     son transparentes para que se vea).
+   - El hero funde su imagen con el fondo vía .hero::after.
+   - El viewport del carrusel usa mask-image para difuminar los bordes superior/inferior. */
 body{
     background:
-        radial-gradient(ellipse at 82% 0, color-mix(in srgb, var(--color-accent) 7%, transparent), transparent 34rem),
-        radial-gradient(ellipse at 5% 80%, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 28rem),
-        var(--color-background);
+        radial-gradient(ellipse 85% 34% at 88% 4%, color-mix(in srgb, var(--color-accent) 13%, transparent), transparent 70%),
+        radial-gradient(ellipse 65% 30% at 8% 37%, color-mix(in srgb, var(--color-primary) 17%, transparent), transparent 72%),
+        radial-gradient(ellipse 80% 34% at 88% 68%, color-mix(in srgb, var(--color-primary-deep) 30%, transparent), transparent 72%),
+        radial-gradient(ellipse 70% 30% at 12% 93%, color-mix(in srgb, var(--color-accent) 10%, transparent), transparent 70%),
+        linear-gradient(180deg,
+            var(--color-background) 0%,
+            color-mix(in srgb, var(--color-primary-deep) 14%, var(--color-background)) 30%,
+            color-mix(in srgb, var(--color-primary) 11%, var(--color-background)) 50%,
+            color-mix(in srgb, var(--color-primary-deep) 16%, var(--color-background)) 76%,
+            var(--color-background) 100%);
     color:var(--color-text);
     font-family: 'TASA Explorer', sans-serif;
     font-size:1rem;
@@ -175,7 +186,7 @@ a{
 .logo {
     background-size: 150% 150%;
     background-position: 0 50%;
-    transition: transform 180ms ease, filter 180ms ease, background-position 250ms ease;
+    transition: transform 300ms ease, filter 300ms ease, background-position 500ms ease;
 }
 
 /* Encabezado */
@@ -280,8 +291,45 @@ header{
     box-sizing:border-box;
     flex-shrink:0;
     user-select:none;
+    transition: transform 400ms ease, background-position 500ms ease;
 }
 
+/* El toggle de idioma vive en js/i18n.js (.idioma-header): se inyecta en el header de
+   todas las páginas, o como pastilla flotante en las páginas sin header. */
+
+
+
+/* Skeleton loaders para evitar parpadeo de textos al cargar */
+.skeleton-hero-text {
+    height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(90deg, var(--color-surface) 0%, var(--color-surface-raised) 50%, var(--color-surface) 100%);
+    background-size: 200% 100%;
+    animation: skeleton-pulse 1.4s ease-in-out infinite;
+    max-width: 640px;
+}
+
+.skeleton-hero-btn {
+    height: 56px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--color-surface) 0%, var(--color-surface-raised) 50%, var(--color-surface) 100%);
+    background-size: 200% 100%;
+    animation: skeleton-pulse 1.4s ease-in-out infinite;
+    max-width: 220px;
+}
+
+@keyframes skeleton-pulse {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+html.i18n-cargando body {
+    visibility: hidden;
+}
 
 /* hero*/
 
@@ -315,6 +363,20 @@ header{
     background:linear-gradient(90deg, color-mix(in srgb, var(--color-background) 84%, transparent), color-mix(in srgb, var(--color-background) 34%, transparent));
 }
 
+/* Degradé inferior: funde la imagen del hero con el fondo continuo de la página.
+   Va por encima del overlay pero debajo del texto (.hero-contenido tiene z-index 2). */
+.hero::after{
+    content:"";
+    position:absolute;
+    z-index:1;
+    right:0;
+    bottom:0;
+    left:0;
+    height:45%;
+    background:linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--color-background) 55%, transparent) 52%, var(--color-background) 100%);
+    pointer-events:none;
+}
+
 .hero-contenido{
     position:relative;
     z-index:2;
@@ -345,8 +407,9 @@ header{
     border-radius:10px;
     background:var(--gradient-button);
     color:var(--color-text);
-    font-family: 'TASA Explorer', sans-serif;
-    font-weight:600;
+    font-family:'TASA Explorer',sans-serif;
+    font-weight:800;
+    letter-spacing:.02em;
     transition:.3s;
     cursor:pointer;
 }
@@ -356,7 +419,7 @@ header{
 /*  seccion nosotros */
 
 .nosotros{
-    background:var(--color-background);
+    background:transparent;
     padding:80px 0;
 }
 
@@ -454,7 +517,7 @@ header{
 /* seccion instalaciones*/
 
 .instalaciones{
-    background:var(--color-background);
+    background:transparent;
     padding:90px 0;
 }
 
@@ -509,7 +572,7 @@ header{
 /* seccion reseñas*/
 
 .reviews{
-    background:var(--color-background);
+    background:transparent;
     padding:90px 0;
 }
 
@@ -558,6 +621,9 @@ header{
     flex:1;
     height:470px;
     overflow:hidden;
+    /* Difuminado superior/inferior: las tarjetas no quedan "cortadas" al final */
+    -webkit-mask-image:linear-gradient(180deg, transparent 0, #000 52px, #000 calc(100% - 52px), transparent 100%);
+    mask-image:linear-gradient(180deg, transparent 0, #000 52px, #000 calc(100% - 52px), transparent 100%);
 }
 
 .slider{
@@ -648,7 +714,7 @@ header{
 /* seccion planes*/
 
 .planes{
-    background:var(--color-background);
+    background:transparent;
     padding:90px 0;
     text-align:center;
 }
@@ -668,6 +734,8 @@ header{
 }
 
 .plan{
+    display:flex;
+    flex-direction:column;
     padding:28px;
     border-radius:10px;
     border:1px solid var(--color-border);
@@ -744,6 +812,7 @@ header{
 
 .plan button,
 .plan-button{
+    margin-top:auto;
     display:inline-flex;
     width:min(100%, 22rem);
     align-items:center;
@@ -762,6 +831,11 @@ header{
 }
 
 
+/* El botón de PRO va apenas elevado respecto a los demás botones */
+.btn-pro{
+    margin-bottom:8px;
+}
+
 /* footer */
 
 footer{
@@ -771,7 +845,14 @@ footer{
 
 .logo-footer{
     margin:0;
-    font-size:clamp(1.4rem, 3vw, 2rem);
+    font-size:2rem;
+}
+
+.iconos{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    flex-wrap:wrap;
 }
 
 .iconos a{
@@ -816,14 +897,8 @@ a:focus{
 
 .comentario .contenido h3 { font-family: "Special Gothic Expanded One", sans-serif; }
 
-.nosotros,
-.instalaciones,
-.reviews,
-.planes {
-    background:
-        radial-gradient(ellipse at 50% 0, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 34rem),
-        var(--color-background);
-}
+/* exp-landing-gradient: las secciones son transparentes para que el degradé continuo
+   del body se vea a lo largo de toda la página. */
 
 .nosotros h2,
 .instalaciones-texto h2,

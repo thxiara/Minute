@@ -249,14 +249,23 @@
     overflow: hidden;
 }
 
+.product-preview-wrap {
+    min-width: 0;
+}
+
 .product-preview-image {
     width: calc(100% - 32px);
     height: 250px;
-    margin: 16px;
+    margin: 16px 16px 10px;
     border: 1px solid var(--color-border);
     border-radius: 11px;
     background: var(--color-surface-raised);
     object-fit: cover;
+}
+
+.product-photo-button {
+    width: calc(100% - 32px);
+    margin: 0 16px 16px;
 }
 
 .product-summary-copy {
@@ -304,7 +313,10 @@
     gap: 18px;
 }
 
-/* Formularios */
+.product-fields .product-field-wide {
+    grid-column: 1 / -1;
+}
+
 .product-fields .form-label,
 .product-stock-field .form-label {
     color: var(--color-text-secondary);
@@ -373,6 +385,14 @@
     border-radius: 0;
     background: transparent;
     text-align: center;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.product-stock-stepper .form-control::-webkit-outer-spin-button,
+.product-stock-stepper .form-control::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .product-form-actions {
@@ -401,7 +421,12 @@
     .product-preview-image {
         width: calc(100% - 28px);
         height: 190px;
-        margin: 14px;
+        margin: 14px 14px 10px;
+    }
+
+    .product-photo-button {
+        width: calc(100% - 28px);
+        margin: 0 14px 14px;
     }
 
     .product-summary-copy {
@@ -494,9 +519,25 @@
         grid-template-columns: 110px minmax(0, 1fr);
     }
 
+    .product-preview-wrap {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .product-preview-image {
         width: 96px;
         height: 112px;
+        margin: 14px 7px 10px;
+    }
+
+    .product-photo-button {
+        width: calc(100% - 14px);
+        min-height: 34px;
+        margin: 0 7px 12px;
+        padding: 6px 4px;
+        font-size: 0.7rem;
     }
 
     .product-summary-copy {
@@ -548,6 +589,14 @@
     .product-preview-image {
         width: calc(100% - 28px);
         height: 170px;
+        margin: 14px 14px 10px;
+    }
+
+    .product-photo-button {
+        width: calc(100% - 28px);
+        min-height: 40px;
+        margin: 0 14px 16px;
+        font-size: 0.85rem;
     }
 
     .product-summary-copy {
