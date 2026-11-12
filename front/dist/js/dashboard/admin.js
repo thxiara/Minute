@@ -48,9 +48,13 @@ const AdminUtil = {
         element.textContent = text;
         element.classList.toggle("is-error", isError);
         element.hidden = !text;
+        if (window.Toast && text && !/cargando/i.test(text)) {
+            window.Toast.show(text, isError ? "error" : "success");
+        }
     }
 };
 
+// Clases
 // Administrar clases (crear, listar, eliminar).
 (() => {
 const classForm = document.getElementById("createClassForm");
@@ -102,8 +106,17 @@ function renderManagedClasses(classes) {
 }
 
 async function loadClasses() {
-    const data = await API.request("/clases");
+    window.Skeleton?.blocks(classList, 4);
+    let data;
+    try {
+        data = await API.request("/clases");
+    } catch (error) {
+        classList.replaceChildren();
+        AdminUtil.setFeedback(feedback, error.message || "No se pudieron cargar las clases.", true);
+        return;
+    }
     if (!data?.success) {
+        classList.replaceChildren();
         AdminUtil.setFeedback(feedback, data?.message || "No se pudieron cargar las clases.", true);
         return;
     }

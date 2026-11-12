@@ -1,3 +1,4 @@
+// Foto de perfil
 // Foto de perfil del usuario logueado, para todos los paneles. Va después de api.js.
 // El archivo se manda tal cual a PUT /api/mi-foto: el recorte, la conversión a JPG y el
 // reemplazo de la foto anterior los hace la API.
@@ -24,6 +25,9 @@ function mostrarMensaje(texto, esError = false) {
     aviso.textContent = texto;
     aviso.classList.toggle("is-error", esError);
     aviso.hidden = !texto;
+    if (window.Toast && texto) {
+        window.Toast.show(texto, esError ? "error" : "success");
+    }
     clearTimeout(ocultarAviso);
     if (aviso.classList.contains("foto-perfil-aviso") && texto) {
         ocultarAviso = setTimeout(() => { aviso.hidden = true; }, 4000);

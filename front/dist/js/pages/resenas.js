@@ -1,3 +1,4 @@
+// Reseñas
 // Página pública de reseñas (/resenas): lista las reseñas de la base y,
 // si quien entra es un socio, le deja escribir o modificar la suya.
 (() => {
@@ -42,7 +43,14 @@ function showMessage(text) {
 }
 
 async function loadReviews() {
-    const data = await API.request("/resenas");
+    window.Skeleton?.cards(list, 6);
+    let data;
+    try {
+        data = await API.request("/resenas");
+    } catch (error) {
+        showMessage(error.message || "No se pudieron cargar las reseñas.");
+        return;
+    }
     if (!data?.success) {
         showMessage(data?.message || "No se pudieron cargar las reseñas.");
         return;
@@ -97,6 +105,9 @@ form.addEventListener("submit", async (event) => {
 
     feedback.classList.toggle("is-error", !data?.success);
     feedback.textContent = data?.message || "No se pudo guardar tu reseña.";
+    if (window.Toast) {
+        window.Toast.show(data?.message || "No se pudo guardar tu reseña.", data?.success ? "success" : "error");
+    }
     if (data?.success) {
         heading.textContent = "Modificar tu reseña";
         submit.textContent = "Guardar cambios";

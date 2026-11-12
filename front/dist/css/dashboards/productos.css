@@ -1,3 +1,5 @@
+/* Productos */
+
 .products-panel .interface-panel-body {
     padding-top: 16px;
 }
@@ -404,6 +406,7 @@
     min-width: 130px;
 }
 
+/* Responsive */
 @media (max-width: 991px) {
     .product-editor-grid {
         grid-template-columns: minmax(0, 1fr);

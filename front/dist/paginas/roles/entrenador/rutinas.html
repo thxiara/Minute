@@ -40,8 +40,11 @@
     <link rel="stylesheet" href="/front/dist/css/responsives/dashboardsresponsive/comunresponsive.css?v=20261113">
     <!-- Traducciones: tiene que cargarse antes que el resto de los scripts -->
     <script src="/front/dist/js/i18n.js?v=20261113"></script>
+    <link rel="stylesheet" href="/front/dist/css/efectos.css?v=20261113">
+    <script src="/front/dist/js/efectos.js?v=20261113"></script>
 </head>
 <body class="interface-page trainer-interface">
+    <!-- Encabezado -->
     <header>
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center header-contenido">
@@ -58,6 +61,7 @@
     </header>
 
     <div class="interface-layout">
+        <!-- Menú lateral -->
         <aside class="interface-sidebar offcanvas offcanvas-start" id="roleNavigation" tabindex="-1" aria-labelledby="roleNavigationTitle">
             <div class="offcanvas-header d-lg-none">
                 <h2 class="offcanvas-title" id="roleNavigationTitle">Entrenador</h2>
@@ -79,6 +83,7 @@
             </div>
         </aside>
 
+        <!-- Contenido -->
         <main class="interface-content">
             <div class="interface-heading">
                 <div>
@@ -95,6 +100,7 @@
         </main>
     </div>
 
+    <!-- Modales -->
     <div class="modal fade" id="routineModal" tabindex="-1" aria-labelledby="routineModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content interface-modal">
@@ -146,9 +152,9 @@
             </div>
         </div>
     </div>
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/front/dist/js/api.js?v=20261113"></script>
-    <script src="/front/dist/js/demo-data.js?v=20261113"></script>
     <script src="/front/dist/js/foto-perfil.js?v=20261113"></script>
     <script src="/front/dist/js/visor-imagen.js?v=20261113"></script>
     <script src="/front/dist/js/dashboard/entrenador.js?v=20261113"></script>

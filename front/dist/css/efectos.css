@@ -1,0 +1,609 @@
+/* Efectos visuales */
+
+:root {
+    --efecto-ease: cubic-bezier(.2, .75, .25, 1);
+    --efecto-glow: 0 18px 42px color-mix(in srgb, var(--color-accent) 22%, transparent);
+}
+
+/* Página */
+body.page-ready main,
+body.page-ready .contenedor,
+body.page-ready .contactos-main {
+    animation: efecto-entrada 480ms var(--efecto-ease) both;
+}
+
+body.page-leaving main,
+body.page-leaving .contenedor,
+body.page-leaving .contactos-main {
+    animation: none;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 160ms ease, transform 160ms ease;
+}
+
+/* Aparición al hacer scroll */
+[data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+        opacity 520ms var(--efecto-ease),
+        transform 620ms var(--efecto-ease);
+    transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* Tarjetas */
+:is(.interface-panel,
+    .member-review-card,
+    .routine-preview-card,
+    .class-choice-card,
+    .schedule-card,
+    .review-card,
+    .contacto-card,
+    .profile-summary) {
+    transition:
+        transform 240ms var(--efecto-ease),
+        box-shadow 240ms var(--efecto-ease),
+        border-color 240ms var(--efecto-ease);
+}
+
+:is(.interface-panel,
+    .member-review-card,
+    .routine-preview-card,
+    .class-choice-card,
+    .schedule-card,
+    .review-card,
+    .contacto-card,
+    .profile-summary):hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--color-accent-bright) 42%, transparent);
+    box-shadow: var(--efecto-glow);
+}
+
+/* Bordes degradados */
+:is(.interface-panel,
+    .plan,
+    .member-review-card,
+    .routine-preview-card,
+    .review-card,
+    .schedule-card) {
+    position: relative;
+    isolation: isolate;
+}
+
+:is(.interface-panel,
+    .plan,
+    .member-review-card,
+    .routine-preview-card,
+    .review-card,
+    .schedule-card)::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg,
+            color-mix(in srgb, var(--color-accent-bright) 70%, transparent),
+            transparent 38%,
+            color-mix(in srgb, var(--color-accent) 55%, transparent));
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    opacity: .28;
+    pointer-events: none;
+    transition: opacity 260ms var(--efecto-ease);
+}
+
+:is(.interface-panel,
+    .plan,
+    .member-review-card,
+    .routine-preview-card,
+    .review-card,
+    .schedule-card):hover::before,
+.plan.principal::before {
+    opacity: .95;
+}
+
+.plan.principal {
+    box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--color-accent-bright) 22%, transparent),
+        0 24px 56px color-mix(in srgb, var(--color-accent) 26%, transparent);
+}
+
+/* Hero */
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 1;
+    height: 42%;
+    background: linear-gradient(0deg,
+            color-mix(in srgb, var(--color-accent) 18%, transparent),
+            transparent);
+    pointer-events: none;
+}
+
+.hero img {
+    transform: translate3d(0, var(--parallax-y, 0px), 0) scale(1.06);
+    will-change: transform;
+}
+
+/* Botones */
+:is(button,
+    .btn,
+    .interface-button,
+    .interface-button-secondary,
+    .interface-button-danger,
+    .btn-guardar,
+    .btn-hero,
+    .btn-instalaciones,
+    .plan-button,
+    .review-button,
+    .action-button,
+    .pagination button) {
+    position: relative;
+    overflow: hidden;
+    transition:
+        transform 160ms var(--efecto-ease),
+        box-shadow 160ms var(--efecto-ease),
+        filter 160ms var(--efecto-ease);
+}
+
+:is(button,
+    .btn,
+    .interface-button,
+    .interface-button-secondary,
+    .interface-button-danger,
+    .btn-guardar,
+    .btn-hero,
+    .btn-instalaciones,
+    .plan-button,
+    .review-button,
+    .action-button,
+    .pagination button):hover {
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+    box-shadow: 0 10px 24px color-mix(in srgb, var(--color-accent) 24%, transparent);
+}
+
+:is(button,
+    .btn,
+    .interface-button,
+    .interface-button-secondary,
+    .interface-button-danger,
+    .btn-guardar,
+    .btn-hero,
+    .btn-instalaciones,
+    .plan-button,
+    .review-button,
+    .action-button,
+    .pagination button):active {
+    transform: translateY(0) scale(.98);
+}
+
+:is(.interface-button,
+    .btn-hero,
+    .btn-instalaciones,
+    .plan-button,
+    .review-button,
+    .btn-guardar) {
+    background-size: 180% 180% !important;
+    animation: efecto-degradado 7s ease infinite;
+}
+
+/* Onda */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: color-mix(in srgb, #fff 38%, transparent);
+    pointer-events: none;
+    transform: scale(0);
+    animation: efecto-onda 560ms ease-out forwards;
+}
+
+/* Menú lateral */
+:is(.interface-sidebar, .barra-lateral, .barra-lateral-movil, .menu-usuario) nav a,
+:is(.interface-sidebar, .barra-lateral, .barra-lateral-movil, .menu-usuario) .menu-link,
+.enlace-barra-lateral {
+    position: relative;
+}
+
+:is(.interface-sidebar, .barra-lateral, .barra-lateral-movil, .menu-usuario) nav a::before,
+:is(.interface-sidebar, .barra-lateral, .barra-lateral-movil, .menu-usuario) .menu-link::before,
+.enlace-barra-lateral::before {
+    content: "";
+    width: 4px;
+    height: 4px;
+    flex: 0 0 auto;
+    margin-right: 8px;
+    border-radius: 999px;
+    background: currentColor;
+    transition:
+        width 200ms var(--efecto-ease),
+        height 200ms var(--efecto-ease),
+        border-radius 200ms var(--efecto-ease),
+        background 200ms var(--efecto-ease);
+}
+
+:is(.interface-sidebar, .barra-lateral, .barra-lateral-movil, .menu-usuario) nav a:hover::before,
+:is(.interface-sidebar, .barra-lateral, .barra-lateral-movil, .menu-usuario) nav a.activo::before,
+:is(.interface-sidebar, .barra-lateral, .barra-lateral-movil, .menu-usuario) nav a[aria-current="page"]::before,
+:is(.interface-sidebar, .barra-lateral, .barra-lateral-movil, .menu-usuario) .menu-link:hover::before,
+:is(.interface-sidebar, .barra-lateral, .barra-lateral-movil, .menu-usuario) .menu-link.activo::before,
+:is(.interface-sidebar, .barra-lateral, .barra-lateral-movil, .menu-usuario) .menu-link[aria-current="page"]::before,
+.enlace-barra-lateral:hover::before,
+.enlace-barra-lateral.activo::before {
+    width: 4px;
+    height: 18px;
+    border-radius: 2px;
+    background: var(--color-accent-bright);
+}
+
+/* Modales */
+.modal.fade .modal-dialog {
+    transform: scale(.96) translateY(10px);
+    transition: transform 260ms var(--efecto-ease);
+}
+
+.modal.show .modal-dialog {
+    transform: none;
+}
+
+.modal-backdrop.show {
+    opacity: .72;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+
+/* Foco */
+:is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-accent-bright);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 22%, transparent);
+}
+
+/* Estados */
+.product-status--low,
+.product-status--empty,
+.class-notice-cancelled {
+    animation: efecto-pulso 2.6s ease-in-out infinite;
+}
+
+/* Scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-accent) var(--color-background);
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+    border: 2px solid var(--color-background);
+    border-radius: 999px;
+    background: linear-gradient(180deg, var(--color-accent-bright), var(--color-primary));
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--color-accent-bright), var(--color-accent));
+}
+
+/* Skeletons */
+.skeleton {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    min-height: .9em;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--color-surface-raised) 82%, transparent);
+}
+
+.skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg,
+            transparent,
+            color-mix(in srgb, var(--color-accent-bright) 16%, transparent),
+            transparent);
+    animation: efecto-brillo 1.25s infinite;
+}
+
+.skeleton-line {
+    width: 100%;
+    height: 12px;
+}
+
+.skeleton-block {
+    width: 100%;
+    height: 88px;
+    margin-bottom: 10px;
+}
+
+.skeleton-card {
+    width: 100%;
+    min-height: 180px;
+    border-radius: 12px;
+}
+
+tr.skeleton-row td {
+    padding: 12px 8px;
+}
+
+/* Avisos */
+.aviso-stack {
+    position: fixed;
+    right: clamp(12px, 3vw, 24px);
+    bottom: clamp(12px, 3vw, 24px);
+    z-index: 2000;
+    display: grid;
+    gap: 10px;
+    width: min(380px, calc(100vw - 24px));
+    pointer-events: none;
+}
+
+.aviso {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 13px 14px;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 28%, transparent);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--color-surface-raised) 92%, transparent);
+    box-shadow: 0 16px 40px var(--color-shadow);
+    color: var(--color-text);
+    pointer-events: auto;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    animation: efecto-aviso-entra 300ms var(--efecto-ease) both;
+}
+
+.aviso.is-hiding {
+    animation: efecto-aviso-sale 240ms ease forwards;
+}
+
+.aviso--success {
+    border-color: color-mix(in srgb, var(--color-success) 58%, transparent);
+}
+
+.aviso--error {
+    border-color: color-mix(in srgb, var(--color-danger) 62%, transparent);
+}
+
+.aviso--warning {
+    border-color: color-mix(in srgb, var(--color-warning) 62%, transparent);
+}
+
+.aviso__icon {
+    flex: 0 0 auto;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.aviso--success .aviso__icon {
+    color: var(--color-success);
+}
+
+.aviso--error .aviso__icon {
+    color: var(--color-danger);
+}
+
+.aviso--warning .aviso__icon {
+    color: var(--color-warning);
+}
+
+.aviso__text {
+    margin: 0;
+    font-size: .9rem;
+    line-height: 1.45;
+}
+
+.aviso__close {
+    flex: 0 0 auto;
+    margin-left: auto;
+    padding: 0 2px;
+    border: 0;
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    line-height: 1.3;
+    cursor: pointer;
+}
+
+.aviso__close:hover {
+    color: var(--color-text);
+}
+
+/* Animaciones */
+@keyframes efecto-entrada {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes efecto-degradado {
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes efecto-onda {
+    to {
+        transform: scale(2.6);
+        opacity: 0;
+    }
+}
+
+@keyframes efecto-pulso {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-warning) 34%, transparent);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px transparent;
+    }
+}
+
+@keyframes efecto-brillo {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes efecto-aviso-entra {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes efecto-aviso-sale {
+    to {
+        opacity: 0;
+        transform: translateY(8px) scale(.98);
+    }
+}
+
+@media (max-width: 575px) {
+    .aviso-stack {
+        right: 12px;
+        bottom: 12px;
+        left: 12px;
+        width: auto;
+    }
+}
+
+/* Movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto !important;
+    }
+
+    [data-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    body.page-ready main,
+    body.page-ready .contenedor,
+    body.page-ready .contactos-main,
+    body.page-leaving main,
+    body.page-leaving .contenedor,
+    body.page-leaving .contactos-main {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    :is(.interface-panel,
+        .member-review-card,
+        .routine-preview-card,
+        .class-choice-card,
+        .schedule-card,
+        .review-card,
+        .contacto-card,
+        .profile-summary,
+        .comentario,
+        .plan):hover {
+        transform: none !important;
+    }
+
+    :is(button,
+        .btn,
+        .interface-button,
+        .interface-button-secondary,
+        .interface-button-danger,
+        .btn-guardar,
+        .btn-hero,
+        .btn-instalaciones,
+        .plan-button,
+        .review-button,
+        .action-button,
+        .pagination button):hover,
+    :is(button,
+        .btn,
+        .interface-button,
+        .interface-button-secondary,
+        .interface-button-danger,
+        .btn-guardar,
+        .btn-hero,
+        .btn-instalaciones,
+        .plan-button,
+        .review-button,
+        .action-button,
+        .pagination button):active {
+        transform: none !important;
+        filter: none !important;
+    }
+
+    :is(.interface-button,
+        .btn-hero,
+        .btn-instalaciones,
+        .plan-button,
+        .review-button,
+        .btn-guardar) {
+        background-size: auto !important;
+        animation: none !important;
+    }
+
+    .hero img {
+        transform: none !important;
+    }
+
+    .ripple {
+        display: none !important;
+    }
+
+    .modal.fade .modal-dialog,
+    .modal.show .modal-dialog {
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .product-status--low,
+    .product-status--empty,
+    .class-notice-cancelled {
+        animation: none !important;
+    }
+
+    .aviso,
+    .aviso.is-hiding {
+        animation: none !important;
+    }
+}

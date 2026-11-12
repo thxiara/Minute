@@ -42,6 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
+#HEAD devolver las mismas cabeceras que GET (Apache descarta el cuerpo)
+if ($_SERVER['REQUEST_METHOD'] === 'HEAD') {
+    $_SERVER['REQUEST_METHOD'] = 'GET';
+}
+
 #El servidor rechaza ids de sesión que el no haya generado y solo manda ids de sesión a través del header de cookies
 ini_set('session.use_strict_mode', '1');
 ini_set('session.use_only_cookies', '1');

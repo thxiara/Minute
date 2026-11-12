@@ -1,3 +1,6 @@
+/* Común responsive */
+
+/* Base */
 * {
     box-sizing: border-box;
 }
@@ -19,6 +22,7 @@ body {
         opacity: 0 !important;
     }
 
+    /* Barra lateral */
     .admin-page .barra-lateral,
     .entrenador-page .barra-lateral,
     .profesor-page .barra-lateral {
@@ -33,6 +37,7 @@ body {
 }
 
 @media (max-width: 991px) {
+    /* Encabezado */
     .admin-page > header,
     .entrenador-page > header,
     .profesor-page > header {
