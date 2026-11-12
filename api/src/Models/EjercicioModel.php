@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Utils\Imagenes;
+
 class EjercicioModel
 {
     private $db;
@@ -18,7 +20,22 @@ class EjercicioModel
                     FROM Exercise
                    ORDER BY name_exercise ASC";
 
-        return $this->db->query($query)->fetchAll(\PDO::FETCH_ASSOC);
+        $ejercicios = $this->db->query($query)->fetchAll(\PDO::FETCH_ASSOC);
+        foreach ($ejercicios as &$ejercicio) {
+            $ejercicio['id_exercise'] = (int) $ejercicio['id_exercise'];
+            $ejercicio['has_gif'] = Imagenes::rutaEjercicio($ejercicio['id_exercise']) !== null;
+        }
+        unset($ejercicio);
+
+        return $ejercicios;
+    }
+
+    public function existe(int $id): bool
+    {
+        $stmt = $this->db->prepare("SELECT 1 FROM Exercise WHERE id_exercise = :id");
+        $stmt->execute(['id' => $id]);
+
+        return (bool) $stmt->fetchColumn();
     }
 
     public function existeNombre(string $nombre): bool

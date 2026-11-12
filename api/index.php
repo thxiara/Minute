@@ -14,12 +14,13 @@ set_exception_handler(function (Throwable $e) {
     }
     http_response_code(500);
     header('Content-Type: application/json; charset=UTF-8');
+    $traducir = fn(string $texto) => class_exists('\\App\\Utils\\I18n') ? \App\Utils\I18n::t($texto) : $texto;
     $faltaMigracion = $e instanceof PDOException && in_array($e->getCode(), ['42S22', '42S02'], true);
     echo json_encode([
         'success' => false,
-        'message' => $faltaMigracion
+        'message' => $traducir($faltaMigracion
             ? 'La base de datos está desactualizada: recreá la base con api/config/init.sql.'
-            : 'Error interno del servidor.',
+            : 'Error interno del servidor.'),
     ]);
 });
 
@@ -85,7 +86,7 @@ try {
     http_response_code(500);
     echo json_encode([
         'status' => 'error',
-        'message' => 'Error crítico de BD: no se pudo conectar a la base de datos',
+        'message' => \App\Utils\I18n::t('Error crítico de BD: no se pudo conectar a la base de datos'),
     ]);
 
     exit;

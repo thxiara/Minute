@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Utils\Imagenes;
+
 class RutinaModel
 {
     private $db;
@@ -215,6 +217,7 @@ class RutinaModel
             $porRutina[$fila['fr_routine']][] = [
                 'exercise_id' => (int) $fila['exercise_id'],
                 'exercise_name' => $fila['exercise_name'],
+                'has_gif' => Imagenes::rutaEjercicio((int) $fila['exercise_id']) !== null,
                 'sets' => (int) $fila['sets'],
                 'reps' => (int) $fila['reps'],
             ];

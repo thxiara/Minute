@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use App\Utils\Auth;
+use App\Utils\Entrada;
+use App\Utils\Imagenes;
 use App\Utils\Response;
 
 // Gestión de usuarios desde el panel de administración.
@@ -39,27 +41,22 @@ class UsuarioController
             Response::json(false, 'Usuario no encontrado.', [], 404);
         }
 
-        $data = json_decode(file_get_contents('php://input'), true);
-        $data = is_array($data) ? $data : [];
+        $data = Entrada::json();
 
-        $name = trim((string) ($data['name'] ?? ''));
-        $email = trim((string) ($data['email'] ?? ''));
+        $name = Entrada::texto($data, 'name');
+        $email = Entrada::texto($data, 'email');
         // Igual que en el registro: solo dígitos.
-        $phone = preg_replace('/\D+/', '', (string) ($data['phone'] ?? ''));
-        $ci = trim((string) ($data['ci'] ?? ''));
-        $password = (string) ($data['password'] ?? '');
+        $phone = Entrada::telefono($data, 'phone');
+        $ci = Entrada::texto($data, 'ci');
+        // La contraseña no se recorta: los espacios también cuentan.
+        $password = Entrada::texto($data, 'password', false);
 
         if ($name === '' || $email === '' || $phone === '' || $ci === '') {
             Response::json(false, 'Nombre, C.I., teléfono y correo son obligatorios.', [], 400);
         }
-        if (mb_strlen($name) > 50) {
-            Response::json(false, 'El nombre puede tener hasta 50 caracteres.', [], 400);
-        }
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            Response::json(false, 'El correo electrónico no es válido.', [], 400);
-        }
-        if ($password !== '' && strlen($password) < 8) {
-            Response::json(false, 'La contraseña debe tener al menos 8 caracteres.', [], 400);
+        AuthController::validarDatosDeUsuario($name, $email, $phone, $ci);
+        if ($password !== '') {
+            AuthController::validarPassword($password);
         }
 
         if ($this->usuarios->datoEnUsoPorOtro('email', $email, $usuarioId)) {
@@ -137,8 +134,7 @@ class UsuarioController
             Response::json(false, 'Socio no encontrado.', [], 404);
         }
 
-        $data = json_decode(file_get_contents('php://input'), true);
-        $plan = (int) (is_array($data) ? ($data['membership'] ?? 0) : 0);
+        $plan = (int) Entrada::texto(Entrada::json(), 'membership');
         if (!$this->usuarios->existeMembresia($plan)) {
             Response::json(false, 'Seleccioná un plan válido.', [], 400);
         }
@@ -161,47 +157,29 @@ class UsuarioController
     {
         Auth::exigirRol(Auth::ROL_ADMIN, Auth::ROL_ENTRENADOR, Auth::ROL_PROFESOR, Auth::ROL_SOCIO);
 
-        $foto = $this->usuarios->foto((int) $id);
-        if (!$foto) {
+        $ruta = Imagenes::rutaPfp((int) $id);
+        if ($ruta === null) {
             Response::json(false, 'Sin foto.', [], 404);
         }
 
-        [$bytes, $tipo] = $foto;
-        http_response_code(200);
-        header('Content-Type: ' . $tipo);
-        header('Cache-Control: private, no-cache');
-        header('X-Content-Type-Options: nosniff');
-        echo $bytes;
-        exit();
+        Imagenes::enviar($ruta, 'image/jpeg');
     }
 
-    // PUT /api/mi-foto { image: "data:image/jpeg;base64,..." } → cambia la foto propia.
+    // PUT /api/mi-foto { image: "data:image/...;base64,..." } → cambia la foto propia.
     public function cambiarMiFoto(): void
     {
         $id = Auth::exigirRol(Auth::ROL_ADMIN, Auth::ROL_ENTRENADOR, Auth::ROL_PROFESOR, Auth::ROL_SOCIO);
 
-        $data = json_decode(file_get_contents('php://input'), true);
-        $imagen = is_array($data) ? (string) ($data['image'] ?? '') : '';
-
-        if (!preg_match('#^data:image/(jpeg|png|webp);base64,(.+)$#', $imagen, $partes)) {
-            Response::json(false, 'La foto tiene que ser una imagen JPG, PNG o WEBP.', [], 400);
-        }
-        $bytes = base64_decode($partes[2], true);
-        if ($bytes === false || strlen($bytes) > 1024 * 1024) {
-            Response::json(false, 'La foto no puede pesar más de 1 MB.', [], 400);
-        }
-
-        // Se confirma que de verdad sea una imagen (no basta con lo que dice el texto).
-        $info = @getimagesizefromstring($bytes);
-        $permitidos = ['image/jpeg', 'image/png', 'image/webp'];
-        if (!$info || !in_array($info['mime'], $permitidos, true)) {
-            Response::json(false, 'El archivo no es una imagen válida.', [], 400);
-        }
-
-        if (!$this->usuarios->guardarFoto($id, $bytes, $info['mime'])) {
+        try {
+            $bytes = Imagenes::desdeDataUrl(Entrada::json()['image'] ?? null, Imagenes::MAX_BYTES_PFP);
+            Imagenes::guardarPfp($id, $bytes);
+        } catch (\InvalidArgumentException $e) {
+            Response::json(false, $e->getMessage(), [], 400);
+        } catch (\RuntimeException $e) {
+            error_log('Foto de perfil: ' . $e->getMessage());
             Response::json(false, 'No se pudo guardar la foto.', [], 500);
         }
 
-        Response::json(true, 'Foto actualizada.');
+        Response::json(true, 'Foto actualizada.', ['id_client' => $id]);
     }
 }

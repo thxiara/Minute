@@ -13,6 +13,9 @@ $router->get('/api/socios', 'SocioController@listar');
 #Ejercicios y rutinas (entrenador)
 $router->get('/api/ejercicios', 'RutinaController@listarEjercicios');
 $router->post('/api/ejercicios', 'RutinaController@crearEjercicio');
+#Animación (gif) de un ejercicio: la carga el entrenador, la ve cualquier usuario logueado
+$router->put('/api/ejercicios/:id/gif', 'RutinaController@subirGif');
+$router->get('/api/ejercicios/:id/gif', 'RutinaController@gif');
 $router->get('/api/rutinas', 'RutinaController@listar');
 $router->post('/api/rutinas', 'RutinaController@crear');
 $router->put('/api/rutinas/:id', 'RutinaController@actualizar');
@@ -66,6 +69,7 @@ $router->delete('/api/productos/:id', 'ProductoController@eliminar');
 
 #Reseñas: las ve cualquiera, las escribe el socio
 $router->get('/api/resenas', 'ResenaController@listar');
+$router->get('/api/resenas/:id/foto', 'ResenaController@foto');
 $router->get('/api/mi-resena', 'ResenaController@mia');
 $router->put('/api/mi-resena', 'ResenaController@guardar');
 

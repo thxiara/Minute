@@ -38,6 +38,8 @@
     <link rel="stylesheet" href="/front/dist/css/dashboards/interfaces.css">
     <link rel="stylesheet" href="/front/dist/css/dashboards/productos.css">
     <link rel="stylesheet" href="/front/dist/css/responsives/dashboardsresponsive/comunresponsive.css">
+    <!-- Traducciones: tiene que cargarse antes que el resto de los scripts -->
+    <script src="/front/dist/js/i18n.js"></script>
 </head>
 <body class="interface-page admin-interface products-page">
     <header>
@@ -110,7 +112,7 @@
                         </label>
                         <label class="products-search">
                             <span class="visually-hidden">Buscar productos</span>
-                            <input id="productsSearch" type="search" placeholder="Buscar productos" autocomplete="off">
+                            <input id="productsSearch" type="search" maxlength="50" placeholder="Buscar productos" autocomplete="off">
                             <span aria-hidden="true">⌕</span>
                         </label>
                     </div>
@@ -139,6 +141,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/front/dist/js/api.js"></script>
+    <script src="/front/dist/js/foto-perfil.js"></script>
+    <script src="/front/dist/js/visor-imagen.js"></script>
     <script src="/front/dist/js/dashboard/productos-store.js"></script>
     <script src="/front/dist/js/dashboard/productos.js"></script>
 </body>

@@ -3,6 +3,9 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use App\Utils\Entrada;
+use App\Utils\Imagenes;
+use App\Utils\I18n;
 use App\Utils\Response;
 
 class AuthController
@@ -32,14 +35,15 @@ class AuthController
 
         $data = $this->getRequestData();
 
-        $name = trim($data['name'] ?? '');
-        $email = trim($data['email'] ?? '');
-        $password = $data['password'] ?? '';
-        $confirmPassword = $data['confirm_password'] ?? '';
+        $name = Entrada::texto($data, 'name');
+        $email = Entrada::texto($data, 'email');
+        // La contraseña no se recorta: los espacios también cuentan.
+        $password = Entrada::texto($data, 'password', false);
+        $confirmPassword = Entrada::texto($data, 'confirm_password', false);
         // Solo dígitos: "099 123 456" y "099-123-456" se guardan igual y conservan el 0 inicial.
-        $phone = preg_replace('/\D+/', '', (string) ($data['phone'] ?? ''));
-        $ci = trim($data['ci'] ?? '');
-        $roleId = (int)($data['role'] ?? 0);
+        $phone = Entrada::telefono($data, 'phone');
+        $ci = Entrada::texto($data, 'ci');
+        $roleId = (int) Entrada::texto($data, 'role');
         if (!isset(self::DASHBOARDS[$roleId])) {
             Response::json(false, 'El tipo de usuario no es válido.', [], 400);
         }
@@ -48,18 +52,13 @@ class AuthController
             Response::json(false, 'Todos los campos son obligatorios.', [], 400);
         }
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            Response::json(false, 'El correo electrónico no es válido.', [], 400);
-        }
+        self::validarDatosDeUsuario($name, $email, $phone, $ci);
 
         if ($password !== $confirmPassword) {
             Response::json(false, 'Las contraseñas no coinciden.', [], 400);
         }
+        self::validarPassword($password);
 
-        if (strlen($password) < 8) {
-            Response::json(false, 'La contraseña debe tener al menos 8 caracteres.', [], 400);
-        }
-        
         $usuario = $this->userModel->existsByEmail($email);
         if ($usuario) {
             Response::json(false, 'Ese correo ya está registrado.', [], 409);
@@ -74,7 +73,7 @@ class AuthController
         }
 
         // Fecha de nacimiento (opcional): AAAA-MM-DD y no en el futuro.
-        $birth = trim((string) ($data['birth'] ?? ''));
+        $birth = Entrada::texto($data, 'birth');
         if ($birth !== '') {
             $fecha = \DateTime::createFromFormat('!Y-m-d', $birth);
             if (!$fecha || $fecha->format('Y-m-d') !== $birth || $birth > date('Y-m-d')) {
@@ -85,7 +84,7 @@ class AuthController
         // Los socios arrancan con una membresía; el resto de los roles no tiene.
         $membershipId = null;
         if ($roleId === \App\Utils\Auth::ROL_SOCIO) {
-            $membershipId = (int) ($data['membership'] ?? 0);
+            $membershipId = (int) Entrada::texto($data, 'membership');
             if (!$this->userModel->existeMembresia($membershipId)) {
                 Response::json(false, 'Seleccioná el plan de membresía del socio.', [], 400);
             }
@@ -102,18 +101,49 @@ class AuthController
         }
     }
 
+    public static function validarDatosDeUsuario(string $name, string $email, string $phone, string $ci): void
+    {
+        if (Entrada::largo($name) > Entrada::MAX_NOMBRE) {
+            Response::json(false, 'El nombre puede tener hasta {max} caracteres.', [], 400, ['max' => Entrada::MAX_NOMBRE]);
+        }
+        if (Entrada::largo($ci) > Entrada::MAX_CI) {
+            Response::json(false, 'La C.I. puede tener hasta {max} caracteres.', [], 400, ['max' => Entrada::MAX_CI]);
+        }
+        if (Entrada::largo($phone) > Entrada::MAX_TELEFONO) {
+            Response::json(false, 'El teléfono puede tener hasta {max} dígitos.', [], 400, ['max' => Entrada::MAX_TELEFONO]);
+        }
+        if (Entrada::largo($email) > Entrada::MAX_EMAIL) {
+            Response::json(false, 'El correo puede tener hasta {max} caracteres.', [], 400, ['max' => Entrada::MAX_EMAIL]);
+        }
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            Response::json(false, 'El correo electrónico no es válido.', [], 400);
+        }
+    }
+
+    public static function validarPassword(string $password): void
+    {
+        if (Entrada::largo($password) < Entrada::MIN_PASSWORD) {
+            Response::json(false, 'La contraseña debe tener al menos {min} caracteres.', [], 400, ['min' => Entrada::MIN_PASSWORD]);
+        }
+        if (Entrada::largo($password) > Entrada::MAX_PASSWORD) {
+            Response::json(false, 'La contraseña puede tener hasta {max} caracteres.', [], 400, ['max' => Entrada::MAX_PASSWORD]);
+        }
+    }
+
     public function login(): void
     {
         $data = $this->getRequestData();
 
-        $email = trim($data['email'] ?? '');
-        $password = $data['password'] ?? '';
+        $email = Entrada::texto($data, 'email');
+        $password = Entrada::texto($data, 'password', false);
 
         if ($email === '' || $password === '') {
             Response::json(false, 'Todos los campos son obligatorios.', [], 400);
         }
-        
-        $user = $this->userModel->findByEmail($email);
+
+        // Nadie pudo registrarse con algo más largo que los límites: ni se consulta la base.
+        $muyLargo = Entrada::largo($email) > Entrada::MAX_EMAIL || Entrada::largo($password) > Entrada::MAX_PASSWORD;
+        $user = $muyLargo ? null : $this->userModel->findByEmail($email);
 
         if (!$user || !password_verify($password, $user['password'])) {
             Response::json(false, 'Correo o contraseña incorrectos.', [], 401);
@@ -213,11 +243,12 @@ class AuthController
         // Botón de acceso del header: con sesión lleva al panel, sin sesión al login.
         $this->enviarHtml('index.html', [
             '{{nombre}}' => $nombre,
+            '{{foto_url}}' => $this->fotoDeLaSesion(),
             '{{acceso_url}}' => $miPanel !== null ? '/dash' : '/login',
-            '{{acceso_texto}}' => $miPanel !== null ? 'IR AL DASHBOARD' : 'INICIAR SESIÓN',
+            '{{acceso_texto}}' => I18n::t($miPanel !== null ? 'IR AL DASHBOARD' : 'INICIAR SESIÓN'),
             '{{acceso_titulo}}' => $miPanel !== null
-                ? ($nombre !== '' ? "Panel de $nombre" : 'Ir al dashboard')
-                : 'Iniciar sesión',
+                ? ($nombre !== '' ? I18n::t('Panel de {nombre}', ['nombre' => $nombre]) : I18n::t('Ir al dashboard'))
+                : I18n::t('Iniciar sesión'),
         ]);
     }
     
@@ -239,6 +270,15 @@ class AuthController
         ]);
     }
 
+    // El ?v=<fecha del archivo> hace que el navegador pida la foto nueva cuando cambia.
+    private function fotoDeLaSesion(): string {
+        $id = (int) ($_SESSION['client_id'] ?? 0);
+        $ruta = $id > 0 ? Imagenes::rutaPfp($id) : null;
+        return $ruta !== null
+            ? '/api/usuarios/' . $id . '/foto?v=' . filemtime($ruta)
+            : '/front/dist/assets/imagenes/img6.jpg';
+    }
+
     // URL del panel del usuario logueado, o null si no hay sesión (o el rol no tiene panel).
     private function panelDeLaSesion(): ?string {
         if (empty($_SESSION['client_id'])) {
@@ -256,6 +296,7 @@ class AuthController
         
         http_response_code(200);
         header('Content-Type: text/html; charset=UTF-8');
+        header('Content-Language: ' . I18n::idioma());
     
         // no-store: después de cerrar sesión, el botón "atrás" no puede mostrar el panel guardado.
         header('Cache-Control: no-store');

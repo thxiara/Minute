@@ -1132,3 +1132,71 @@ body.interface-page .interface-empty {
     background: color-mix(in srgb, var(--color-danger) 10%, transparent);
     color: var(--color-danger);
 }
+
+/* ---- Animación (gif) de los ejercicios ---- */
+.exercise-library-row.has-media {
+    grid-template-columns: 64px minmax(0, 1.4fr) minmax(90px, 1fr) minmax(90px, 1fr) auto;
+}
+
+.exercise-gif-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    overflow: hidden;
+    border-radius: 7px;
+    background: color-mix(in srgb, var(--color-text) 6%, transparent);
+}
+
+.exercise-library-row .exercise-gif-slot.is-empty {
+    border: 1px dashed color-mix(in srgb, var(--color-text) 22%, transparent);
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-size: 0.68rem;
+    text-align: center;
+}
+
+.exercise-gif {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.exercise-gif-inline {
+    width: 44px;
+    height: 44px;
+    margin-right: 10px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--color-text) 6%, transparent);
+    vertical-align: middle;
+}
+
+.exercise-gif-button {
+    min-height: 36px;
+    padding: 7px 12px;
+    white-space: nowrap;
+}
+
+.exercise-image-help {
+    margin-top: 6px;
+    color: var(--color-text-secondary);
+    font-size: 0.8rem;
+}
+
+@media (max-width: 767.98px) {
+    .exercise-library-row.has-media {
+        grid-template-columns: 64px minmax(0, 1fr);
+        gap: 5px 14px;
+    }
+
+    .exercise-library-row.has-media .exercise-gif-slot {
+        grid-row: span 3;
+    }
+
+    .exercise-library-row.has-media .exercise-gif-button {
+        grid-column: 1 / -1;
+        justify-self: start;
+        margin-top: 6px;
+    }
+}

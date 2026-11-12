@@ -2,40 +2,6 @@
 <html lang="es">
 
 <head>
-    <script>
-        const assetFallbackPrefix = '/front/dist/';
-        const assetFallbackRoot = document.querySelector('base') ? '' : 'dist/';
-
-        document.addEventListener('error', (event) => {
-            const element = event.target;
-            if (!(element instanceof Element)) return;
-
-            const attribute = element.hasAttribute('href') ? 'href' : 'src';
-            const url = element.getAttribute(attribute);
-            if (!url?.startsWith(assetFallbackPrefix)) return;
-
-            const fallbackUrl = assetFallbackRoot + url.slice(assetFallbackPrefix.length);
-            if (element instanceof HTMLScriptElement) {
-                const replacement = document.createElement('script');
-                replacement.src = fallbackUrl;
-                element.after(replacement);
-                element.remove();
-            } else {
-                element.setAttribute(attribute, fallbackUrl);
-            }
-        }, true);
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const isStaticPreview = location.protocol === 'file:' || document.getElementById('accesoBtn')?.textContent.includes('{{');
-            if (isStaticPreview) {
-                document.querySelectorAll('a[href^="/front/contactos.html"]').forEach((link) => {
-                    link.href = `contactos.html${new URL(link.href).hash}`;
-                });
-                document.querySelector('.logo-footer a')?.setAttribute('href', 'index.html');
-            }
-        }, { once: true });
-    </script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -55,6 +21,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
     <link rel="stylesheet" href="/front/dist/css/responsives/responsive.css">
+    <!-- Traducciones: tiene que cargarse antes que el resto de los scripts -->
+    <script src="/front/dist/js/i18n.js"></script>
 </head>
 
 
@@ -79,7 +47,7 @@
                 </a>
 
                 <img
-                    src="/front/dist/assets/imagenes/img6.jpg"
+                    src="{{foto_url}}"
                     class="usuario-header"
                     alt="Usuario">
 

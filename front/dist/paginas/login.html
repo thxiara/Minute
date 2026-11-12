@@ -46,6 +46,8 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
+<!-- Traducciones: tiene que cargarse antes que el resto de los scripts -->
+<script src="/front/dist/js/i18n.js"></script>
 </head>
 
 
@@ -88,6 +90,8 @@
                     name="email"
                     class="form-control"
                     placeholder="Correo electrónico"
+                    maxlength="50"
+                    autocomplete="username"
                     required>
 
                 </div>
@@ -101,6 +105,8 @@
                     name="password"
                     class="form-control"
                     placeholder="Contraseña"
+                    maxlength="50"
+                    autocomplete="current-password"
                     required>
 
                 </div>
