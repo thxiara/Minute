@@ -1,7 +1,11 @@
+/* Común */
+
+/* Variables */
 :root {
     font-size: 19px;
 }
 
+/* Barra lateral */
 .barra-lateral .collapse,
 .barra-lateral-movil .collapse {
     display: block !important;
@@ -9,6 +13,7 @@
     visibility: visible !important;
 }
 
+/* Responsive */
 @media (max-width: 991px) {
     .interface-sidebar.offcanvas {
         padding: 0;
@@ -137,10 +142,8 @@
     transition: background-color 150ms ease;
 }
 
-.search button:hover {
-    background-color: var(--color-surface-raised);
-}
 
+/* Tablas */
 .tabla-socios,
 .tabla-usuarios,
 .tabla-alumnos {
@@ -263,10 +266,6 @@
     margin-right: 5px;
 }
 
-.action-menu .delete {
-    color: var(--color-danger);
-}
-
 .icono-ver {
     color: var(--color-text);
 }
@@ -289,6 +288,7 @@
     transition: background-color 150ms ease, color 150ms ease;
 }
 
+.search button:hover,
 .action-button:hover {
     background-color: var(--color-surface-raised);
 }
@@ -362,6 +362,10 @@ body.interface-page > header {
 }
 
 :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page, body.interface-page) .header-derecha {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
     gap: 16px;
 }
 
@@ -615,6 +619,7 @@ body.interface-page > header {
     font-weight: 700;
 }
 
+.action-menu .delete,
 .interface-sidebar nav a.cerrar,
 .enlace-barra-lateral.cerrar,
 .menu-usuario .menu-link.cerrar {
@@ -667,6 +672,12 @@ body.interface-page > header {
 :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page, body.interface-page) > header .header-contenido,
 :is(.admin-page, .entrenador-page, .profesor-page, .usuario-page, body.interface-page) > header .header-derecha {
     align-items: center;
+}
+
+:is(.admin-page, .entrenador-page, .profesor-page, .usuario-page, body.interface-page) > header .header-derecha {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
 }
 
 /* ---- Foto de perfil editable (todos los paneles) ---- */

@@ -1,3 +1,4 @@
+// Productos
 (() => {
     const tableBody = document.getElementById("productsTableBody");
     const productForm = document.getElementById("productForm");
@@ -79,8 +80,10 @@
 
     function showError(element, error, fallbackMessage) {
         console.error(fallbackMessage, error);
-        element.textContent = error instanceof Error ? error.message : fallbackMessage;
+        const message = error instanceof Error ? error.message : fallbackMessage;
+        element.textContent = message;
         element.classList.add("is-error");
+        window.Toast?.error(message);
     }
 
     function getStockStatus(stock) {
@@ -93,6 +96,7 @@
         return `$${new Intl.NumberFormat("es-AR").format(price)}`;
     }
 
+    // Listado
     if (tableBody) {
         const searchInput = document.getElementById("productsSearch");
         const pageSize = document.getElementById("productsPageSize");
@@ -180,6 +184,8 @@
         }
 
         async function renderProducts() {
+            window.Skeleton?.rows(tableBody, 5, 6);
+            emptyMessage.hidden = true;
             const products = await window.ProductosStore.list();
             tableBody.replaceChildren(...products.map(createProductRow));
             filterProducts();
@@ -199,6 +205,7 @@
                 removeProductPhoto(deleteButton.dataset.productDelete);
                 feedback.classList.remove("is-error");
                 feedback.textContent = "Producto eliminado correctamente.";
+                window.Toast?.success("Producto eliminado correctamente.");
                 await renderProducts();
             } catch (error) {
                 showError(feedback, error, "No se pudo eliminar el producto.");
@@ -206,11 +213,13 @@
         });
 
         renderProducts().catch((error) => {
+            tableBody.replaceChildren();
             showError(feedback, error, "No se pudo cargar la lista de productos.");
             emptyMessage.hidden = false;
         });
     }
 
+    // Editor
     if (!productForm) return;
 
     const formTitle = document.getElementById("productFormTitle");
@@ -249,6 +258,7 @@
         });
     }
 
+    // Carga
     if (productId) {
         formTitle.textContent = "Editar producto";
         saveButton.textContent = "Guardar cambios";
@@ -313,6 +323,7 @@
         });
     }
 
+    // Eventos
     [nameInput, categoryInput, priceInput, stockInput].forEach(input => {
         input.addEventListener("input", updateSummary);
         input.addEventListener("change", updateSummary);
@@ -354,6 +365,7 @@
 
             formFeedback.classList.remove("is-error");
             formFeedback.textContent = "Producto guardado correctamente.";
+            window.Toast?.success("Producto guardado correctamente.");
             saveButton.disabled = true;
             window.setTimeout(() => {
                 window.location.href = "/dash/admin/productos";

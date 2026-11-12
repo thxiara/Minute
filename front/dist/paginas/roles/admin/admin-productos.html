@@ -38,10 +38,13 @@
     <link rel="stylesheet" href="/front/dist/css/dashboards/interfaces.css">
     <link rel="stylesheet" href="/front/dist/css/dashboards/productos.css">
     <link rel="stylesheet" href="/front/dist/css/responsives/dashboardsresponsive/comunresponsive.css">
-    <!-- Traducciones: tiene que cargarse antes que el resto de los scripts -->
+    <!-- Traducciones -->
     <script src="/front/dist/js/i18n.js"></script>
+    <link rel="stylesheet" href="/front/dist/css/efectos.css">
+    <script src="/front/dist/js/efectos.js"></script>
 </head>
 <body class="interface-page admin-interface products-page">
+    <!-- Encabezado -->
     <header>
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center header-contenido">
@@ -58,6 +61,7 @@
     </header>
 
     <div class="interface-layout">
+        <!-- Menú lateral -->
         <aside class="interface-sidebar offcanvas offcanvas-start" id="roleNavigation" tabindex="-1" aria-labelledby="roleNavigationTitle">
             <div class="offcanvas-header d-lg-none">
                 <h2 class="offcanvas-title" id="roleNavigationTitle">Administración</h2>
@@ -88,6 +92,7 @@
             </div>
         </aside>
 
+        <!-- Contenido -->
         <main class="interface-content">
             <div class="interface-heading">
                 <div>
@@ -143,6 +148,7 @@
         </main>
     </div>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/front/dist/js/api.js"></script>
     <script src="/front/dist/js/foto-perfil.js"></script>

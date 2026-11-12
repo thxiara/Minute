@@ -1,3 +1,4 @@
+// Acceso
 document.getElementById('loginForm').addEventListener('submit', function (e) {
     // Se cancela la acción default ante submits permitiendo al javascript operar con los datos
     e.preventDefault();
@@ -14,6 +15,7 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
         alerta.className = 'alert alert-danger';
         alerta.textContent = mensaje;
         alertContainer.replaceChildren(alerta);
+        window.Toast?.error(mensaje);
     };
 
     // Se hace un request POST al endpoint login con los datos,
