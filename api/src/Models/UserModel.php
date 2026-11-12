@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Utils\Imagenes;
+use App\Utils\Auth;
 
 class UserModel
 {
@@ -175,6 +176,41 @@ class UserModel
         $stmt = $this->db->prepare("SELECT active_client FROM Client WHERE id_client = :id");
         $stmt->execute(['id' => $id]);
         return (bool) $stmt->fetchColumn();
+    }
+
+    // Usuarios de todos los roles, para el panel de administración. `rol` filtra por tipo
+    // ('all' | 'socio' | 'profesor' | 'entrenador' | 'admin'); `bajas` lista los dados de baja.
+    public function listarTodos(string $rol = 'all', bool $bajas = false): array
+    {
+        $roles = ['socio' => Auth::ROL_SOCIO, 'profesor' => Auth::ROL_PROFESOR,
+                  'entrenador' => Auth::ROL_ENTRENADOR, 'admin' => Auth::ROL_ADMIN];
+        $filtro = ($rol !== 'all' && isset($roles[$rol])) ? $roles[$rol] : null;
+
+        $sql = "SELECT " . self::COLUMNAS_PERFIL . "
+              FROM Client cl
+              INNER JOIN Credentials cr ON cr.id_credentials = cl.fr_credentials
+              WHERE cl.active_client = :activo";
+        $params = ['activo' => $bajas ? 0 : 1];
+
+        if ($filtro !== null) {
+            $sql .= ' AND cl.fr_role = :rol';
+            $params['rol'] = $filtro;
+        }
+
+        $sql .= ' ORDER BY cl.name_client ASC';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+
+        $usuarios = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        foreach ($usuarios as &$usuario) {
+            $usuario['id_client'] = (int) $usuario['id_client'];
+            $usuario['role_id'] = (int) $usuario['role_id'];
+            $usuario['active_client'] = (bool) $usuario['active_client'];
+            $usuario['role_name'] = array_search($usuario['role_id'], $roles, true);
+            $usuario['has_photo'] = \App\Utils\Imagenes::rutaPfp($usuario['id_client']) !== null;
+        }
+
+        return $usuarios;
     }
 
     // ---------------------------------------------------------------- Membresías

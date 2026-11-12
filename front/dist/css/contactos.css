@@ -1,9 +1,12 @@
+/* Contactos */
+
 .contactos-page {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
 }
 
+/* Encabezado */
 .contact-header-inner {
     display: flex;
     width: min(100% - 40px, 1440px);
@@ -118,6 +121,7 @@
     background: linear-gradient(145deg, #281d43, #1a1428);
 }
 
+/* Responsive */
 @media (max-width: 575px) {
     .contact-header-inner,
     .contactos-main {
@@ -135,7 +139,7 @@
     .contact-header-inner .header-btn {
         max-width: 52%;
         padding: 9px 12px;
-        font-size: 0.72rem;
+        font-size: 0.78rem;
         text-align: center;
         white-space: normal;
     }

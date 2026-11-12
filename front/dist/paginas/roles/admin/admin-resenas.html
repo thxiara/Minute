@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <base href="../../../">
+    <script>
+        const assetFallbackPrefix = '/front/dist/';
+        const assetFallbackRoot = document.querySelector('base') ? '' : 'dist/';
+
+        document.addEventListener('error', (event) => {
+            const element = event.target;
+            if (!(element instanceof Element)) return;
+
+            const attribute = element.hasAttribute('href') ? 'href' : 'src';
+            const url = element.getAttribute(attribute);
+            if (!url?.startsWith(assetFallbackPrefix)) return;
+
+            const fallbackUrl = assetFallbackRoot + url.slice(assetFallbackPrefix.length);
+            if (element instanceof HTMLScriptElement) {
+                const replacement = document.createElement('script');
+                replacement.src = fallbackUrl;
+                element.after(replacement);
+                element.remove();
+            } else {
+                element.setAttribute(attribute, fallbackUrl);
+            }
+        }, true);
+    </script>
+    <link rel="icon" type="image/png" href="/front/dist/assets/iconos/favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reseñas | FitPower</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&family=TASA+Explorer:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/front/dist/css/styles.css">
+    <link rel="stylesheet" href="/front/dist/css/dashboards/comun.css">
+    <link rel="stylesheet" href="/front/dist/css/dashboards/interfaces.css">
+    <link rel="stylesheet" href="/front/dist/css/dashboards/resenas.css">
+    <link rel="stylesheet" href="/front/dist/css/responsives/dashboardsresponsive/comunresponsive.css">
+    <!-- Traducciones: tiene que cargarse antes que el resto de los scripts -->
+    <script src="/front/dist/js/i18n.js"></script>
+</head>
+<body class="interface-page admin-interface reviews-page">
+    <header>
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center header-contenido">
+                <h1 class="logo"><a href="/">FitPower</a></h1>
+                <div class="header-derecha">
+                    <span class="header-text">{{nombre}}</span>
+                    <img src="/front/dist/assets/imagenes/img6.jpg" class="usuario-header" alt="Foto de perfil">
+                    <button class="boton-menu role-nav-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#roleNavigation" aria-controls="roleNavigation" aria-label="Abrir navegación">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="interface-layout">
+        <aside class="interface-sidebar offcanvas offcanvas-start" id="roleNavigation" tabindex="-1" aria-labelledby="roleNavigationTitle">
+            <div class="offcanvas-header d-lg-none">
+                <h2 class="offcanvas-title" id="roleNavigationTitle">Administración</h2>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+            </div>
+            <div class="offcanvas-body">
+                <nav aria-label="Navegación de administración">
+                    <div class="interface-nav-group">
+                        <h3>Usuarios</h3>
+                        <a href="/dash/admin">Usuarios activos</a>
+                        <a href="/dash/admin/registrar">Nuevo usuario</a>
+                    </div>
+                    <div class="interface-nav-group">
+                        <h3>Clases</h3>
+                        <a href="/dash/admin/clases">Administrar clases</a>
+                    </div>
+                    <div class="interface-nav-group">
+                        <h3>Productos</h3>
+                        <a href="/dash/admin/productos">Productos activos</a>
+                        <a href="/dash/admin/producto">Nuevo producto</a>
+                    </div>
+                    <div class="interface-nav-group">
+                        <h3>Reseñas</h3>
+                        <a href="/dash/admin/resenas" aria-current="page">Reseñas</a>
+                    </div>
+                    <a href="/logout" class="cerrar">Cerrar sesión</a>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="interface-content">
+            <div class="interface-heading">
+                <div>
+                    <span class="interface-eyebrow">Administración</span>
+                    <h1>Reseñas</h1>
+                </div>
+            </div>
+
+            <div class="reviews-stats" aria-label="Resumen de reseñas">
+                <div class="reviews-stat">
+                    <span class="reviews-stat-value" id="reviewsStatTotal">—</span>
+                    <span class="reviews-stat-label">Total de reseñas</span>
+                </div>
+                <div class="reviews-stat">
+                    <span class="reviews-stat-value" id="reviewsStatAverage">—</span>
+                    <span class="reviews-stat-label">Calificación promedio</span>
+                </div>
+                <div class="reviews-stat">
+                    <span class="reviews-stat-value" id="reviewsStatCarousel">—</span>
+                    <span class="reviews-stat-label">En el carrusel</span>
+                </div>
+            </div>
+
+            <section class="interface-panel products-panel" aria-labelledby="reviewsPanelTitle">
+                <div class="interface-panel-header">
+                    <h2 id="reviewsPanelTitle">Todas las reseñas</h2>
+                    <div class="interface-actions">
+                        <button type="button" class="interface-button-secondary" id="reviewsToggleHidden" hidden>Mostrar eliminadas</button>
+                        <button type="button" class="interface-button-secondary" id="reviewsClearSelection" hidden>Restablecer selección</button>
+                    </div>
+                </div>
+                <div class="interface-panel-body">
+                    <div class="products-toolbar">
+                        <p class="reviews-selection-summary" id="reviewsSelectionSummary" role="status" aria-live="polite"></p>
+                        <label class="products-search">
+                            <span class="visually-hidden">Buscar reseñas</span>
+                            <input id="reviewsSearch" type="search" maxlength="60" placeholder="Buscar reseñas" autocomplete="off">
+                            <span aria-hidden="true">⌕</span>
+                        </label>
+                    </div>
+
+                    <div class="reviews-admin-grid" id="reviewsAdminList" aria-live="polite"></div>
+                    <p class="products-empty" id="reviewsEmpty" hidden>No hay reseñas.</p>
+                    <p class="interface-feedback mb-0" id="reviewsFeedback" role="status" aria-live="polite"></p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/front/dist/js/api.js"></script>
+    <script src="/front/dist/js/foto-perfil.js"></script>
+    <script src="/front/dist/js/resenas-store.js"></script>
+    <script src="/front/dist/js/dashboard/resenas.js"></script>
+</body>
+</html>

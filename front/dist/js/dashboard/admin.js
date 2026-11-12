@@ -48,9 +48,13 @@ const AdminUtil = {
         element.textContent = text;
         element.classList.toggle("is-error", isError);
         element.hidden = !text;
+        if (window.Toast && text && !/cargando/i.test(text)) {
+            window.Toast.show(text, isError ? "error" : "success");
+        }
     }
 };
 
+// Clases
 // Administrar clases (crear, listar, eliminar).
 (() => {
 const classForm = document.getElementById("createClassForm");
@@ -102,8 +106,17 @@ function renderManagedClasses(classes) {
 }
 
 async function loadClasses() {
-    const data = await API.request("/clases");
+    window.Skeleton?.blocks(classList, 4);
+    let data;
+    try {
+        data = await API.request("/clases");
+    } catch (error) {
+        classList.replaceChildren();
+        AdminUtil.setFeedback(feedback, error.message || "No se pudieron cargar las clases.", true);
+        return;
+    }
     if (!data?.success) {
+        classList.replaceChildren();
         AdminUtil.setFeedback(feedback, data?.message || "No se pudieron cargar las clases.", true);
         return;
     }
@@ -184,7 +197,7 @@ let onSaved = () => {};
 
 async function open(memberId, memberName) {
     activeMemberId = memberId;
-    memberLabel.textContent = memberName || "el socio";
+    memberLabel.textContent = memberName || "el usuario";
     options.replaceChildren();
     AdminUtil.setFeedback(feedback, "Cargando clases…");
     submit.disabled = true;
@@ -241,7 +254,7 @@ return {
 };
 })();
 
-// Perfil de socio (/dash/admin/perfil?id=...)
+// Perfil de usuario (/dash/admin/perfil?id=...)
 (() => {
 const profileId = new URLSearchParams(window.location.search).get("id");
 if (!profileId || !document.getElementById("profileName")) return;
@@ -411,33 +424,42 @@ document.addEventListener("click", (event) => {
     }
 });
 
-// Listado de socios
+// Listado de usuarios (todos los roles)
 (() => {
-const tbody = document.getElementById("sociosTableBody");
+const tbody = document.getElementById("usuariosTableBody");
 if (!tbody) return;
 
-const countEl = document.getElementById("sociosCount");
+const countEl = document.getElementById("usuariosCount");
 const verBajasBtn = document.getElementById("verBajas");
+const titleEl = document.getElementById("usuariosTitle");
+const searchInput = document.getElementById("usersSearch");
+const pageSizeSelect = document.getElementById("usersPageSize");
+const filterButtons = [...document.querySelectorAll(".users-filter")];
+
 let verBajas = false;
-const titleEl = document.getElementById("sociosTitle");
+let currentRole = "all";
+let allUsers = [];
+
+const ROLE_LABELS = { 1: "Admin", 2: "Entrenador", 3: "Profesor", 4: "Socio" };
+const ROLE_PLURAL = { socio: "Socios", profesor: "Profesores", entrenador: "Entrenadores", admin: "Admins" };
 
 const mostrarMensaje = (texto) => {
     tbody.replaceChildren();
     const fila = document.createElement("tr");
     const celda = document.createElement("td");
-    celda.colSpan = 5;
-    celda.className = "socios-empty";
+    celda.colSpan = 6;
+    celda.className = "usuarios-empty";
     celda.textContent = texto;
     fila.append(celda);
     tbody.append(fila);
 };
 
-const crearBotonMenu = (texto, icono, atributo, socio) => {
+const crearBotonMenu = (texto, icono, atributo, usuario) => {
     const boton = document.createElement("button");
     boton.type = "button";
     boton.setAttribute(atributo, "");
-    boton.dataset.memberName = socio.name_client || "";
-    boton.dataset.memberId = String(socio.id_client);
+    boton.dataset.memberName = usuario.name_client || "";
+    boton.dataset.memberId = String(usuario.id_client);
 
     const span = document.createElement("span");
     span.className = "icono-ver";
@@ -447,20 +469,32 @@ const crearBotonMenu = (texto, icono, atributo, socio) => {
     return boton;
 };
 
-const crearFila = (socio) => {
+const crearFila = (usuario) => {
     const fila = document.createElement("tr");
-    const valores = [
-        socio.name_client || "—",
-        socio.ci || "—",
-        socio.phone || "—",
-        AdminUtil.formatDate(socio.expiry_date)
-    ];
+    fila.dataset.userRow = "";
+    const esSocio = Number(usuario.role_id) === 4;
+    const nombre = usuario.name_client || "—";
 
-    valores.forEach((valor) => {
+    const nombreCelda = document.createElement("td");
+    nombreCelda.textContent = nombre;
+    fila.append(nombreCelda);
+
+    const rolCelda = document.createElement("td");
+    const rolBadge = document.createElement("span");
+    rolBadge.className = "rol-badge";
+    rolBadge.textContent = ROLE_LABELS[Number(usuario.role_id)] || usuario.role_name || "—";
+    rolCelda.append(rolBadge);
+    fila.append(rolCelda);
+
+    [usuario.ci, usuario.phone].forEach((valor) => {
         const celda = document.createElement("td");
-        celda.textContent = valor;
+        celda.textContent = valor || "—";
         fila.append(celda);
     });
+
+    const vencimiento = document.createElement("td");
+    vencimiento.textContent = esSocio ? AdminUtil.formatDate(usuario.expiry_date) : "—";
+    fila.append(vencimiento);
 
     const acciones = document.createElement("td");
     acciones.className = "acciones";
@@ -469,6 +503,7 @@ const crearFila = (socio) => {
     botonAcciones.type = "button";
     botonAcciones.className = "action-button";
     botonAcciones.textContent = "⋮";
+    botonAcciones.setAttribute("aria-label", `Acciones para ${nombre}`);
 
     const menu = document.createElement("div");
     menu.className = "action-menu";
@@ -483,8 +518,8 @@ const crearFila = (socio) => {
         menu.classList.toggle("mostrar");
     });
 
-    menu.append(crearBotonMenu("Ver/editar perfil", "●", "data-admin-profile", socio));
-    if (!verBajas) menu.append(crearBotonMenu("Asignar clases", "▣", "data-open-class-assign", socio));
+    menu.append(crearBotonMenu("Ver/editar perfil", "●", "data-admin-profile", usuario));
+    if (esSocio && !verBajas) menu.append(crearBotonMenu("Asignar clases", "▣", "data-open-class-assign", usuario));
 
     const darDeBaja = document.createElement("button");
     darDeBaja.type = "button";
@@ -493,13 +528,13 @@ const crearFila = (socio) => {
     icono.textContent = "⊗";
     darDeBaja.append(icono, " Dar de baja");
     darDeBaja.addEventListener("click", async () => {
-        if (!window.confirm(`¿Dar de baja a ${socio.name_client}? No va a poder iniciar sesión.`)) return;
-        const data = await API.request(`/usuarios/${socio.id_client}`, "DELETE");
+        if (!window.confirm(`¿Dar de baja a ${nombre}? No va a poder iniciar sesión.`)) return;
+        const data = await API.request(`/usuarios/${usuario.id_client}`, "DELETE");
         if (!data?.success) {
-            window.alert(data?.message || "No se pudo dar de baja al socio.");
+            window.alert(data?.message || "No se pudo dar de baja al usuario.");
             return;
         }
-        cargarSocios();
+        cargarUsuarios();
     });
     if (!verBajas) menu.append(darDeBaja);
 
@@ -509,35 +544,74 @@ const crearFila = (socio) => {
     return fila;
 };
 
-const cargarSocios = async () => {
+// Barra de búsqueda y cantidad de registros: se filtra en el cliente sobre
+// las filas ya cargadas, como hace el listado de productos.
+const aplicarFiltros = () => {
+    const query = (searchInput?.value || "").trim().toLocaleLowerCase();
+    const limit = Number(pageSizeSelect?.value || 25);
+    let visibles = 0;
+
+    tbody.querySelectorAll("[data-user-row]").forEach((row) => {
+        const coincide = row.textContent.toLocaleLowerCase().includes(query);
+        const mostrar = coincide && visibles < limit;
+        row.hidden = !mostrar;
+        if (mostrar) visibles += 1;
+    });
+};
+
+const actualizarConteo = (total) => {
+    if (countEl) countEl.textContent = String(total);
+};
+
+const cargarUsuarios = async () => {
     const bajas = verBajas;
-    if (verBajasBtn) verBajasBtn.textContent = bajas ? "Volver a socios activos" : "Ver socios dados de baja";
-    if (titleEl) titleEl.textContent = bajas ? "Socios dados de baja" : "Socios Activos";
-    const data = await API.request(bajas ? "/socios?bajas=1" : "/socios");
+    if (verBajasBtn) verBajasBtn.textContent = bajas ? "Volver a usuarios activos" : "Ver usuarios dados de baja";
+    if (titleEl) {
+        const sufijo = bajas ? "dados de baja" : "activos";
+        titleEl.textContent = currentRole === "all"
+            ? (bajas ? "Usuarios dados de baja" : "Usuarios activos")
+            : `${ROLE_PLURAL[currentRole] || currentRole} ${sufijo}`;
+    }
+
+    const params = new URLSearchParams({ role: currentRole });
+    if (bajas) params.set("bajas", "1");
+    const data = await API.request(`/admin/usuarios?${params.toString()}`);
 
     if (!data || !data.success) {
-        mostrarMensaje((data && data.message) || "No se pudieron cargar los socios.");
-        if (countEl) countEl.textContent = "—";
+        mostrarMensaje((data && data.message) || "No se pudieron cargar los usuarios.");
+        actualizarConteo("—");
         return;
     }
 
-    const socios = Array.isArray(data.socios) ? data.socios : [];
-    if (countEl) countEl.textContent = String(data.total ?? socios.length);
+    allUsers = Array.isArray(data.usuarios) ? data.usuarios : [];
+    actualizarConteo(data.total ?? allUsers.length);
 
-    if (!socios.length) {
-        mostrarMensaje(bajas ? "No hay socios dados de baja." : "No hay socios registrados.");
+    if (!allUsers.length) {
+        mostrarMensaje(bajas ? "No hay usuarios dados de baja." : "No hay usuarios registrados.");
         return;
     }
 
     tbody.replaceChildren();
-    socios.forEach((socio) => tbody.append(crearFila(socio)));
+    allUsers.forEach((usuario) => tbody.append(crearFila(usuario)));
+    aplicarFiltros();
 };
+
+filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        currentRole = button.dataset.roleFilter || "all";
+        filterButtons.forEach((element) => element.classList.toggle("is-active", element === button));
+        cargarUsuarios();
+    });
+});
+
+searchInput?.addEventListener("input", aplicarFiltros);
+pageSizeSelect?.addEventListener("change", aplicarFiltros);
 
 verBajasBtn?.addEventListener("click", () => {
     verBajas = !verBajas;
-    cargarSocios();
+    cargarUsuarios();
 });
-cargarSocios();
+cargarUsuarios();
 })();
 
 // Registro

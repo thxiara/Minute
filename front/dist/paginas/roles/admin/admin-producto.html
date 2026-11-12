@@ -38,10 +38,13 @@
     <link rel="stylesheet" href="/front/dist/css/dashboards/interfaces.css">
     <link rel="stylesheet" href="/front/dist/css/dashboards/productos.css">
     <link rel="stylesheet" href="/front/dist/css/responsives/dashboardsresponsive/comunresponsive.css">
-    <!-- Traducciones: tiene que cargarse antes que el resto de los scripts -->
+    <!-- Traducciones -->
     <script src="/front/dist/js/i18n.js"></script>
+    <link rel="stylesheet" href="/front/dist/css/efectos.css">
+    <script src="/front/dist/js/efectos.js"></script>
 </head>
 <body class="interface-page admin-interface products-page">
+    <!-- Encabezado -->
     <header>
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center header-contenido">
@@ -58,6 +61,7 @@
     </header>
 
     <div class="interface-layout">
+        <!-- Menú lateral -->
         <aside class="interface-sidebar offcanvas offcanvas-start" id="roleNavigation" tabindex="-1" aria-labelledby="roleNavigationTitle">
             <div class="offcanvas-header d-lg-none">
                 <h2 class="offcanvas-title" id="roleNavigationTitle">Administración</h2>
@@ -66,9 +70,9 @@
             <div class="offcanvas-body">
                 <nav aria-label="Navegación de administración">
                     <div class="interface-nav-group">
-                        <h3>Socios</h3>
-                        <a href="/dash/admin">Socios activos</a>
-                        <a href="/dash/admin/registrar">Nuevo socio</a>
+                        <h3>Usuarios</h3>
+                        <a href="/dash/admin">Usuarios activos</a>
+                        <a href="/dash/admin/registrar">Nuevo usuario</a>
                     </div>
                     <div class="interface-nav-group">
                         <h3>Clases</h3>
@@ -77,24 +81,33 @@
                     <div class="interface-nav-group">
                         <h3>Productos</h3>
                         <a href="/dash/admin/productos">Productos activos</a>
-                        <a href="/dash/admin/producto" aria-current="page">Agregar producto</a>
+                        <a href="/dash/admin/producto" aria-current="page">Nuevo producto</a>
+                    </div>
+                    <div class="interface-nav-group">
+                        <h3>Reseñas</h3>
+                        <a href="/dash/admin/resenas">Reseñas</a>
                     </div>
                     <a href="/logout" class="cerrar">Cerrar sesión</a>
                 </nav>
             </div>
         </aside>
 
+        <!-- Contenido -->
         <main class="interface-content">
             <div class="interface-heading">
                 <div>
                     <span class="interface-eyebrow">Administración</span>
-                    <h1 id="productFormTitle">Agregar producto</h1>
+                    <h1 id="productFormTitle">Nuevo producto</h1>
                 </div>
             </div>
 
             <div class="product-editor-grid">
                 <section class="interface-panel product-summary" aria-labelledby="productSummaryName">
-                    <img src="/front/dist/assets/imagenes/img6.jpg" alt="Imagen de muestra del producto" class="product-preview-image">
+                    <div class="product-preview-wrap">
+                        <img src="/front/dist/assets/imagenes/product-placeholder.jpg" alt="Imagen del producto" class="product-preview-image" id="productPreviewImage">
+                        <button type="button" class="interface-button-secondary product-photo-button" id="productPhotoButton" aria-label="Cambiar foto">Cambiar foto</button>
+                        <input type="file" id="productPhotoInput" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
+                    </div>
                     <div class="product-summary-copy">
                         <h2 id="productSummaryName">Nuevo producto</h2>
                         <dl>
@@ -109,7 +122,7 @@
                 <section class="interface-panel product-editor-panel" aria-label="Datos del producto">
                     <form id="productForm" novalidate>
                         <div class="product-fields">
-                            <div>
+                            <div class="product-field-wide">
                                 <label class="form-label" for="productName">Nombre del producto</label>
                                 <input class="form-control" id="productName" name="name" maxlength="40" required>
                             </div>
@@ -126,7 +139,7 @@
                                 <label class="form-label" for="productPrice">Precio ($)</label>
                                 <input class="form-control" id="productPrice" name="price" type="number" min="0" max="99999999" step="1" required>
                             </div>
-                            <div>
+                            <div class="product-field-wide">
                                 <label class="form-label" for="productDescription">Descripción</label>
                                 <textarea class="form-control" id="productDescription" name="description" rows="2" maxlength="240"></textarea>
                             </div>
@@ -160,6 +173,7 @@
         </main>
     </div>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/front/dist/js/api.js"></script>
     <script src="/front/dist/js/foto-perfil.js"></script>
