@@ -3,6 +3,29 @@
 
 <head>
     <base href="../../../">
+    <script>
+        const assetFallbackPrefix = '/front/dist/';
+        const assetFallbackRoot = document.querySelector('base') ? '' : 'dist/';
+
+        document.addEventListener('error', (event) => {
+            const element = event.target;
+            if (!(element instanceof Element)) return;
+
+            const attribute = element.hasAttribute('href') ? 'href' : 'src';
+            const url = element.getAttribute(attribute);
+            if (!url?.startsWith(assetFallbackPrefix)) return;
+
+            const fallbackUrl = assetFallbackRoot + url.slice(assetFallbackPrefix.length);
+            if (element instanceof HTMLScriptElement) {
+                const replacement = document.createElement('script');
+                replacement.src = fallbackUrl;
+                element.after(replacement);
+                element.remove();
+            } else {
+                element.setAttribute(attribute, fallbackUrl);
+            }
+        }, true);
+    </script>
     <link rel="icon" type="image/png" href="/front/dist/assets/iconos/favicon.png">
 
     <meta charset="UTF-8">
@@ -60,6 +83,8 @@
     >
 
 
+    <!-- Traducciones: tiene que cargarse antes que el resto de los scripts -->
+    <script src="/front/dist/js/i18n.js"></script>
 </head>
 
 
@@ -190,7 +215,7 @@
                             >
                             <span>Cambiar foto</span>
                         </button>
-                        <input class="visually-hidden" type="file" id="profilePhotoInput" accept="image/*" aria-hidden="true" tabindex="-1">
+                        <input class="visually-hidden" type="file" id="profilePhotoInput" accept="image/jpeg,image/png,image/webp,image/gif" aria-hidden="true" tabindex="-1">
                     </div>
 
 

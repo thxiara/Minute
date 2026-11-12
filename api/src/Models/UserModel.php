@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
+use App\Utils\Imagenes;
+
 class UserModel
 {
     private $db;
 
-    // Columnas que se devuelven al mostrar un usuario (nunca la contraseña ni la foto en sí).
+    // Columnas que se devuelven al mostrar un usuario (nunca la contraseña).
+    // La foto no está en la base: es el archivo <id>.jpg de la carpeta PFP_DIR (ver Utils\Imagenes).
     private const COLUMNAS_PERFIL = "
         cl.id_client, cl.name_client, cl.ci, cl.phone, cl.fr_role AS role_id, cr.email,
         cl.birth_client, cl.created_client, cl.active_client,
-        (cl.photo_client IS NOT NULL) AS has_photo,
         (SELECT mm.expiry_date FROM member_membership mm
           WHERE mm.fr_client = cl.id_client ORDER BY mm.expiry_date DESC LIMIT 1) AS expiry_date,
         (SELECT m.name_membership FROM member_membership mm
@@ -111,7 +113,7 @@ class UserModel
         $user['id_client'] = (int) $user['id_client'];
         $user['role_id'] = (int) $user['role_id'];
         $user['active_client'] = (bool) $user['active_client'];
-        $user['has_photo'] = (bool) $user['has_photo'];
+        $user['has_photo'] = Imagenes::rutaPfp($user['id_client']) !== null;
 
         return $user;
     }
@@ -220,30 +222,6 @@ class UserModel
                FROM Membership m WHERE m.id_membership = :plan"
         );
         $stmt->execute(['cliente' => $clientId, 'desde' => $desde, 'desde2' => $desde, 'plan' => $membershipId]);
-    }
-
-    // ---------------------------------------------------------------- Foto de perfil
-
-    public function guardarFoto(int $id, string $bytes, string $tipo): bool
-    {
-        $stmt = $this->db->prepare(
-            "UPDATE Client SET photo_client = :foto, photo_type = :tipo WHERE id_client = :id"
-        );
-        $stmt->bindValue('foto', $bytes, \PDO::PARAM_LOB);
-        $stmt->bindValue('tipo', $tipo);
-        $stmt->bindValue('id', $id, \PDO::PARAM_INT);
-        return $stmt->execute();
-    }
-
-    // [bytes, tipo] o null si no tiene foto.
-    public function foto(int $id): ?array
-    {
-        $stmt = $this->db->prepare(
-            "SELECT photo_client, photo_type FROM Client WHERE id_client = :id AND photo_client IS NOT NULL"
-        );
-        $stmt->execute(['id' => $id]);
-        $fila = $stmt->fetch(\PDO::FETCH_NUM);
-        return $fila ?: null;
     }
 
     // ---------------------------------------------------------------- Login

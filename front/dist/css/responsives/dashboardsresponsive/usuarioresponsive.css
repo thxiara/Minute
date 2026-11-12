@@ -100,11 +100,6 @@
         font-size: 19px;
     }
 
-    .rutina,
-    .imagen-rutina {
-        width: min(100%, 280px);
-    }
-
     .clases {
         grid-template-columns: 1fr;
         gap: 10px;

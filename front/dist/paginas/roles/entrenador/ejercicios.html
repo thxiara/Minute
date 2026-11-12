@@ -2,6 +2,29 @@
 <html lang="es">
 <head>
     <base href="../../../">
+    <script>
+        const assetFallbackPrefix = '/front/dist/';
+        const assetFallbackRoot = document.querySelector('base') ? '' : 'dist/';
+
+        document.addEventListener('error', (event) => {
+            const element = event.target;
+            if (!(element instanceof Element)) return;
+
+            const attribute = element.hasAttribute('href') ? 'href' : 'src';
+            const url = element.getAttribute(attribute);
+            if (!url?.startsWith(assetFallbackPrefix)) return;
+
+            const fallbackUrl = assetFallbackRoot + url.slice(assetFallbackPrefix.length);
+            if (element instanceof HTMLScriptElement) {
+                const replacement = document.createElement('script');
+                replacement.src = fallbackUrl;
+                element.after(replacement);
+                element.remove();
+            } else {
+                element.setAttribute(attribute, fallbackUrl);
+            }
+        }, true);
+    </script>
     <link rel="icon" type="image/png" href="/front/dist/assets/iconos/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +37,8 @@
     <link rel="stylesheet" href="/front/dist/css/dashboards/comun.css">
     <link rel="stylesheet" href="/front/dist/css/dashboards/interfaces.css">
     <link rel="stylesheet" href="/front/dist/css/responsives/dashboardsresponsive/comunresponsive.css">
+    <!-- Traducciones: tiene que cargarse antes que el resto de los scripts -->
+    <script src="/front/dist/js/i18n.js"></script>
 </head>
 <body class="interface-page trainer-interface">
     <header>
@@ -67,7 +92,7 @@
                 <div class="interface-panel-body">
                     <form id="exerciseForm">
                         <div class="row g-3">
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <label class="form-label" for="exerciseName">Nombre</label>
                                 <input class="form-control" id="exerciseName" name="name" maxlength="30" required>
                             </div>
@@ -79,8 +104,13 @@
                                 <label class="form-label" for="exerciseEquipment">Equipamiento</label>
                                 <input class="form-control" id="exerciseEquipment" name="equipment" maxlength="50" required>
                             </div>
-                            <div class="col-md-1 d-flex align-items-end">
+                            <div class="col-md-2 d-flex align-items-end">
                                 <button class="interface-button" type="submit">Agregar</button>
+                            </div>
+                            <div class="col-md-10">
+                                <label class="form-label" for="exerciseImage">Animación (opcional)</label>
+                                <input class="form-control" id="exerciseImage" type="file" accept="image/gif,image/jpeg,image/png,image/webp" aria-describedby="exerciseImageHelp">
+                                <p class="exercise-image-help mb-0" id="exerciseImageHelp">GIF, JPG, PNG o WEBP de hasta 5 MB. Se guarda como GIF, sin recortar.</p>
                             </div>
                         </div>
                         <p id="exerciseFeedback" class="interface-feedback mb-0" role="status"></p>
@@ -96,7 +126,7 @@
                     </div>
                     <div class="exercise-library-filters">
                         <select class="form-select interface-search" id="exerciseMuscleFilter" aria-label="Filtrar por grupo muscular"></select>
-                        <input class="interface-search" id="exerciseSearch" type="search" placeholder="Buscar ejercicio" aria-label="Buscar ejercicio">
+                        <input class="interface-search" id="exerciseSearch" type="search" maxlength="50" placeholder="Buscar ejercicio" aria-label="Buscar ejercicio">
                     </div>
                 </div>
                 <div class="interface-panel-body">

@@ -303,8 +303,7 @@
 }
 
 .product-fields .form-label,
-.product-stock-field .form-label,
-.product-stock-adjustment .form-label {
+.product-stock-field .form-label {
     color: var(--color-text-secondary);
     font-size: 0.88rem;
     font-weight: 600;

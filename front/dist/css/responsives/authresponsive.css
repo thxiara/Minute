@@ -97,18 +97,14 @@
     }
 
     .review-card{
-        padding:25px;
+        padding:18px;
         height:100%;
         text-align:center;
     }
 
-    .review-card:hover{
-        transform:translateY(-6px);
-    }
-
     .review-card img{
-        width:95px;
-        height:95px;
+        width:80px;
+        height:80px;
         border-radius:50%;
         object-fit:cover;
         object-position:top;
@@ -124,15 +120,6 @@
 
     .subtitulo{
         font-size:.85rem;
-    }
-
-    .review-card{
-        padding:18px;
-    }
-
-    .review-card img{
-        width:80px;
-        height:80px;
     }
 
     .review-card h3{

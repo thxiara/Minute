@@ -148,12 +148,11 @@
 }
 
 .btn-guardar:hover {
-    background-color: var(--color-accent-bright);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
 }
 
 .form-buttons button:focus-visible,
 .cerrar-sesion:focus-visible,
-.boton-ver:focus-visible,
 .menu-link:focus-visible {
     outline: 2px solid var(--color-accent-bright);
     outline-offset: 3px;

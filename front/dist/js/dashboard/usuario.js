@@ -14,7 +14,8 @@ const SocioUtil = {
     },
 
     formatLong(date) {
-        return new Intl.DateTimeFormat("es-UY", { weekday: "long", day: "numeric", month: "long" }).format(date);
+        // El formato de la fecha sigue al idioma elegido (ver i18n.js).
+        return new Intl.DateTimeFormat(window.I18n?.locale || "es-UY", { weekday: "long", day: "numeric", month: "long" }).format(date);
     },
 
     dateKey(date) {
@@ -77,7 +78,8 @@ API.request("/mi-perfil").then((data) => {
 });
 })();
 
-// Sección: Foto de perfil (se achica en el navegador y se guarda en la base).
+// Sección: Foto de perfil. Se achica en el navegador para subir menos datos; el servidor la
+// deja en JPG de 128 × 128 y reemplaza la anterior (ver api/src/Utils/Imagenes.php).
 (() => {
 const photoInput = document.getElementById("profilePhotoInput");
 if (!photoInput) return;
@@ -92,6 +94,7 @@ function showPhotoFeedback(message, isError = false) {
 }
 
 // Recorta al centro en un cuadrado de hasta 400 px y la pasa a JPEG: queda en ~50 KB.
+// (Como sale de un <canvas>, la miniatura que se muestra al instante es la misma que se sube.)
 function toSquareJpeg(file) {
     return new Promise((resolve, reject) => {
         const url = URL.createObjectURL(file);
@@ -290,6 +293,15 @@ function createRoutineCard(routine) {
     routine.items.forEach((item) => {
         const line = document.createElement("li");
         line.textContent = `${item.exercise_name} — ${item.sets} series × ${item.reps} repeticiones`;
+        // Animación del ejercicio, si el entrenador le cargó una.
+        if (item.has_gif) {
+            const gif = document.createElement("img");
+            gif.className = "exercise-gif exercise-gif-inline";
+            gif.src = `/api/ejercicios/${item.exercise_id}/gif`;
+            gif.alt = `Animación de ${item.exercise_name}`;
+            gif.loading = "lazy";
+            line.prepend(gif);
+        }
         exerciseList.append(line);
     });
 

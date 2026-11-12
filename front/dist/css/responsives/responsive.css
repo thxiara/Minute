@@ -2,11 +2,6 @@
 
 @media(max-width:992px){
 
-    /* aca va la seccion del header */
-    .header-vacio{
-        display:none;
-    }
-
     .header-contenido{
         justify-content:space-between!important;
     }
@@ -226,7 +221,8 @@
         font-size:2rem;
     }
 
-    .plan button{
+    .plan button,
+    .plan-button{
         width:100%;
     }
 
@@ -265,10 +261,6 @@
     /* header */
     .logo{
         font-size:1.6rem;
-    }
-
-    .registrarse{
-        font-size:.8rem;
     }
 
     .usuario-header{

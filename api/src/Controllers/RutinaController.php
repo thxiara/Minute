@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Models\ClienteModel;
 use App\Models\EjercicioModel;
 use App\Models\RutinaModel;
+use App\Utils\Entrada;
+use App\Utils\Imagenes;
 use App\Utils\Response;
 
 class RutinaController
@@ -41,15 +43,16 @@ class RutinaController
         ]);
     }
 
-    // POST /api/ejercicios   { name, muscle, equipment }
+    // POST /api/ejercicios   { name, muscle, equipment, image? }
+    // image (opcional) es la animación del ejercicio como "data:image/...;base64,...".
     public function crearEjercicio(): void
     {
         $this->exigirRol(self::ROL_ENTRENADOR);
         $data = $this->datos();
 
-        $nombre = trim($data['name'] ?? '');
-        $musculo = trim($data['muscle'] ?? '');
-        $equipamiento = trim($data['equipment'] ?? '');
+        $nombre = Entrada::texto($data, 'name');
+        $musculo = Entrada::texto($data, 'muscle');
+        $equipamiento = Entrada::texto($data, 'equipment');
 
         if ($nombre === '' || $equipamiento === '') {
             Response::json(false, 'Completá el nombre y el equipamiento.', [], 400);
@@ -67,8 +70,50 @@ class RutinaController
             Response::json(false, 'Ese ejercicio ya existe.', [], 409);
         }
 
+        // La imagen se revisa antes de crear nada: si no sirve, no queda un ejercicio a medias.
+        $imagen = null;
+        if (($data['image'] ?? '') !== '') {
+            $imagen = $this->leerImagen($data['image']);
+        }
+
         $id = $this->ejercicios->crear($nombre, $musculo, $equipamiento);
-        Response::json(true, 'Ejercicio agregado.', ['id_exercise' => $id], 201);
+        if ($imagen !== null) {
+            $this->guardarGif($id, $imagen, 'El ejercicio se agregó, pero no se pudo guardar su imagen.');
+        }
+
+        Response::json(true, 'Ejercicio agregado.', ['id_exercise' => $id, 'has_gif' => $imagen !== null], 201);
+    }
+
+    // PUT /api/ejercicios/:id/gif   { image: "data:image/...;base64,..." }
+    // Carga (o reemplaza) la animación del ejercicio. Siempre queda guardada como
+    // EXERCISE_DIR/<id>.gif, sin recortar: un GIF se guarda tal cual y un JPG, PNG o WEBP
+    // se convierte a GIF.
+    public function subirGif(string $id): void
+    {
+        $this->exigirRol(self::ROL_ENTRENADOR);
+        $ejercicioId = (int) $id;
+        if (!$this->ejercicios->existe($ejercicioId)) {
+            Response::json(false, 'Ejercicio no encontrado.', [], 404);
+        }
+
+        $this->guardarGif($ejercicioId, $this->leerImagen($this->datos()['image'] ?? null), 'No se pudo guardar la imagen.');
+        Response::json(true, 'Imagen del ejercicio actualizada.', ['id_exercise' => $ejercicioId, 'has_gif' => true]);
+    }
+
+    // GET /api/ejercicios/:id/gif → la animación (o 404 si no tiene). Cualquier usuario logueado:
+    // el entrenador la ve en la biblioteca y el socio en sus rutinas.
+    public function gif(string $id): void
+    {
+        if (empty($_SESSION['client_id'])) {
+            Response::json(false, 'Tenés que iniciar sesión.', [], 401);
+        }
+
+        $ruta = Imagenes::rutaEjercicio((int) $id);
+        if ($ruta === null) {
+            Response::json(false, 'Sin imagen.', [], 404);
+        }
+
+        Imagenes::enviar($ruta, 'image/gif');
     }
 
     // =====================================================================
@@ -187,7 +232,7 @@ class RutinaController
     // Revisa nombre y ejercicios. Devuelve [nombre, items limpios] o corta con 400.
     private function validarRutina(array $data, int $entrenadorId, int $excepto = 0): array
     {
-        $nombre = trim($data['name'] ?? '');
+        $nombre = Entrada::texto($data, 'name');
         if ($nombre === '') {
             Response::json(false, 'La rutina necesita un título.', [], 400);
         }
@@ -199,7 +244,9 @@ class RutinaController
         }
 
         $items = [];
-        foreach (($data['items'] ?? []) as $item) {
+        $recibidos = is_array($data['items'] ?? null) ? $data['items'] : [];
+        foreach ($recibidos as $item) {
+            $item = is_array($item) ? $item : [];
             $ejercicio = (int) ($item['exercise_id'] ?? 0);
             $series = (int) ($item['sets'] ?? 0);
             $reps = (int) ($item['reps'] ?? 0);
@@ -243,10 +290,36 @@ class RutinaController
         return $socioId;
     }
 
+    // Bytes de la imagen que vino en el pedido, o corta con 400.
+    private function leerImagen($dataUrl): string
+    {
+        try {
+            $bytes = Imagenes::desdeDataUrl($dataUrl, Imagenes::MAX_BYTES_EJERCICIO);
+            Imagenes::comprobar($bytes, Imagenes::MAX_BYTES_EJERCICIO);
+            return $bytes;
+        } catch (\InvalidArgumentException $e) {
+            Response::json(false, $e->getMessage(), [], 400);
+        } catch (\RuntimeException $e) {
+            error_log('Imagen de ejercicio: ' . $e->getMessage());
+            Response::json(false, 'No se pudo guardar la imagen.', [], 500);
+        }
+    }
+
+    // Guarda la animación del ejercicio (reemplaza la anterior), o corta con 400/500.
+    private function guardarGif(int $ejercicioId, string $bytes, string $mensajeSiFalla): void
+    {
+        try {
+            Imagenes::guardarEjercicio($ejercicioId, $bytes);
+        } catch (\InvalidArgumentException $e) {
+            Response::json(false, $e->getMessage(), ['id_exercise' => $ejercicioId], 400);
+        } catch (\RuntimeException $e) {
+            error_log('Imagen de ejercicio: ' . $e->getMessage());
+            Response::json(false, $mensajeSiFalla, ['id_exercise' => $ejercicioId], 500);
+        }
+    }
+
     private function datos(): array
     {
-        $decoded = json_decode(file_get_contents('php://input'), true);
-
-        return is_array($decoded) ? $decoded : [];
+        return Entrada::json();
     }
 }

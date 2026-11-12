@@ -17,6 +17,8 @@ CREATE TABLE IF NOT EXISTS `Exercise` (
     `muscle_exercise`    VARCHAR(30) NOT NULL DEFAULT 'Cuerpo completo',
     `equipment_exercise` VARCHAR(50) NOT NULL DEFAULT '',
     `desc_exercise` TEXT,
+    -- Sin uso: la animación del ejercicio es el archivo <id_exercise>.gif de la carpeta
+    -- indicada por EXERCISE_DIR en api/.env.
     `media_exercise` VARCHAR(255)
 );
 
@@ -48,8 +50,8 @@ CREATE TABLE IF NOT EXISTS `Client` (
     `created_client` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     -- FALSE = dado de baja: no puede iniciar sesión ni aparece en los listados.
     `active_client` BOOLEAN NOT NULL DEFAULT TRUE,
-    `photo_client`  MEDIUMBLOB NULL,
-    `photo_type`    VARCHAR(30) NULL,
+    -- La foto de perfil no va en la base: es el archivo <id_client>.jpg de la carpeta
+    -- indicada por PFP_DIR en api/.env.
     CONSTRAINT `fk_client_credentials`
         FOREIGN KEY (`fr_credentials`) REFERENCES `Credentials`(`id_credentials`)
         ON DELETE CASCADE ON UPDATE CASCADE,
@@ -231,5 +233,9 @@ INSERT IGNORE INTO `Role` (`id_role`, `name_role`) VALUES
     (2, 'entrenador'),
     (3, 'profesor'),
     (4, 'socio');
+
+-- Bases creadas cuando las fotos de perfil se guardaban en la base: las columnas ya no se usan.
+-- Para quitarlas, ejecutar a mano (las fotos guardadas ahí se pierden; cada usuario vuelve a subir la suya):
+-- ALTER TABLE `Client` DROP COLUMN IF EXISTS `photo_client`, DROP COLUMN IF EXISTS `photo_type`;
 
 SET FOREIGN_KEY_CHECKS = 1;

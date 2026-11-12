@@ -50,7 +50,7 @@
 .leer-mas {
     display: inline-block;
     margin-top: 3px;
-    color: var(--color-accent);
+    color: var(--color-accent-bright);
     font-size: 11px;
     text-decoration: none;
 }

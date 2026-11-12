@@ -94,8 +94,8 @@ class ProductoController
         if (!is_numeric($precio) || $precio < 0 || $precio > 99999999) {
             Response::json(false, 'El precio debe ser un número mayor o igual a cero.', [], 400);
         }
-        if (!is_numeric($stock) || (int) $stock != $stock || $stock < 0) {
-            Response::json(false, 'El stock debe ser un entero mayor o igual a cero.', [], 400);
+        if (!is_numeric($stock) || (int) $stock != $stock || $stock < 0 || $stock > 999999) {
+            Response::json(false, 'El stock debe ser un entero entre 0 y 999999.', [], 400);
         }
         if (mb_strlen($descripcion) > 240) {
             Response::json(false, 'La descripción puede tener hasta 240 caracteres.', [], 400);

@@ -2,6 +2,29 @@
 <html lang="es">
 <head>
     <base href="../../../">
+    <script>
+        const assetFallbackPrefix = '/front/dist/';
+        const assetFallbackRoot = document.querySelector('base') ? '' : 'dist/';
+
+        document.addEventListener('error', (event) => {
+            const element = event.target;
+            if (!(element instanceof Element)) return;
+
+            const attribute = element.hasAttribute('href') ? 'href' : 'src';
+            const url = element.getAttribute(attribute);
+            if (!url?.startsWith(assetFallbackPrefix)) return;
+
+            const fallbackUrl = assetFallbackRoot + url.slice(assetFallbackPrefix.length);
+            if (element instanceof HTMLScriptElement) {
+                const replacement = document.createElement('script');
+                replacement.src = fallbackUrl;
+                element.after(replacement);
+                element.remove();
+            } else {
+                element.setAttribute(attribute, fallbackUrl);
+            }
+        }, true);
+    </script>
     <link rel="icon" type="image/png" href="/front/dist/assets/iconos/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +37,8 @@
     <link rel="stylesheet" href="/front/dist/css/dashboards/comun.css">
     <link rel="stylesheet" href="/front/dist/css/dashboards/interfaces.css">
     <link rel="stylesheet" href="/front/dist/css/responsives/dashboardsresponsive/comunresponsive.css">
+    <!-- Traducciones: tiene que cargarse antes que el resto de los scripts -->
+    <script src="/front/dist/js/i18n.js"></script>
 </head>
 <body class="interface-page admin-interface">
     <header>
@@ -158,7 +183,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label" for="editUserName">Nombre</label>
-                            <input class="form-control" id="editUserName" name="nombre" maxlength="50" required>
+                            <input class="form-control" id="editUserName" name="nombre" maxlength="30" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="editUserCi">C.I.</label>
@@ -170,11 +195,11 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="editUserEmail">Correo</label>
-                            <input class="form-control" id="editUserEmail" name="email" type="email" maxlength="100" required>
+                            <input class="form-control" id="editUserEmail" name="email" type="email" maxlength="50" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="editUserPassword">Nueva contraseña</label>
-                            <input class="form-control" id="editUserPassword" name="contrasena" type="password" minlength="8" autocomplete="new-password" placeholder="Dejar vacío para no cambiarla">
+                            <input class="form-control" id="editUserPassword" name="contrasena" type="password" minlength="8" maxlength="50" autocomplete="new-password" placeholder="Dejar vacío para no cambiarla">
                         </div>
                         <p id="editUserFeedback" class="interface-feedback" role="status" hidden></p>
                     </div>

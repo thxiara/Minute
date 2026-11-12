@@ -247,7 +247,49 @@ const muscleSelect = document.getElementById("exerciseMuscle");
 const muscleFilter = document.getElementById("exerciseMuscleFilter");
 const emptyExerciseList = document.getElementById("emptyExerciseList");
 const feedback = document.getElementById("exerciseFeedback");
+const imageInput = document.getElementById("exerciseImage");
 let exercises = [];
+
+// Animación de cada ejercicio. El servidor la guarda siempre como GIF (sin recortarla) y,
+// si el ejercicio ya tenía una, la reemplaza.
+const IMAGE_TYPES = ["image/gif", "image/jpeg", "image/png", "image/webp"];
+const IMAGE_MAX_BYTES = 5 * 1024 * 1024;
+// Después de cambiar un gif se le agrega ?v=... a su dirección para que el navegador lo vuelva a pedir.
+const gifVersions = new Map();
+// Un solo selector de archivos (oculto) para el botón "Cambiar GIF" de todas las filas.
+const replaceInput = document.createElement("input");
+replaceInput.type = "file";
+replaceInput.accept = IMAGE_TYPES.join(",");
+replaceInput.hidden = true;
+exerciseForm.after(replaceInput);
+let replacingExerciseId = null;
+
+function showFeedback(message, isError = false) {
+    feedback.classList.toggle("is-error", isError);
+    feedback.textContent = message;
+}
+
+function gifUrl(exerciseId) {
+    const version = gifVersions.get(exerciseId);
+    return `/api/ejercicios/${exerciseId}/gif${version ? `?v=${version}` : ""}`;
+}
+
+// Devuelve un mensaje de error si el archivo no sirve, o "" si está bien.
+function imageProblem(file) {
+    if (!IMAGE_TYPES.includes(file.type)) return "La imagen tiene que ser GIF, JPG, PNG o WEBP.";
+    if (file.size > IMAGE_MAX_BYTES) return "La imagen debe pesar 5 MB o menos.";
+    return "";
+}
+
+// Archivo → "data:image/gif;base64,..." (así viaja dentro del JSON).
+function readAsDataUrl(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result));
+        reader.onerror = () => reject(new Error("No se pudo leer la imagen seleccionada."));
+        reader.readAsDataURL(file);
+    });
+}
 
 function populateMuscleGroups(groups) {
     groups.forEach((group) => {
@@ -271,14 +313,37 @@ function renderExercises() {
         })
         .forEach((exercise) => {
             const row = document.createElement("article");
-            row.className = "exercise-library-row";
+            row.className = "exercise-library-row has-media";
+
+            // Miniatura de la animación (o un recuadro vacío si todavía no tiene).
+            const media = document.createElement("div");
+            media.className = "exercise-gif-slot";
+            if (exercise.has_gif) {
+                const image = document.createElement("img");
+                image.className = "exercise-gif";
+                image.src = gifUrl(exercise.id_exercise);
+                image.alt = `Animación de ${exercise.name_exercise}`;
+                image.loading = "lazy";
+                media.append(image);
+            } else {
+                media.classList.add("is-empty");
+                media.textContent = "Sin GIF";
+            }
+
             const name = document.createElement("h3");
             name.textContent = exercise.name_exercise;
             const muscle = document.createElement("span");
             muscle.textContent = exercise.muscle_exercise;
             const equipment = document.createElement("span");
             equipment.textContent = exercise.equipment_exercise;
-            row.append(name, muscle, equipment);
+
+            const changeGif = document.createElement("button");
+            changeGif.type = "button";
+            changeGif.className = "interface-button-secondary exercise-gif-button";
+            changeGif.dataset.exerciseGif = String(exercise.id_exercise);
+            changeGif.textContent = exercise.has_gif ? "Cambiar GIF" : "Cargar GIF";
+
+            row.append(media, name, muscle, equipment, changeGif);
             exerciseList.append(row);
         });
 
@@ -288,13 +353,50 @@ function renderExercises() {
 async function loadExercises() {
     const data = await API.request("/ejercicios");
     if (!data.success) {
-        feedback.classList.add("is-error");
-        feedback.textContent = data.message || "No se pudieron cargar los ejercicios.";
+        showFeedback(data.message || "No se pudieron cargar los ejercicios.", true);
         return null;
     }
     exercises = data.ejercicios;
     return data;
 }
+
+// Botón "Cargar GIF" / "Cambiar GIF" de una fila: abre el selector de archivos.
+exerciseList.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-exercise-gif]");
+    if (!button) return;
+    replacingExerciseId = Number(button.dataset.exerciseGif);
+    replaceInput.click();
+});
+
+replaceInput.addEventListener("change", async () => {
+    const [file] = replaceInput.files || [];
+    replaceInput.value = "";
+    const exerciseId = replacingExerciseId;
+    if (!file || !exerciseId) return;
+
+    const problem = imageProblem(file);
+    if (problem) {
+        showFeedback(problem, true);
+        return;
+    }
+
+    try {
+        showFeedback("Subiendo imagen…");
+        const image = await readAsDataUrl(file);
+        const data = await API.request(`/ejercicios/${exerciseId}/gif`, "PUT", { image });
+        if (!data?.success) {
+            showFeedback(data?.message || "No se pudo guardar la imagen.", true);
+            return;
+        }
+        const exercise = exercises.find(entry => entry.id_exercise === exerciseId);
+        if (exercise) exercise.has_gif = true;
+        gifVersions.set(exerciseId, Date.now());
+        renderExercises();
+        showFeedback(data.message || "Imagen del ejercicio actualizada.");
+    } catch (error) {
+        showFeedback(error.message, true);
+    }
+});
 
 exerciseForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -302,15 +404,33 @@ exerciseForm.addEventListener("submit", async (event) => {
 
     const formData = new FormData(exerciseForm);
     const muscle = String(formData.get("muscle"));
-    const data = await API.request("/ejercicios", "POST", {
+    const body = {
         name: String(formData.get("name")).trim(),
         muscle,
         equipment: String(formData.get("equipment")).trim()
-    });
+    };
 
-    feedback.classList.toggle("is-error", !data.success);
-    feedback.textContent = data.message || "No se pudo guardar el ejercicio.";
-    if (!data.success) return;
+    // La imagen es opcional: si se eligió una, viaja junto con los datos del ejercicio.
+    const [file] = imageInput?.files || [];
+    if (file) {
+        const problem = imageProblem(file);
+        if (problem) {
+            showFeedback(problem, true);
+            return;
+        }
+        try {
+            body.image = await readAsDataUrl(file);
+        } catch (error) {
+            showFeedback(error.message, true);
+            return;
+        }
+    }
+
+    const data = await API.request("/ejercicios", "POST", body);
+
+    showFeedback(data.message || "No se pudo guardar el ejercicio.", !data.success);
+    // Si el ejercicio se creó pero falló su imagen, igual hay que mostrarlo en la lista.
+    if (!data.success && !data.id_exercise) return;
 
     exerciseForm.reset();
     await loadExercises();
@@ -533,6 +653,14 @@ function showRoutine(routine) {
         const series = item.sets === 1 ? "serie" : "series";
         const repeticiones = item.reps === 1 ? "repetición" : "repeticiones";
         line.textContent = `${item.exercise_name} — ${item.sets} ${series} × ${item.reps} ${repeticiones}`;
+        if (item.has_gif) {
+            const gif = document.createElement("img");
+            gif.className = "exercise-gif exercise-gif-inline";
+            gif.src = `/api/ejercicios/${item.exercise_id}/gif`;
+            gif.alt = `Animación de ${item.exercise_name}`;
+            gif.loading = "lazy";
+            line.prepend(gif);
+        }
         list.append(line);
     });
     routineDetailModal.show();

@@ -37,7 +37,8 @@ const ProfesorUtil = (() => {
     }
 
     function formatDate(date) {
-        return new Intl.DateTimeFormat("es-UY", {
+        // El formato de la fecha sigue al idioma elegido (ver i18n.js).
+        return new Intl.DateTimeFormat(window.I18n?.locale || "es-UY", {
             weekday: "long",
             day: "numeric",
             month: "long",

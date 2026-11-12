@@ -67,7 +67,7 @@ class Router {
         http_response_code(404);
         echo json_encode([
             "status" => "error", 
-            "message" => "Ruta no encontrada en la API",
+            "message" => I18n::t("Ruta no encontrada en la API"),
         ]);
     }
 

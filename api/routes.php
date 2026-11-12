@@ -13,6 +13,9 @@ $router->get('/api/socios', 'SocioController@listar');
 #Ejercicios y rutinas (entrenador)
 $router->get('/api/ejercicios', 'RutinaController@listarEjercicios');
 $router->post('/api/ejercicios', 'RutinaController@crearEjercicio');
+#Animación (gif) de un ejercicio: la carga el entrenador, la ve cualquier usuario logueado
+$router->put('/api/ejercicios/:id/gif', 'RutinaController@subirGif');
+$router->get('/api/ejercicios/:id/gif', 'RutinaController@gif');
 $router->get('/api/rutinas', 'RutinaController@listar');
 $router->post('/api/rutinas', 'RutinaController@crear');
 $router->put('/api/rutinas/:id', 'RutinaController@actualizar');

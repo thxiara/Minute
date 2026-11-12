@@ -3,6 +3,29 @@
 
 <head>
     <base href="../">
+    <script>
+        const assetFallbackPrefix = '/front/dist/';
+        const assetFallbackRoot = document.querySelector('base') ? '' : 'dist/';
+
+        document.addEventListener('error', (event) => {
+            const element = event.target;
+            if (!(element instanceof Element)) return;
+
+            const attribute = element.hasAttribute('href') ? 'href' : 'src';
+            const url = element.getAttribute(attribute);
+            if (!url?.startsWith(assetFallbackPrefix)) return;
+
+            const fallbackUrl = assetFallbackRoot + url.slice(assetFallbackPrefix.length);
+            if (element instanceof HTMLScriptElement) {
+                const replacement = document.createElement('script');
+                replacement.src = fallbackUrl;
+                element.after(replacement);
+                element.remove();
+            } else {
+                element.setAttribute(attribute, fallbackUrl);
+            }
+        }, true);
+    </script>
     <link rel="icon" type="image/png" href="/front/dist/assets/iconos/favicon.png">
 
     <meta charset="UTF-8">
@@ -267,6 +290,8 @@
 
     </style>
 
+    <!-- Traducciones: tiene que cargarse antes que el resto de los scripts -->
+    <script src="/front/dist/js/i18n.js"></script>
 </head>
 
 
@@ -395,6 +420,9 @@
                 <input
                     type="text"
                     class="form-control"
+                    maxlength="19"
+                    inputmode="numeric"
+                    autocomplete="cc-number"
                     placeholder="1234 5678 9012 3456">
 
 
@@ -414,6 +442,8 @@
                 <input
                     type="text"
                     class="form-control"
+                    maxlength="30"
+                    autocomplete="cc-name"
                     placeholder="Nombre completo">
 
 
@@ -436,6 +466,8 @@
                     <input
                         type="text"
                         class="form-control"
+                        maxlength="5"
+                        autocomplete="cc-exp"
                         placeholder="MM/AA">
 
 
@@ -455,6 +487,9 @@
                     <input
                         type="password"
                         class="form-control"
+                        maxlength="4"
+                        inputmode="numeric"
+                        autocomplete="cc-csc"
                         placeholder="123">
 
 

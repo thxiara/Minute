@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Utils\Auth;
+use App\Utils\Entrada;
 use App\Utils\Response;
 
 // Reseñas de los socios: las ve cualquiera, solo un socio puede escribir (una por socio).
@@ -19,8 +20,7 @@ class ResenaController
     public function listar(): void
     {
         $filas = $this->db->query(
-            "SELECT r.id_review, cl.id_client, cl.name_client, r.rating, r.desc_review, r.updated_review,
-                    (cl.photo_client IS NOT NULL) AS has_photo
+            "SELECT r.id_review, cl.id_client, cl.name_client, r.rating, r.desc_review, r.updated_review
                FROM Review r
                INNER JOIN Client cl ON cl.id_client = r.fr_client AND cl.active_client = 1
               ORDER BY r.updated_review DESC
@@ -56,11 +56,10 @@ class ResenaController
     public function guardar(): void
     {
         $socioId = Auth::exigirRol(Auth::ROL_SOCIO);
-        $data = json_decode(file_get_contents('php://input'), true);
-        $data = is_array($data) ? $data : [];
+        $data = Entrada::json();
 
-        $puntaje = (int) ($data['rating'] ?? 0);
-        $texto = trim((string) ($data['text'] ?? ''));
+        $puntaje = (int) Entrada::texto($data, 'rating');
+        $texto = Entrada::texto($data, 'text');
         if ($puntaje < 1 || $puntaje > 5) {
             Response::json(false, 'Elegí una calificación de 1 a 5 estrellas.', [], 400);
         }

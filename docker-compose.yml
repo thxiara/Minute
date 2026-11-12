@@ -10,6 +10,8 @@ services:
     volumes:
       - ./:/var/www/html
       - sessions:/var/lib/php/sessions
+      # Imágenes subidas (fotos de perfil y gifs de ejercicios): fuera de /var/www/html
+      - media:/var/lib/minute
     depends_on:
       - db
 
@@ -41,4 +43,5 @@ services:
 volumes:
   db_data:
   sessions:
-  
+  media:
+  
