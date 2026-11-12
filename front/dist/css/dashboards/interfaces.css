@@ -807,9 +807,10 @@ body.interface-page .logo {
 
 .foto-usuario-trigger span {
     position: absolute;
-    right: -14px;
-    bottom: -5px;
-    padding: 4px 7px;
+    left: 50%;
+    bottom: -9px;
+    transform: translateX(-50%);
+    padding: 2px 8px;
     border: 1px solid color-mix(in srgb, var(--color-text) 15%, transparent);
     border-radius: 999px;
     background: var(--color-surface-raised);
@@ -912,8 +913,7 @@ body.interface-page .logo {
     }
 
     .foto-usuario-trigger span {
-        right: -10px;
-        font-size: 12px;
+        font-size: 11px;
     }
 
     .interface-heading h1 {
@@ -974,6 +974,7 @@ body.interface-page .logo {
 
     .schedule-meta {
         text-align: left;
+        white-space: normal;
     }
 
     .interface-panel-header,
