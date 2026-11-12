@@ -19,4 +19,4 @@ sudo tee /etc/apache2/conf.d/zz-htdocs-allowoverride.conf >/dev/null <<'EOF'
     AllowOverride All
 </Directory>
 EOF
-sudo apache2ctl configtest && sudo systemctl restart apache2
+sudo systemctl restart apache2
