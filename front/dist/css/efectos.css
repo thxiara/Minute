@@ -64,6 +64,12 @@ body.page-leaving .contactos-main {
     box-shadow: var(--efecto-glow);
 }
 
+/* Tablas sin elevación */
+:is(.interface-panel, .users-panel):has(table):hover,
+.users-panel:hover {
+    transform: none;
+}
+
 /* Bordes degradados */
 :is(.interface-panel,
     .plan,

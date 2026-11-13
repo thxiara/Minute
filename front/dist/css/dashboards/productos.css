@@ -1,9 +1,11 @@
 /* Productos */
 
+/* Panel listado */
 .products-panel .interface-panel-body {
     padding-top: 16px;
 }
 
+/* Barra herramientas */
 .products-toolbar {
     display: flex;
     align-items: center;
@@ -62,6 +64,7 @@
     color: var(--color-text-secondary);
 }
 
+/* Tabla productos */
 .products-table-wrap {
     overflow: visible;
 }
@@ -303,6 +306,7 @@
     text-align: right;
 }
 
+/* Editor producto */
 .product-editor-panel {
     padding: 22px;
 }
@@ -323,6 +327,7 @@
     font-weight: 600;
 }
 
+/* Inventario */
 .product-inventory {
     margin-top: 26px;
     padding: 18px 20px;
@@ -332,15 +337,16 @@
 }
 
 .product-inventory-heading {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
     gap: 12px;
     margin-bottom: 0;
 }
 
 .product-inventory-heading h2 {
-    margin: 0 auto 0 0;
+    margin: 0;
+    justify-self: start;
     color: var(--color-text);
     font-family: "TASA Explorer", sans-serif;
     font-size: 1.08rem;
@@ -350,7 +356,13 @@
 .product-inventory-controls {
     display: flex;
     align-items: center;
+    justify-self: center;
     width: min(220px, 100%);
+}
+
+/* Estado stock */
+.product-inventory-heading > .product-status {
+    justify-self: end;
 }
 
 .product-stock-stepper {
@@ -394,6 +406,7 @@
     margin: 0;
 }
 
+/* Acciones formulario */
 .product-form-actions {
     display: flex;
     flex-wrap: wrap;
@@ -566,8 +579,18 @@
         padding: 15px;
     }
 
+    /* Contador móvil */
+    .product-inventory-heading {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
     .product-inventory-controls {
         width: 100%;
+        justify-self: stretch;
+    }
+
+    .product-inventory-heading > .product-status {
+        justify-self: start;
     }
 
     .product-form-actions {

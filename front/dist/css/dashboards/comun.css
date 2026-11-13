@@ -202,6 +202,7 @@
     background-color: color-mix(in srgb, var(--color-accent) 11%, transparent) !important;
 }
 
+/* Ajuste celdas */
 .tabla-socios td,
 .tabla-usuarios td,
 .tabla-alumnos td {
@@ -210,6 +211,8 @@
     font-family: "TASA Explorer", sans-serif;
     font-size: 16px;
     padding: 0 8px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
     vertical-align: middle;
 }
 
