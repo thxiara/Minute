@@ -35,4 +35,9 @@
     # 3. LANDING (pasa por PHP para poder usar la sesión)
     # ====================================================
     RewriteRule ^$ /api/index.php [L,QSA]
+
+    # ====================================================
+    # 4. Redirección a 404
+    # ====================================================
+    ErrorDocument 404 /front/404.html
 </IfModule>
