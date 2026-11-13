@@ -28,6 +28,8 @@ CREATE TABLE IF NOT EXISTS `Product` (
     `stock`        INT NOT NULL DEFAULT 0,
     `price`        DECIMAL(10,2) NOT NULL,
     `category`      VARCHAR(40) NOT NULL,
+    -- Sin uso: la imagen del producto es el archivo <id_product>.jpg de la carpeta
+    -- indicada por PRODUCT_DIR en api/.env.
     `media_product` VARCHAR(255) NOT NULL DEFAULT '',
     `desc_product`  VARCHAR(240) NOT NULL DEFAULT ''
 );

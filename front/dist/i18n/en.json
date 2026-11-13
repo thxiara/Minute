@@ -261,6 +261,8 @@
     "No se pudo cargar la lista de productos.": "The product list could not be loaded.",
     "No se pudo cargar el producto.": "The product could not be loaded.",
     "Producto guardado correctamente.": "Product saved successfully.",
+    "La foto se guardará al agregar el producto.": "The photo will be saved when the product is added.",
+    "El producto se agregó, pero no se pudo guardar su foto.": "The product was added, but its photo could not be saved.",
     "No se pudo guardar el producto.": "The product could not be saved.",
     "FitPower - Vista Entrenador": "FitPower - Trainer view",
     "Navegación de entrenador": "Trainer navigation",

@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\ProductoModel;
 use App\Utils\Auth;
+use App\Utils\Entrada;
+use App\Utils\Imagenes;
 use App\Utils\Response;
 
 // Catálogo de productos (panel de administración).
@@ -71,7 +73,43 @@ class ProductoController
         if (!$borrado) {
             Response::json(false, 'No se encontró el producto que intentas eliminar.', [], 404);
         }
+        Imagenes::borrarProducto((int) $id);
         Response::json(true, 'Producto eliminado correctamente.');
+    }
+
+    // PUT /api/productos/:id/imagen   { image: "data:image/...;base64,..." }
+    public function subirImagen(string $id): void
+    {
+        Auth::exigirRol(Auth::ROL_ADMIN);
+        $productoId = (int) $id;
+        if (!$this->productos->buscar($productoId)) {
+            Response::json(false, 'No se encontró el producto.', [], 404);
+        }
+
+        try {
+            $bytes = Imagenes::desdeDataUrl(Entrada::json()['image'] ?? null, Imagenes::MAX_BYTES_PRODUCTO);
+            Imagenes::guardarProducto($productoId, $bytes);
+        } catch (\InvalidArgumentException $e) {
+            Response::json(false, $e->getMessage(), [], 400);
+        } catch (\RuntimeException $e) {
+            error_log('Imagen de producto: ' . $e->getMessage());
+            Response::json(false, 'No se pudo guardar la imagen.', [], 500);
+        }
+
+        Response::json(true, 'Imagen del producto actualizada.', ['producto' => $this->productos->buscar($productoId)]);
+    }
+
+    // GET /api/productos/:id/imagen → la imagen (o 404 si no tiene). Cualquier usuario logueado.
+    public function imagen(string $id): void
+    {
+        Auth::exigirRol(Auth::ROL_ADMIN, Auth::ROL_ENTRENADOR, Auth::ROL_PROFESOR, Auth::ROL_SOCIO);
+
+        $ruta = Imagenes::rutaProducto((int) $id);
+        if ($ruta === null) {
+            Response::json(false, 'Sin imagen.', [], 404);
+        }
+
+        Imagenes::enviar($ruta, 'image/jpeg');
     }
 
     private function validar(): array

@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
 
+use App\Utils\Imagenes;
+
 class ProductoModel {
     private $db;
 
@@ -51,6 +53,8 @@ class ProductoModel {
         $fila['id'] = (int) $fila['id'];
         $fila['price'] = (float) $fila['price'];
         $fila['stock'] = (int) $fila['stock'];
+        // La imagen no está en la base: es el archivo <id>.jpg de la carpeta PRODUCT_DIR.
+        $fila['has_image'] = Imagenes::rutaProducto($fila['id']) !== null;
         return $fila;
     }
 }

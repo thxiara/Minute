@@ -62,6 +62,7 @@ return [
     'Foto actualizada.' => 'Photo updated.',
     'No se pudo guardar la foto.' => 'The photo could not be saved.',
     'No se pudo guardar la imagen.' => 'The image could not be saved.',
+    'Imagen del producto actualizada.' => 'Product image updated.',
     'Imagen del ejercicio actualizada.' => 'Exercise image updated.',
     'El ejercicio se agregó, pero no se pudo guardar su imagen.' => 'The exercise was added, but its image could not be saved.',
     'El archivo tiene que ser una imagen JPG, PNG, WEBP o GIF.' => 'The file must be a JPG, PNG, WEBP or GIF image.',
