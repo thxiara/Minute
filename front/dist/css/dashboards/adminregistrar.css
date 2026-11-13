@@ -1,3 +1,6 @@
+/* Registro */
+
+/* Campos formulario */
 .campo {
     margin-bottom: 22px;
 }
@@ -38,6 +41,7 @@
     appearance: auto;
 }
 
+/* Botones formulario */
 .form-buttons {
     display: flex;
     justify-content: flex-end;

@@ -93,30 +93,35 @@
 
         <!-- Contenido -->
         <main class="interface-content">
+            <!-- Encabezado perfil -->
             <div class="interface-heading">
                 <div>
                     <span class="interface-eyebrow">Administración</span>
                     <h1>Perfil de usuario</h1>
-                    <p>Consulta la información de membresía y las actividades asignadas a este usuario.</p>
+                    <p id="profileSubtitle">Consulta la información y las funciones asignadas a este usuario.</p>
                 </div>
                 <div class="interface-actions">
                     <a class="interface-button-secondary" href="/dash/admin">Volver a usuarios</a>
                     <button class="interface-button" type="button" id="editUserButton">Editar datos</button>
                     <button class="interface-button-danger" type="button" id="toggleActiveButton">Dar de baja</button>
-                    <button class="interface-button-secondary" type="button" data-open-class-assign>Asignar clases</button>
+                    <button class="interface-button-secondary" type="button" data-open-class-assign data-socio-only hidden>Asignar clases</button>
+                    <button class="interface-button-secondary" type="button" data-open-teacher-classes data-profesor-only hidden>Gestionar clases</button>
                 </div>
             </div>
 
+            <!-- Resumen usuario -->
             <section class="interface-panel profile-summary" aria-label="Resumen del usuario">
                 <img src="/front/dist/assets/imagenes/img6.jpg?v=20261113" alt="Foto del usuario" id="profilePhoto">
                 <div>
                     <h2 id="profileName"></h2>
                     <p id="profileSince">—</p>
+                    <span id="profileRoleBadge" class="rol-badge" hidden></span>
                 </div>
             </section>
             <p id="profileFeedback" class="interface-feedback" role="status" hidden></p>
 
             <div class="interface-grid">
+                <!-- Información personal -->
                 <section class="interface-panel">
                     <div class="interface-panel-header"><h2>Información personal</h2></div>
                     <div class="interface-panel-body">
@@ -130,7 +135,8 @@
                     </div>
                 </section>
 
-                <section class="interface-panel">
+                <!-- Membresía (socios) -->
+                <section class="interface-panel" data-socio-only hidden>
                     <div class="interface-panel-header"><h2>Membresía</h2></div>
                     <div class="interface-panel-body">
                         <ul class="interface-list">
@@ -147,10 +153,28 @@
                     </div>
                 </section>
 
-                <section class="interface-panel">
+                <!-- Clases grupales (socios) -->
+                <section class="interface-panel" data-socio-only hidden>
                     <div class="interface-panel-header"><h2>Clases grupales</h2></div>
                     <div class="interface-panel-body">
                         <ul class="interface-list" id="memberAssignedClasses"></ul>
+                    </div>
+                </section>
+
+                <!-- Clases que dicta (profesores) -->
+                <section class="interface-panel" data-profesor-only hidden>
+                    <div class="interface-panel-header"><h2>Clases que dicta</h2></div>
+                    <div class="interface-panel-body">
+                        <ul class="interface-list" id="professorAssignedClasses"></ul>
+                    </div>
+                </section>
+
+                <!-- Funciones por rol -->
+                <section class="interface-panel" id="profileRolePanel" hidden>
+                    <div class="interface-panel-header"><h2 id="profileRoleTitle">Funciones</h2></div>
+                    <div class="interface-panel-body">
+                        <p id="profileRoleDescription" class="profile-role-description"></p>
+                        <ul class="interface-list" id="profileRoleDetails"></ul>
                     </div>
                 </section>
             </div>
@@ -176,6 +200,30 @@
                     <div class="modal-footer">
                         <button type="button" class="interface-button-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="interface-button">Guardar clases</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="teacherClassesModal" tabindex="-1" aria-labelledby="teacherClassesTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content interface-modal">
+                <form id="teacherClassesForm">
+                    <div class="modal-header">
+                        <div>
+                            <h2 class="modal-title" id="teacherClassesTitle">Asignar o quitar clases</h2>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Elegí a quién le corresponde cada clase. Si le sacás una clase a este profesor, pasa a otro profesor.</p>
+                        <div class="teacher-class-options" id="teacherClassOptions"></div>
+                        <p id="teacherClassesFeedback" class="interface-feedback" role="status" hidden></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="interface-button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="interface-button">Guardar cambios</button>
                     </div>
                 </form>
             </div>

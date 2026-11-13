@@ -1,3 +1,6 @@
+/* Profesor */
+
+/* Título contenido */
 .content-title {
     margin-bottom: 22px;
 }
@@ -38,6 +41,7 @@
     padding: 0 7px;
 }
 
+/* Notas alumno */
 .nota {
     font-size: 12px !important;
     line-height: 15px;
