@@ -12,15 +12,26 @@ body{
 }
 
 body.login-page {
-    background:var(--color-background);
+    /* Negro puro: el borde de img4.jpg es negro y así no se nota dónde termina la foto. */
+    background:#000;
 }
 
 .contenedor{
     position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     width:100%;
     min-height:100vh;
-    overflow:hidden;
+    min-height:100dvh;
+    padding:84px 14px 76px;
+    overflow:hidden auto;
     isolation:isolate;
+}
+
+.contenedor > .row{
+    width:100%;
+    min-height:0;
 }
 
 .fondo{
@@ -30,6 +41,7 @@ body.login-page {
     width:100%;
     height:100%;
     object-fit:cover;
+    object-position:center 20%;
     filter:brightness(.35);
 }
 
@@ -62,7 +74,6 @@ body.login-page {
 .formulario{
     position:relative;
     z-index:2;
-    margin-top:70px;
     padding:45px;
     border:1px solid color-mix(in srgb, var(--color-accent) 20%, transparent);
     background:rgba(13, 10, 20, .96);
