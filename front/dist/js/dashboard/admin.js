@@ -268,18 +268,214 @@ return {
 };
 })();
 
+// Gestión de clases de un profesor: asignar o pasar a otro profesor (modal del perfil).
+const AdminTeacherClassAssignment = (() => {
+const modal = document.getElementById("teacherClassesModal");
+const form = document.getElementById("teacherClassesForm");
+if (!modal || !form) return null;
+
+const options = document.getElementById("teacherClassOptions");
+const feedback = document.getElementById("teacherClassesFeedback");
+const submit = form.querySelector('[type="submit"]');
+let activeProfessorId = null;
+let currentClasses = [];
+let onSaved = () => {};
+
+function classRow(session, profesores) {
+    const row = document.createElement("div");
+    row.className = "teacher-class-option" + (session.teacher_id === activeProfessorId ? " is-current" : "");
+
+    const info = document.createElement("div");
+    info.className = "teacher-class-info";
+    const name = document.createElement("strong");
+    name.textContent = session.name_course;
+    const meta = document.createElement("span");
+    meta.textContent = `${AdminUtil.formatDays(session.days)} · ${session.time} · ${session.student_count ?? 0} alumnos`;
+    info.append(name, meta);
+
+    const select = document.createElement("select");
+    select.className = "form-select teacher-class-select";
+    select.dataset.classId = String(session.id_course);
+    select.dataset.currentTeacherId = String(session.teacher_id);
+    select.setAttribute("aria-label", `Profesor de la clase ${session.name_course}`);
+    profesores.forEach((profesor) => {
+        const option = document.createElement("option");
+        option.value = String(profesor.id_client);
+        option.textContent = profesor.name_client;
+        if (profesor.id_client === session.teacher_id) option.selected = true;
+        select.append(option);
+    });
+    select.addEventListener("change", () => {
+        row.classList.toggle("is-current", Number(select.value) === activeProfessorId);
+    });
+
+    row.append(info, select);
+    return row;
+}
+
+async function open(professorId, professorName) {
+    activeProfessorId = Number(professorId);
+    options.replaceChildren();
+    AdminUtil.setFeedback(feedback, "Cargando clases…");
+    submit.disabled = true;
+    bootstrap.Modal.getOrCreateInstance(modal).show();
+
+    const [classesData, professorsData] = await Promise.all([
+        API.request("/clases"),
+        API.request("/profesores")
+    ]);
+    currentClasses = classesData?.success ? classesData.clases : [];
+    const profesores = professorsData?.success ? professorsData.profesores : [];
+
+    if (!classesData?.success || !professorsData?.success) {
+        AdminUtil.setFeedback(feedback, (classesData?.success ? professorsData : classesData)?.message || "No se pudieron cargar las clases.", true);
+        return;
+    }
+    if (!profesores.length) {
+        AdminUtil.setFeedback(feedback, "No hay profesores registrados.", true);
+        return;
+    }
+
+    options.replaceChildren();
+    currentClasses.forEach((session) => options.append(classRow(session, profesores)));
+    if (!currentClasses.length) {
+        options.textContent = "Primero crea una clase para poder asignarla.";
+    }
+    AdminUtil.setFeedback(feedback, "");
+    submit.disabled = currentClasses.length === 0;
+}
+
+form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const changes = [...options.querySelectorAll(".teacher-class-select")]
+        .map((select) => ({ select, classId: Number(select.dataset.classId), teacher: Number(select.value), current: Number(select.dataset.currentTeacherId) }))
+        .filter(({ teacher, current }) => teacher !== current);
+
+    if (!changes.length) {
+        AdminUtil.setFeedback(feedback, "No hubo cambios.");
+        return;
+    }
+
+    submit.disabled = true;
+    const byId = new Map(currentClasses.map((session) => [session.id_course, session]));
+    let failed = 0;
+    for (const change of changes) {
+        const original = byId.get(change.classId);
+        if (!original) { failed += 1; continue; }
+        const data = await API.request(`/clases/${encodeURIComponent(change.classId)}`, "PUT", {
+            name: original.name_course,
+            desc: original.desc_course || "",
+            days: original.days,
+            time: original.time,
+            teacher_id: change.teacher
+        });
+        if (!data?.success) failed += 1;
+    }
+    submit.disabled = false;
+    if (failed) {
+        AdminUtil.setFeedback(feedback, "No se pudieron actualizar todas las clases.", true);
+        return;
+    }
+    // Sincroniza el estado tras guardar: el próximo submit compara contra lo guardado.
+    changes.forEach((change) => {
+        change.select.dataset.currentTeacherId = String(change.teacher);
+        const original = byId.get(change.classId);
+        if (original) original.teacher_id = change.teacher;
+    });
+    AdminUtil.setFeedback(feedback, "Clases actualizadas.");
+    onSaved(activeProfessorId);
+});
+
+return {
+    open,
+    onSaved(callback) { onSaved = callback; }
+};
+})();
+
 // Perfil de usuario (/dash/admin/perfil?id=...)
 (() => {
 const profileId = new URLSearchParams(window.location.search).get("id");
 if (!profileId || !document.getElementById("profileName")) return;
 
 const assignedList = document.getElementById("memberAssignedClasses");
+const professorAssignedList = document.getElementById("professorAssignedClasses");
+const profesorOnlyElements = document.querySelectorAll("[data-profesor-only]");
 const statusButton = document.getElementById("toggleActiveButton");
 const profileFeedback = document.getElementById("profileFeedback");
 let profileData = null;
 
+// Variantes por rol
+const ROLE_PROFILES = {
+    1: {
+        label: "Admin",
+        title: "Administración",
+        description: "Este usuario administra el gimnasio y tiene acceso a todas las secciones del panel.",
+        details: ["Gestiona usuarios y membresías", "Administra clases y productos", "Modera las reseñas"]
+    },
+    2: {
+        label: "Entrenador",
+        title: "Entrenamiento",
+        description: "Este usuario diseña rutinas y acompaña el entrenamiento de los socios.",
+        details: ["Crea y edita rutinas", "Asigna ejercicios a los socios", "Revisa el progreso"]
+    },
+    3: {
+        label: "Profesor",
+        title: "Docencia",
+        description: "Este usuario dicta clases grupales y registra la asistencia de sus alumnos.",
+        details: ["Gestiona sus clases", "Registra asistencia", "Evalúa a los alumnos"]
+    },
+    4: {
+        label: "Socio"
+    }
+};
+
+const socioOnlyElements = document.querySelectorAll("[data-socio-only]");
+const rolePanel = document.getElementById("profileRolePanel");
+const roleBadge = document.getElementById("profileRoleBadge");
+const profileSubtitle = document.getElementById("profileSubtitle");
+
+function showRoleVariant(usuario) {
+    const roleId = Number(usuario.role_id);
+    const esSocio = roleId === 4;
+    const esProfesor = roleId === 3;
+    const info = ROLE_PROFILES[roleId];
+
+    socioOnlyElements.forEach((element) => {
+        element.hidden = !esSocio;
+    });
+    profesorOnlyElements.forEach((element) => {
+        element.hidden = !esProfesor;
+    });
+    if (rolePanel) rolePanel.hidden = esSocio || !info;
+    if (roleBadge) {
+        roleBadge.textContent = info?.label || usuario.role_name || "Usuario";
+        roleBadge.hidden = false;
+    }
+    if (profileSubtitle) {
+        profileSubtitle.textContent = esSocio
+            ? "Consulta la información de membresía y las actividades asignadas a este usuario."
+            : "Consulta la información personal y las funciones asignadas a este usuario.";
+    }
+
+    if (!esSocio && info) {
+        document.getElementById("profileRoleTitle").textContent = info.title;
+        document.getElementById("profileRoleDescription").textContent = info.description;
+        const details = document.getElementById("profileRoleDetails");
+        details.replaceChildren(...info.details.map((text) => {
+            const item = document.createElement("li");
+            const span = document.createElement("span");
+            span.textContent = text;
+            item.append(span);
+            return item;
+        }));
+    }
+
+    return esSocio;
+}
+
 function showProfile(usuario) {
     profileData = usuario;
+    const esSocio = showRoleVariant(usuario);
     const values = {
         Name: usuario.name_client,
         Since: usuario.created_client ? `Registrado el ${AdminUtil.formatDate(usuario.created_client)}` : "—",
@@ -307,10 +503,12 @@ function showProfile(usuario) {
         trigger.dataset.memberName = usuario.name_client;
         trigger.dataset.memberId = String(usuario.id_client);
     });
+
+    return esSocio;
 }
 
 async function loadMemberClasses() {
-    if (!assignedList) return;
+    if (!assignedList || Number(profileData?.role_id) !== 4) return;
     const data = await API.request(`/socios/${encodeURIComponent(profileId)}/clases`);
     assignedList.replaceChildren();
     const classes = data?.success ? data.clases : [];
@@ -331,16 +529,45 @@ async function loadMemberClasses() {
     });
 }
 
+async function renderProfessorClasses() {
+    if (!professorAssignedList || Number(profileData?.role_id) !== 3) return;
+    const data = await API.request("/clases");
+    professorAssignedList.replaceChildren();
+    const classes = (data?.success ? data.clases : []).filter((session) => Number(session.teacher_id) === Number(profileId));
+    if (!classes.length) {
+        const empty = document.createElement("li");
+        empty.textContent = "No dicta ninguna clase todavía.";
+        professorAssignedList.append(empty);
+        return;
+    }
+    classes.forEach((session) => {
+        const item = document.createElement("li");
+        const name = document.createElement("strong");
+        name.textContent = session.name_course;
+        const schedule = document.createElement("span");
+        schedule.textContent = `${AdminUtil.formatDays(session.days)} · ${session.time}`;
+        item.append(name, schedule);
+        professorAssignedList.append(item);
+    });
+}
+
+document.querySelectorAll("[data-open-teacher-classes]").forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+        AdminTeacherClassAssignment?.open(Number(profileId), profileData?.name_client);
+    });
+});
+
 API.request(`/usuarios/${encodeURIComponent(profileId)}`).then((data) => {
     if (!data?.success || !data.usuario) {
         document.getElementById("profileName").textContent = data?.message || "No se pudo cargar el usuario.";
         return;
     }
-    showProfile(data.usuario);
-    loadMemberClasses();
+    if (showProfile(data.usuario)) loadMemberClasses();
+    if (Number(data.usuario.role_id) === 3) renderProfessorClasses();
 });
 
 AdminClassAssignment?.onSaved(loadMemberClasses);
+AdminTeacherClassAssignment?.onSaved(renderProfessorClasses);
 
 // Dar de baja / reactivar.
 statusButton?.addEventListener("click", async () => {

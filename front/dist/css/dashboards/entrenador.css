@@ -1,3 +1,6 @@
+/* Entrenador */
+
+/* Columnas socios */
 .tabla-socios th:nth-child(1) {
     width: 15%;
 }
@@ -26,6 +29,7 @@
     height: 68px;
 }
 
+/* Notas socio */
 .nota {
     line-height: 1.3;
 }
