@@ -22,6 +22,9 @@ source ./rclone_setup.sh
 #Configuración interactiva backups
 source ./backups_setup.sh
 
+#Configuración interactiva rutas imágenes
+source ./media_routes.sh
+
 #Creación envs
 source ./env_setup.sh
 
