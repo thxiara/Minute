@@ -16,6 +16,7 @@ body.login-page {
     background:#000;
 }
 
+/* Contenedor login */
 .contenedor{
     position:relative;
     display:flex;
@@ -34,6 +35,7 @@ body.login-page {
     min-height:0;
 }
 
+/* Fondo login */
 .fondo{
     position:absolute;
     inset:0;
@@ -71,6 +73,7 @@ body.login-page {
     color:var(--color-accent-bright);
 }
 
+/* Caja formulario */
 .formulario{
     position:relative;
     z-index:2;

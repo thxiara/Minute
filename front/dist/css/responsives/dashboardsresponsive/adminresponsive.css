@@ -1,3 +1,5 @@
+/* Admin responsive */
+
 @media (max-width: 767px) {
     .tabla-usuarios tbody tr:not(:has(td[colspan])) td:nth-child(1)::before {
         content: "Nombre";
