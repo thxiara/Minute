@@ -849,10 +849,11 @@ footer{
 }
 
 .iconos{
-    display:flex;
+    display:grid;
+    grid-template-columns:repeat(3, auto);
     align-items:center;
     gap:18px;
-    flex-wrap:wrap;
+    width:max-content;
 }
 
 .iconos a{
