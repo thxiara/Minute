@@ -8,15 +8,20 @@ if (!slider) return;
 const arriba = document.querySelector(".izquierda");
 const abajo = document.querySelector(".derecha");
 const visibles = 2;
-const fotos = ["img7.jpg", "img3.jpg", "img8.jpg"];
+// Foto genérica para quien no subió foto de perfil (la misma que usa el resto del sitio).
+const FOTO_POR_DEFECTO = "/front/dist/assets/imagenes/img6.jpg";
 
-function crearComentario(resena, indice) {
+function crearComentario(resena) {
     const comentario = document.createElement("div");
     comentario.className = "comentario";
 
     const imagen = document.createElement("img");
-    imagen.src = resena.photo || `/front/dist/assets/imagenes/${fotos[indice % fotos.length]}`;
+    // Foto de perfil de quien escribió la reseña.
+    imagen.src = resena.photo || FOTO_POR_DEFECTO;
     imagen.alt = "Socio";
+    imagen.addEventListener("error", () => {
+        if (!imagen.src.endsWith(FOTO_POR_DEFECTO)) imagen.src = FOTO_POR_DEFECTO;
+    }, { once: true });
 
     const contenido = document.createElement("div");
     contenido.className = "contenido";
@@ -26,6 +31,9 @@ function crearComentario(resena, indice) {
     estrellas.textContent = `${"★".repeat(resena.rating)}${"☆".repeat(5 - resena.rating)}`;
     const texto = document.createElement("p");
     texto.textContent = resena.text;
+    // Lo que escribió el socio se muestra tal cual: ni i18n.js ni el traductor del navegador lo tocan.
+    texto.dataset.i18nSkip = "";
+    texto.translate = false;
     contenido.append(nombre, estrellas, texto);
 
     comentario.append(imagen, contenido);
@@ -55,7 +63,7 @@ if (usuarioHeader) {
         const resenas = window.ResenasStore ? window.ResenasStore.paraElCarrusel(data.resenas) : data.resenas;
         const minimo = window.ResenasStore?.haySeleccionCarrusel() ? 1 : visibles;
         if (resenas.length >= minimo) {
-            slider.replaceChildren(...resenas.slice(0, 10).map(crearComentario));
+            slider.replaceChildren(...resenas.slice(0, 10).map((resena) => crearComentario(resena)));
         }
     }
 

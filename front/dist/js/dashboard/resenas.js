@@ -80,6 +80,9 @@
         const text = document.createElement("p");
         text.className = "review-admin-text";
         text.textContent = resena.text || "";
+        // Lo que escribió el socio se muestra tal cual, sin traducir.
+        text.dataset.i18nSkip = "";
+        text.translate = false;
 
         const actions = document.createElement("div");
         actions.className = "review-admin-actions";

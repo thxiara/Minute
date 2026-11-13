@@ -28,6 +28,9 @@ function createCard(review) {
     rating.textContent = stars(review.rating);
     const text = document.createElement("p");
     text.textContent = review.text;
+    // Lo que escribió el socio se muestra tal cual, sin traducir.
+    text.dataset.i18nSkip = "";
+    text.translate = false;
     content.append(name, rating, text);
 
     card.append(image, content);
