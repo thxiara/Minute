@@ -8,71 +8,55 @@
         return;
     }
 
-    // Fotos de producto: la API todavía no guarda imágenes de productos, así que la foto
-    // elegida se guarda en el navegador (localStorage) y se muestra tanto en el editor
-    // como en la lista. Si más adelante la API acepta fotos, esto se reemplaza por la URL del servidor.
-    const PHOTO_KEY = "fitpower:product-photo:";
+    // Imagen del producto: la guarda la API (PUT /api/productos/:id/imagen) y se pide con
+    // GET /api/productos/:id/imagen. Sin imagen se muestra la de relleno.
     const PLACEHOLDER_IMAGE = "/front/dist/assets/imagenes/product-placeholder.jpg";
+    const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
 
-    function getProductPhoto(id) {
-        try {
-            return window.localStorage.getItem(PHOTO_KEY + id) || PLACEHOLDER_IMAGE;
-        } catch {
-            return PLACEHOLDER_IMAGE;
-        }
+    function getProductPhoto(product, version = "") {
+        if (!product?.has_image) return PLACEHOLDER_IMAGE;
+        const url = `/api/productos/${encodeURIComponent(product.id)}/imagen`;
+        return version ? `${url}?v=${encodeURIComponent(version)}` : url;
     }
 
-    function setProductPhoto(id, dataUrl) {
-        try {
-            window.localStorage.setItem(PHOTO_KEY + id, dataUrl);
-            return true;
-        } catch (error) {
-            console.error("No se pudo guardar la foto del producto.", error);
-            return false;
-        }
+    function usePlaceholderOnError(image) {
+        image.addEventListener("error", () => {
+            if (!image.src.endsWith(PLACEHOLDER_IMAGE)) image.src = PLACEHOLDER_IMAGE;
+        });
     }
 
-    function removeProductPhoto(id) {
-        try {
-            window.localStorage.removeItem(PHOTO_KEY + id);
-        } catch {
-            // Sin acceso a localStorage no hay nada que borrar.
-        }
-    }
-
-    // Lee el archivo y lo devuelve como data URL. Las imágenes grandes se achican a un
-    // máximo de 512 px (en JPEG) para no llenar el almacenamiento del navegador;
-    // los GIF se guardan tal cual para conservar la animación.
+    // Lee el archivo y lo devuelve como data URL. Se achica a 800 px como máximo (en JPEG),
+    // que es lo mismo que hace el servidor, así el envío pesa menos.
     function readPhotoAsDataUrl(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.onerror = () => reject(new Error("No se pudo leer la imagen seleccionada."));
             reader.onload = () => {
-                if (file.type === "image/gif" && file.size <= 900 * 1024) {
-                    resolve(String(reader.result));
-                    return;
-                }
+                const original = String(reader.result);
                 const image = new Image();
-                image.onerror = () => resolve(String(reader.result));
+                image.onerror = () => reject(new Error("No se pudo leer la imagen seleccionada."));
                 image.onload = () => {
-                    const maxSize = 512;
+                    const maxSize = 800;
                     const scale = Math.min(1, maxSize / Math.max(image.width, image.height));
                     const canvas = document.createElement("canvas");
                     canvas.width = Math.max(1, Math.round(image.width * scale));
                     canvas.height = Math.max(1, Math.round(image.height * scale));
                     const context = canvas.getContext("2d");
                     if (!context) {
-                        resolve(String(reader.result));
+                        resolve(original);
                         return;
                     }
+                    // Fondo blanco: el JPEG no tiene transparencia.
+                    context.fillStyle = "#fff";
+                    context.fillRect(0, 0, canvas.width, canvas.height);
                     context.drawImage(image, 0, 0, canvas.width, canvas.height);
                     try {
                         resolve(canvas.toDataURL("image/jpeg", 0.85));
                     } catch {
-                        resolve(String(reader.result));
+                        resolve(original);
                     }
                 };
-                image.src = String(reader.result);
+                image.src = original;
             };
             reader.readAsDataURL(file);
         });
@@ -119,9 +103,11 @@
             const productName = document.createElement("div");
             productName.className = "product-name";
             const image = document.createElement("img");
-            image.src = getProductPhoto(product.id);
+            usePlaceholderOnError(image);
+            image.src = getProductPhoto(product);
             image.alt = "";
             image.className = "product-thumbnail";
+            image.loading = "lazy";
             const name = document.createElement("span");
             name.textContent = product.name;
             productName.append(image, name);
@@ -202,7 +188,6 @@
 
             try {
                 await window.ProductosStore.remove(deleteButton.dataset.productDelete);
-                removeProductPhoto(deleteButton.dataset.productDelete);
                 feedback.classList.remove("is-error");
                 feedback.textContent = "Producto eliminado correctamente.";
                 window.Toast?.success("Producto eliminado correctamente.");
@@ -241,7 +226,8 @@
     const photoInput = document.getElementById("productPhotoInput");
     const productId = new URLSearchParams(window.location.search).get("id");
     let editingProductFound = !productId;
-    let pendingPhoto = null; // Foto elegida en modo creación; se guarda al crear el producto.
+    let pendingPhoto = null; // Foto elegida en modo creación; se sube después de crear el producto.
+    if (previewImage) usePlaceholderOnError(previewImage);
 
     function updateSummary() {
         const stock = Math.max(0, Number(stockInput.value) || 0);
@@ -272,7 +258,7 @@
             priceInput.value = String(product.price);
             descriptionInput.value = product.description || "";
             stockInput.value = String(product.stock);
-            if (previewImage) previewImage.src = getProductPhoto(productId);
+            if (previewImage) previewImage.src = getProductPhoto(product);
             updateSummary();
         }).catch((error) => {
             showError(formFeedback, error, "No se pudo cargar el producto.");
@@ -293,29 +279,32 @@
                 showError(formFeedback, new Error("El archivo tiene que ser una imagen."), "El archivo tiene que ser una imagen.");
                 return;
             }
-            if (file.size > 5 * 1024 * 1024) {
+            if (file.size > MAX_PHOTO_BYTES) {
                 showError(formFeedback, new Error("La imagen puede pesar hasta 5 MB."), "La imagen puede pesar hasta 5 MB.");
                 return;
             }
 
+            const previousSrc = previewImage.src;
             try {
                 photoButton.disabled = true;
                 const dataUrl = await readPhotoAsDataUrl(file);
                 previewImage.src = dataUrl;
+                formFeedback.classList.remove("is-error");
 
                 if (productId) {
-                    // En edición la foto se guarda enseguida, con el id del producto.
-                    if (!setProductPhoto(productId, dataUrl)) {
-                        showError(formFeedback, new Error("No se pudo guardar la foto."), "No se pudo guardar la foto.");
-                        return;
-                    }
+                    // En edición la foto se sube enseguida.
+                    formFeedback.textContent = "Subiendo foto…";
+                    const updated = await window.ProductosStore.uploadImage(productId, dataUrl);
+                    previewImage.src = getProductPhoto(updated, Date.now());
+                    formFeedback.textContent = "Foto actualizada.";
+                    window.Toast?.success("Foto actualizada.");
                 } else {
-                    // En creación queda pendiente y se guarda con el id que devuelva la API.
+                    // En creación queda pendiente y se sube con el id que devuelva la API.
                     pendingPhoto = dataUrl;
+                    formFeedback.textContent = "La foto se guardará al agregar el producto.";
                 }
-                formFeedback.classList.remove("is-error");
-                formFeedback.textContent = "Foto actualizada.";
             } catch (error) {
+                previewImage.src = previousSrc;
                 showError(formFeedback, error, "No se pudo guardar la foto.");
             } finally {
                 photoButton.disabled = false;
@@ -358,8 +347,21 @@
             } else {
                 const created = await window.ProductosStore.create(product);
                 if (pendingPhoto && created?.id) {
-                    setProductPhoto(created.id, pendingPhoto);
-                    pendingPhoto = null;
+                    try {
+                        await window.ProductosStore.uploadImage(created.id, pendingPhoto);
+                        pendingPhoto = null;
+                    } catch (error) {
+                        // El producto ya existe: se abre su edición para volver a intentar con la foto.
+                        console.error(error);
+                        const message = "El producto se agregó, pero no se pudo guardar su foto.";
+                        formFeedback.textContent = message;
+                        formFeedback.classList.add("is-error");
+                        window.Toast?.error(message);
+                        window.setTimeout(() => {
+                            window.location.href = `/dash/admin/producto?id=${encodeURIComponent(created.id)}`;
+                        }, 1500);
+                        return;
+                    }
                 }
             }
 

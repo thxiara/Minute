@@ -67,6 +67,9 @@ $router->post('/api/productos', 'ProductoController@crear');
 $router->get('/api/productos/:id', 'ProductoController@ver');
 $router->put('/api/productos/:id', 'ProductoController@actualizar');
 $router->delete('/api/productos/:id', 'ProductoController@eliminar');
+#Imagen de un producto: la carga el admin, la ve cualquier usuario logueado
+$router->put('/api/productos/:id/imagen', 'ProductoController@subirImagen');
+$router->get('/api/productos/:id/imagen', 'ProductoController@imagen');
 
 #Reseñas: las ve cualquiera, las escribe el socio
 $router->get('/api/resenas', 'ResenaController@listar');

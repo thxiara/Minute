@@ -29,6 +29,11 @@
 
         async remove(id) {
             await call(`/productos/${encodeURIComponent(id)}`, "DELETE");
+        },
+
+        // image: data URL ("data:image/...;base64,..."). Devuelve el producto actualizado.
+        async uploadImage(id, image) {
+            return (await call(`/productos/${encodeURIComponent(id)}/imagen`, "PUT", { image })).producto;
         }
     };
 })();

@@ -7,11 +7,13 @@ class Imagenes
     public const LADO_PFP = 128;                      // px: las fotos de perfil quedan de 128 × 128
     public const MAX_BYTES_PFP = 5 * 1024 * 1024;
     public const MAX_BYTES_EJERCICIO = 5 * 1024 * 1024;
+    public const MAX_BYTES_PRODUCTO = 5 * 1024 * 1024;
 
     private const CALIDAD_JPG = 85;
     private const MAX_LADO_ORIGINAL = 8000;           // px: más grande que esto no se intenta abrir
     private const MAX_PIXELES_ORIGINAL = 40000000;
     private const MAX_LADO_EJERCICIO = 800;           // px: las imágenes fijas se achican (sin recortar)
+    private const MAX_LADO_PRODUCTO = 800;            // px: ídem para los productos
     private const TIPOS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
 
@@ -23,6 +25,11 @@ class Imagenes
     public static function rutaEjercicio(int $id): ?string
     {
         return self::rutaSiExiste('EXERCISE_DIR', $id, 'gif');
+    }
+
+    public static function rutaProducto(int $id): ?string
+    {
+        return self::rutaSiExiste('PRODUCT_DIR', $id, 'jpg');
     }
 
 
@@ -61,18 +68,29 @@ class Imagenes
             return;
         }
 
-        $ancho = imagesx($original);
-        $alto = imagesy($original);
-        $escala = min(1, self::MAX_LADO_EJERCICIO / max($ancho, $alto));
-        $nuevoAncho = max(1, (int) round($ancho * $escala));
-        $nuevoAlto = max(1, (int) round($alto * $escala));
-
-        $imagen = self::lienzoBlanco($nuevoAncho, $nuevoAlto);
-        imagecopyresampled($imagen, $original, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+        $imagen = self::achicar($original, self::MAX_LADO_EJERCICIO);
         // GIF admite hasta 256 colores.
         imagetruecolortopalette($imagen, true, 255);
 
         self::escribir('EXERCISE_DIR', $id, 'gif', fn(string $temporal) => imagegif($imagen, $temporal));
+    }
+
+    // Imagen de un producto: se achica (sin recortar) y se guarda como JPG en PRODUCT_DIR/<id>.jpg.
+    // Un GIF animado queda con su primer cuadro.
+    public static function guardarProducto(int $id, string $bytes): void
+    {
+        $info = self::inspeccionar($bytes, self::MAX_BYTES_PRODUCTO);
+        $imagen = self::achicar(self::abrir($bytes, $info['mime']), self::MAX_LADO_PRODUCTO);
+
+        self::escribir('PRODUCT_DIR', $id, 'jpg', fn(string $temporal) => imagejpeg($imagen, $temporal, self::CALIDAD_JPG));
+    }
+
+    public static function borrarProducto(int $id): void
+    {
+        $ruta = self::rutaProducto($id);
+        if ($ruta !== null && !@unlink($ruta)) {
+            error_log("No se pudo borrar la imagen del producto $id ($ruta).");
+        }
     }
 
     public static function comprobar(string $bytes, int $maxBytes): void
@@ -202,6 +220,21 @@ class Imagenes
                 }
             }
         }
+
+        return $imagen;
+    }
+
+    // Copia la imagen en un lienzo blanco cuyo lado más largo mide como mucho $maxLado px.
+    private static function achicar(\GdImage $original, int $maxLado): \GdImage
+    {
+        $ancho = imagesx($original);
+        $alto = imagesy($original);
+        $escala = min(1, $maxLado / max($ancho, $alto));
+        $nuevoAncho = max(1, (int) round($ancho * $escala));
+        $nuevoAlto = max(1, (int) round($alto * $escala));
+
+        $imagen = self::lienzoBlanco($nuevoAncho, $nuevoAlto);
+        imagecopyresampled($imagen, $original, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
 
         return $imagen;
     }
