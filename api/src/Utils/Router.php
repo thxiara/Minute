@@ -65,6 +65,16 @@ class Router {
         #404 en caso de que la ejecución de arriba no hizo return
         #(La url ingresada no se encontraba en routes)
         http_response_code(404);
+
+        #Si no es una ruta de la API (ej. /dash/algo-que-no-existe) la pidió un navegador:
+        #se le muestra la página 404 en vez de un JSON
+        if (!preg_match('#^/api(/|$)#', $uri)) {
+            header('Content-Type: text/html; charset=UTF-8');
+            header('Cache-Control: no-store');
+            readfile(__DIR__ . '/../../../front/404.html');
+            return;
+        }
+
         echo json_encode([
             "status" => "error", 
             "message" => I18n::t("Ruta no encontrada en la API"),
