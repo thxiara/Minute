@@ -72,9 +72,12 @@
         href="/front/dist/css/responsives/dashboardsresponsive/adminregistrarresponsive.css?v=20261113"
     >
 
+    <link rel="stylesheet" href="/front/dist/css/efectos.css?v=20261113">
+
 
     <!-- Traducciones: tiene que cargarse antes que el resto de los scripts -->
     <script src="/front/dist/js/i18n.js?v=20261113"></script>
+    <script src="/front/dist/js/efectos.js?v=20261113"></script>
 </head>
 
 
@@ -202,12 +205,18 @@
                                     type="text"
                                     id="ci"
                                     name="ci"
-                                    maxlength="20"
+                                    minlength="8"
+                                    maxlength="8"
                                     required
                                 >
 
                             </div>
 
+                        </div>
+
+
+
+                        <div class="row">
 
 
                             <div class="col-md-4 campo">
@@ -227,11 +236,6 @@
 
                             </div>
 
-                        </div>
-
-
-
-                        <div class="row">
 
 
                             <div class="col-md-4 campo">
@@ -268,23 +272,6 @@
 
                             </div>
 
-
-
-                            <div class="col-md-4 campo" id="campoPlan" hidden>
-
-                                <label for="plan" id="membershipLabel">
-                                    Membresía *
-                                </label>
-
-                                <select id="plan" name="plan">
-                                    <option value="">Selecciona una opción</option>
-                                    <option value="basico">Básico</option>
-                                    <option value="pro">Pro</option>
-                                    <option value="premium">Premium</option>
-                                </select>
-
-                            </div>
-
                         </div>
 
 
@@ -306,6 +293,23 @@
                                     minlength="8" maxlength="50" autocomplete="new-password"
                                     required
                                 >
+
+                            </div>
+
+
+
+                            <div class="col-md-4 campo" id="campoPlan" hidden>
+
+                                <label for="plan" id="membershipLabel">
+                                    Membresía *
+                                </label>
+
+                                <select id="plan" name="plan">
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="basico">Básico</option>
+                                    <option value="pro">Pro</option>
+                                    <option value="premium">Premium</option>
+                                </select>
 
                             </div>
 

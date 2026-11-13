@@ -317,8 +317,7 @@
     grid-column: 1 / -1;
 }
 
-.product-fields .form-label,
-.product-stock-field .form-label {
+.product-fields .form-label {
     color: var(--color-text-secondary);
     font-size: 0.88rem;
     font-weight: 600;
@@ -326,7 +325,7 @@
 
 .product-inventory {
     margin-top: 26px;
-    padding: 20px;
+    padding: 18px 20px;
     border: 1px solid var(--color-border);
     border-radius: 12px;
     background: color-mix(in srgb, var(--color-surface-raised) 70%, var(--color-background));
@@ -334,14 +333,14 @@
 
 .product-inventory-heading {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
     gap: 12px;
-    margin-bottom: 18px;
+    margin-bottom: 0;
 }
 
 .product-inventory-heading h2 {
-    margin: 0;
+    margin: 0 auto 0 0;
     color: var(--color-text);
     font-family: "TASA Explorer", sans-serif;
     font-size: 1.08rem;
@@ -349,15 +348,15 @@
 }
 
 .product-inventory-controls {
-    display: grid;
-    grid-template-columns: minmax(130px, 280px);
-    align-items: end;
-    gap: 10px;
+    display: flex;
+    align-items: center;
+    width: min(220px, 100%);
 }
 
 .product-stock-stepper {
     display: grid;
     grid-template-columns: 38px minmax(50px, 1fr) 38px;
+    width: 100%;
     align-items: center;
     overflow: hidden;
     border: 1px solid var(--color-border);
@@ -568,7 +567,7 @@
     }
 
     .product-inventory-controls {
-        grid-template-columns: minmax(0, 1fr);
+        width: 100%;
     }
 
     .product-form-actions {

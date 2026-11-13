@@ -51,6 +51,20 @@ const AdminUtil = {
         if (window.Toast && text && !/cargando/i.test(text)) {
             window.Toast.show(text, isError ? "error" : "success");
         }
+    },
+
+    // Corrige textos que llegan con UTF-8 leído como Latin-1 ("BÃ¡sico" → "Básico").
+    texto(valor) {
+        if (typeof valor !== "string" || !/[ÃÂ]/.test(valor) || typeof TextDecoder !== "function") return valor;
+        for (const caracter of valor) {
+            if (caracter.charCodeAt(0) > 255) return valor;
+        }
+        try {
+            const bytes = Uint8Array.from(valor, caracter => caracter.charCodeAt(0));
+            return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+        } catch {
+            return valor;
+        }
     }
 };
 
@@ -274,7 +288,7 @@ function showProfile(usuario) {
         Email: usuario.email,
         Birth: usuario.birth_client ? AdminUtil.formatDate(usuario.birth_client) : "—",
         Status: usuario.active_client ? "Activo" : "Dado de baja",
-        Plan: usuario.membership_name,
+        Plan: AdminUtil.texto(usuario.membership_name),
         Expiration: usuario.expiry_date ? AdminUtil.formatDate(usuario.expiry_date) : null
     };
     Object.entries(values).forEach(([field, value]) => {
@@ -351,7 +365,7 @@ if (renewForm) {
         (data?.membresias || []).forEach((plan) => {
             const option = document.createElement("option");
             option.value = String(plan.id_membership);
-            option.textContent = plan.name_membership;
+            option.textContent = AdminUtil.texto(plan.name_membership);
             renewSelect.append(option);
         });
     });
@@ -639,7 +653,7 @@ API.request("/membresias").then((data) => {
     data.membresias.forEach((plan) => {
         const option = document.createElement("option");
         option.value = String(plan.id_membership);
-        option.textContent = plan.name_membership;
+        option.textContent = AdminUtil.texto(plan.name_membership);
         planSelect.append(option);
     });
 });

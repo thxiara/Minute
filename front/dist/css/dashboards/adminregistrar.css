@@ -2,6 +2,10 @@
     margin-bottom: 22px;
 }
 
+.registro-panel .campo {
+    margin-bottom: 16px;
+}
+
 .campo label {
     display: block;
     margin-bottom: 7px;
