@@ -237,14 +237,10 @@
     }
 
     .iconos{
-        gap:15px;
-        flex-wrap:wrap;
         justify-content:center;
     }
 
     .iconos a{
-        width:44px;
-        height:44px;
         font-size:1rem;
     }
 }
@@ -410,16 +406,6 @@
     /* footer */
     .logo-footer{
         font-size:1.5rem;
-    }
-
-    .iconos{
-        gap:12px;
-    }
-
-    .iconos a{
-        width:40px;
-        height:40px;
-        font-size:.95rem;
     }
 
 
