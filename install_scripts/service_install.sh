@@ -18,7 +18,7 @@ sudo zypper install -y phpMyAdmin
 echo -e "\e[1;32mInstalando apache2\e[0m"
 sudo zypper install -y apache2 apache2-mod_php8 
 echo -e "\e[1;32mInstalando php8\e[0m"
-sudo zypper install -y php8 php8-mysql php8-mbstring php8-zip php8-gd php8-curl 
+sudo zypper install -y php8 php8-mysql php8-mbstring php8-zip php8-gd php8-curl php8-gd
 
 ## Aplicación
 sudo mkdir -p /srv/www
