@@ -343,8 +343,8 @@ const I18n = (() => {
         const limite = setTimeout(mostrar, 2500);
 
         const url = origenScript
-            ? new URL(`../i18n/${idioma}.json`, origenScript)
-            : `/front/dist/i18n/${idioma}.json`;
+            ? new URL(`../i18n/${idioma}.json?v=20261114`, origenScript)
+            : `/front/dist/i18n/${idioma}.json?v=20261114`;
 
         fetch(url)
             .then((respuesta) => {
