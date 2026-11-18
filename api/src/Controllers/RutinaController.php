@@ -15,7 +15,7 @@ class RutinaController
     private const ROL_SOCIO = 4;
 
     // Los mismos grupos que muestra el formulario de ejercicios.
-    private const GRUPOS_MUSCULARES = ['Piernas', 'Pecho', 'Espalda', 'Hombros', 'Core'];
+    private const GRUPOS_MUSCULARES = ['Piernas', 'Pecho', 'Espalda', 'Hombros', 'Brazos', 'Core'];
 
     private $db;
     private EjercicioModel $ejercicios;
