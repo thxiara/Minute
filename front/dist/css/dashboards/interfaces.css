@@ -905,6 +905,13 @@ fieldset > legend.form-label {
     color: var(--color-text-secondary);
 }
 
+.interface-modal .form-control::placeholder,
+.interface-modal .form-select::placeholder,
+.interface-modal textarea::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+}
+
 .interface-modal .form-control:focus,
 .interface-modal .form-select:focus {
     border-color: var(--color-accent);

@@ -488,11 +488,13 @@ const params = new URLSearchParams(window.location.search);
 const classId = Number(params.get("clase"));
 const classSchedule = document.getElementById("classSchedule");
 const classDates = document.getElementById("classDates");
-const attendancePanel = document.getElementById("attendancePanel");
+const attendanceModalElement = document.getElementById("attendanceModal");
+const attendanceModal = attendanceModalElement ? bootstrap.Modal.getOrCreateInstance(attendanceModalElement) : null;
 const attendanceStudents = document.getElementById("attendanceStudents");
 const attendanceForm = document.getElementById("attendanceForm");
 const attendanceFeedback = document.getElementById("attendanceFeedback");
 const errorMessage = document.getElementById("classError");
+let activeAttendance = null;
 
 function showError(text) {
     errorMessage.textContent = text;
@@ -519,11 +521,12 @@ function createDateCard(session, date, today) {
         status.textContent = "Cancelada";
         card.append(status);
     } else if (date <= today) {
-        const attendanceLink = document.createElement("a");
-        attendanceLink.className = "interface-button";
-        attendanceLink.href = `/dash/profesor/clase?clase=${session.id_course}&fecha=${key}`;
-        attendanceLink.textContent = lesson?.state_lesson === "given" ? "Ver asistencia" : "Tomar asistencia";
-        card.append(attendanceLink);
+        const attendanceButton = document.createElement("button");
+        attendanceButton.type = "button";
+        attendanceButton.className = "interface-button";
+        attendanceButton.textContent = lesson?.state_lesson === "given" ? "Ver asistencia" : "Tomar asistencia";
+        attendanceButton.addEventListener("click", () => showAttendance(session, key, date));
+        card.append(attendanceButton);
     } else {
         const noteText = document.createElement("p");
         noteText.className = "session-note";
@@ -540,6 +543,8 @@ async function showAttendance(session, key, date) {
         return;
     }
 
+    activeAttendance = { session, key };
+    ProfesorUtil.setFeedback(attendanceFeedback, "");
     document.getElementById("attendanceDateLabel").textContent = ProfesorUtil.formatDate(date);
     attendanceStudents.replaceChildren();
     data.alumnos.forEach((student) => {
@@ -571,18 +576,19 @@ async function showAttendance(session, key, date) {
         empty.textContent = "El administrador todavía no asignó alumnos a esta clase.";
         attendanceStudents.append(empty);
     }
-    attendancePanel.hidden = false;
-
-    attendanceForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        const presentes = new FormData(attendanceForm).getAll("attendees").map(Number);
-        const submit = attendanceForm.querySelector('[type="submit"]');
-        submit.disabled = true;
-        const result = await API.request(`/profesor/clases/${session.id_course}/encuentros/${key}/asistencia`, "PUT", { presentes });
-        submit.disabled = false;
-        ProfesorUtil.setFeedback(attendanceFeedback, result?.success ? "Asistencia guardada." : (result?.message || "No se pudo guardar la asistencia."), !result?.success);
-    });
+    attendanceModal?.show();
 }
+
+attendanceForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!activeAttendance) return;
+    const presentes = new FormData(attendanceForm).getAll("attendees").map(Number);
+    const submit = attendanceForm.querySelector('[type="submit"]');
+    submit.disabled = true;
+    const result = await API.request(`/profesor/clases/${activeAttendance.session.id_course}/encuentros/${activeAttendance.key}/asistencia`, "PUT", { presentes });
+    submit.disabled = false;
+    ProfesorUtil.setFeedback(attendanceFeedback, result?.success ? "Asistencia guardada." : (result?.message || "No se pudo guardar la asistencia."), !result?.success);
+});
 
 ProfesorUtil.loadClasses().then((classes) => {
     const session = classes.find(item => item.id_course === classId);

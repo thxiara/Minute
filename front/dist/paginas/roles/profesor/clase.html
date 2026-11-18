@@ -96,25 +96,33 @@
             </div>
 
             <section class="schedule-list" id="classDates" aria-label="Fechas de la clase"></section>
-            <section class="interface-panel mt-4" id="attendancePanel" hidden>
-                <div class="interface-panel-header">
-                    <div>
-                        <h2>Asistencia</h2>
-                        <p class="mb-0 mt-2 text-secondary" id="attendanceDateLabel"></p>
-                    </div>
-                </div>
-                <div class="interface-panel-body">
-                    <form id="attendanceForm">
-                        <div class="attendance-list" id="attendanceStudents"></div>
-                        <div class="d-flex align-items-center flex-wrap gap-3 mt-4">
-                            <button class="interface-button" type="submit">Guardar asistencia</button>
-                            <p id="attendanceFeedback" class="interface-feedback mb-0" role="status"></p>
-                        </div>
-                    </form>
-                </div>
-            </section>
             <p id="classError" class="interface-feedback" role="status" hidden></p>
         </main>
+    </div>
+
+    <!-- Asistencia -->
+    <div class="modal fade" id="attendanceModal" tabindex="-1" aria-labelledby="attendanceTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content interface-modal">
+                <form id="attendanceForm">
+                    <div class="modal-header">
+                        <div>
+                            <h2 class="modal-title" id="attendanceTitle">Asistencia</h2>
+                            <p class="mb-0 mt-2 text-secondary" id="attendanceDateLabel"></p>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="attendance-list" id="attendanceStudents"></div>
+                        <p id="attendanceFeedback" class="interface-feedback mb-0" role="status"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="interface-button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button class="interface-button" type="submit">Guardar asistencia</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <!-- Scripts -->
