@@ -22,6 +22,12 @@
     font-size: clamp(26px, 4vw, 38px);
 }
 
+/* El botón de idioma se agrega como último hijo del header: este margen mantiene
+   "Volver a membresías" junto a él, alineado a la derecha. */
+.contact-header-inner .header-btn {
+    margin-left: auto;
+}
+
 .contactos-main {
     display: grid;
     width: min(100% - 40px, 1000px);
